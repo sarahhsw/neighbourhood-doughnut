@@ -1,0 +1,443 @@
+[
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "Healthy life expectancy at birth",
+    "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/bulletins/healthstatelifeexpectanciesuk/between2011to2013and2022to2024/relateddata",
+    "granularity": "LA",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "Health index score",
+    "source_url": "https://www.ons.gov.uk/releases/healthindexforengland2015to2021",
+    "granularity": "Borough",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "adult obesity prevalence %",
+    "source_url": null,
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "child obesity prevalence %",
+    "source_url": null,
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "smoking prevalence %",
+    "source_url": "OHID Fingertips",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "diabetes prevalence %",
+    "source_url": null,
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "recorded depression prevalence %",
+    "source_url": null,
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "health",
+    "category": "Healthy",
+    "indicator": "% of registered patients on disease registers",
+    "source_url": "GP practice QOF data",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "housing",
+    "category": "Healthy",
+    "indicator": "% households in temporary accomodation",
+    "source_url": "https://trustforlondon.org.uk/data/temporary-accommodation-borough/",
+    "granularity": "London boroughs",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "housing",
+    "category": "Healthy",
+    "indicator": "# of rough sleeper",
+    "source_url": "https://trustforlondon.org.uk/data/rough-sleeping-borough/",
+    "granularity": "London boroughs",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "housing",
+    "category": "Healthy",
+    "indicator": "Rent as a % of income",
+    "source_url": "https://trustforlondon.org.uk/data/rent-affordability-borough/",
+    "granularity": "London boroughs",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "housing",
+    "category": "Healthy",
+    "indicator": "# of empty homes",
+    "source_url": "https://www.gov.uk/government/statistics/council-taxbase-2025-in-england",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "food",
+    "category": "Healthy",
+    "indicator": "% population with moderate to severe food insecurity",
+    "source_url": "https://foodfoundation.org.uk/initiatives/health-and-diet-inequalities-dashboard",
+    "granularity": "Constituency",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "food",
+    "category": "Healthy",
+    "indicator": "% of children in reception and year 6 with obesity",
+    "source_url": "https://foodfoundation.org.uk/initiatives/health-and-diet-inequalities-dashboard",
+    "granularity": "Constituency",
+    "lewisham_value": "Lewisham north: 9.5%\nLewisham west & east dulwich: 10.34%\nLewisham east: 9.5%"
+  },
+  {
+    "lens": "local_social",
+    "dimension": "food",
+    "category": "Healthy",
+    "indicator": "% of children in reception and year 6 with dental decay",
+    "source_url": "https://foodfoundation.org.uk/initiatives/health-and-diet-inequalities-dashboard",
+    "granularity": "Constituency",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "food",
+    "category": "Healthy",
+    "indicator": "% of people over 17 years old with type 2 diabetes",
+    "source_url": "https://foodfoundation.org.uk/initiatives/health-and-diet-inequalities-dashboard",
+    "granularity": "Constituency",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "food",
+    "category": "Healthy",
+    "indicator": "% of food outlets that are fast food outlets",
+    "source_url": "https://foodfoundation.org.uk/initiatives/health-and-diet-inequalities-dashboard",
+    "granularity": "Constituency",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "water_and_sanitation",
+    "category": "Healthy",
+    "indicator": "Per household water consumption (litre /day)",
+    "source_url": "https://www.data.gov.uk/dataset/87b59684-3da3-45cf-8881-e4727cfd1415/water-resource-management-plan-annual-review-data",
+    "granularity": "Water company",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "water_and_sanitation",
+    "category": "Healthy",
+    "indicator": "Areas of water stress",
+    "source_url": "https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "connectivity",
+    "category": "Connected",
+    "indicator": "Broadband coverage data",
+    "source_url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "connectivity",
+    "category": "Connected",
+    "indicator": "Mobile coverage data",
+    "source_url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "connectivity",
+    "category": "Connected",
+    "indicator": "Digital exclusion data",
+    "source_url": "https://data.london.gov.uk/dataset/mapping-digital-exclusion-supporting-data-206m8",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "community",
+    "category": "Connected",
+    "indicator": "% adults reported feeling lonely often or always",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": "Regional",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "community",
+    "category": "Connected",
+    "indicator": "% adults felt strongly belonged to their neighbourhood",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "culture",
+    "category": "Connected",
+    "indicator": "# of cultural venue per 1,000 population",
+    "source_url": "https://data.london.gov.uk/dataset/cultural-infrastructure-map-2025-2rj5o",
+    "granularity": "GLA",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "culture",
+    "category": "Connected",
+    "indicator": "\u00a3 local authority funding in art & culture",
+    "source_url": "https://www.equity.org.uk/campaigns-policy/elections-2026/local-government-arts-funding-tracker",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "culture",
+    "category": "Connected",
+    "indicator": "Active participation",
+    "source_url": "https://www.gov.uk/government/statistics/participation-survey-2024-25-annual-publication/main-report-for-the-participation-survey-april-2024-to-march-2025",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "mobility",
+    "category": "Connected",
+    "indicator": "Public Transport Accessibility Levels",
+    "source_url": "https://gis-tfl.opendata.arcgis.com/search?q=PTAL",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "mobility",
+    "category": "Connected",
+    "indicator": "% of trips by sustainable modes",
+    "source_url": "https://www.healthystreetsscorecard.london/results_2024/results_outcome_indicators_2024/#ResultsModeshare",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "education",
+    "category": "Enabled",
+    "indicator": "GCSE attainment",
+    "source_url": "https://trustforlondon.org.uk/data/gcse-attainment-borough/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "energy",
+    "category": "Enabled",
+    "indicator": "% property with EPC > C",
+    "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/energyperformancecertificateepcbandcoraboveenglandandwales",
+    "granularity": "LA",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "energy",
+    "category": "Enabled",
+    "indicator": "% household in fuel poverty",
+    "source_url": "https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "income_and_work",
+    "category": "Enabled",
+    "indicator": "Poverty rate",
+    "source_url": "https://trustforlondon.org.uk/data/poverty-borough/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "income_and_work",
+    "category": "Enabled",
+    "indicator": "% children in poverty (after housing cost)",
+    "source_url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "income_and_work",
+    "category": "Enabled",
+    "indicator": "% working residents paid below London Living Wage",
+    "source_url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "income_and_work",
+    "category": "Enabled",
+    "indicator": "Unemployment rate",
+    "source_url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "income_and_work",
+    "category": "Enabled",
+    "indicator": "Index of Multiple Deprivation Decile",
+    "source_url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
+    "granularity": "LSOA",
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "peace_and_justice",
+    "category": "Empowered",
+    "indicator": "Index of Multiple Deprivation Decile",
+    "source_url": "https://trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "peace_and_justice",
+    "category": "Empowered",
+    "indicator": "Crime rate per 1,000 population",
+    "source_url": "https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "political_voice",
+    "category": "Empowered",
+    "indicator": "% turnout in local election",
+    "source_url": "https://lginform.local.gov.uk/reports/lgastandard?mod-area=E92000001&mod-group=E09000023&mod-metric=3361&mod-type=area",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "political_voice",
+    "category": "Empowered",
+    "indicator": "% adults that have engaged in civic participation",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "political_voice",
+    "category": "Empowered",
+    "indicator": "% adults agreed they can personally influence decisions affecting local area",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "social_cohesion",
+    "category": "Empowered",
+    "indicator": "% adults agreed that people in neighbourhood can be trusted",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "social_cohesion",
+    "category": "Empowered",
+    "indicator": "% adults agreed people from different backgrounds get along well together",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "social_cohesion",
+    "category": "Empowered",
+    "indicator": "% proud to live in their local area",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "social_cohesion",
+    "category": "Empowered",
+    "indicator": "% adults that have participated in formal/informal volunteering",
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "equality",
+    "category": "Empowered",
+    "indicator": "Hourly wage ratio",
+    "source_url": "https://trustforlondon.org.uk/data/pay-inequality-borough/",
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "equality",
+    "category": "Empowered",
+    "indicator": "% wealth hold by poorest 50%",
+    "source_url": null,
+    "granularity": null,
+    "lewisham_value": null
+  },
+  {
+    "lens": "local_social",
+    "dimension": "equality",
+    "category": "Empowered",
+    "indicator": "Pay gap (ethnic, gender)",
+    "source_url": null,
+    "granularity": null,
+    "lewisham_value": null
+  }
+]

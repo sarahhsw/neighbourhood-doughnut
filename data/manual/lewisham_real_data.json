@@ -1,0 +1,144 @@
+{
+  "source": "Trust for London - Lewisham Poverty and Inequality Indicators",
+  "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
+  "accessed": "2026-07-12",
+  "data_year": "2022/23",
+  "borough": "Lewisham",
+  "borough_code": "E09000023",
+  "population": 299810,
+
+  "indicators": {
+    "poverty_rate": {
+      "value": 28.0,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 26.0,
+        "status": "worse"
+      },
+      "dimension": "income_and_work"
+    },
+    "child_poverty_rate_ahc": {
+      "value": 30.0,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 31.0,
+        "status": "average"
+      },
+      "dimension": "income_and_work"
+    },
+    "unemployment_rate": {
+      "value": 6.1,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 6.1,
+        "status": "equal"
+      },
+      "dimension": "income_and_work"
+    },
+    "low_pay_residents": {
+      "value": 13.4,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 16.1,
+        "status": "better"
+      },
+      "dimension": "income_and_work",
+      "note": "% working residents paid below London Living Wage"
+    },
+    "out_of_work_benefits": {
+      "value": 17.7,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 15.2,
+        "status": "worse"
+      },
+      "dimension": "income_and_work"
+    },
+    "gross_household_income": {
+      "value": 72200,
+      "unit": "£",
+      "year": 2023,
+      "comparison": {
+        "london_average": 74200,
+        "status": "below"
+      },
+      "dimension": "income_and_work"
+    },
+    "pay_inequality_ratio": {
+      "value": 2.43,
+      "unit": "ratio",
+      "year": 2023,
+      "comparison": {
+        "england_average": 1.52,
+        "status": "worse"
+      },
+      "dimension": "equality",
+      "note": "80:20 ratio - higher is more unequal"
+    },
+    "median_rent_percent_of_pay": {
+      "value": 43.6,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 51.6,
+        "status": "better"
+      },
+      "dimension": "housing"
+    },
+    "temporary_accommodation_rate": {
+      "value": 18.72,
+      "unit": "per 1,000 households",
+      "year": 2023,
+      "comparison": {
+        "london_average": null,
+        "status": "better"
+      },
+      "dimension": "housing"
+    },
+    "female_life_expectancy": {
+      "value": 82.92,
+      "unit": "years",
+      "year": 2023,
+      "comparison": {
+        "london_average": 84.13,
+        "status": "below"
+      },
+      "dimension": "health"
+    },
+    "premature_mortality": {
+      "value": 340,
+      "unit": "per 100,000",
+      "year": 2023,
+      "comparison": {
+        "london_average": 294,
+        "status": "worse"
+      },
+      "dimension": "health"
+    },
+    "childhood_obesity": {
+      "value": 24.5,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 23.2,
+        "status": "worse"
+      },
+      "dimension": "food"
+    },
+    "gcse_attainment_9_4": {
+      "value": 63.1,
+      "unit": "%",
+      "year": 2023,
+      "comparison": {
+        "london_average": 70.5,
+        "status": "below"
+      },
+      "dimension": "education"
+    }
+  }
+}

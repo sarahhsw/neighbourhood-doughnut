@@ -1,0 +1,24 @@
+{
+  "ward_code": "E05013725",
+  "ward_name": "Ladywell",
+  "lad_code": "E09000023",
+  "lad_name": "Lewisham",
+  "boundary_date": "2022-05-05",
+  "predecessor_wards": [
+    "E05000439",
+    "E05000446",
+    "E05000448",
+    "E05000451"
+  ],
+  "note": "This is a bootstrap file. Full LSOA/MSOA/OA lookups need to be populated from ONS data. For Phase 1, we can aggregate from Lewisham-wide data where ward-specific data is unavailable.",
+  "example_postcodes": [
+    "SE13 7JF",
+    "SE13 7TW",
+    "SE13 6NX",
+    "SE13 7UQ",
+    "SE13 7UD"
+  ],
+  "lsoas_placeholder": "To be populated - use ONS LSOA-to-Ward best-fit lookup",
+  "msoas_placeholder": "To be populated - derive from LSOA mappings",
+  "oas_placeholder": "To be populated - use ONS OA-to-LSOA lookup"
+}

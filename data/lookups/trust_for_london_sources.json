@@ -1,0 +1,94 @@
+{
+  "trust_for_london_sources": [
+    {
+      "lens": "local_social",
+      "dimension": "housing",
+      "category": "Healthy",
+      "indicator": "% households in temporary accomodation",
+      "source_url": "https://trustforlondon.org.uk/data/temporary-accommodation-borough/",
+      "granularity": "London boroughs",
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "housing",
+      "category": "Healthy",
+      "indicator": "# of rough sleeper",
+      "source_url": "https://trustforlondon.org.uk/data/rough-sleeping-borough/",
+      "granularity": "London boroughs",
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "housing",
+      "category": "Healthy",
+      "indicator": "Rent as a % of income",
+      "source_url": "https://trustforlondon.org.uk/data/rent-affordability-borough/",
+      "granularity": "London boroughs",
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "education",
+      "category": "Enabled",
+      "indicator": "GCSE attainment",
+      "source_url": "https://trustforlondon.org.uk/data/gcse-attainment-borough/",
+      "granularity": null,
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "income_and_work",
+      "category": "Enabled",
+      "indicator": "Poverty rate",
+      "source_url": "https://trustforlondon.org.uk/data/poverty-borough/",
+      "granularity": null,
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "income_and_work",
+      "category": "Enabled",
+      "indicator": "% children in poverty (after housing cost)",
+      "source_url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
+      "granularity": null,
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "income_and_work",
+      "category": "Enabled",
+      "indicator": "% working residents paid below London Living Wage",
+      "source_url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
+      "granularity": null,
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "income_and_work",
+      "category": "Enabled",
+      "indicator": "Unemployment rate",
+      "source_url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
+      "granularity": null,
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "peace_and_justice",
+      "category": "Empowered",
+      "indicator": "Index of Multiple Deprivation Decile",
+      "source_url": "https://trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/",
+      "granularity": null,
+      "lewisham_value": null
+    },
+    {
+      "lens": "local_social",
+      "dimension": "equality",
+      "category": "Empowered",
+      "indicator": "Hourly wage ratio",
+      "source_url": "https://trustforlondon.org.uk/data/pay-inequality-borough/",
+      "granularity": null,
+      "lewisham_value": null
+    }
+  ]
+}

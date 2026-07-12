@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladywell Neighbourhood Doughnut</title>
+    <link rel="stylesheet" href="css/styles.css?v=21">
+</head>
+<body>
+    <header>
+        <button class="ward-pill">Ladywell ↓</button>
+    </header>
+
+    <main>
+        <div class="content-grid">
+            <div class="left-column">
+                <div class="intro-section">
+                    <h1 class="mobile-headline">Ladywell,<br>drawn out.</h1>
+                    <h1 class="desktop-headline">A doughnut, layered from the ward up</h1>
+                    <p class="subtitle mobile-only">A doughnut portrait pinned up from public data — tap anything to read what's underneath.</p>
+                    <div class="view-toggle">
+                        <button id="toggle-local" class="toggle-btn active">Local</button>
+                        <button id="toggle-global" class="toggle-btn">Global</button>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <div id="doughnut-chart"></div>
+                </div>
+
+                <!-- Torn paper divider (mobile only) -->
+                <div class="torn-divider"></div>
+            </div>
+
+            <!-- Dimensions panel (right column on desktop, below chart on mobile) -->
+            <div class="dimensions-panel" id="dimensions-panel">
+                <div class="dimension-section">
+                    <h2 class="section-heading" id="social-heading">LOCAL SOCIAL</h2>
+                    <div class="dimension-cards" id="social-cards">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="dimension-section">
+                    <h2 class="section-heading" id="ecological-heading">LOCAL ECOLOGICAL</h2>
+                    <div class="dimension-cards" id="ecological-cards">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <p>Built on: Kate Raworth's Doughnut Economics</p>
+            <p>Generated: <span id="generated-at">—</span></p>
+            <p class="caveat">⚠️ Global dimensions inherit London citywide figures. Local dimensions use ward-level data where available.</p>
+        </footer>
+    </main>
+
+    <!-- Dimension detail overlay -->
+    <div id="dimension-overlay" class="dimension-overlay hidden">
+        <div class="overlay-content">
+            <button class="back-button" id="back-button">← Back</button>
+            <div class="detail-container" id="detail-container">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/chart.js?v=7"></script>
+    <script src="js/app.js?v=32"></script>
+</body>
+</html>

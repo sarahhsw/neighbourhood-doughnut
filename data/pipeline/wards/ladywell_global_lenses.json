@@ -1,0 +1,402 @@
+{
+  "global_ecological": [
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "climate_change",
+      "target": {
+        "text": "Stay within planetary boundary for greenhouse gas emissions",
+        "source_body": "Stockholm Resilience Centre / Planetary Boundaries Framework",
+        "has_official_target": true
+      },
+      "indicator": "CO2 emissions overshoot factor (territorial + consumption-based)",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within boundary"
+      },
+      "snapshot": {
+        "value": 5.5,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "material_footprint",
+      "target": {
+        "text": "Material consumption within sustainable limits",
+        "source_body": "Material footprint methodology (consumption-based)",
+        "has_official_target": true
+      },
+      "indicator": "Material footprint overshoot factor",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within boundary"
+      },
+      "snapshot": {
+        "value": 1.1,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "ecological_footprint",
+      "target": {
+        "text": "Consumption footprint within Earth's biocapacity",
+        "source_body": "Global Footprint Network",
+        "has_official_target": true
+      },
+      "indicator": "Ecological footprint overshoot factor",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within biocapacity"
+      },
+      "snapshot": {
+        "value": 2.2,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "nitrogen",
+      "target": {
+        "text": "Nitrogen flows within planetary boundary",
+        "source_body": "Planetary Boundaries Framework - Biochemical Flows",
+        "has_official_target": true
+      },
+      "indicator": "Nitrogen flow overshoot factor",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within boundary"
+      },
+      "snapshot": {
+        "value": 1.9,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "phosphorus",
+      "target": {
+        "text": "Phosphorus flows within planetary boundary",
+        "source_body": "Planetary Boundaries Framework - Biochemical Flows",
+        "has_official_target": true
+      },
+      "indicator": "Phosphorus flow overshoot factor",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within boundary"
+      },
+      "snapshot": {
+        "value": 1.2,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "land_system_change",
+      "target": {
+        "text": "Land-use change within sustainable limits",
+        "source_body": "Planetary Boundaries Framework",
+        "has_official_target": true
+      },
+      "indicator": "Land system change overshoot factor",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within boundary"
+      },
+      "snapshot": {
+        "value": 2.8,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "freshwater_use",
+      "target": {
+        "text": "Freshwater consumption within planetary boundary",
+        "source_body": "Planetary Boundaries Framework",
+        "has_official_target": true
+      },
+      "indicator": "Freshwater use overshoot factor",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = within boundary"
+      },
+      "snapshot": {
+        "value": 2.6,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "air_pollution",
+      "target": {
+        "text": "Air pollution within safe levels",
+        "source_body": "WHO Air Quality Guidelines / Planetary Boundaries",
+        "has_official_target": true
+      },
+      "indicator": "Air pollution boundary status",
+      "threshold": {
+        "value": 1.0,
+        "unit": "factor",
+        "description": "1.0 = at boundary, <1.0 = within"
+      },
+      "snapshot": {
+        "value": 0.6,
+        "unit": "\u00d7",
+        "year": 2024,
+        "date": null
+      },
+      "status": "met",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024 - Doughnut Ecological Overshoot Analysis",
+        "url": "https://www.thriving-cities-initiative.org/london-portrait",
+        "accessed": "2026-07-11",
+        "notes": "City-wide figures applied to all Lewisham wards. No ward-level differentiation in source data."
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "biosphere_integrity",
+      "target": {
+        "text": "Stay within planetary boundary for biosphere integrity",
+        "source_body": "Planetary Boundaries Framework",
+        "has_official_target": true
+      },
+      "indicator": "Biodiversity loss and species extinction rates",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": "Boundary defined but London data unavailable"
+      },
+      "snapshot": {
+        "value": null,
+        "unit": null,
+        "year": null,
+        "date": null
+      },
+      "status": "unknown",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024",
+        "url": null,
+        "accessed": null,
+        "notes": "No data available for this planetary boundary at London scale"
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "novel_entities",
+      "target": {
+        "text": "Stay within planetary boundary for novel entities",
+        "source_body": "Planetary Boundaries Framework",
+        "has_official_target": true
+      },
+      "indicator": "Chemical pollution and plastic pollution",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": "Boundary defined but London data unavailable"
+      },
+      "snapshot": {
+        "value": null,
+        "unit": null,
+        "year": null,
+        "date": null
+      },
+      "status": "unknown",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024",
+        "url": null,
+        "accessed": null,
+        "notes": "No data available for this planetary boundary at London scale"
+      },
+      "confidence": "low",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_ecological",
+      "dimension": "ozone_depletion",
+      "target": {
+        "text": "Stay within planetary boundary for ozone depletion",
+        "source_body": "Planetary Boundaries Framework",
+        "has_official_target": true
+      },
+      "indicator": "Stratospheric ozone depletion",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": "Boundary defined but London data unavailable"
+      },
+      "snapshot": {
+        "value": null,
+        "unit": null,
+        "year": null,
+        "date": null
+      },
+      "status": "unknown",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "London City Portrait 2024",
+        "url": null,
+        "accessed": null,
+        "notes": "No data available for this planetary boundary at London scale"
+      },
+      "confidence": "low",
+      "community_notes": []
+    }
+  ],
+  "global_social": [
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "global_social",
+      "dimension": "global_social_placeholder",
+      "target": {
+        "text": "International supply-chain justice and fair trade",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Global Social Foundation metrics (placeholder)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": "No London-level data available"
+      },
+      "snapshot": {
+        "value": null,
+        "unit": null,
+        "year": null,
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "london_inherited",
+      "source": {
+        "name": "Placeholder - Global Social lens not implemented in London City Portrait 2024",
+        "url": null,
+        "accessed": null,
+        "notes": "Future versions may include fair trade data, supply chain labor conditions, etc."
+      },
+      "confidence": "low",
+      "community_notes": []
+    }
+  ]
+}

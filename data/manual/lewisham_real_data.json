@@ -83,7 +83,8 @@
     "median_rent_percent_of_pay": {
       "value": 43.6,
       "unit": "%",
-      "year": 2023,
+      "year": 2025,
+      "note": "Corrected: this figure is 2025 Q4, not 2023 (true 2023 Q4 value is 43.1%). Full 2015-2025 quarterly trend extracted from Trust for London chart data (https://trustforlondon.org.uk/data/dataset/1497/csv/) and stored in site/data/wards/ladywell.json.",
       "comparison": {
         "london_average": 51.6,
         "status": "better"
@@ -91,9 +92,10 @@
       "dimension": "housing"
     },
     "temporary_accommodation_rate": {
-      "value": 18.72,
+      "value": 18.9,
       "unit": "per 1,000 households",
-      "year": 2023,
+      "year": "2025/26",
+      "note": "Updated from MHCLG Detailed LA Table TA1, 31 Dec 2025 (2,363 households). 7-year trend (FY2019-20 to FY2025-26) stored in site/data/wards/ladywell.json.",
       "comparison": {
         "london_average": null,
         "status": "better"

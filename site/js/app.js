@@ -4,6 +4,67 @@ let wardData = null;
 let currentChart = null;
 let currentView = 'local'; // 'local' or 'global'
 
+// Global function to initialize tooltips for trend charts
+function initializeTooltips(dimensionName) {
+    const chartId = 'trend-chart-' + dimensionName;
+    const tooltipId = 'html-tooltip-' + dimensionName;
+
+    const chartSvg = document.getElementById(chartId);
+    const tooltip = document.getElementById(tooltipId);
+    const periodElem = document.getElementById('html-tooltip-period-' + dimensionName);
+    const valueElem = document.getElementById('html-tooltip-value-' + dimensionName);
+
+    if (!chartSvg || !tooltip) {
+        return;
+    }
+
+    const circles = chartSvg.querySelectorAll('.chart-hit-area');
+
+    if (circles.length === 0) {
+        return;
+    }
+
+    circles.forEach(function(circle, idx) {
+        circle.addEventListener('mouseenter', function(evt) {
+            const period = this.getAttribute('data-period');
+            const value = this.getAttribute('data-value');
+            const unit = this.getAttribute('data-unit') || '';
+
+            periodElem.textContent = period;
+            valueElem.textContent = value + (unit ? ' ' + unit : '');
+
+            const rect = chartSvg.getBoundingClientRect();
+            const circleX = parseFloat(this.getAttribute('cx'));
+            const circleY = parseFloat(this.getAttribute('cy'));
+
+            const svgWidth = chartSvg.viewBox.baseVal.width;
+            const svgHeight = chartSvg.viewBox.baseVal.height;
+            const scaleX = rect.width / svgWidth;
+            const scaleY = rect.height / svgHeight;
+
+            const pageX = rect.left + (circleX * scaleX);
+            const pageY = rect.top + (circleY * scaleY);
+
+            // Position tooltip
+            tooltip.style.left = (pageX + 15) + 'px';
+            tooltip.style.top = (pageY - 55) + 'px';
+            tooltip.style.display = 'block';
+
+            // Trigger fade-in animation
+            setTimeout(() => {
+                tooltip.style.opacity = '1';
+            }, 10);
+        });
+
+        circle.addEventListener('mouseleave', function() {
+            tooltip.style.opacity = '0';
+            setTimeout(() => {
+                tooltip.style.display = 'none';
+            }, 200);
+        });
+    });
+}
+
 async function loadWardData() {
     try {
         // Add cache-busting parameter
@@ -195,20 +256,11 @@ function renderTrendChart(allIndicators, dimension) {
     let svg = `
         <div class="detail-section">
             <h3>${chartTitle}</h3>
-            <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="max-width: 600px;">
+            <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="max-width: 600px;" id="trend-chart-${dimension.dimension}">
                 <!-- Y axis -->
                 <line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#999" stroke-width="1"/>
                 <!-- X axis -->
                 <line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#999" stroke-width="1"/>
-
-                <!-- Target line (only show if threshold exists) -->
-                ${dimension.threshold && dimension.threshold.value !== null ? `
-                    <line x1="${margin.left}" y1="${yScale(dimension.threshold.value)}"
-                          x2="${width - margin.right}" y2="${yScale(dimension.threshold.value)}"
-                          stroke="#4B3F8F" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
-                    <text x="${width - margin.right + 5}" y="${yScale(dimension.threshold.value) + 4}"
-                          font-size="10px" fill="#4B3F8F">Target: ${dimension.threshold.value}</text>
-                ` : ''}
     `;
 
     // Draw lines for each indicator
@@ -230,19 +282,26 @@ function renderTrendChart(allIndicators, dimension) {
         ind.trend.forEach((point, i) => {
             const x = xScale(allPeriods.indexOf(point.period));
             const y = yScale(point.value);
+            const unit = ind.snapshot.unit || '';
+            const dataPointId = `datapoint-${dimension.dimension}-${indIndex}-${i}`;
             svg += `
-                <circle cx="${x}" cy="${y}" r="4" fill="${color}" style="cursor: pointer;">
-                    <title>${ind.indicator}: ${point.value} (${point.period})</title>
-                </circle>
+                <!-- Larger invisible hit area -->
+                <circle cx="${x}" cy="${y}" r="12" fill="transparent" style="cursor: pointer;"
+                    data-period="${point.period}" data-value="${point.value}" data-unit="${unit}" class="chart-hit-area"></circle>
+                <!-- Visible data point -->
+                <circle id="${dataPointId}" cx="${x}" cy="${y}" r="4" fill="${color}" style="pointer-events: none;"></circle>
             `;
         });
 
-        // Legend
-        const legendY = margin.top + indIndex * 20;
-        svg += `
-            <line x1="${width - margin.right + 10}" y1="${legendY}" x2="${width - margin.right + 30}" y2="${legendY}" stroke="${color}" stroke-width="2"/>
-            <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${ind.indicator.replace('Healthy life expectancy at birth ', '')}</text>
-        `;
+        // Legend (only needed to distinguish multiple lines - the chart title
+        // already names the indicator when there's just one)
+        if (indicatorsWithTrend.length > 1) {
+            const legendY = margin.top + indIndex * 20;
+            svg += `
+                <line x1="${width - margin.right + 10}" y1="${legendY}" x2="${width - margin.right + 30}" y2="${legendY}" stroke="${color}" stroke-width="2"/>
+                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${ind.indicator.replace('Healthy life expectancy at birth ', '')}</text>
+            `;
+        }
     });
 
     // X-axis labels - use midpoint year for rolling periods
@@ -277,6 +336,35 @@ function renderTrendChart(allIndicators, dimension) {
             </svg>
         </div>
     `;
+
+    // Create tooltip and append to body (outside stacking context)
+    const dimName = dimension.dimension;
+    setTimeout(() => {
+        // Remove any existing tooltip
+        const existingTooltip = document.getElementById('html-tooltip-' + dimName);
+        if (existingTooltip) {
+            existingTooltip.remove();
+        }
+
+        // Create new tooltip appended to body
+        const tooltip = document.createElement('div');
+        tooltip.id = 'html-tooltip-' + dimName;
+        tooltip.style.cssText = 'position: fixed; display: none; background: rgba(255, 255, 255, 0.98); border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 8px; padding: 10px 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1); pointer-events: none; z-index: 99999; font-family: var(--font-sans); white-space: nowrap; opacity: 0; transition: opacity 0.2s ease; backdrop-filter: blur(8px);';
+
+        const periodDiv = document.createElement('div');
+        periodDiv.id = 'html-tooltip-period-' + dimName;
+        periodDiv.style.cssText = 'font-weight: 600; margin-bottom: 3px; color: #241226; font-size: 13px; letter-spacing: -0.01em;';
+
+        const valueDiv = document.createElement('div');
+        valueDiv.id = 'html-tooltip-value-' + dimName;
+        valueDiv.style.cssText = 'color: #4B3F8F; font-size: 15px; font-weight: 700; letter-spacing: -0.02em;';
+
+        tooltip.appendChild(periodDiv);
+        tooltip.appendChild(valueDiv);
+        document.body.appendChild(tooltip);
+
+        initializeTooltips(dimName);
+    }, 100);
 
     console.log('Trend chart SVG generated, length:', svg.length);
     return svg;
@@ -314,7 +402,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
     // Custom descriptions for specific dimensions
     const dimensionDescriptions = {
-        'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability."
+        'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability.",
+        'housing': "The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem - a quarter of its homes are estimated to fall short of basic decency standards. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before.",
+        'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -351,20 +441,116 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             }
         }
 
+        // Housing-specific explanations
+        if (baseName === 'Median rent as % of median pay') {
+            return `This indicator measures housing affordability by comparing median private rents to median gross pay. At 43.6% in Lewisham (2025 Q4), it exceeds the 30% threshold that housing experts consider the ceiling for sustainable costs - beyond it, households typically cut back on essentials and have little cushion against a rent rise or income shock. Lewisham's ratio has hovered in the low-to-mid 40s since 2015 rather than trending steadily in either direction, suggesting a persistently strained affordability band rather than a temporary spike. With so little slack, even a modest rent rise or a missed pay cheque can be enough to tip a household toward eviction or needing the council's help to avoid homelessness.`;
+        }
+
+        if (baseName === 'Households in temporary accommodation') {
+            return `Temporary accommodation is emergency housing the council must provide to households legally assessed as homeless and in priority need - nightly-paid hotels (the most expensive and often least suitable), council-owned properties, and privately leased units. Despite the name, stays commonly run for years rather than months, so families can spend a child's entire primary school career in a single hotel room. Its use here has been driven by rising private rents pricing people out of the market and by evictions outpacing the supply of settled homes to move people into. It functions as both a safety net keeping people off the street and a warning sign of how much strain the wider housing system is under.`;
+        }
+
+        if (baseName === '% non-decent homes') {
+            return `A home is "non-decent" if it fails to meet basic standards for safety, state of repair, facilities, or thermal comfort - the Decent Homes Standard the government has used since 2006 to judge housing quality. These are modelled estimates from national survey data rather than an inspection of every home, so year-to-year movement should be read as broad direction rather than precise change. Lewisham's rate has run below the London average in three of the last four rounds, but the 2024 uptick is worth watching alongside the borough's other housing pressures: disrepair and overcrowding often cluster in the same low-income, high-rent households already stretched by rent affordability and temporary accommodation.`;
+        }
+
+        if (baseName === 'Rough sleepers') {
+            return `Rough sleeping counts people seen sleeping on streets, in doorways, parks, or other outdoor locations by outreach workers over the year - the most visible, and most dangerous, form of homelessness. Lewisham was one of nine London boroughs to achieve a temporary reduction in 2024/25, but the rise since suggests those gains were fragile rather than structural: without sustained investment in prevention and move-on accommodation, people cycle back onto the street as fast as they're helped off it. Each person counted here faces acute health risks, vulnerability to violence, and barriers to support, making rough sleeping both a symptom of the borough's housing crisis and one of its most severe consequences.`;
+        }
+
+        // Food-specific explanations
+        if (baseName === '% population with moderate to severe food insecurity') {
+            return `This measures the share of Lewisham residents living in neighbourhoods classed by government modelling as at highest risk of food insecurity - not a direct survey of household experience. At 7.8% in 2022, Lewisham sits comfortably below both the London (13.3%) and England (10%) averages, and the risk fell from 9.6% in 2021. The council's own Food Justice Action Plan cites the same figure as evidence that, despite the visible strain on foodbanks since the cost-of-living crisis, structural food insecurity risk here is lower than in most of London - though only two years of data exist so far, too short to call this a settled trend.`;
+        }
+
+        if (baseName === '% of children in reception and year 6 with obesity') {
+            return `Obesity is measured separately for Reception-age children (4-5) and Year 6 (10-11) through the National Child Measurement Programme; Lewisham's 2024/25 rates were 10.0% and 24.5%. The near-doubling between the two ages has held in every year since measurement began in 2006/07, both nationally and in Lewisham, and points to the primary-school years as where obesity risk accumulates fastest. Lewisham's Year 6 rate has run above the London average every year on record; Reception has mostly tracked close to it. The council's Whole Systems Approach to Obesity has an explicit ambition to halve childhood obesity by 2030.`;
+        }
+
+        if (baseName === '% of children in reception and year 6 with dental decay') {
+            return `Tooth decay in children is tracked through separate national surveys: a biennial one for 5-year-olds (Reception age) and a single one-off survey of Year 6 children in 2022/23, the first and only time that age group has been surveyed nationally. Lewisham's most recent Reception figure (18.9%, 2023/24) and Year 6 figure (9.9%, 2022/23) both sit below the London and England averages - Lewisham had the 4th-lowest Reception decay rate of London's 33 boroughs in 2024. The Reception trend has been volatile rather than steadily improving, dropping to 12.4% in 2021/22 before rising again, which NHS commissioners partly attribute to reduced dental access during and after the pandemic.`;
+        }
+
+        if (baseName === '% of people over 17 years old with type 2 diabetes') {
+            return `This tracks the share of Lewisham residents aged 17+ with diabetes recorded on their GP's disease register (both type 1 and type 2, though type 2 accounts for roughly 90% of diagnosed cases). At 7.2% in 2024/25, up steadily from 5.7% in 2012/13, Lewisham has stayed significantly below the England average (7.9%) throughout, and close to London's (7.1%). The rise mirrors a national trend in an ageing, increasingly overweight population; Lewisham's Whole Systems Approach to Obesity explicitly frames type 2 diabetes prevention as one of the direct health benefits of its weight-management work, alongside cardiovascular risk and joint disease.`;
+        }
+
         // Generic fallback
         return null;
     }
 
     // Function to get council/government context for each dimension
+    // Returns an ARRAY of { title, year, url, summary } objects - most dimensions have one,
+    // but a dimension can have up to 3 when its indicators span genuinely distinct policy
+    // areas that no single document covers (see DIMENSION_PAGE_SPECIFICATION.md Section 3).
     function getCouncilContext(dimensionName) {
         // Health dimension council context
         if (dimensionName === 'health') {
-            return {
+            return [{
                 title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
                 year: '2025-2030',
                 url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
                 summary: 'The strategy responds to stark health inequalities in Lewisham, where there\'s a 6.6-year gap in male life expectancy between the most and least deprived areas (2020-21), with cancer and cardiovascular disease as the leading causes of death. Rather than focusing solely on healthcare services, the council is targeting three root causes of poor health: poverty, housing, and education — particularly where these intersect with health and care. The approach emphasizes prevention at the community level, aiming to tackle the fundamental drivers of health inequality before they manifest as serious illness, shifting resources upstream from reactive treatment to proactive intervention.'
-            };
+            }];
+        }
+
+        // Housing dimension council context - 2 documents for now (capped per current
+        // guidance): Housing Strategy covers rent affordability, supply, AND housing
+        // conditions/non-decent homes (its Priority 3); Homelessness Strategy covers
+        // temporary accommodation + rough sleeping. A dedicated enforcement/licensing
+        // document exists (Policies to Support the Regulation and Enforcement of the
+        // Private Rented Housing Sector, 2021) but was judged less interesting to surface
+        // here - see git history if it's wanted back.
+        if (dimensionName === 'housing') {
+            return [
+                {
+                    title: "Lewisham's Housing Strategy 2020-26",
+                    year: '2020-2026',
+                    url: 'https://lewisham.moderngov.co.uk/documents/s75863/Housing%20Strategy%202020-26.pdf',
+                    summary: `<p>Lewisham's housing strategy sets out five priorities: delivering more genuinely affordable homes, preventing homelessness, improving housing quality and safety, supporting independent living, and strengthening communities. It documents private rented sector rents growing 50% between 2011-2017 (70% in the borough's historically cheaper areas) while household incomes rose only around 12% over a comparable period - the gap it identifies as the single biggest driver of homelessness, since the ending of a private tenancy is the most common reason households approach the council for help. The strategy also estimates a quarter of private rented homes are non-decent. Its actions span all of this: building new council and social rent homes, bringing empty properties back into use, pushing for longer and more secure private tenancies, and expanding licensing to raise standards.</p>`
+                },
+                {
+                    title: 'Lewisham Homelessness and Rough Sleeping Strategy',
+                    year: '2023-2026',
+                    url: 'https://lewisham.moderngov.co.uk/ieDecisionDetails.aspx?ID=9725',
+                    summary: `<p>The council assisted over 3,000 households experiencing homelessness in the past year, driven by cost-of-living pressures and the lasting impact of COVID-19 on vulnerable residents. It organises its response around four priorities:</p>
+                    <ul>
+                        <li><strong>Prevention first</strong> - early intervention, financial help with rent arrears, and protection from illegal eviction, connecting at-risk residents to support before they lose their home.</li>
+                        <li><strong>Expanding supply</strong> - building new council homes, bringing empty properties back into use, and increasing temporary accommodation capacity for families facing sudden housing loss.</li>
+                        <li><strong>Health-led support for rough sleepers</strong> - closer working with health services on the physical and mental health needs and substance misuse that often accompany rough sleeping, with specific provision for people with unclear immigration status and for women's needs.</li>
+                        <li><strong>Cross-service partnership</strong> - mobilising council departments alongside borough-wide charities and public services.</li>
+                    </ul>
+                    <p>Its stated commitment: "no individual should be forced to sleep on the streets" - despite 13 years of budget cuts constraining what the council can do alone.</p>`
+                }
+            ];
+        }
+
+        // Food dimension council context - 3 documents: Food Justice Action Plan covers
+        // food insecurity; Whole Systems Approach to Obesity covers obesity and touches
+        // diabetes (explicitly framed as a prevention benefit); a dedicated NHS dental
+        // commissioning presentation covers dental decay, which neither of the other two
+        // documents addresses.
+        if (dimensionName === 'food') {
+            return [
+                {
+                    title: 'Lewisham Food Justice Action Plan - Update Report (Health & Wellbeing Board)',
+                    year: '2023-2027',
+                    url: 'https://lewisham.moderngov.co.uk/documents/s123350/6%20Food%20Justice%20action%20plan%20update%20REPORT.pdf',
+                    summary: `<p>Lewisham launched its Food Justice Action Plan in April 2023 as food bank demand rose sharply after the pandemic and into the cost-of-living crisis, and has since become a Sustainable Food Places Silver Award borough and passed a motion to become a "Right to Food" borough. Its Community Food Justice Grants had, by December 2025, funded 31 local organisations reaching over 20,000 people, and the programme - now funded to April 2027 - sits formally under the council's Whole Systems Approach to Obesity as part of the wider food environment.</p>`
+                },
+                {
+                    title: 'Lewisham Whole Systems Approach to Obesity and weight management medication',
+                    year: '2026',
+                    url: 'https://lewisham.moderngov.co.uk/documents/s123840/06b.%20Systems%20Approach%20to%20Obesity%20and%20weight%20management%20medication.pdf',
+                    summary: `<p>Lewisham's Whole Systems Approach to Obesity (WSAO), running since 2016, is the council's system-wide response to a borough where 21.8% of Reception children and 39% of Year 6 children carry excess weight, and where obesity-related hospital admissions run three times the national rate (62 vs 20 per 100,000, 2019-20). Its most recent focus is integrating new weight-loss medications (Wegovy, Mounjaro) into wider prevention work rather than a standalone fix - both are limited to patients with a BMI over 35 and a weight-related condition, referred through specialist NHS services, since unsupported use tends to see weight regained within two years of stopping. The council frames type 2 diabetes prevention as a direct benefit of this work.</p>`
+                },
+                {
+                    title: 'Dental Services Lewisham (NHS South East London ICB)',
+                    year: '2026',
+                    url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=121820',
+                    summary: `<p>Lewisham's NHS dental commissioning is run jointly across South East London by the ICB rather than the council, but the council receives regular updates because access shapes outcomes like decay rates. Lewisham has 35 NHS general dental practices, delivering 98.1% of its contracted treatment target in 2024/25 - above the South East London average. Community Dental Services (run by King's) provide targeted outreach - supervised toothbrushing, oral health education and personalised support for children with visible decay - through food banks, libraries and family hubs; paediatric referrals into these services have risen 40% since before the pandemic. Lewisham's 2024 child dental decay rate was the fourth-lowest of London's 33 boroughs.</p>`
+                }
+            ];
         }
 
         // Generic fallback
@@ -409,6 +595,90 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
+        // Housing dimension neighbour voices
+        if (dimensionName === 'housing') {
+            return [
+                {
+                    name: 'Rachel',
+                    location: 'Ladywell Fields',
+                    date: 'Jul 2026',
+                    quote: 'Our landlord raised the rent by £200 a month. We\'re a family of four and now over half my salary goes on rent alone.'
+                },
+                {
+                    name: 'James',
+                    location: 'Hither Green Lane',
+                    date: 'Jun 2026',
+                    quote: 'Been in temporary accommodation for two years now. They call it temporary, but my daughter has started and finished reception year in the same hotel room.'
+                },
+                {
+                    name: 'Amara',
+                    location: 'Ladywell Village',
+                    date: 'May 2026',
+                    quote: 'The damp in our flat keeps coming back. Landlord says he\'ll fix it but never does. My son\'s asthma has gotten worse.'
+                },
+                {
+                    name: 'David',
+                    location: 'Crofton Park',
+                    date: 'Apr 2026',
+                    quote: 'I work full time as a teaching assistant. Can\'t afford a one-bed flat on my own anymore — had to move back with my mum at 34.'
+                },
+                {
+                    name: 'Sofia',
+                    location: 'Brockley Road',
+                    date: 'Mar 2026',
+                    quote: 'We got our eviction notice last month. Section 21, no reason given. Just two months to find somewhere we can afford, which doesn\'t exist.'
+                },
+                {
+                    name: 'Michael',
+                    location: 'Ladywell Station',
+                    date: 'Feb 2026',
+                    quote: 'Three viewings this week. Each flat had 15 other people looking. One landlord asked for six months rent upfront. How is that legal?'
+                }
+            ];
+        }
+
+        // Food dimension neighbour voices
+        if (dimensionName === 'food') {
+            return [
+                {
+                    name: 'Priya',
+                    location: 'Ladywell Fields',
+                    date: 'Jul 2026',
+                    quote: 'The food bank queue outside the community centre used to be short. Now it wraps round the block every Thursday.'
+                },
+                {
+                    name: 'Kwame',
+                    location: 'Verdant Lane',
+                    date: 'Jun 2026',
+                    quote: 'My daughter\'s school stopped doing the fruit and veg scheme this year. Budget cuts, they said.'
+                },
+                {
+                    name: 'Grace',
+                    location: 'Ladywell Village',
+                    date: 'May 2026',
+                    quote: 'Waited four months for an NHS dentist appointment for my son. In the end we paid privately, which we couldn\'t really afford.'
+                },
+                {
+                    name: 'Daniel',
+                    location: 'Brockley Road',
+                    date: 'Apr 2026',
+                    quote: 'Diabetes runs in my family. The GP\'s dietician clinic has a three month wait, so I\'ve mostly had to work it out myself.'
+                },
+                {
+                    name: 'Amaka',
+                    location: 'Hither Green Lane',
+                    date: 'Mar 2026',
+                    quote: 'Since the Healthy Start vouchers got easier to claim, it\'s made a real difference for fruit and milk each week.'
+                },
+                {
+                    name: 'Tomasz',
+                    location: 'Crofton Park',
+                    date: 'Feb 2026',
+                    quote: 'Every fast food place on the high street does a meal deal under £4. The greengrocer can\'t compete on price.'
+                }
+            ];
+        }
+
         // Generic fallback
         return null;
     }
@@ -449,13 +719,6 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             `;
         });
 
-        // Show target line if exists
-        if (firstIndicator.threshold && firstIndicator.threshold.value !== null) {
-            html += `
-                <div class="target-line">Target: ${firstIndicator.threshold.value}${firstIndicator.threshold.unit ? ' ' + firstIndicator.threshold.unit : ''} (${firstIndicator.threshold.description || 'target'})</div>
-            `;
-        }
-
         // Render trend chart for this group (no divider before chart)
         html += renderTrendChart(indicators, firstIndicator);
 
@@ -483,18 +746,22 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         }
     });
 
-    // Add council/government context section for the entire dimension
-    const councilContext = getCouncilContext(dimension.dimension);
-    if (councilContext) {
+    // Add council/government context section(s) for the entire dimension - up to 3 documents
+    // when the dimension's indicators span genuinely distinct policy areas (see 3.2 in spec)
+    const councilContexts = getCouncilContext(dimension.dimension);
+    if (councilContexts && councilContexts.length > 0) {
         html += '<div class="section-divider"></div>';
-        html += `
-            <h3 class="council-context-heading">Council & Government Context</h3>
-            <div class="council-context">
-                <h4>${councilContext.title}</h4>
-                <div class="council-date">${councilContext.year}</div>
-                <div class="council-summary">${councilContext.summary}</div>
-            </div>
-        `;
+        html += '<h3 class="council-context-heading">Council & Government Context</h3>';
+        councilContexts.forEach(ctx => {
+            html += `
+                <div class="council-context">
+                    <h4>${ctx.title}</h4>
+                    <div class="council-date">${ctx.year}</div>
+                    <div class="council-summary">${ctx.summary}</div>
+                    ${ctx.url ? `<div class="source-line">Source: <a href="${ctx.url}" target="_blank">${ctx.title}</a></div>` : ''}
+                </div>
+            `;
+        });
     }
 
     // Add neighbour voices section for the entire dimension

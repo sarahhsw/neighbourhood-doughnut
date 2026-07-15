@@ -95,6 +95,7 @@ class Dimension:
     confidence: Confidence
 
     community_notes: List[Dict[str, Any]] = None  # Empty for Phase 1
+    trend: Optional[List[Dict[str, Any]]] = None  # Historical series: [{"period": str, "value": ..., "note": str?}]
 
     def __post_init__(self):
         if self.community_notes is None:
@@ -102,7 +103,7 @@ class Dimension:
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization"""
-        return {
+        d = {
             "ward": self.ward,
             "ward_code": self.ward_code,
             "lens": self.lens.value if isinstance(self.lens, Enum) else self.lens,
@@ -117,6 +118,9 @@ class Dimension:
             "confidence": self.confidence.value if isinstance(self.confidence, Enum) else self.confidence,
             "community_notes": self.community_notes
         }
+        if self.trend is not None:
+            d["trend"] = self.trend
+        return d
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Dimension':
@@ -134,7 +138,8 @@ class Dimension:
             geography_of_data=GeographyLevel(data["geography_of_data"]),
             source=Source(**data["source"]),
             confidence=Confidence(data["confidence"]),
-            community_notes=data.get("community_notes", [])
+            community_notes=data.get("community_notes", []),
+            trend=data.get("trend")
         )
 
 @dataclass
@@ -172,7 +177,9 @@ def create_descriptive_dimension(
     source: Source,
     geography: GeographyLevel,
     confidence: Confidence = Confidence.MEDIUM,
-    threshold_description: Optional[str] = None
+    threshold_description: Optional[str] = None,
+    trend: Optional[List[Dict[str, Any]]] = None,
+    target_text: Optional[str] = None
 ) -> Dimension:
     """
     Create a dimension with no official target (descriptive_only status).
@@ -184,7 +191,7 @@ def create_descriptive_dimension(
         lens=lens,
         dimension=dimension_name,
         target=Target(
-            text="No official GLA or UK Government target established for this dimension.",
+            text=target_text or "No official GLA or UK Government target established for this dimension.",
             source_body="none_found",
             has_official_target=False
         ),
@@ -194,7 +201,8 @@ def create_descriptive_dimension(
         status=Status.DESCRIPTIVE_ONLY,
         geography_of_data=geography,
         source=source,
-        confidence=confidence
+        confidence=confidence,
+        trend=trend
     )
 
 def create_targeted_dimension(
@@ -209,7 +217,8 @@ def create_targeted_dimension(
     status: Status,
     source: Source,
     geography: GeographyLevel,
-    confidence: Confidence = Confidence.MEDIUM
+    confidence: Confidence = Confidence.MEDIUM,
+    trend: Optional[List[Dict[str, Any]]] = None
 ) -> Dimension:
     """
     Create a dimension with an official target and shortfall/met/overshoot status.
@@ -226,5 +235,6 @@ def create_targeted_dimension(
         status=status,
         geography_of_data=geography,
         source=source,
-        confidence=confidence
+        confidence=confidence,
+        trend=trend
     )

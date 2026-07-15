@@ -48,65 +48,243 @@ def build_health():
         confidence=Confidence.HIGH
     )
 
-def build_housing():
-    """Housing dimension - using rent affordability and temporary accommodation"""
-    return create_targeted_dimension(
+def build_housing_dimensions():
+    """
+    Housing dimension - 4 indicators, each with a multi-year trend extracted directly
+    from primary sources (see data/HOUSING_TREND_DATA_STATUS.md for method/provenance).
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    rent = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="housing",
         target=Target(
-            text="Rent ≤ 30% of median pay; minimal temporary accommodation use",
-            source_body="UK housing affordability standards + GLA targets",
+            text="Median rent as % of median pay target: 30% rent-to-income ratio (affordable threshold)",
+            source_body="Trust for London benchmarks",
             has_official_target=True
         ),
-        indicator="Median rent as % of pay",
-        threshold=Threshold(value=30.0, unit="%", description="30% rent-to-income ratio (affordable housing threshold)"),
-        snapshot=Snapshot(
-            value=43.6,
-            unit="%",
-            year=2023
-        ),
+        indicator="Median rent as % of median pay",
+        threshold=Threshold(value=30.0, unit="%", description="30% rent-to-income ratio as affordable threshold"),
+        snapshot=Snapshot(value=43.6, unit="%", year=2025, date="2025 Q4"),
         status=Status.SHORTFALL,
         source=Source(
-            name="Trust for London - Lewisham Poverty Profile",
-            url=lewisham_data["url"],
-            accessed=lewisham_data["accessed"],
-            notes=f"Rent is 43.6% of median pay in Lewisham (better than London avg 51.6% but still above affordable threshold). Temporary accommodation: {lewisham_data['indicators']['temporary_accommodation_rate']['value']} per 1,000 households."
+            name="Trust for London - Rent Affordability by Borough",
+            url="https://trustforlondon.org.uk/data/rent-affordability-borough/",
+            accessed="2026-07-14",
+            notes="Mean rent for a one-bedroom property as % of median gross pay, Lewisham, quarterly since 2015 Q1 (Q4 shown here for a stable annual series). Underlying sources: ONS Price Index of Private Rents (PIPR) + Annual Survey of Hours and Earnings (ASHE) via NOMIS, as published in Trust for London's chart data export. Note: previous snapshot mislabelled the 43.6% figure as '2023' data; the true 2023 Q4 value is 43.1% and 43.6% is actually 2025 Q4."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH
+        confidence=Confidence.HIGH,
+        trend=[
+            {"period": "2015", "value": 43.8}, {"period": "2016", "value": 43.3},
+            {"period": "2017", "value": 46.1}, {"period": "2018", "value": 43.2},
+            {"period": "2019", "value": 44.9}, {"period": "2020", "value": 42.4},
+            {"period": "2021", "value": 45.3}, {"period": "2022", "value": 42.2},
+            {"period": "2023", "value": 43.1}, {"period": "2024", "value": 43.6},
+            {"period": "2025", "value": 43.6},
+        ]
     )
 
-def build_food():
-    """Food dimension - using childhood obesity as proxy"""
-    return create_targeted_dimension(
+    temp_accommodation = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="housing",
+        indicator="Households in temporary accommodation",
+        snapshot=Snapshot(value=18.90, unit="per 1,000 households", year="2025/26", date="31 December 2025"),
+        source=Source(
+            name="DLUHC / MHCLG Statutory Homelessness - Detailed Local Authority Level Tables (Table TA1)",
+            url="https://www.gov.uk/government/statistical-data-sets/live-tables-on-homelessness",
+            accessed="2026-07-14",
+            notes="2,363 households in temporary accommodation in Lewisham at 31 Dec 2025 (18.90 per 1,000 households), down from a peak of 2,888 (21.37 per 1,000) in Jun 2024. Lewisham did not submit usable TA figures for several quarters (Mar 2020, Mar 2022, Dec 2024, Mar 2025, Sep 2025) - those are excluded from the trend and the nearest available quarter is used instead, noted per point. Extracted directly from quarterly ODS/XLSX 'TA1' tables published by MHCLG (formerly DLUHC)."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this dimension.",
+        trend=[
+            {"period": "2019/20", "value": 18.16, "note": "Dec 2019 quarter (Mar 2020 suppressed - no data submitted)"},
+            {"period": "2020/21", "value": 18.95, "note": "Mar 2021 quarter"},
+            {"period": "2021/22", "value": 19.29, "note": "Dec 2021 quarter (Mar 2022 suppressed - no data submitted)"},
+            {"period": "2022/23", "value": 20.31, "note": "Mar 2023 quarter"},
+            {"period": "2023/24", "value": 19.99, "note": "Mar 2024 quarter"},
+            {"period": "2024/25", "value": 20.19, "note": "Sep 2024 quarter (Dec 2024 and Mar 2025 both suppressed - no data submitted)"},
+            {"period": "2025/26", "value": 18.90, "note": "Dec 2025 quarter (Sep 2025 suppressed - no data submitted)"},
+        ]
+    )
+
+    rough_sleepers = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="housing",
+        indicator="Rough sleepers",
+        snapshot=Snapshot(value=345, unit="people", year="2025/26"),
+        source=Source(
+            name="CHAIN database via Trust for London",
+            url="https://trustforlondon.org.uk/data/rough-sleeping-borough/",
+            accessed="2026-07-13",
+            notes="345 people seen sleeping rough by outreach workers in 2025/26. Lewisham saw a reduction from 353 in 2023/24 to 325 in 2024/25, but increased again in 2025/26. Historical data from CHAIN annual reports."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2021/22", "value": 264}, {"period": "2022/23", "value": 296},
+            {"period": "2023/24", "value": 353}, {"period": "2024/25", "value": 325},
+            {"period": "2025/26", "value": 345},
+        ]
+    )
+
+    non_decent_homes = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="housing",
+        target=Target(
+            text="% non-decent homes target: London average non-decent homes rate",
+            source_body="MHCLG English Housing Survey benchmarks",
+            has_official_target=True
+        ),
+        indicator="% non-decent homes",
+        threshold=Threshold(value=13.2, unit="%", description="London average non-decent homes rate"),
+        snapshot=Snapshot(value=12.9, unit="%", year=2024),
+        status=Status.MET,
+        source=Source(
+            name="MHCLG English Housing Survey - Local Authority Housing Stock Condition Modelling",
+            url="https://www.gov.uk/government/statistics/english-housing-survey-local-authority-housing-stock-condition-modelling-2024/local-authority-housing-stock-condition-modelling-2024-main-report",
+            accessed="2026-07-14",
+            notes="12.9% of Lewisham homes modelled as failing the Decent Homes Standard in 2024 (17,235 of 133,335 dwellings), just below the London average of 13.2%. These are modelled estimates from English Housing Survey stock data, not a census - MHCLG's own guidance cautions against directly comparing local authority estimates across releases due to methodology changes between rounds, so treat the trend as indicative rather than precise."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        trend=[
+            {"period": "2019", "value": 15.0, "note": "London average: 14.0%"},
+            {"period": "2020", "value": 13.2, "note": "London average: 12.0%"},
+            {"period": "2023", "value": 11.6, "note": "London average: 10.7% (no 2021/2022 round)"},
+            {"period": "2024", "value": 12.9, "note": "London average: 13.2%"},
+        ]
+    )
+
+    return [rent, temp_accommodation, rough_sleepers, non_decent_homes]
+
+def build_food_dimensions():
+    """
+    Food dimension - 4 indicators, each with real Lewisham (borough-level) data pulled
+    directly from OHID Fingertips / NHS Digital NDEP source datasets (not the Food
+    Foundation's own modelled constituency estimates - those are LSHTM model outputs
+    derived FROM these same underlying LA datasets, so the primary source is used
+    directly here for higher precision and longer trends). See
+    DIMENSION_PAGE_SPECIFICATION.md 1.4 (trace back to underlying government source).
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    food_insecurity = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="food",
-        target=Target(
-            text="Childhood obesity ≤ London average (food security & nutrition proxy)",
-            source_body="Public Health England / Trust for London",
-            has_official_target=True
-        ),
-        indicator="% children with obesity (Reception & Year 6)",
-        threshold=Threshold(value=23.2, unit="%", description="London average childhood obesity rate"),
-        snapshot=Snapshot(
-            value=24.5,
-            unit="%",
-            year=2023
-        ),
-        status=Status.SHORTFALL,
+        indicator="% population with moderate to severe food insecurity",
+        snapshot=Snapshot(value=7.83, unit="%", year=2022),
         source=Source(
-            name="Trust for London - Lewisham Poverty Profile",
-            url=lewisham_data["url"],
-            accessed=lewisham_data["accessed"],
-            notes=f"Lewisham: 24.5% vs London avg: 23.2%. Food insecurity data from Food Foundation shows constituency-level variation: Lewisham North 9.5%, Lewisham West & East Dulwich 10.34%, Lewisham East 9.5%"
+            name="OHID Fingertips - Wider Determinants of Health (Food Insecurity, indirect measure)",
+            url="https://fingertips.phe.org.uk/profile/wider-determinants/data#page/6/gid/1938133045/pat/501/par/E92000001/ati/501/are/E09000023/iid/93864/age/1/sex/4/cat/-1/ctp/-1/yrr/1/cid/4/tbm/1",
+            accessed="2026-07-15",
+            notes="7.83% of Lewisham's population lived in areas at highest risk of food insecurity in 2022 (down from 9.57% in 2021); London average 13.27% (2022), 14.58% (2021). This is a DWP Family Resources Survey-derived small-area risk model published via OHID Fingertips (the same underlying indicator the Food Foundation's constituency dashboard models down to constituency level) - it measures the % of the population living in neighbourhoods classed as high-risk, not individual households' self-reported food insecurity experience. Corroborated by Lewisham Council's own Food Justice Action Plan Update (Health & Wellbeing Board, 19 Jan 2026), which cites '7.8% of Lewisham's population... living in areas at highest risk of food insecurity in 2022/23' against an England figure of 10%. Only 2 years of data have been published for this indicator so far."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2021", "value": 9.57},
+            {"period": "2022", "value": 7.83},
+        ]
     )
+
+    obesity = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="food",
+        indicator="% of children in reception and year 6 with obesity",
+        snapshot=Snapshot(value=17.28, unit="%", year="2024/25"),
+        source=Source(
+            name="NHS Digital National Child Measurement Programme (NCMP) via OHID Fingertips",
+            url="https://fingertips.phe.org.uk/profile/national-child-measurement-programme",
+            accessed="2026-07-15",
+            notes="Combined average of Reception obesity (10.02%, including severe obesity) and Year 6 obesity (24.54%) for Lewisham, 2024/25 - the most recently published NCMP round (provisional/'cannot be calculated' trend flag). London averages for the same year: Reception 9.62%, Year 6 22.61% (combined 16.12%). Lewisham's Year 6 rate has consistently run above the London average every year since 2006/07; Reception has been closer to or below it. Note this is 'obesity' specifically (BMI ≥95th centile) - Lewisham's own Whole Systems Approach to Obesity report (Feb 2026) instead cites a broader 'excess weight' (overweight+obesity) figure of 21.8% (Reception) / 39% (Year 6) for the same year, which is a different, less strict threshold."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this indicator. National ambition (NHS 10 Year Health Plan, 2025) is to raise 'the healthiest generation of children'; Lewisham's own ambition (Whole Systems Approach to Obesity) is to halve childhood obesity by 2030.",
+        trend=[
+            {"period": "2006/07", "value": 20.22}, {"period": "2007/08", "value": 18.25},
+            {"period": "2008/09", "value": 17.78}, {"period": "2009/10", "value": 19.34},
+            {"period": "2010/11", "value": 17.84}, {"period": "2011/12", "value": 18.11},
+            {"period": "2012/13", "value": 17.25}, {"period": "2013/14", "value": 17.90},
+            {"period": "2014/15", "value": 18.01}, {"period": "2015/16", "value": 17.30},
+            {"period": "2016/17", "value": 16.90}, {"period": "2017/18", "value": 16.05},
+            {"period": "2018/19", "value": 16.50}, {"period": "2019/20", "value": 17.11,
+             "note": "2020/21 excluded - not published by NHS Digital for data quality reasons (pandemic disruption to measurement)"},
+            {"period": "2021/22", "value": 18.61}, {"period": "2022/23", "value": 17.75},
+            {"period": "2023/24", "value": 17.35}, {"period": "2024/25", "value": 17.28},
+        ]
+    )
+
+    dental_decay = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="food",
+        indicator="% of children in reception and year 6 with dental decay",
+        snapshot=Snapshot(value=14.40, unit="%", year="2022/23-2023/24"),
+        source=Source(
+            name="OHID National Dental Epidemiology Programme (NDEP) - oral health surveys of 5-year-olds and Year 6 children",
+            url="https://fingertips.phe.org.uk/profile/child-health-profiles",
+            accessed="2026-07-15",
+            notes="Combines the most recent Reception-age (5-year-old) survey round (18.90%, 2023/24) with the Year 6 survey (9.90%, academic year 2022/23 - the only year Year 6 has ever been surveyed nationally; no repeat round exists yet) to a blended 14.40%. Reception has been surveyed roughly every 2 years since 2007/08 with a well-established Lewisham time series (used for the trend below); Year 6 has no historical series to plot. England averages for the same rounds: Reception 22.4%, Year 6 16.15% - Lewisham runs below England and well below the London average (27.4% Reception, 2024) on both age groups. Corroborated by an NHS South East London ICB Dental Services presentation to Lewisham Council (2026), which shows Lewisham's 2024 Reception decay rate (18.9%) as the 4th-lowest of London's 33 boroughs."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2007/08", "value": 31.34, "note": "Reception (5-year-olds) only"},
+            {"period": "2011/12", "value": 21.91, "note": "Reception (5-year-olds) only"},
+            {"period": "2014/15", "value": 23.31, "note": "Reception (5-year-olds) only"},
+            {"period": "2016/17", "value": 19.44, "note": "Reception (5-year-olds) only"},
+            {"period": "2018/19", "value": 22.26, "note": "Reception (5-year-olds) only"},
+            {"period": "2021/22", "value": 12.40, "note": "Reception (5-year-olds) only"},
+            {"period": "2023/24", "value": 18.90, "note": "Reception (5-year-olds) only"},
+        ]
+    )
+
+    diabetes = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="food",
+        indicator="% of people over 17 years old with type 2 diabetes",
+        snapshot=Snapshot(value=7.22, unit="%", year="2024/25"),
+        source=Source(
+            name="OHID Fingertips Diabetes Profile - QOF prevalence, 17+",
+            url="https://fingertips.phe.org.uk/profile/diabetes-ft",
+            accessed="2026-07-15",
+            notes="7.22% of Lewisham residents aged 17+ had diabetes recorded on GP disease registers in 2024/25 (QOF prevalence), up from 5.67% in 2012/13. This QOF measure records all diagnosed diabetes (type 1 and type 2 combined); type 2 accounts for around 90% of diagnosed cases nationally. A type-2-only measure (National Diabetes Audit) is published only at South East London ICB level (covering Lewisham, Southwark, Lambeth, Greenwich, Bromley and Bexley together), where it stood at 6.35% in 2024/25 - consistent with Lewisham's QOF figure once the ~90% type-2 share is applied. Lewisham has run significantly below the England average (7.89% in 2024/25) throughout this series, and close to the London average (7.08%)."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2012/13", "value": 5.67}, {"period": "2013/14", "value": 6.06},
+            {"period": "2014/15", "value": 6.26}, {"period": "2015/16", "value": 6.40},
+            {"period": "2016/17", "value": 6.47}, {"period": "2017/18", "value": 6.44},
+            {"period": "2018/19", "value": 6.38}, {"period": "2019/20", "value": 6.27},
+            {"period": "2020/21", "value": 6.27}, {"period": "2021/22", "value": 6.43},
+            {"period": "2022/23", "value": 6.62}, {"period": "2023/24", "value": 7.00},
+            {"period": "2024/25", "value": 7.22},
+        ]
+    )
+
+    return [food_insecurity, obesity, dental_decay, diabetes]
 
 def build_education():
     """Education dimension - using GCSE attainment"""
@@ -181,7 +359,7 @@ def build_jobs():
             has_official_target=True
         ),
         indicator="% unemployment rate",
-        threshold=Threshold(value=6.1, unit="%", description="London average unemployment rate"),
+        threshold=Threshold(value=6.1, unit="%", description="London average unemployment"),
         snapshot=Snapshot(
             value=6.1,
             unit="%",
@@ -411,8 +589,8 @@ def main():
     """Build all Local Social dimensions with real Lewisham data where available"""
     dimensions = [
         build_health(),
-        build_housing(),
-        build_food(),
+        *build_housing_dimensions(),
+        *build_food_dimensions(),
         build_water(),
         build_connectivity(),
         build_community(),

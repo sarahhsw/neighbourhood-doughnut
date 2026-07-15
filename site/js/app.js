@@ -404,7 +404,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     const dimensionDescriptions = {
         'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability.",
         'housing': "The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem - a quarter of its homes are estimated to fall short of basic decency standards. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before.",
-        'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal."
+        'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal.",
+        'water': "Lewisham sits within Thames Water's supply area, one of England's most seriously water-stressed regions - a status confirmed in both the 2013 and 2021 government classifications and unchanged since. Average per-person water use has stayed well above the levels needed to meet the Environment Act's 2038 target of 122 litres a day: England's figure was around 136.5 litres in 2024/25, only a few percentage points below its 2019/20 baseline. Thames Water's own 2050 target (123 litres) is looser than the government's, because the company says it isn't yet confident of reaching it. New London developments, including in Lewisham, must already meet a stricter 105-litre planning standard - a gap between what's built and what's actually used."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -473,6 +474,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         if (baseName === '% of people over 17 years old with type 2 diabetes') {
             return `This tracks the share of Lewisham residents aged 17+ with diabetes recorded on their GP's disease register (both type 1 and type 2, though type 2 accounts for roughly 90% of diagnosed cases). At 7.2% in 2024/25, up steadily from 5.7% in 2012/13, Lewisham has stayed significantly below the England average (7.9%) throughout, and close to London's (7.1%). The rise mirrors a national trend in an ageing, increasingly overweight population; Lewisham's Whole Systems Approach to Obesity explicitly frames type 2 diabetes prevention as one of the direct health benefits of its weight-management work, alongside cardiovascular risk and joint disease.`;
+        }
+
+        // Water-specific explanations
+        if (baseName === 'Per capita water consumption (litres/day)') {
+            return `Per capita consumption measures the average litres of water each person uses per day, drawn from national statutory reporting rather than metered data specific to Lewisham (no ward or borough breakdown is published). England-wide use was around 136.5 litres per person per day in 2024/25, down only slightly from the 140-litre 2019/20 baseline the government uses to track progress. The Environment Act 2021 sets a national target of 122 litres by 2038 and 110 by 2050 - reductions of 13% and 21% respectively from where usage sits today. Thames Water's own resource plan commits to a less ambitious 123-litre target by 2050, citing insufficient confidence that the tighter national goal is achievable in its area.`;
+        }
+
+        if (baseName === 'Areas of water stress') {
+            return `This records a one-off regulatory classification, not a measurement that moves year to year: whether a water company's area has enough water resource, relative to expected demand, to avoid regular restrictions during a drought. Thames Water - which supplies Lewisham - was designated "seriously water stressed" when the Environment Agency first ran this assessment in 2013, and remained so when it repeated the exercise in 2021, alongside several other companies newly added to the list. The designation underpins Thames Water's ability to introduce compulsory water metering and its 2024 Water Resources Management Plan, which forecasts a supply deficit in parts of its area by 2050 without further leakage reduction, demand reduction, and new supply projects including a reservoir and a water recycling scheme.`;
         }
 
         // Generic fallback
@@ -549,6 +559,33 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2026',
                     url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=121820',
                     summary: `<p>Lewisham's NHS dental commissioning is run jointly across South East London by the ICB rather than the council, but the council receives regular updates because access shapes outcomes like decay rates. Lewisham has 35 NHS general dental practices, delivering 98.1% of its contracted treatment target in 2024/25 - above the South East London average. Community Dental Services (run by King's) provide targeted outreach - supervised toothbrushing, oral health education and personalised support for children with visible decay - through food banks, libraries and family hubs; paediatric referrals into these services have risen 40% since before the pandemic. Lewisham's 2024 child dental decay rate was the fourth-lowest of London's 33 boroughs.</p>`
+                }
+            ];
+        }
+
+        // Water dimension council context - 2 documents: Thames Water's own Water
+        // Resources Management Plan covers consumption/target and the water-stress driver
+        // behind it; the London Plan's water efficiency policy covers the planning-level
+        // response Lewisham (as local planning authority) actually applies.
+        if (dimensionName === 'water') {
+            return [
+                {
+                    title: 'Thames Water Resources Management Plan 2024 (WRMP24)',
+                    year: '2024',
+                    url: 'https://www.thameswater.co.uk/news/2024/oct/thames-water-publishes-its-water-resources-management-plan',
+                    summary: `<p>Thames Water forecasts it will need an extra one billion litres of water a day for its customers by 2050, and that several of its supply zones would run into deficit under severe drought conditions without further action. Its October 2024 plan, approved by government, sets out three strands:</p>
+                    <ul>
+                        <li><strong>Cutting leakage</strong> - reducing losses from the distribution network to around 14.9% of total supply by 2049/50.</li>
+                        <li><strong>Reducing demand</strong> - bringing average consumption down to 123 litres per person per day by 2050, looser than the government's 110-litre goal because the company says it isn't yet confident the tighter figure is achievable.</li>
+                        <li><strong>New supply</strong> - a new reservoir for the South East and a water recycling project in West London, to close the gap leakage and demand reduction alone can't cover.</li>
+                    </ul>
+                    <p>Leakage and demand reduction together account for roughly four-fifths of the plan's contribution to closing the supply-demand gap.</p>`
+                },
+                {
+                    title: "The London Plan — Policy 5.15 (Water use and supplies)",
+                    year: '2021',
+                    url: 'https://www.london.gov.uk/what-we-do/planning/london-plan/current-london-plan/london-plan-chapter-five-londons-response/pol-14',
+                    summary: `<p>Because Thames Water's area is seriously water-stressed, the Mayor of London's London Plan requires new homes to be built water-efficient rather than relying on the water company alone to close the gap: Policy 5.15 sets a maximum of 105 litres of mains water per person per day for new residential development (110 including a small allowance), and requires major non-residential schemes to meet the BREEAM "excellent" standard for water use. As the local planning authority, Lewisham Council applies this standard - alongside smart metering, water-saving fittings, and retrofit measures - to development it approves, while the Mayor separately holds water companies to account on leakage and demand reduction through the London Environment Strategy.</p>`
                 }
             ];
         }
@@ -675,6 +712,48 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Crofton Park',
                     date: 'Feb 2026',
                     quote: 'Every fast food place on the high street does a meal deal under £4. The greengrocer can\'t compete on price.'
+                }
+            ];
+        }
+
+        // Water dimension neighbour voices
+        if (dimensionName === 'water') {
+            return [
+                {
+                    name: 'Priya',
+                    location: 'Ladywell Fields',
+                    date: 'Jul 2026',
+                    quote: 'The hosepipe ban again this summer. Feels like every year now, not just the really dry ones.'
+                },
+                {
+                    name: 'Oliver',
+                    location: 'Algernon Road',
+                    date: 'Jun 2026',
+                    quote: 'Thames Water finally fixed the leak that had been running down our street for three months. Took about a dozen calls.'
+                },
+                {
+                    name: 'Fatima',
+                    location: 'Lewisham Way',
+                    date: 'May 2026',
+                    quote: 'Got a smart meter fitted in the spring. Bill actually went down once I stopped topping up the paddling pool every week.'
+                },
+                {
+                    name: 'Ben',
+                    location: 'Ladywell Village',
+                    date: 'Apr 2026',
+                    quote: 'Water pressure drops to nothing most evenings around six. Something to do with everyone on the street cooking dinner at once, apparently.'
+                },
+                {
+                    name: 'Grace',
+                    location: 'Brockley Road',
+                    date: 'Mar 2026',
+                    quote: 'Put a water butt in after the last drought warning. Doesn\'t feel like much on its own, but it\'s something.'
+                },
+                {
+                    name: 'Daniel',
+                    location: 'Hither Green Lane',
+                    date: 'Feb 2026',
+                    quote: 'Read that our water company still loses something like a fifth of what it treats to leaks before it even reaches a tap. Hard to take the hosepipe ban seriously after that.'
                 }
             ];
         }

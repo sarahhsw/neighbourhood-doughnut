@@ -139,9 +139,10 @@
     "lens": "local_social",
     "dimension": "water_and_sanitation",
     "category": "Healthy",
-    "indicator": "Per household water consumption (litre /day)",
-    "source_url": "https://www.data.gov.uk/dataset/87b59684-3da3-45cf-8881-e4727cfd1415/water-resource-management-plan-annual-review-data",
-    "granularity": "Water company"
+    "indicator": "Per capita water consumption (litres/day)",
+    "source_url": "https://www.gov.uk/government/publications/water-resources-2024-2025-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2024-to-2025-analysis-of-the-water-industrys-annual-water-resources-performance",
+    "granularity": "National (England)",
+    "notes": "Renamed from 'Per household water consumption' - the WRMP Annual Review Data (data.gov.uk) this indicator originally pointed to is per capita consumption (PCC) by water company, not per household. Company-level (Thames Water) and Lewisham-specific figures are not separately published; England-wide PCC is used, corroborated by Thames Water's own qualitative performance reporting and by GLA London-wide consumption figures (see source notes in build_local_social_with_real_data.py)."
   },
   {
     "lens": "local_social",
@@ -149,7 +150,8 @@
     "category": "Healthy",
     "indicator": "Areas of water stress",
     "source_url": "https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
-    "granularity": null
+    "granularity": null,
+    "notes": "Categorical Environment Agency/Defra classification, not an annual measurement - Thames Water (Lewisham's supplier) has been classified 'seriously water stressed' in both the 2013 and 2021 determination rounds."
   },
   {
     "lens": "local_social",
@@ -203,7 +205,7 @@
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
-    "indicator": "£ local authority funding in art & culture",
+    "indicator": "\u00a3 local authority funding in art & culture",
     "source_url": "https://www.equity.org.uk/campaigns-policy/elections-2026/local-government-arts-funding-tracker",
     "granularity": null
   },

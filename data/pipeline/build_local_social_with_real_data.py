@@ -146,7 +146,7 @@ def build_housing_dimensions():
             source_body="MHCLG English Housing Survey benchmarks",
             has_official_target=True
         ),
-        indicator="% non-decent homes",
+        indicator="% non-decent homes (all tenure)",
         threshold=Threshold(value=13.2, unit="%", description="London average non-decent homes rate"),
         snapshot=Snapshot(value=12.9, unit="%", year=2024),
         status=Status.MET,
@@ -436,7 +436,7 @@ def build_water_dimensions():
             accessed="2026-07-15",
             notes="dimension_data_sources.json's original indicator label ('Per household water consumption') pointed to the company-level Water Resource Management Plan Annual Review Data (data.gov.uk); that dataset publishes per capita consumption (PCC) by water company, not per household - relabelled here to match what the source actually measures. Its underlying spreadsheets, and Thames Water's own company-level annual performance report, could not be downloaded and parsed directly in this session (data.gov.uk and thameswater.co.uk were both blocked by this environment's network egress policy, unlike the direct file access used for prior dimensions). Figures shown here are the England-wide PCC published in Defra/EA's annual water resources performance analysis, since a reliable Thames-Water-specific multi-year series could not be obtained via web search alone. Thames Water's own reporting states a 4.8% PCC reduction in 2024-25 but that it remained in the industry's 'lagging behind' performance category for the fourth year running (with Southern Water) - i.e. Thames Water's actual consumption is likely somewhat above the England average shown here, not below it. Separately, the Mayor of London's own reporting put London-wide consumption at 152.2 litres/person/day in 2020/21, falling to 144.4 in 2021/22 against a 142.6 target - consistent in direction with the national series but on a different measurement basis, so not merged into the trend below.",
         ),
-        geography=GeographyLevel.NATIONAL_INHERITED,
+        geography=GeographyLevel.ENGLAND,
         confidence=Confidence.MEDIUM,
         trend=[
             {"period": "2019/20", "value": 140.0, "note": "Environment Act 2021 baseline year"},
@@ -459,7 +459,7 @@ def build_water_dimensions():
             accessed="2026-07-15",
             notes="Thames Water - which supplies Lewisham - was classified as an area of 'serious' water stress in both the original 2013 determination and the 2021 update; the classification has not changed between rounds, so no numeric trend applies here (this is a one-off regulatory determination, not an annual measurement). In 2021 several other companies (e.g. Severn Trent, Wessex Water, South Staffordshire) moved from 'not serious' to 'serious' for the first time, widening the list, but Thames Water's own status was unchanged. The determination is used to decide which water companies can introduce compulsory water metering for all customers."
         ),
-        geography=GeographyLevel.NATIONAL_INHERITED,
+        geography=GeographyLevel.WATER_COMPANY,
         confidence=Confidence.HIGH,
         target_text="No official GLA or UK Government target established for this indicator - this is a regulatory classification, not a target."
     )
@@ -500,7 +500,7 @@ def build_community():
             accessed=datetime.now().date().isoformat(),
             notes="Regional data only (not borough-specific). No official targets for loneliness/belonging."
         ),
-        geography=GeographyLevel.NATIONAL_INHERITED,
+        geography=GeographyLevel.ENGLAND,
         confidence=Confidence.LOW
     )
 
@@ -614,7 +614,7 @@ def build_social_equity():
             accessed=datetime.now().date().isoformat(),
             notes="Regional data only. No official targets."
         ),
-        geography=GeographyLevel.NATIONAL_INHERITED,
+        geography=GeographyLevel.ENGLAND,
         confidence=Confidence.LOW
     )
 

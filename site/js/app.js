@@ -370,6 +370,26 @@ function renderTrendChart(allIndicators, dimension) {
     return svg;
 }
 
+// Human-readable label for each geography_of_data value - see DIMENSION_PAGE_SPECIFICATION.md
+// for the full taxonomy. Anything not WARD means the figure shown is inherited from a wider
+// area applied uniformly to every ward in it, not measured for Ladywell specifically.
+const GEOGRAPHY_LABELS = {
+    'ward': 'Ward',
+    'lsoa_aggregated': 'Neighbourhood (LSOA)',
+    'msoa_aggregated': 'Neighbourhood (MSOA)',
+    'postcode_aggregated': 'Postcode area',
+    'borough_inherited': 'Borough (Lewisham)',
+    'water_company': 'Water company (Thames Water)',
+    'london_inherited': 'London-wide',
+    'england': 'England-wide',
+    'uk': 'UK-wide',
+    'national_inherited': 'England/UK-wide'
+};
+
+function geographyLabel(geo) {
+    return GEOGRAPHY_LABELS[geo] || null;
+}
+
 function renderDimensionDetail(dimension, allIndicators, ring) {
     const container = document.getElementById('detail-container');
 
@@ -403,9 +423,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // Custom descriptions for specific dimensions
     const dimensionDescriptions = {
         'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability.",
-        'housing': "The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem - a quarter of its homes are estimated to fall short of basic decency standards. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before.",
+        'housing': "The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem: MHCLG puts 16% of its homes as non-decent in 2024, well above the 12.9% rate for all tenures. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before.",
         'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal.",
-        'water': "Lewisham sits within Thames Water's supply area, one of England's most seriously water-stressed regions - a status confirmed in both the 2013 and 2021 government classifications and unchanged since. Average per-person water use has stayed well above the levels needed to meet the Environment Act's 2038 target of 122 litres a day: England's figure was around 136.5 litres in 2024/25, only a few percentage points below its 2019/20 baseline. Thames Water's own 2050 target (123 litres) is looser than the government's, because the company says it isn't yet confident of reaching it. New London developments, including in Lewisham, must already meet a stricter 105-litre planning standard - a gap between what's built and what's actually used."
+        'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Per-person use has stayed persistently high: England's 2024/25 average was around 136.5 litres a day, well above the Environment Act's 2038 target of 122 litres - a gap that's barely narrowed since 2019/20."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -451,7 +471,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return `Temporary accommodation is emergency housing the council must provide to households legally assessed as homeless and in priority need - nightly-paid hotels (the most expensive and often least suitable), council-owned properties, and privately leased units. Despite the name, stays commonly run for years rather than months, so families can spend a child's entire primary school career in a single hotel room. Its use here has been driven by rising private rents pricing people out of the market and by evictions outpacing the supply of settled homes to move people into. It functions as both a safety net keeping people off the street and a warning sign of how much strain the wider housing system is under.`;
         }
 
-        if (baseName === '% non-decent homes') {
+        if (baseName === '% non-decent homes (all tenure)') {
             return `A home is "non-decent" if it fails to meet basic standards for safety, state of repair, facilities, or thermal comfort - the Decent Homes Standard the government has used since 2006 to judge housing quality. These are modelled estimates from national survey data rather than an inspection of every home, so year-to-year movement should be read as broad direction rather than precise change. Lewisham's rate has run below the London average in three of the last four rounds, but the 2024 uptick is worth watching alongside the borough's other housing pressures: disrepair and overcrowding often cluster in the same low-income, high-rent households already stretched by rent affordability and temporary accommodation.`;
         }
 
@@ -478,7 +498,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Water-specific explanations
         if (baseName === 'Per capita water consumption (litres/day)') {
-            return `Per capita consumption measures the average litres of water each person uses per day, drawn from national statutory reporting rather than metered data specific to Lewisham (no ward or borough breakdown is published). England-wide use was around 136.5 litres per person per day in 2024/25, down only slightly from the 140-litre 2019/20 baseline the government uses to track progress. The Environment Act 2021 sets a national target of 122 litres by 2038 and 110 by 2050 - reductions of 13% and 21% respectively from where usage sits today. Thames Water's own resource plan commits to a less ambitious 123-litre target by 2050, citing insufficient confidence that the tighter national goal is achievable in its area.`;
+            return `Per capita consumption measures the average litres of water each person uses per day, drawn from national statutory reporting rather than metered data specific to Lewisham (no ward or borough breakdown is published). England-wide use was around 136.5 litres per person per day in 2024/25, down only slightly from the 140-litre 2019/20 baseline the government uses to track progress. The Environment Act 2021 target - 122 litres by 2038, 110 by 2050 - exists because the Environment Agency's National Framework for Water Resources projects a supply-demand gap of several billion litres a day by mid-century, driven by climate change shrinking supply, population growth increasing demand, and a parallel push to cut unsustainable abstraction from rivers and aquifers. Cutting demand is the fastest and cheapest of the three levers used to close that gap (alongside cutting leakage and building new supply), which is why it was set as a statutory target rather than left as an aspiration. Thames Water's own resource plan commits to a less ambitious 123-litre target by 2050, citing insufficient confidence that the tighter national goal is achievable in its area.`;
         }
 
         if (baseName === 'Areas of water stress') {
@@ -802,9 +822,10 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         html += renderTrendChart(indicators, firstIndicator);
 
         // Add source line for this group
+        const geoLabel = geographyLabel(firstIndicator.geography_of_data);
         html += `
             <div class="source-line">
-                Source: <a href="${firstIndicator.source.url}" target="_blank">${firstIndicator.source.name}</a> · last updated ${firstIndicator.source.accessed || 'recently'}
+                Source: <a href="${firstIndicator.source.url}" target="_blank">${firstIndicator.source.name}</a>${geoLabel ? ` · <span class="geography-label" title="Resolution of the underlying data - see What this measures below">${geoLabel}</span>` : ''} · last updated ${firstIndicator.source.accessed || 'recently'}
             </div>
         `;
 

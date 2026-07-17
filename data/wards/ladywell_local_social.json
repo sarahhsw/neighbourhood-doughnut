@@ -313,7 +313,7 @@
         "source_body": "MHCLG English Housing Survey benchmarks",
         "has_official_target": true
       },
-      "indicator": "% non-decent homes",
+      "indicator": "% non-decent homes (all tenure)",
       "threshold": {
         "value": 13.2,
         "unit": "%",
@@ -414,7 +414,7 @@
         "date": null
       },
       "status": "shortfall",
-      "geography_of_data": "national_inherited",
+      "geography_of_data": "england",
       "source": {
         "name": "Environment Agency / Defra - Water resources: analysis of the water industry's annual water resources performance",
         "url": "https://www.gov.uk/government/publications/water-resources-2024-2025-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2024-to-2025-analysis-of-the-water-industrys-annual-water-resources-performance",
@@ -466,7 +466,7 @@
         "date": "1 July 2021"
       },
       "status": "descriptive_only",
-      "geography_of_data": "national_inherited",
+      "geography_of_data": "water_company",
       "source": {
         "name": "Environment Agency / Defra - Water stressed areas: 2021 classification",
         "url": "https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
@@ -532,7 +532,7 @@
         "date": null
       },
       "status": "descriptive_only",
-      "geography_of_data": "national_inherited",
+      "geography_of_data": "england",
       "source": {
         "name": "DCMS Community Life Survey",
         "url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
@@ -928,7 +928,7 @@
         "date": null
       },
       "status": "descriptive_only",
-      "geography_of_data": "national_inherited",
+      "geography_of_data": "england",
       "source": {
         "name": "DCMS Community Life Survey",
         "url": "https://www.gov.uk/",

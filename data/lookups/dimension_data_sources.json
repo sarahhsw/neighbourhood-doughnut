@@ -94,7 +94,7 @@
     "lens": "local_social",
     "dimension": "housing",
     "category": "Healthy",
-    "indicator": "% non-decent homes",
+    "indicator": "% non-decent homes (all tenure)",
     "source_url": "https://www.gov.uk/government/collections/english-housing-survey-local-authority-stock-condition-modelling",
     "granularity": "Local authority (modelled)",
     "notes": "MHCLG modelled estimates of Decent Homes Standard failure by local authority, produced from English Housing Survey stock data (https://www.gov.uk/government/collections/english-housing-survey). Releases: 2019, 2020, 2023, 2024 (no round in 2021/2022). Official guidance cautions against directly comparing LA estimates across releases due to methodology changes between rounds - treat the trend as indicative rather than a precise time series."
@@ -150,7 +150,7 @@
     "category": "Healthy",
     "indicator": "Areas of water stress",
     "source_url": "https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
-    "granularity": null,
+    "granularity": "Water company (Thames Water)",
     "notes": "Categorical Environment Agency/Defra classification, not an annual measurement - Thames Water (Lewisham's supplier) has been classified 'seriously water stressed' in both the 2013 and 2021 determination rounds."
   },
   {

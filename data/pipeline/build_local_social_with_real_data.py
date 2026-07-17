@@ -146,7 +146,7 @@ def build_housing_dimensions():
             source_body="MHCLG English Housing Survey benchmarks",
             has_official_target=True
         ),
-        indicator="% non-decent homes",
+        indicator="% non-decent homes (all tenure)",
         threshold=Threshold(value=13.2, unit="%", description="London average non-decent homes rate"),
         snapshot=Snapshot(value=12.9, unit="%", year=2024),
         status=Status.MET,
@@ -407,31 +407,64 @@ def build_equality():
     )
 
 # Keep existing dimensions from build_local_social_full.py for dimensions without new data
-def build_water():
-    """Water & sanitation"""
-    return create_targeted_dimension(
+def build_water_dimensions():
+    """
+    Water dimension - 2 indicators matching data/lookups/dimension_data_sources.json
+    ("water_and_sanitation"). No ward- or borough-specific water data is published (water
+    is supplied and regulated at the water-company level, not by the council), so both
+    indicators use the best available company/national-level figures - see source notes
+    for exactly what's inherited from where.
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    per_capita_consumption = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="water",
         target=Target(
-            text="Universal access to clean, affordable water within Environmental Agency limits",
-            source_body="Water UK / Thames Water regulation",
+            text="Reduce average per capita water use in England by 20% from the 2019/20 baseline (140 litres/person/day) to 122 litres/person/day by March 2038, and to 110 litres/person/day by 2050 (Environment Act 2021 statutory target).",
+            source_body="Defra / Environment Act 2021 target framework",
             has_official_target=True
         ),
-        indicator="Water stress classification",
-        threshold=Threshold(value=1.0, unit="classification", description="Not water-stressed"),
-        snapshot=Snapshot(value=1.0, unit="classification", year=2021),
-        status=Status.MET,
+        indicator="Per capita water consumption (litres/day)",
+        threshold=Threshold(value=122.0, unit="litres/person/day", description="Environment Act 2021 target: 122 l/p/d by March 2038 (20% cut from 2019/20 baseline); 110 l/p/d by 2050"),
+        snapshot=Snapshot(value=136.5, unit="litres/person/day", year="2024/25"),
+        status=Status.SHORTFALL,
         source=Source(
-            name="Environment Agency - Water Stressed Areas 2021",
-            url="https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
-            accessed=datetime.now().date().isoformat(),
-            notes="London classified as 'seriously water stressed' but universal access to supply maintained"
+            name="Environment Agency / Defra - Water resources: analysis of the water industry's annual water resources performance",
+            url="https://www.gov.uk/government/publications/water-resources-2024-2025-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2024-to-2025-analysis-of-the-water-industrys-annual-water-resources-performance",
+            accessed="2026-07-15",
+            notes="dimension_data_sources.json's original indicator label ('Per household water consumption') pointed to the company-level Water Resource Management Plan Annual Review Data (data.gov.uk); that dataset publishes per capita consumption (PCC) by water company, not per household - relabelled here to match what the source actually measures. Its underlying spreadsheets, and Thames Water's own company-level annual performance report, could not be downloaded and parsed directly in this session (data.gov.uk and thameswater.co.uk were both blocked by this environment's network egress policy, unlike the direct file access used for prior dimensions). Figures shown here are the England-wide PCC published in Defra/EA's annual water resources performance analysis, since a reliable Thames-Water-specific multi-year series could not be obtained via web search alone. Thames Water's own reporting states a 4.8% PCC reduction in 2024-25 but that it remained in the industry's 'lagging behind' performance category for the fourth year running (with Southern Water) - i.e. Thames Water's actual consumption is likely somewhat above the England average shown here, not below it. Separately, the Mayor of London's own reporting put London-wide consumption at 152.2 litres/person/day in 2020/21, falling to 144.4 in 2021/22 against a 142.6 target - consistent in direction with the national series but on a different measurement basis, so not merged into the trend below.",
         ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.MEDIUM
+        geography=GeographyLevel.ENGLAND,
+        confidence=Confidence.MEDIUM,
+        trend=[
+            {"period": "2019/20", "value": 140.0, "note": "Environment Act 2021 baseline year"},
+            {"period": "2022/23", "value": 141.0},
+            {"period": "2023/24", "value": 137.0},
+            {"period": "2024/25", "value": 136.5},
+        ]
     )
+
+    water_stress = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="water",
+        indicator="Areas of water stress",
+        snapshot=Snapshot(value="Seriously water stressed", unit=None, year=2021, date="1 July 2021"),
+        source=Source(
+            name="Environment Agency / Defra - Water stressed areas: 2021 classification",
+            url="https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
+            accessed="2026-07-15",
+            notes="Thames Water - which supplies Lewisham - was classified as an area of 'serious' water stress in both the original 2013 determination and the 2021 update; the classification has not changed between rounds, so no numeric trend applies here (this is a one-off regulatory determination, not an annual measurement). In 2021 several other companies (e.g. Severn Trent, Wessex Water, South Staffordshire) moved from 'not serious' to 'serious' for the first time, widening the list, but Thames Water's own status was unchanged. The determination is used to decide which water companies can introduce compulsory water metering for all customers."
+        ),
+        geography=GeographyLevel.WATER_COMPANY,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this indicator - this is a regulatory classification, not a target."
+    )
+
+    return [per_capita_consumption, water_stress]
 
 def build_connectivity():
     """Digital connectivity"""
@@ -467,7 +500,7 @@ def build_community():
             accessed=datetime.now().date().isoformat(),
             notes="Regional data only (not borough-specific). No official targets for loneliness/belonging."
         ),
-        geography=GeographyLevel.NATIONAL_INHERITED,
+        geography=GeographyLevel.ENGLAND,
         confidence=Confidence.LOW
     )
 
@@ -581,7 +614,7 @@ def build_social_equity():
             accessed=datetime.now().date().isoformat(),
             notes="Regional data only. No official targets."
         ),
-        geography=GeographyLevel.NATIONAL_INHERITED,
+        geography=GeographyLevel.ENGLAND,
         confidence=Confidence.LOW
     )
 
@@ -591,7 +624,7 @@ def main():
         build_health(),
         *build_housing_dimensions(),
         *build_food_dimensions(),
-        build_water(),
+        *build_water_dimensions(),
         build_connectivity(),
         build_community(),
         build_culture(),

@@ -22,14 +22,24 @@ class Status(str, Enum):
     UNKNOWN = "unknown"  # Data insufficient
 
 class GeographyLevel(str, Enum):
-    """Resolution of data"""
+    """
+    Resolution of the underlying source data - not necessarily the resolution
+    displayed (a ward page showing a BOROUGH_INHERITED figure is showing Lewisham's
+    number, not Ladywell's specifically). See DIMENSION_PAGE_SPECIFICATION.md
+    section on geography labelling for the full taxonomy and display-label mapping.
+    NATIONAL_INHERITED is deprecated - it conflated England-only and UK-wide sources.
+    Use ENGLAND or UK explicitly for new indicators.
+    """
     WARD = "ward"
     LSOA_AGGREGATED = "lsoa_aggregated"
     MSOA_AGGREGATED = "msoa_aggregated"
     POSTCODE_AGGREGATED = "postcode_aggregated"
     BOROUGH_INHERITED = "borough_inherited"
+    WATER_COMPANY = "water_company"
     LONDON_INHERITED = "london_inherited"
-    NATIONAL_INHERITED = "national_inherited"
+    ENGLAND = "england"
+    UK = "uk"
+    NATIONAL_INHERITED = "national_inherited"  # deprecated, see docstring
 
 class Confidence(str, Enum):
     """Data quality and reliability"""

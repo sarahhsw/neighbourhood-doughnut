@@ -22,6 +22,7 @@
 - **Check publication dates** - Always note when the source was last updated and use the most recent available data
 - **Identify data vintage** - Record the time period the data represents (e.g., "2022-2024", "Q4 2023", "Academic year 2023/24")
 - **Update the JSON** - If you find better/newer sources or URLs have changed, update `dimension_data_sources.json`
+- **Classify the data's true geography** - Every indicator's `geography_of_data` field must reflect what the *source* actually covers (Ward / Borough / Water company / London / England / UK), not what the ward page happens to display it on. See section 2.7 for the full taxonomy and worked examples of getting this wrong.
 
 ### 1.2 Data Freshness Validation
 
@@ -184,6 +185,16 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   contested or multi-sided (e.g. long-term empty homes existing alongside a housing
   shortage). State the situation; let the reader draw conclusions.
 - Compare to regional (London) or national average where it clarifies the overall picture
+- **Cap comparison points at two in the headline description - don't stack a third.** Once
+  you've picked two things worth comparing (e.g. a target and a current value), resist
+  reaching for a third entity just because the data exists. Example: for the water
+  dimension, compare the Environment Act 2021 target (122 l/p/d by 2038) against England's
+  current per capita usage (136.5 l/p/d) - that's the headline comparison. Don't also work
+  in Thames Water's own company-level figures (e.g. its water-stress classification or
+  company-specific consumption data) as a third comparison point; that's one more than a
+  headline paragraph can hold without becoming a stat-dump. Company/supplier-specific detail
+  like that belongs in the indicator card's "what this measures" section further down (2.5),
+  not the top plain-english summary.
 - Avoid gender-specific mentions unless data differs significantly
 - **Hard limit: 130 words maximum.** Count it (`len(text.split())`) before moving on -
   don't estimate.
@@ -328,6 +339,19 @@ if (ring === 'social') {
     - Explain weighting methodology
     - Describe baseline and scaling (e.g., "indexed to England 2015 = 100")
     - Example: *"The Health Index combines over 50 indicators across three key domains: Healthy Lives (mortality, morbidity, mental health), Healthy People (personal behaviors), and Healthy Places (environmental factors). Each domain is weighted equally and indexed to England 2015 as baseline of 100."*
+  - For indicators with a **statutory/regulatory target**, explain not just the number but
+    *why that number* - the underlying rationale, not just the figure. A target like "122
+    litres/person/day by 2038" means little on its own; readers understand it once they know
+    it's a 20% cut from a 140-litre 2019/20 baseline, set because the Environment Agency
+    projects a multi-billion-litre/day supply-demand gap by mid-century (climate change
+    shrinking supply, population growth raising demand, plus a push to cut unsustainable
+    river/aquifer abstraction) - and that demand reduction is the cheapest, fastest of three
+    levers used to close that gap, which is why it's a statutory target rather than an
+    aspiration. This rationale belongs in the indicator card, not the top plain-english
+    summary (which has a 130-word cap, see 2.1) - dig for it in the primary source (the
+    government framework/strategy document behind the target, not just the number itself,
+    e.g. the EA's National Framework for Water Resources rather than only the Environmental
+    Targets Regulations that fixed the figure) and cite it.
 - **Historical trend visualization**:
   - Display trend chart/sparkline showing historical trajectory (5-10 years where available)
   - Show ward trend line with comparison benchmarks (London/England) if available
@@ -356,6 +380,54 @@ restatement of a number better explained in the narrative.
 - If you're extending `app.js`, do not reintroduce `target-line` rendering or a target
   dashed-line/text pair inside `renderTrendChart` without this being an explicit, deliberate
   product decision (check with whoever's driving the session first).
+
+### 2.7 Geography Level Labelling
+
+**Every indicator must clearly state the resolution of its underlying source data**, not
+just imply it by being shown on a ward page. This is a `Dimension`'s `geography_of_data`
+field (`data/pipeline/schema.py`, `GeographyLevel` enum), and it's rendered on-page in the
+source line for every indicator group (`geographyLabel()` in `site/js/app.js`) - e.g.
+"Source: MHCLG ... · Borough (Lewisham) · last updated 2026-07-14".
+
+**Fixed taxonomy** (enum value → on-page label → meaning):
+
+| Enum value | On-page label | Meaning |
+|---|---|---|
+| `ward` | Ward | Measured for Ladywell specifically - true ward-level granularity |
+| `lsoa_aggregated` / `msoa_aggregated` | Neighbourhood (LSOA/MSOA) | Small-area statistical geography, aggregated up to/for the ward |
+| `postcode_aggregated` | Postcode area | Aggregated from postcode-level data |
+| `borough_inherited` | Borough (Lewisham) | Local-authority-level figure, applied uniformly to every ward in Lewisham |
+| `water_company` | Water company (Thames Water) | Set by the water company's supply-area boundary, which doesn't align with borough or ward boundaries |
+| `london_inherited` | London-wide | Greater London figure, applied uniformly to every ward in the city |
+| `england` | England-wide | England-only source (won't include Scotland/Wales/NI figures even if the source's title says "national" or "UK") |
+| `uk` | UK-wide | Genuinely UK-wide source |
+
+`national_inherited` still exists in the enum for older records but is **deprecated** -
+it conflated England-only sources with genuinely UK-wide ones, which matters (e.g. DCMS's
+Community Life Survey and MHCLG's English Housing Survey are both England-only; ONS
+healthy life expectancy is UK-wide). Use `england` or `uk` explicitly for anything new, and
+fix a `national_inherited` value to one of the two when you're already touching that
+indicator.
+
+**Why this matters**: a ward-page reader has no way to tell "measured for Ladywell" from
+"Lewisham's borough-wide number, shown identically on all 15 ward pages" from "Thames
+Water's supply-area classification, which doesn't follow council boundaries at all" unless
+the label says so. Getting this wrong doesn't just mislabel a field - it lets contradictions
+slip past unnoticed. Two examples found and fixed in a July 2026 audit of every indicator
+in the live data:
+- Three health indicators used the bare string `"local_authority"`, which isn't a valid
+  `GeographyLevel` value at all (should have been `borough_inherited`) - a hand-splice typo
+  that happened to still round-trip through `from_dict()`/`to_dict()` without erroring, so
+  it went unnoticed until an explicit audit.
+- Both water indicators were labelled `national_inherited`, even though one ("Per capita
+  water consumption") is a genuine England-wide Defra/EA figure and the other ("Areas of
+  water stress") is Thames Water's own company-specific regulatory classification - two
+  different geographies wearing the same label. Split into `england` and `water_company`
+  respectively.
+
+**When adding a new indicator**: pick the taxonomy value that matches what the *source*
+actually measured (check the source's own methodology/coverage notes, not just its name -
+"National X Survey" is frequently England-only), not the value that sounds most authoritative.
 
 ---
 

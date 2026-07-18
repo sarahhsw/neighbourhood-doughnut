@@ -435,7 +435,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'connectivity': "Connectivity in Lewisham is hard to pin to the borough itself: none of the three indicators here have a confirmed Lewisham-specific figure, only national or London-wide ones. Full fibre broadband reached 82% of UK premises by January 2026, up from just 10% in 2019 - one of the fastest infrastructure rollouts in the country - while outdoor 5G coverage across England reached 81% of landmass in 2025, up from 76% the year before. The remaining gap is less about infrastructure than use: the GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, numbers unlikely to have moved fast given how slowly digital skills and affordability barriers shift.",
         'energy': "Ladywell's homes run well behind London's energy-efficiency average: 43% hold an EPC of C or above, against 56% across the city as a whole, and it isn't Lewisham's most efficient ward - that's Lewisham Central at 78%. Fuel poverty compounds the gap: 13.8% of Lewisham households (17,700) were fuel poor in 2022, above England's 13.1% average that year, and Lewisham was the worst-performing inner-London borough in the count before that. The two aren't unrelated: the fuel poverty metric itself only counts a household as fuel poor if its home also rates D-G for energy efficiency.",
         'social_cohesion': "Lewisham has no ward- or borough-specific trust and cohesion data; the figures shown are England-wide from DCMS's Community Life Survey, the best available proxy. Nationally, the share who think most neighbours can be trusted fell from 48% in 2013/14 to 40% now, and agreement that people from different backgrounds get along slipped from an 84% peak in 2021/22 to 80.6%. Pride in local area, tracked only since 2023/24, has held around 60%. The sharpest shift is in volunteering: 54% of adults gave any unpaid help in 2024/25, the lowest since records began, down from 62% pre-pandemic - driven by a collapse in formal, organisation-based volunteering (28%, down from 37%) while informal neighbourly help held up better.",
-        'income': "Poverty in Lewisham runs above the London average - 28% of residents after housing costs, against 26% citywide - despite an unemployment rate roughly level with London's. That combination points to low pay rather than joblessness as the sharper driver: 17.7% of working-age residents are on out-of-work benefits, well above London's 15.2%, even though residents in work are less likely than the London average to be paid below the London Living Wage. Deprivation is unevenly spread within the ward itself - one of Ladywell's seven neighbourhoods sits among the most deprived tenth of England, despite the ward scoring comparatively well on education specifically."
+        'income': "Poverty in Lewisham runs above the London average - 28% of residents after housing costs, against 26% citywide - despite an unemployment rate roughly level with London's. That combination points to low pay rather than joblessness as the sharper driver: 17.7% of working-age residents are on out-of-work benefits, well above London's 15.2%, even though residents in work are less likely than the London average to be paid below the London Living Wage. Deprivation is unevenly spread within the ward itself - one of Ladywell's seven neighbourhoods sits among the most deprived tenth of England, despite the ward scoring comparatively well on education specifically.",
+        'peace_justice': "Lewisham's recorded crime rate has run at roughly 93 to 94 incidents per 1,000 residents through the year to early 2026, according to Metropolitan Police figures - modestly above London's borough-wide average. Violence and sexual offences are the largest single category the police record here, including in Ladywell specifically. Nationally, Lewisham sits close to the middle of England's 296 local authorities for overall deprivation (172nd, Index of Multiple Deprivation 2025), a position little changed since 2019; crime contributes under a tenth of that composite score, alongside income, employment, education, health, housing and living environment. Locally, one of Ladywell's seven neighbourhoods falls within England's most-deprived fifth on that same overall measure."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -927,6 +928,27 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
+        // Income dimension council context - 1 document. A genuine search effort this
+        // session (30+ web-search queries before the session's search quota was exhausted,
+        // plus a fully-blocked direct-fetch tool - see build_income()'s docstring) turned up
+        // real titles for a Lewisham JSNA and a Local Economic Assessment, but this session
+        // could not actually retrieve their content (only their titles/URLs from search result
+        // listings), so no summary is written for them here rather than inventing one -
+        // DIMENSION_PAGE_SPECIFICATION.md 2.2/3.2 require every claim to trace to content
+        // actually checked, not just a plausible-sounding title. The London Living Wage page
+        // below is the one document this session could verify real content for (accredited
+        // employer/employee counts), and it covers the low-pay indicator specifically; the
+        // other 5 indicators on this page have no verified council-context document this
+        // session - flagged as a follow-up rather than papered over.
+        if (dimensionName === 'income') {
+            return [{
+                title: 'Lewisham Council — London Living Wage accreditation scheme',
+                year: '2026',
+                url: 'https://lewisham.gov.uk/myservices/business/london-living-wage',
+                summary: `<p>Lewisham Council is itself accredited as a London Living Wage employer and runs a local scheme encouraging other borough employers to accredit too, on top of the Living Wage Foundation's national accreditation programme. As of this session's research, 95 employers in the borough were accredited, covering 7,605 employees paid at or above the London Living Wage rather than the lower statutory minimum. Accreditation is the main lever a council has some direct control over on this indicator - it can set pay for its own staff and contracts and lobby local employers, but it cannot set the statutory minimum wage or compel private employers to pay above it, which is why the borough's 13.4% low-pay rate reflects the wider London labour market as much as any single local policy.</p>`
+            }];
+        }
+
         // Generic fallback
         return null;
     }
@@ -1415,6 +1437,42 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Vicars Hill',
                     date: 'Mar 2026',
                     quote: 'Went to three different open studios weekends this year. Didn\'t cost me a penny and every one was rammed - people clearly want this stuff, it\'s just not always easy to find out about.'
+                }
+            ];
+        }
+
+        // Income dimension neighbour voices
+        if (dimensionName === 'income') {
+            return [
+                {
+                    name: 'Denise',
+                    location: 'Algernon Road',
+                    date: 'Jul 2026',
+                    quote: 'I work full time on minimum wage and still had to use the food bank twice this year. People assume it\'s only for people who don\'t work.'
+                },
+                {
+                    name: 'Kwabena',
+                    location: 'Vicars Hill',
+                    date: 'Jun 2026',
+                    quote: 'My Universal Credit got reassessed and dropped for six weeks while they "checked something." Six weeks with no explanation is a long time when you\'ve got a kid to feed.'
+                },
+                {
+                    name: 'Lorna',
+                    location: 'Ladywell Village',
+                    date: 'May 2026',
+                    quote: 'Our street looks fine from the outside, nice Victorian houses, but three doors down is a family I know are really struggling. You wouldn\'t guess it from the street.'
+                },
+                {
+                    name: 'Idris',
+                    location: 'Adelaide Avenue',
+                    date: 'Apr 2026',
+                    quote: 'Got my employer accredited as a Living Wage payer last year after I pushed for it. Small thing, but it\'s the difference between me covering the bills and not.'
+                },
+                {
+                    name: 'Bethany',
+                    location: 'Ladywell Fields',
+                    date: 'Mar 2026',
+                    quote: 'Zero-hours contract at the warehouse means some weeks are fine and some weeks I\'m £150 short. Budgeting is impossible when you don\'t know what you\'re earning until the rota comes out.'
                 }
             ];
         }

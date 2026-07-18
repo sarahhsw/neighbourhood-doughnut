@@ -1188,23 +1188,105 @@ def build_energy():
     return [epc_band_c, fuel_poverty]
 
 def build_peace_justice():
-    """Safety & access to justice"""
-    return create_descriptive_dimension(
+    """
+    Peace & Justice dimension - 2 indicators (crime rate; IMD Crime domain deprivation).
+
+    IMPORTANT PROVENANCE NOTE (2026-07-18 build): the intended primary sources for both
+    indicators - MPS Recorded Crime: Geographic Breakdown (data.london.gov.uk, genuine
+    ward-level monthly crime counts for Ladywell) and Trust for London's Crime-domain-specific
+    IMD 2025 page (trustforlondon.org.uk) - could NOT be downloaded/parsed this session due to
+    a sustained outbound-network access failure in this environment (confirmed via repeated
+    curl/fetch attempts against these hosts AND neutral control hosts like example.com and
+    en.wikipedia.org, all returning connection failures across a multi-hour window). Per
+    DIMENSION_PAGE_SPECIFICATION.md's hard rule against fabricating data, both indicators below
+    use the best real, sourced figures locatable via web search of secondary aggregators built
+    on the same underlying MPS/MHCLG datasets, at Confidence.MEDIUM/LOW with the specific
+    limitation spelled out in each Source.notes. Both should be revisited to pull the true
+    ward-level MPS figure and the true Crime-domain LSOA decile once direct source access is
+    restored - see notes below for exactly what's missing and where to get it.
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    crime_rate = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="peace_justice",
-        indicator="Crime rate per 1,000; Index of Multiple Deprivation (Crime domain)",
-        snapshot=Snapshot(value=0.0, unit="per 1000", year=2025),
+        indicator="Crime rate per 1,000 population",
+        snapshot=Snapshot(value=93.0, unit="per 1,000 population", year="2025/26", date="12 months to ~Feb 2026"),
         source=Source(
-            name="MPS Recorded Crime Geographic Breakdown / IMD 2025",
-            url="https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
-            accessed=datetime.now().date().isoformat(),
-            notes="Borough and ward-level crime data available"
+            name="MPS recorded crime data (Lewisham borough-wide), via CrimeRate.co.uk and homenicom.co.uk aggregation of Metropolitan Police statistics",
+            url="https://homenicom.co.uk/area/lewisham/crime-rate",
+            accessed="2026-07-18",
+            notes=(
+                "Lewisham borough-wide recorded crime rate. crimerate.co.uk reports ~93 per 1,000 "
+                "population for the 12 months to ~Feb 2026 (vs London's 82 per 1,000 on a "
+                "daytime-population basis - not a like-for-like comparison, included here for "
+                "directional context only); homenicom.co.uk separately reports 94.4 per 1,000 to "
+                "September 2025, explicitly attributed to 'official Metropolitan Police statistics'. "
+                "A third aggregator (scos.co.uk) reports a notably higher 119.4 per 1,000 for 2025, "
+                "likely reflecting a different scope/population base and treated as an outlier, not "
+                "used. PRIMARY SOURCE NOT YET DIRECTLY QUERIED: the MPS Recorded Crime: Geographic "
+                "Breakdown dataset (data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m) "
+                "publishes genuine ward-level monthly crime counts for Ladywell specifically (by Home "
+                "Office offence category, back to 2008 for historic categories / 2019 for current "
+                "ones) - a future update should download it directly and divide Ladywell's 12-month "
+                "total by Ladywell's ONS/Census population to get a true ward-level rate, rather than "
+                "this borough-wide figure. This session could not download/parse it due to a sustained "
+                "network access failure. Partial ward-level context found via search: Ladywell recorded "
+                "192 violence-and-sexual-offence incidents in the 12 months to March 2026 (unchanged "
+                "from 2025), the single largest crime category, plus 29 robbery, 21 theft-from-person, "
+                "8 weapons-possession and 5 shoplifting offences over the same period (crimerate.co.uk, "
+                "itself built on police.uk/MPS data) - this is a partial category list, not an "
+                "exhaustive cross-category total, so was not used as the headline figure."
+            )
         ),
-        geography=GeographyLevel.WARD,
-        confidence=Confidence.MEDIUM
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator."
     )
+
+    imd_crime_decile = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="peace_justice",
+        indicator="Index of Multiple Deprivation Decile",
+        snapshot=Snapshot(value=172, unit="rank out of 296 English local authorities (IMD 2025, overall/all-domain; 1 = most deprived)", year=2025),
+        source=Source(
+            name="MHCLG English Indices of Deprivation 2025 (overall/all-domain local authority summary), via Ladywell Live reporting on the government release",
+            url="https://ladywell-live.org/2025/10/31/2-of-neighbourhoods-in-lewisham-highly-deprived-with-borough-ranked-172-out-of-296-government-deprivation-data-shows/",
+            accessed="2026-07-18",
+            notes=(
+                "dimension_data_sources.json specifies Trust for London's Crime-domain-specific IMD "
+                "page (trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/) as "
+                "the intended source for THIS indicator - itself built on the MHCLG English Indices of "
+                "Deprivation 2025 (published 30 Oct 2025, LSOA-level; "
+                "gov.uk/government/statistics/english-indices-of-deprivation-2025). That page, and the "
+                "government's own LSOA-level Local Deprivation Explorer "
+                "(deprivation.communities.gov.uk) which would let a future update pinpoint the actual "
+                "Crime domain decile for each of Ladywell's 7 constituent LSOAs individually, could not "
+                "be accessed this session due to a sustained outbound-network access failure; web "
+                "search located only partial, non-crime-domain-specific figures. What IS confirmed via "
+                "search this session: Lewisham ranks 172nd of 296 English local authorities on the "
+                "OVERALL (all 7 domains combined) IMD 2025 - close to the middle, moderately deprived, "
+                "little changed in relative position since IMD 2019 - and locally, 1 of Ladywell's 7 "
+                "LSOAs falls within the most-deprived 20% of neighbourhoods in England on that same "
+                "overall index (Ladywell Live, 31 Oct 2025, reporting on the same government release). "
+                "Crime contributes only 9.3% of the weighting toward that overall IMD score (one of "
+                "seven domains, alongside Income and Employment at 22.5% each, Education and Health at "
+                "13.5% each, and Barriers to Housing/Services and Living Environment at 9.3% each) - so "
+                "neither figure above is a substitute for the crime-specific decile this indicator is "
+                "meant to track, and the value/unit above is reported as an overall-IMD local authority "
+                "rank, not a neighbourhood-level crime decile, to avoid overstating precision. Revisit "
+                "once direct access to Trust for London or the government's LSOA explorer is restored."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.LOW,
+        target_text="No official GLA or UK Government target established for this indicator."
+    )
+
+    return [crime_rate, imd_crime_decile]
 
 def build_political_voice():
     """

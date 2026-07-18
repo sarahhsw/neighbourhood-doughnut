@@ -1291,31 +1291,64 @@
       "lens": "local_social",
       "dimension": "peace_justice",
       "target": {
-        "text": "No official GLA or UK Government target established for this dimension.",
+        "text": "No official GLA or UK Government target established for this indicator.",
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Crime rate and community safety",
+      "indicator": "Crime rate per 1,000 population",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 0.0,
-        "unit": "per 1000",
+        "value": 93.0,
+        "unit": "per 1,000 population",
+        "year": "2025/26",
+        "date": "12 months to ~Feb 2026"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "MPS recorded crime data (Lewisham borough-wide), via CrimeRate.co.uk and homenicom.co.uk aggregation of Metropolitan Police statistics",
+        "url": "https://homenicom.co.uk/area/lewisham/crime-rate",
+        "accessed": "2026-07-18",
+        "notes": "Lewisham borough-wide recorded crime rate. crimerate.co.uk reports ~93 per 1,000 population for the 12 months to ~Feb 2026 (vs London's 82 per 1,000 on a daytime-population basis - not a like-for-like comparison, included here for directional context only); homenicom.co.uk separately reports 94.4 per 1,000 to September 2025, explicitly attributed to 'official Metropolitan Police statistics'. A third aggregator (scos.co.uk) reports a notably higher 119.4 per 1,000 for 2025, likely reflecting a different scope/population base and treated as an outlier, not used. PRIMARY SOURCE NOT YET DIRECTLY QUERIED: the MPS Recorded Crime: Geographic Breakdown dataset (data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m) publishes genuine ward-level monthly crime counts for Ladywell specifically (by Home Office offence category, back to 2008 for historic categories / 2019 for current ones) - a future update should download it directly and divide Ladywell's 12-month total by Ladywell's ONS/Census population to get a true ward-level rate, rather than this borough-wide figure. This session could not download/parse it due to a sustained network access failure. Partial ward-level context found via search: Ladywell recorded 192 violence-and-sexual-offence incidents in the 12 months to March 2026 (unchanged from 2025), the single largest crime category, plus 29 robbery, 21 theft-from-person, 8 weapons-possession and 5 shoplifting offences over the same period (crimerate.co.uk, itself built on police.uk/MPS data) - this is a partial category list, not an exhaustive cross-category total, so was not used as the headline figure."
+      },
+      "confidence": "medium",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_social",
+      "dimension": "peace_justice",
+      "target": {
+        "text": "No official GLA or UK Government target established for this indicator.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Index of Multiple Deprivation Decile",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 172,
+        "unit": "rank out of 296 English local authorities (IMD 2025, overall/all-domain; 1 = most deprived)",
         "year": 2025,
         "date": null
       },
       "status": "descriptive_only",
-      "geography_of_data": "ward",
+      "geography_of_data": "borough_inherited",
       "source": {
-        "name": "MPS Recorded Crime Data",
-        "url": "https://data.london.gov.uk/",
-        "accessed": "2026-07-12",
-        "notes": "Ward and borough-level crime data available"
+        "name": "MHCLG English Indices of Deprivation 2025 (overall/all-domain local authority summary), via Ladywell Live reporting on the government release",
+        "url": "https://ladywell-live.org/2025/10/31/2-of-neighbourhoods-in-lewisham-highly-deprived-with-borough-ranked-172-out-of-296-government-deprivation-data-shows/",
+        "accessed": "2026-07-18",
+        "notes": "dimension_data_sources.json specifies Trust for London's Crime-domain-specific IMD page (trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/) as the intended source for THIS indicator - itself built on the MHCLG English Indices of Deprivation 2025 (published 30 Oct 2025, LSOA-level; gov.uk/government/statistics/english-indices-of-deprivation-2025). That page, and the government's own LSOA-level Local Deprivation Explorer (deprivation.communities.gov.uk) which would let a future update pinpoint the actual Crime domain decile for each of Ladywell's 7 constituent LSOAs individually, could not be accessed this session due to a sustained outbound-network access failure; web search located only partial, non-crime-domain-specific figures. What IS confirmed via search this session: Lewisham ranks 172nd of 296 English local authorities on the OVERALL (all 7 domains combined) IMD 2025 - close to the middle, moderately deprived, little changed in relative position since IMD 2019 - and locally, 1 of Ladywell's 7 LSOAs falls within the most-deprived 20% of neighbourhoods in England on that same overall index (Ladywell Live, 31 Oct 2025, reporting on the same government release). Crime contributes only 9.3% of the weighting toward that overall IMD score (one of seven domains, alongside Income and Employment at 22.5% each, Education and Health at 13.5% each, and Barriers to Housing/Services and Living Environment at 9.3% each) - so neither figure above is a substitute for the crime-specific decile this indicator is meant to track, and the value/unit above is reported as an overall-IMD local authority rank, not a neighbourhood-level crime decile, to avoid overstating precision. Revisit once direct access to Trust for London or the government's LSOA explorer is restored."
       },
-      "confidence": "medium",
+      "confidence": "low",
       "community_notes": []
     },
     {

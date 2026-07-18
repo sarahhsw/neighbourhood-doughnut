@@ -593,6 +593,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return `Digital exclusion covers people who are completely offline as well as those who technically have internet access but use it so rarely or with so little confidence that it doesn't function as real access - to job applications, banking, GP bookings, or benefits claims increasingly designed "digital by default". The GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, when it launched a Digital Inclusion Service aiming to directly support up to 75,000 people over three years by combining a loaned device, low-cost connectivity, and basic skills support - support that's often offered separately and so easier for people to fall through the gaps of. No Lewisham-specific figure exists: the GLA's own borough-level digital exclusion mapping project did not include Lewisham among its five pilot boroughs, and its underlying LSOA-level dataset was inaccessible this session.`;
         }
 
+        // Energy-specific explanations
+        if (baseName === '% properties with EPC Band C or above') {
+            return `EPC (Energy Performance Certificate) ratings run A, the most efficient, to G, the least, based on estimated running costs, insulation, heating type and fabric quality rather than an actual bill - Band C or above is the level national policy repeatedly uses as its improvement marker for both landlords and fuel-poor households. In Ladywell specifically, 43% of assessed homes reach Band C or above, well below London's 56% average and near the less efficient end of Lewisham's own wards, which ranged from 37% (Hither Green) to 78% (Lewisham Central) in the same 2022 count. No ward-level time series exists to chart a trend - Lewisham Observatory's Ward Profiles are a point-in-time exercise, last run in 2022 - but the borough's older, often converted housing stock is the likeliest driver of a lower starting point for retrofit than newer parts of London.`;
+        }
+
+        if (baseName === '% households in fuel poverty') {
+            return `Fuel poverty (the Low Income Low Energy Efficiency, or LILEE, metric DESNZ adopted in 2021) counts a household as fuel poor only if it is both low income and living in a home rated Band D or below for energy efficiency - not simply a measure of who struggles to pay a bill. Lewisham's 13.8% (17,700 households) in the 2022 data year sat above England's 13.1% average for the same year, and in the 2020 data year Lewisham was reported as the worst-performing inner-London borough at 14.1%. Because the metric bundles income with home efficiency, it moves with both energy prices and how much of the housing stock has been retrofitted. Some Lewisham neighbourhoods run far higher than the borough figure - the council's own public health reporting cites rates above 23% in parts of the borough and above 20% in seven small areas.`;
+        }
+
         // Generic fallback
         return null;
     }
@@ -809,6 +818,28 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=119735',
                 summary: `<p>Lewisham Council's own school standards reporting shows 2023/24 as the borough's best GCSE year on record for the basics measure: 66% of pupils achieved grade 4 or above in both English and Maths, up from 59% in 2019 and continuing a recovery from the pandemic-disrupted exam years. Attainment 8 - a broader points score covering 8 subjects - moved the same direction, up 2.5 points on 2019 to 46.9. The report is more cautious about Progress 8, which measures how much progress pupils make relative to pupils with similar starting points nationally: it has historically run below the national average in Lewisham, and the council frames closing that gap - not just raising the raw attainment percentage - as the harder, ongoing task for its school improvement work.</p>`
             }];
+        }
+
+        // Connectivity dimension council context - 2 documents: Lewisham's own Digital
+        // Infrastructure programme page covers full fibre broadband and mobile small-cell
+        // rollout (the two Ofcom-sourced indicators); the Mayor of London's Digital Access
+        // for All / Digital Inclusion Service covers digital exclusion, since no
+        // Lewisham-specific digital-inclusion strategy document was found this session.
+        if (dimensionName === 'connectivity') {
+            return [
+                {
+                    title: 'Lewisham Digital Infrastructure',
+                    year: '2026',
+                    url: 'https://lewisham.gov.uk/myservices/lewisham-digital-infrastructure',
+                    summary: `<p>Lewisham Council has been removing planning and highways barriers that previously slowed fibre providers from reaching residential streets, scaling up full fibre rollout to homes and businesses across the borough in partnership with network operators. More than 70,000 homes and businesses can already upgrade to full fibre - via a roughly £21m Openreach investment reaching around half of properties - though only around 30% of eligible premises had actually switched over by the council's own reporting, illustrating that availability and take-up are two different gaps. Alongside fixed broadband, the council has agreements with BT, Ontix, Freshwave and BAI Communications to install small-cell mobile equipment to improve 4G/5G signal, with installations completed in New Cross and further sites planned across the borough.</p>`
+                },
+                {
+                    title: 'Digital Access for All (Mayor of London Digital Inclusion Service)',
+                    year: '2022-',
+                    url: 'https://www.london.gov.uk/talk-london/topics/communities/digital-access-all',
+                    summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer, aiming to directly support up to 75,000 Londoners over three years.</p>`
+                }
+            ];
         }
 
         // Generic fallback
@@ -1119,6 +1150,42 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Algernon Road',
                     date: 'Mar 2026',
                     quote: 'I\'ve lived here 40 years and I still don\'t feel like my vote at the local level changes much day to day. National elections feel different somehow - this one just doesn\'t.'
+                }
+            ];
+        }
+
+        // Education dimension neighbour voices
+        if (dimensionName === 'education') {
+            return [
+                {
+                    name: 'Nadia',
+                    location: 'Vicars Hill',
+                    date: 'Jul 2026',
+                    quote: 'My daughter got her grade 4s in English and Maths this summer, first in our family to do it. Doesn\'t sound like much from the outside but it changes what doors are open to her.'
+                },
+                {
+                    name: 'Kwame',
+                    location: 'Ladywell Village',
+                    date: 'Jun 2026',
+                    quote: 'Governor at one of the secondaries here. Results have been climbing three years running now, but you can still see which kids are getting extra tutoring at home and which aren\'t.'
+                },
+                {
+                    name: 'Rosa',
+                    location: 'Silver Road',
+                    date: 'May 2026',
+                    quote: 'My son\'s doing an English resit this year after just missing a 4 last summer. Nobody tells you how disruptive that is - it eats into his college timetable for the whole first term.'
+                },
+                {
+                    name: 'Tom',
+                    location: 'Slagrove Place',
+                    date: 'Apr 2026',
+                    quote: 'Moved here from Bromley two years ago and the school gap surprised me. Our old borough\'s results were miles ahead - Lewisham\'s catching up but it\'s starting from further back.'
+                },
+                {
+                    name: 'Ijeoma',
+                    location: 'Marsala Road',
+                    date: 'Mar 2026',
+                    quote: 'Volunteer with a homework club near the station. The kids who come every week, their confidence going into exams is night and day compared to the ones who only show up occasionally.'
                 }
             ];
         }

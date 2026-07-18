@@ -327,7 +327,8 @@
     "category": "Empowered",
     "indicator": "Index of Multiple Deprivation Decile",
     "source_url": "https://trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/",
-    "granularity": null
+    "granularity": "LSOA (Trust for London Crime domain page); London Datastore/gov.uk LSOA-level source",
+    "notes": "Underlying source: MHCLG English Indices of Deprivation 2025 (published 30 Oct 2025, LSOA-level; gov.uk/government/statistics/english-indices-of-deprivation-2025), specifically the Crime domain (9.3% weighting of overall IMD) - Trust for London's page presents this domain isolated from the overall IMD score. As of the 2026-07-18 build, the precise Crime-domain decile for Ladywell's LSOAs could not be extracted (trustforlondon.org.uk and the government's LSOA-level Local Deprivation Explorer, deprivation.communities.gov.uk, were both unreachable this session due to a sustained network access failure). build_peace_justice() in build_local_social_with_real_data.py uses Lewisham's overall (all-domain) IMD 2025 local authority rank (172 of 296) as a lower-confidence proxy pending a follow-up pull of the true crime-domain figure - see that function's docstring/Source.notes."
   },
   {
     "lens": "local_social",
@@ -335,7 +336,8 @@
     "category": "Empowered",
     "indicator": "Crime rate per 1,000 population",
     "source_url": "https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
-    "granularity": null
+    "granularity": "Ward (MPS Recorded Crime: Geographic Breakdown publishes ward-level monthly counts)",
+    "notes": "MPS Recorded Crime: Geographic Breakdown (London Datastore) publishes genuine ward-level monthly crime counts for Ladywell by Home Office offence category. As of the 2026-07-18 build, this dataset could not be downloaded/parsed (sustained network access failure this session affecting data.london.gov.uk among other hosts); build_peace_justice() instead uses a Lewisham borough-wide crime rate sourced from secondary aggregation of Metropolitan Police statistics (crimerate.co.uk / homenicom.co.uk), at Confidence.MEDIUM, with the specific gap documented in that function's Source.notes. A future pass should download this dataset directly and compute a true ward-level per-1,000 rate using Ladywell's ONS/Census population."
   },
   {
     "lens": "local_social",

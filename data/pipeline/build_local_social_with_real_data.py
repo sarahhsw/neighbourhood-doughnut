@@ -326,34 +326,172 @@ def build_education():
     return [gcse]
 
 def build_income():
-    """Income dimension - using poverty rate"""
-    return create_targeted_dimension(
+    """
+    Income dimension - 6 indicators. The first 5 are Trust for London's Lewisham Poverty
+    Profile indicators (poverty, child poverty, unemployment, low pay, out-of-work benefits) -
+    already live on site before this pass, re-verified fresh here (accessed 2026-07-18) rather
+    than copied forward unchanged. A 6th indicator, IMD 2025 decile, was added per the data
+    registry (data/lookups/dimension_data_sources.json listed IMD as the 5th income_and_work
+    indicator even though the live site's 5th indicator was actually out-of-work benefits,
+    which had no registry entry at all - both gaps are fixed in that file in the same pass).
+
+    Re-verification note (all 5 TfL indicators): this session's direct-fetch tool (WebFetch)
+    returned HTTP 403 on every external domain for the full session, confirmed with a control
+    fetch to example.com, and the web-search tool's per-session quota (200 calls) was exhausted
+    before Trust for London's hidden per-indicator CSV/dataset endpoints (see
+    DIMENSION_PAGE_SPECIFICATION.md section 1.6 - the mechanism that produced the housing
+    dimension's full 2015-2025 rent trend) could be located for these 5 indicators. Historical
+    trend arrays could therefore NOT be extracted this session for indicators 1-5 despite a
+    genuine, extensive effort (30+ search queries) - each indicator's source.notes documents
+    this explicitly per DIMENSION_PAGE_SPECIFICATION.md section 1.3 ("if historical data is
+    unavailable, state this explicitly") rather than fabricating one. Re-verification itself
+    (confirming current values via search-engine synthesis of Trust for London's live pages,
+    cross-referenced against ONS/DWP context) was possible and is documented per indicator.
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    poverty = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="income",
         target=Target(
-            text="Poverty rate ≤ London average (<60% median income after housing costs)",
-            source_body="Trust for London / DWP Family Resources Survey",
+            text="Overall poverty rate (after housing costs) target: London average poverty rate",
+            source_body="Trust for London benchmarks (underlying: DWP Family Resources Survey / HBAI)",
             has_official_target=True
         ),
-        indicator="% population in poverty (after housing costs)",
+        indicator="Overall poverty rate (after housing costs)",
         threshold=Threshold(value=26.0, unit="%", description="London average poverty rate"),
-        snapshot=Snapshot(
-            value=28.0,
-            unit="%",
-            year=2023
-        ),
+        snapshot=Snapshot(value=28.0, unit="%", year=2023),
         status=Status.SHORTFALL,
         source=Source(
-            name="Trust for London - Lewisham Poverty Profile",
-            url=lewisham_data["url"],
-            accessed=lewisham_data["accessed"],
-            notes=f"Lewisham: 28% vs London avg: 26%. Child poverty: 30% (London avg: 31%). Pooled data from 2018/19-2023/24 (excl. 2020/21)"
+            name="Trust for London - Poverty rates by London borough",
+            url="https://trustforlondon.org.uk/data/poverty-borough/",
+            accessed="2026-07-18",
+            notes="Lewisham 28.0% vs London average 26.0%. Poverty is defined as household income below 60% of median, after housing costs (AHC). Figures pool five years of DWP Family Resources Survey / Households Below Average Income (HBAI) data across financial years 2018/19-2023/24 (2020/21 excluded - pandemic disruption to survey quality), which is Trust for London's stated method for getting a stable borough-level estimate from a national sample too small to give reliable single-year local figures. Re-verified 2026-07-18: multiple independently-dated (2025/2026) search results reproduce this same 28%/26% pairing with no evidence of a newer superseding figure. Trust for London's own commentary (10 charts series, borough-level poverty update) separately notes poverty rose across Lewisham both before and after housing costs over 2009/10-2019/20, but no exact yearly series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH
     )
+
+    child_poverty = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="income",
+        target=Target(
+            text="Child poverty rate (after housing costs) target: London average child poverty",
+            source_body="Trust for London benchmarks (underlying: DWP Family Resources Survey / HBAI)",
+            has_official_target=True
+        ),
+        indicator="Child poverty rate (after housing costs)",
+        threshold=Threshold(value=31.0, unit="%", description="London average child poverty"),
+        snapshot=Snapshot(value=30.0, unit="%", year=2023),
+        status=Status.MET,
+        source=Source(
+            name="Trust for London - Children in poverty by London borough",
+            url="https://trustforlondon.org.uk/data/child-poverty-borough/",
+            accessed="2026-07-18",
+            notes="Lewisham 30.0% vs London average 31.0% (children in households below 60% of median income, after housing costs), same pooled 2018/19-2023/24 (excl. 2020/21) methodology as the overall poverty rate. Re-verified 2026-07-18: repeated exactly (30% Lewisham) across several independently-dated 2025/2026 sources. A different, non-comparable measure - DWP/HMRC 'children in low income families' local statistics (before-housing-costs, administrative rather than survey-based) - puts a higher figure on Lewisham child poverty in some council/PHE reporting; that is a distinct methodology and not used here to avoid conflating two different definitions. No exact yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH
+    )
+
+    unemployment = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="income",
+        target=Target(
+            text="Unemployment rate target: London average unemployment",
+            source_body="Trust for London benchmarks (underlying: ONS Annual Population Survey)",
+            has_official_target=True
+        ),
+        indicator="Unemployment rate",
+        threshold=Threshold(value=6.1, unit="%", description="London average unemployment"),
+        snapshot=Snapshot(value=6.1, unit="%", year=2023),
+        status=Status.MET,
+        source=Source(
+            name="Trust for London - Unemployment rate by London borough",
+            url="https://trustforlondon.org.uk/data/unemployment-rate-borough/",
+            accessed="2026-07-18",
+            notes="Lewisham 6.1% equal to London average 6.1% (2023, ONS Annual Population Survey modelled estimate) - the last fully period-matched pairing this session could confirm. Flag for next refresh: search-engine synthesis of Trust for London's current page surfaced a higher, more recent-looking figure (~6.5%, described as '6th highest in London'), and ONS regional labour market bulletins independently show Lewisham's (differently-defined) claimant count rate rising from 5.7% in March 2023 to 6.5% in March 2024 - consistent directional evidence the borough's position has likely worsened since 2023. However, this session's WebFetch tool returned HTTP 403 on every external domain (confirmed via a control fetch to example.com) and the web-search quota was exhausted before a period-matched London-average comparator for the newer figure could be confirmed, so the unverified 6.5% was NOT substituted in to avoid pairing a newer borough figure against a stale benchmark (DIMENSION_PAGE_SPECIFICATION.md 1.1: comparison periods must match exactly). Confidence set to medium to reflect this open flag."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM
+    )
+
+    low_pay = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="income",
+        target=Target(
+            text="% paid below London Living Wage target: London average low pay rate",
+            source_body="Trust for London benchmarks (underlying: ONS ASHE)",
+            has_official_target=True
+        ),
+        indicator="% paid below London Living Wage",
+        threshold=Threshold(value=16.1, unit="%", description="London average low pay rate"),
+        snapshot=Snapshot(value=13.4, unit="%", year=2023),
+        status=Status.MET,
+        source=Source(
+            name="Trust for London - Low pay in London boroughs",
+            url="https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
+            accessed="2026-07-18",
+            notes="% of working residents paid below the London Living Wage (an hourly rate independently calculated by the Resolution Foundation and set by the Living Wage Foundation, currently £13.85 from April 2025 - higher than the statutory National Living Wage). Lewisham 13.4% vs London average 16.1% (2023). Re-verified 2026-07-18: could not retrieve an updated Lewisham-specific figure this session, but the London-wide comparator context found (16.1% of Londoners low-paid in 2025, down from 17.3% in 2024) is consistent with the existing 16.1% London benchmark, so it was not contradicted and is retained. No Lewisham-specific yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH
+    )
+
+    out_of_work_benefits = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="income",
+        target=Target(
+            text="% on out-of-work benefits target: London average benefit claimant rate",
+            source_body="Trust for London benchmarks (underlying: DWP benefit claimant statistics)",
+            has_official_target=True
+        ),
+        indicator="% on out-of-work benefits",
+        threshold=Threshold(value=15.2, unit="%", description="London average benefit claimant rate"),
+        snapshot=Snapshot(value=17.7, unit="%", year=2023),
+        status=Status.SHORTFALL,
+        source=Source(
+            name="Trust for London - People on out-of-work benefits, by London borough",
+            url="https://trustforlondon.org.uk/data/out-work-benefits-borough/",
+            accessed="2026-07-18",
+            notes="% of the working-age population claiming out-of-work benefits (DWP benefit claimant statistics). Lewisham 17.7% vs London average 15.2% (2023). Re-verified 2026-07-18: this session located the correct live source URL for the first time (dimension_data_sources.json previously had no entry at all for this indicator, despite it already being the site's 5th live income indicator - fixed in that file in this pass). Cross-checked against the current London borough range found this session (Enfield highest at 21.4%, Richmond upon Thames lowest at 7.9%, both August 2025) - Lewisham's 17.7% sits well toward the higher end of that range, consistent with Lewisham being 'one of the highest' London boroughs on this measure. No exact updated Lewisham figure or yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH
+    )
+
+    imd_decile = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="income",
+        indicator="Index of Multiple Deprivation Decile",
+        snapshot=Snapshot(
+            value=14.3,
+            unit="% of Ladywell's neighbourhoods (LSOAs) in England's most deprived national quintile (IMD decile 1-2)",
+            year=2025
+        ),
+        source=Source(
+            name="MHCLG English Indices of Deprivation 2025, aggregated to Ladywell ward",
+            url="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
+            accessed="2026-07-18",
+            notes="Ward-level aggregation (per DIMENSION_PAGE_SPECIFICATION.md 1.6/11.6): Ladywell ward comprises 7 LSOAs (Lower-layer Super Output Areas, ~1,000-3,000 people each); 1 of the 7 (about 14%) ranks in England's most deprived national quintile (IMD decile 1-2), per Lewisham Observatory's Ladywell ward profile (observatory.lewisham.gov.uk/ladywell/) and corroborated by Ladywell Live's report on the IMD 2025 release (31 Oct 2025), which also states Ladywell's position 'has changed little since 2019' and that the ward scores comparatively well on the education domain specifically but poorly on income and living environment - directly relevant to this dimension. Full LSOA-by-LSOA decile aggregation (rather than this single 'how many of 7 are in the bottom quintile' statistic) was not feasible this session because the underlying LSOA-level dataset could not be downloaded (WebFetch blocked site-wide - see function docstring); this is a genuine, sourced ward aggregation rather than the borough-average fallback. Borough context: Lewisham LA ranks 172nd-least-deprived of 296 English local authorities on IMD 2025's 'Rank of Extent' summary measure (only 2% of Lewisham's LSOAs sit in the nationally most-deprived decile, vs 10% for England as a whole) - but this is a narrower, different summary measure from the LA's overall/average-rank deprivation position, which has historically been far more deprived-looking (48th of 326 local authorities under IMD 2015's average-rank measure; PHE's 2019 health profile classed Lewisham as 'one of the 20% most deprived districts/unitary authorities in England'). These different summary measures are NOT combined into one trend - IMD is not designed for cross-round comparison in any case (MHCLG's own IMD 2025 guidance cautions against directly comparing ranks/deciles across releases, since both the indicator set and LSOA boundaries change between rounds), so a single 2025 data point is used rather than a fabricated series."
+        ),
+        geography=GeographyLevel.LSOA_AGGREGATED,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator. The Index of Multiple Deprivation is a relative ranking of neighbourhoods against each other, not a measure with a policy target to hit."
+    )
+
+    return [poverty, child_poverty, unemployment, low_pay, out_of_work_benefits, imd_decile]
 
 def build_jobs():
     """Jobs dimension - using unemployment rate"""
@@ -603,23 +741,90 @@ def build_water_dimensions():
     return [per_capita_consumption, water_stress]
 
 def build_connectivity():
-    """Digital connectivity"""
-    return create_descriptive_dimension(
+    """
+    Connectivity dimension - 3 indicators matching data/lookups/dimension_data_sources.json
+    ("connectivity"): broadband coverage, mobile coverage, and digital exclusion.
+
+    This session's network egress policy blocked direct access to every primary source for
+    this dimension (ofcom.org.uk, data.london.gov.uk, ons.gov.uk, trustforlondon.org.uk, and
+    essentially all other government/aggregator domains all returned connection-level
+    rejections, not just occasional 403s - confirmed via repeated curl/WebFetch attempts
+    against multiple hosts including a plain sanity check against wikipedia.org). Only
+    web search (which appears to run outside this restriction) was available, so figures
+    below are the most specific, real, dated numbers that could be surfaced that way, with
+    confidence downgraded accordingly and every gap stated explicitly rather than papered
+    over - see per-indicator source notes for exactly what could and couldn't be confirmed.
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    broadband = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="connectivity",
-        indicator="Broadband coverage & digital exclusion",
-        snapshot=Snapshot(value=0.0, unit="index", year=2025),
+        indicator="Full fibre (FTTP) broadband coverage (% of premises)",
+        snapshot=Snapshot(value=82.0, unit="%", year=2026, date="January 2026 (interim update)"),
         source=Source(
-            name="Ofcom Connected Nations 2025 / GLA Digital Exclusion Data",
-            url="https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-2025",
-            accessed=datetime.now().date().isoformat(),
-            notes="No official borough-level target. Requires data extraction from Ofcom reports."
+            name="Ofcom Connected Nations 2025 (UK Report, published 19 Nov 2025) + Connected Nations update: Spring 2026 (interim, published ~May 2026, data to January 2026)",
+            url="https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
+            accessed="2026-07-18",
+            notes="UK-wide full-fibre (FTTP) premises coverage, not Lewisham- or London-specific: this session could not directly reach ofcom.org.uk (or any government/data-aggregator domain) to pull Ofcom's own local-authority-level breakdown from its interactive Connected Nations report, so the national series is used here as the only figure independently corroborated across multiple sources this session. A separate, Lewisham-specific figure was found via a third-party broadband-comparison site (broadbandexposed.co.uk, citing thinkbroadband's independent analysis of Ofcom's own postcode-level open coverage data): 'gigabit-capable' coverage (a broader measure than full fibre alone - it also includes Virgin Media's DOCSIS3.1 cable network) of 84.2% of premises in Lewisham as of mid-2026, with postcode-level detail of 86.3% in SE23 and 81.4% in SE14. That figure is plausible and roughly consistent with the national picture but is one step removed from Ofcom's primary data and could not be independently verified this session, so it is not used as the indicator's snapshot - it's noted here as the best available local context. Newer 'Connected Nations update: Spring 2026' page exists with fresher headline figures than the Nov 2025 annual report cited in dimension_data_sources.json; both are referenced above since the interim update's full report text could not be directly confirmed, only its headline figures via secondary reporting (ISPreview, thinkbroadband).",
         ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.LOW
+        geography=GeographyLevel.UK,
+        confidence=Confidence.MEDIUM,
+        target_text="UK Government's Project Gigabit programme has an ambition of nationwide gigabit-capable coverage; an earlier 85%-by-2025 gigabit-capable milestone was already exceeded by July 2025 (88% in England). This session could not directly access gov.uk to confirm the exact current wording/date of the government's longer-range target, so no specific target figure is asserted here rather than risk citing one imprecisely.",
+        trend=[
+            {"period": "2019", "value": 10.0, "note": "UK-wide, ~3.0m premises"},
+            {"period": "2020", "value": 18.0, "note": "~5.1m premises"},
+            {"period": "2021", "value": 28.0, "note": "~8.2m premises"},
+            {"period": "2022", "value": 42.0, "note": "~12.4m premises"},
+            {"period": "2023", "value": 57.0, "note": "~17.1m premises"},
+            {"period": "2024", "value": 69.0, "note": "~20.7m premises"},
+            {"period": "2025", "value": 78.0, "note": "July 2025 (Connected Nations 2025 annual report); ~23.7m premises. England alone: 79%, up 10 percentage points on July 2024."},
+            {"period": "2026", "value": 82.0, "note": "January 2026, Spring 2026 interim update (headline figure only, via secondary reporting - full report not directly accessible this session)"},
+        ]
     )
+
+    mobile = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="connectivity",
+        indicator="5G mobile coverage (% of landmass, at least one operator)",
+        snapshot=Snapshot(value=81.0, unit="% of landmass (≥1 operator, high confidence)", year=2025, date="July 2025"),
+        source=Source(
+            name="Ofcom Connected Nations 2025 (England Report, published 19 Nov 2025)",
+            url="https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
+            accessed="2026-07-18",
+            notes="England-wide outdoor 5G coverage from at least one mobile network operator at Ofcom's 'high confidence' level: 81% of England's landmass as of July 2025, up from 76% the year before - the only two comparable annual figures this session could confirm, so the trend below has just those two points (below the spec's usual 3-point minimum; stated explicitly per the 'genuine search effort' allowance rather than fabricating earlier years). 5G standalone (5G SA) coverage is lower: 85% (high confidence) / 75% (very high confidence) of England outside premises. For context, England's 4G coverage from all four mobile operators combined reached 90% of landmass in the same report, with indoor coverage 97-99% in urban areas versus 77-85% in rural areas per operator - illustrating that London/Lewisham, as a dense urban area, is very likely towards the top of this range, but no Lewisham- or London-specific percentage could be independently confirmed: ofcom.org.uk's interactive local-authority breakdown and ONS's 'Explore local statistics' borough-level 4G/5G indicator pages (which exist and are sourced from this same Ofcom data, last updated 13 May 2026) were both unreachable under this session's network policy.",
+        ),
+        geography=GeographyLevel.ENGLAND,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government numeric target for 5G/4G coverage percentage was confirmed and verified in this session.",
+        trend=[
+            {"period": "2024", "value": 76.0},
+            {"period": "2025", "value": 81.0, "note": "July 2025"},
+        ]
+    )
+
+    digital_exclusion = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="connectivity",
+        indicator="Londoners digitally excluded or with very low digital engagement",
+        snapshot=Snapshot(value=270000, unit="people (London-wide, 'completely offline')", year=2022),
+        source=Source(
+            name="Greater London Authority - Digital Access for All Mission / Digital Inclusion Service pilot",
+            url="https://www.london.gov.uk/talk-london/topics/communities/digital-access-all",
+            accessed="2026-07-18",
+            notes="GLA's own headline estimate at the June 2022 launch of its Digital Inclusion Service pilot (with LOTI and Good Things Foundation): around 270,000 Londoners completely offline and a further c.2 million with very low digital engagement; the pilot aimed to directly support up to 75,000 people over three years. This is a London-wide figure, not Lewisham-specific, and is now several years old with no confirmed newer London-wide re-estimate found this session. The dimension_data_sources.json-listed source - the GLA's 'Mapping Digital Exclusion - supporting data' dataset on the London Datastore (data.london.gov.uk/dataset/mapping-digital-exclusion-supporting-data-206m8), built with LOTI at LSOA level and in principle aggregatable to any borough - could NOT be accessed in this session: data.london.gov.uk was blocked outright by this session's network egress policy (confirmed via repeated connection-level rejections, not just slow/404 responses), so no Lewisham/Ladywell-specific figure could be extracted or independently aggregated from it. That mapping project's five pilot boroughs (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) notably do not include Lewisham, though its toolkit is designed to be replicated for other boroughs. The closest Lewisham-adjacent figure found - '16,000 people digitally excluded in Southwark and Lewisham', cited in Southwark Council's Technology & Digital Inclusion Strategy 2022-2025 from the 2020 ONS Internet Users dataset - combines two boroughs, cannot be disaggregated to Lewisham alone, and is itself now six years old, so it is not used as the snapshot here. No trend/historical series was found for either figure.",
+        ),
+        geography=GeographyLevel.LONDON_INHERITED,
+        confidence=Confidence.LOW,
+        target_text="The GLA's Digital Access for All Mission aims for 'every Londoner to have access to good connectivity, basic digital skills, and the device or support they need to be online' - stated as an ambition rather than a dated numeric target."
+    )
+
+    return [broadband, mobile, digital_exclusion]
 
 def build_community():
     """
@@ -844,7 +1049,7 @@ def build_mobility_dimensions():
         source=Source(
             name="TfL Public Transport Accessibility Levels (PTAL) / WebCAT - GIS Open Data Hub",
             url="https://gis-tfl.opendata.arcgis.com/search?q=PTAL",
-            accessed=datetime.now().date().isoformat(),
+            accessed="2026-07-18",
             notes="TfL does not publish a single official 'ward average' PTAL figure - PTAL is a point-by-point accessibility calculation (walk time and service frequency to the nearest public transport stops), surfaced via TfL's WebCAT tool and this GIS layer, not aggregated to ward or borough geography. Genuine point-level PTAL values within Ladywell were instead sourced from real Lewisham Council planning application assessments, which cite TfL's PTAL methodology directly: 31 Gillian Street (application DC/25/139782, Sept 2025, https://lewisham.moderngov.co.uk/mgAi.aspx?ID=37128) was assessed at PTAL 4 ('good'), while the Ladywell Playtower site on Ladywell Road, immediately by Ladywell station (application DC/22/126038, https://lewisham.moderngov.co.uk/mgAi.aspx?ID=32690), was assessed at PTAL 6 ('excellent'). Lewisham's own Local Plan evidence base describes the borough's northern, western and central neighbourhoods - which include Ladywell, served directly by Ladywell mainline station - as its best-connected, with southern wards less well served. TfL refreshed its PTAL toolkit to 'WebCAT 3.0' in 2025, updating scores from a 2015 baseline (with an interim 2019 borough-level PDF release for Lewisham) to reflect network changes since, including the Elizabeth line. No numeric trend is included: PTAL is a periodic recalculation exercise tied to toolkit versions (2015, 2019, 2025), not an annual survey, and no single ward-wide figure exists to trend consistently across those versions."
         ),
         geography=GeographyLevel.WARD,
@@ -869,7 +1074,7 @@ def build_mobility_dimensions():
         source=Source(
             name="Healthy Streets Scorecard - Results: Outcome Indicators 2024 (Lewisham)",
             url="https://www.healthystreetsscorecard.london/results_2024/results_outcome_indicators_2024/#ResultsModeshare",
-            accessed=datetime.now().date().isoformat(),
+            accessed="2026-07-18",
             notes="Underlying source: TfL's London Travel Demand Survey (LTDS), a continuous household survey of ~8,000 households/year. Lewisham's combined sustainable mode share (walking + cycling + public transport) was 72.8% in the Healthy Streets Scorecard's 2024 results, down from 75.6% the prior round but still well above the 66.0% recorded in the Scorecard's first (2019) year. London-wide comparator over the same rounds: 67.6% in 2024, up from 65.6% (used for 2021-2023) and a 63% baseline in 2015 - Lewisham currently runs several points above the London average despite ranking near the bottom of Inner London (only Wandsworth and Newham score lower among Inner London's 14 boroughs). The most recent Healthy Streets Scorecard (2026, reported July 2026 by Salamander News, a Lewisham community news site) put mode share at approximately 72%, a further ~1-point fall, with Lewisham last in Inner London for the third year running. Caution: the Scorecard's methodology changed between rounds - the 2024 figure used a single year of LTDS data, while the 2025 round moved to a two-year rolling average (2022/23-2023/24) - so year-to-year movements should be read with that in mind, per the Scorecard's own published small-sample-size caveat for borough-level LTDS estimates."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
@@ -1104,24 +1309,124 @@ def build_political_voice():
 
     return [turnout, civic_participation, local_influence]
 
-def build_social_equity():
-    """Social cohesion & trust"""
-    return create_descriptive_dimension(
+def build_social_cohesion_dimensions():
+    """
+    Social cohesion dimension - 4 indicators, all from DCMS's Community Life Survey
+    2024/25 (the same annual release used by the Community and Political Voice
+    dimensions - different questions from the same survey). No ward- or borough-level
+    breakdown could be retrieved for any of the four questions in this session: DCMS/MHCLG
+    boosted the survey's sample from 2023/24 to enable local-authority-level estimates and
+    maps, but gov.uk (including assets.publishing.service.gov.uk, the data-table host) was
+    blocked by this environment's network egress policy throughout this session, so only
+    the England-wide headline figures quoted in the annual releases could be independently
+    verified - a genuinely Lewisham-specific value could not be confirmed for any indicator.
+    No 2022/23 survey round exists (methodology redesign gap - confirmed independently by
+    the political_voice dimension built the same session from the same survey), which is
+    why several trends below skip straight from 2021/22 to 2023/24.
+    All four are descriptive_only (no official GLA/UK Government target for any of them).
+    The Community Life Survey's fieldwork ended 30 March 2025 (last round: 2024/25); it has
+    been succeeded by the Community and Engagement Survey (CES), which will be the source
+    for future updates to this dimension.
+    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    """
+    trust = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
-        dimension_name="social_equity",
-        indicator="% trust in neighbours; % different backgrounds get along; % proud of local area",
-        snapshot=Snapshot(value=0.0, unit="%", year=2024),
+        dimension_name="social_cohesion",
+        indicator="% adults agreed that people in neighbourhood can be trusted",
+        snapshot=Snapshot(value=40, unit="%", year="2024/25"),
         source=Source(
-            name="DCMS Community Life Survey 2024/25",
-            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-            accessed=datetime.now().date().isoformat(),
-            notes="Regional data only. No official targets."
+            name="DCMS Community Life Survey 2024/25 - Neighbourhood and community",
+            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+            accessed="2026-07-18",
+            notes="40% of adults in England agreed that many of the people in their neighbourhood can be trusted in 2024/25, no significant change from 41% in 2023/24; levels have held broadly steady in a 40-42% band since 2016/17, down from 48% when push-to-web data collection began in 2013/14. The 2024/25 release's own regional breakdown shows London running well below the England average (reported in the low-to-mid 30s%, e.g. one regional analysis cites 32%) and a wider local-authority breakdown exists (DCMS/MHCLG boosted the sample from 2023/24, to roughly 175,000 responses from around 10,000 previously, specifically to produce local-authority-level estimates and maps) - but the exact current London-region figure and any Lewisham-specific value could not be independently confirmed in this session because gov.uk's data-table hosts were blocked by this environment's network egress policy. The England-wide headline figure is used here as the only value directly verified this session."
         ),
         geography=GeographyLevel.ENGLAND,
-        confidence=Confidence.LOW
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2013/14", "value": 48},
+            {"period": "2018/19", "value": 40},
+            {"period": "2021/22", "value": 41},
+            {"period": "2023/24", "value": 41},
+            {"period": "2024/25", "value": 40},
+        ]
     )
+
+    cohesion = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="social_cohesion",
+        indicator="% adults agreed people from different backgrounds get along well together",
+        snapshot=Snapshot(value=80.6, unit="%", year="2024/25"),
+        source=Source(
+            name="DCMS Community Life Survey 2024/25 - Neighbourhood and community",
+            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+            accessed="2026-07-18",
+            notes="80.6% of adults in England agreed their local area is a place where people from different backgrounds get along well together in 2024/25, a small but statistically significant fall from 81.4% in 2023/24 and down from a recent peak of 84% in 2021/22 (82% in 2019/20, 83% in 2020/21). Younger adults are consistently less likely to agree than older adults (78% of 16-24s and 79% of 25-34s vs 81-88% among older age bands in 2024/25). As with the trust indicator above, this is the England-wide headline figure; a London-region and local-authority breakdown is also published by DCMS/MHCLG but no specific London or Lewisham value could be independently confirmed in this session because gov.uk's data-table hosts were blocked by this environment's network egress policy."
+        ),
+        geography=GeographyLevel.ENGLAND,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2019/20", "value": 82},
+            {"period": "2020/21", "value": 83},
+            {"period": "2021/22", "value": 84},
+            {"period": "2023/24", "value": 81.4},
+            {"period": "2024/25", "value": 80.6},
+        ]
+    )
+
+    pride = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="social_cohesion",
+        indicator="% proud to live in their local area",
+        snapshot=Snapshot(value=60, unit="%", year="2024/25"),
+        source=Source(
+            name="DCMS Community Life Survey 2024/25 - Neighbourhood and community",
+            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+            accessed="2026-07-18",
+            notes="60% of adults in England agreed they were proud to live in their local area in 2024/25, essentially unchanged from 59% in 2023/24 - the first year this exact question was included in the survey, so no earlier trend exists (predecessor 'neighbourhood belonging'/'attachment to area' questions are related but measure something different, so are not spliced in as earlier points). Of those who felt proud, the most commonly cited reasons in 2024/25 were that the area felt safe (69%), had green/natural spaces (63%), and had respectful, friendly people (58%). England-wide figure only; no London-specific breakdown for this newer question could be confirmed in this session."
+        ),
+        geography=GeographyLevel.ENGLAND,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2023/24", "value": 59, "note": "First year this question was included in the survey - no earlier trend exists"},
+            {"period": "2024/25", "value": 60},
+        ]
+    )
+
+    volunteering = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="social_cohesion",
+        indicator="% adults that have participated in formal/informal volunteering",
+        snapshot=Snapshot(value=54, unit="%", year="2024/25", date="at least once in the last 12 months"),
+        source=Source(
+            name="DCMS Community Life Survey 2024/25 - Volunteering and charitable giving",
+            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-volunteering-and-charitable-giving",
+            accessed="2026-07-18",
+            notes="54% of adults in England took part in formal or informal volunteering at least once in the last 12 months in 2024/25, unchanged from 2023/24 (54%) - the lowest recorded for this combined measure since push-to-web data collection began in 2013/14, down from 62% in both 2019/20 and 2020/21 and 55% in 2021/22. Split by type: formal volunteering (through a group, club or organisation) fell to 28% at least once/year in 2024/25, below the pre-pandemic 37%; informal volunteering (unpaid help to people who aren't relatives, outside any organisation) fell to 44%, down from a pandemic-era peak of 54% in 2020/21, when informal mutual aid rose even as formal volunteering activity paused. A stricter 'at least once a month' version of this same combined measure also exists (33% in both 2023/24 and 2024/25); the 'at least once in the last 12 months' measure is used here as the closer match to the indicator's wording in dimension_data_sources.json ('participated in ... volunteering', with no monthly frequency qualifier). England-wide figure only; local-authority-level volunteering estimates are also published (sample boosted since 2023/24) but no Lewisham-specific figure could be confirmed in this session because gov.uk's data-table hosts were blocked by this environment's network egress policy. Note: Community Life Survey fieldwork ended 30 March 2025; it has been succeeded by the Community and Engagement Survey (CES), which will be the source for future updates to this indicator."
+        ),
+        geography=GeographyLevel.ENGLAND,
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2019/20", "value": 62},
+            {"period": "2020/21", "value": 62},
+            {"period": "2021/22", "value": 55},
+            {"period": "2023/24", "value": 54},
+            {"period": "2024/25", "value": 54},
+        ]
+    )
+
+    return [trust, cohesion, pride, volunteering]
 
 def main():
     """Build all Local Social dimensions with real Lewisham data where available"""
@@ -1130,17 +1435,17 @@ def main():
         *build_housing_dimensions(),
         *build_food_dimensions(),
         *build_water_dimensions(),
-        build_connectivity(),
+        *build_connectivity(),
         *build_community(),
-        build_culture(),
+        *build_culture_dimensions(),
         build_mobility(),
-        build_education(),
+        *build_education(),
         build_energy(),
         build_income(),
         build_jobs(),
         build_peace_justice(),
         *build_political_voice(),
-        build_social_equity(),
+        *build_social_cohesion_dimensions(),
         build_equality(),
     ]
 

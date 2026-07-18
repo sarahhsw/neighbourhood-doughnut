@@ -157,41 +157,46 @@
     "lens": "local_social",
     "dimension": "connectivity",
     "category": "Connected",
-    "indicator": "Broadband coverage data",
+    "indicator": "Full fibre (FTTP) broadband coverage (% of premises)",
     "source_url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
-    "granularity": null
+    "granularity": "UK-wide",
+    "notes": "Original indicator label ('Broadband coverage data') renamed to match what's actually reported. Ofcom's local-authority-level breakdown (via its interactive Connected Nations report / ONS's 'Explore local statistics' borough indicator pages, which republish the same Ofcom data) could not be accessed in this session - ofcom.org.uk, ons.gov.uk and data.london.gov.uk all returned connection-level rejections under this session's network egress policy, not just occasional 403s. UK-wide figure used instead, with a Lewisham-specific secondary-aggregator estimate (thinkbroadband analysis of Ofcom's postcode-level open data, via broadbandexposed.co.uk: 84.2% gigabit-capable coverage, 2026) noted in the pipeline source as context only, since it's one step removed from Ofcom's primary data. A newer 'Connected Nations update: Spring 2026' release exists (~May 2026, data to Jan 2026) - referenced alongside the original Nov 2025 annual report URL since only its headline figures could be confirmed via secondary reporting this session."
   },
   {
     "lens": "local_social",
     "dimension": "connectivity",
     "category": "Connected",
-    "indicator": "Mobile coverage data",
+    "indicator": "5G mobile coverage (% of landmass, at least one operator)",
     "source_url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
-    "granularity": null
+    "granularity": "England-wide",
+    "notes": "Original indicator label ('Mobile coverage data') renamed to match what's actually reported. England-wide outdoor 5G coverage from Ofcom's Connected Nations 2025 England Report; no Lewisham/London-borough-level figure could be confirmed (same access restrictions as the broadband indicator above). Only two comparable annual data points (2024, 2025) were found."
   },
   {
     "lens": "local_social",
     "dimension": "connectivity",
     "category": "Connected",
-    "indicator": "Digital exclusion data",
+    "indicator": "Londoners digitally excluded or with very low digital engagement",
     "source_url": "https://data.london.gov.uk/dataset/mapping-digital-exclusion-supporting-data-206m8",
-    "granularity": null
+    "granularity": "London-wide (LSOA-level source dataset itself inaccessible this session)",
+    "notes": "Original indicator label ('Digital exclusion data') renamed to match what's actually reported. This GLA/LOTI dataset (LSOA-level, in principle aggregatable to any borough) could NOT be accessed in this session - data.london.gov.uk was blocked outright by this session's network egress policy. Its own borough mapping pilot (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) does not include Lewisham. Figure used instead: the GLA's own London-wide headline estimate from its Digital Access for All Mission launch (June 2022) - c.270,000 Londoners completely offline, c.2 million with very low digital engagement - sourced via https://www.london.gov.uk/talk-london/topics/communities/digital-access-all. A Lewisham+Southwark combined figure (16,000 digitally excluded, 2020 ONS data, via Southwark Council's Technology & Digital Inclusion Strategy) was found but could not be disaggregated to Lewisham alone and is now dated, so was not used as the primary figure."
   },
   {
     "lens": "local_social",
     "dimension": "community",
     "category": "Connected",
     "indicator": "% adults reported feeling lonely often or always",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": "Regional"
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-loneliness-and-support-networks",
+    "granularity": "England",
+    "notes": "DCMS Community Life Survey - designed and published at England level only, not borough- or ward-specific. DCMS/MHCLG boosted the survey sample from 2023/24 (to ~175,000 respondents) intending to eventually enable local-authority-level estimates, and the 2024/25 report includes a by-ITL1-region/local-authority chart, but no reliable Lewisham-specific figure could be confirmed. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "community",
     "category": "Connected",
     "indicator": "% adults felt strongly belonged to their neighbourhood",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+    "granularity": "England (regional/ITL1 breakdown also published, incl. London)",
+    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. The survey does publish a London (ITL1) regional breakdown for this indicator specifically, which consistently runs below the England average (e.g. 59% London vs 62% England, 2024/25) - see source notes in the Python builder for the multi-year comparison. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
@@ -241,23 +246,26 @@
     "category": "Enabled",
     "indicator": "GCSE attainment",
     "source_url": "https://trustforlondon.org.uk/data/gcse-attainment-borough/",
-    "granularity": null
+    "granularity": "LA",
+    "notes": "Underlying source: DfE Key Stage 4 performance statistics (published via Explore Education Statistics), which Trust for London's borough chart itself draws on. trustforlondon.org.uk and explore-education-statistics.service.gov.uk were both blocked by this session's network egress policy, so the July 2026 refresh corroborated figures instead via Lewisham Council's own Validated Outcomes 2024 Standards Report (lewisham.moderngov.co.uk) and GOV.UK's Ethnicity Facts and Figures local-authority breakdown of the same DfE dataset - both trace back to the same underlying source."
   },
   {
     "lens": "local_social",
     "dimension": "energy",
     "category": "Enabled",
-    "indicator": "% property with EPC > C",
+    "indicator": "% properties with EPC Band C or above",
     "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/energyperformancecertificateepcbandcoraboveenglandandwales",
-    "granularity": "LA"
+    "granularity": "LA",
+    "notes": "ONS's dataset publishes at local-authority level only (no ward breakdown), and could not be downloaded/parsed directly this session (network egress to ons.gov.uk blocked). Ward-specific figure used instead comes from Lewisham Observatory's 2022 Ward Profiles (point-in-time EPC register breakdown by ward): https://www.observatory.lewisham.gov.uk/wp-content/uploads/2022/05/Ladywell-digital.pdf. London-region comparator drawn from ONS's 'Energy efficiency of housing in England and Wales' annual articles."
   },
   {
     "lens": "local_social",
     "dimension": "energy",
     "category": "Enabled",
-    "indicator": "% household in fuel poverty",
+    "indicator": "% households in fuel poverty",
     "source_url": "https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics",
-    "granularity": null
+    "granularity": "LA",
+    "notes": "DESNZ (formerly BEIS) Sub-regional Fuel Poverty Statistics, LILEE metric, local-authority level. Most recent confirmed Lewisham figure is 2022 data (13.8%, published in the 'Sub-regional fuel poverty in England, 2024 report (2022 data)'); a newer 2024-data release exists (published 14 May 2026) but could not be independently confirmed for Lewisham this session - see source.notes in build_energy() for detail."
   },
   {
     "lens": "local_social",
@@ -321,55 +329,62 @@
     "category": "Empowered",
     "indicator": "% turnout in local election",
     "source_url": "https://lginform.local.gov.uk/reports/lgastandard?mod-area=E92000001&mod-group=E09000023&mod-metric=3361&mod-type=area",
-    "granularity": null
+    "granularity": "Borough (Lewisham) - LG Inform standard report, metric 3361; no ward-level aggregate published",
+    "notes": "Borough-wide combined Mayor-and-council turnout (one ballot, one turnout figure). Cross-checked against Lewisham Council's own election results pages, Wikipedia's Lewisham borough election articles, and Electoral Commission-reported figures via web search, since this environment's network egress policy blocked direct fetches to lginform.local.gov.uk, councilmeetings.lewisham.gov.uk, lewisham.moderngov.co.uk and en.wikipedia.org this session (all returned connection failures or HTTP 403, including via curl with a browser User-Agent). A genuine attempt was made to source true ward-level Ladywell turnout instead (Ladywell's current boundaries have been used since the 2022 election) - individual 2022 candidate vote counts were found, but the full candidate list, total ballots cast and ward electorate needed to compute a ward-level turnout percentage could not be extracted from search-engine snippets alone."
   },
   {
     "lens": "local_social",
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% adults that have engaged in civic participation",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
+    "granularity": "National (England)",
+    "notes": "DCMS Community Life Survey 2024/25, 'Civic engagement and social action' release (published 10 December 2025, covering the 12 months to March 2025). England-wide Official Statistic only - not published below national level, so no Lewisham- or London-specific figure exists. No 2022/23 survey round was published (methodology redesign, fieldwork moved from 3-4 quarters to 2)."
   },
   {
     "lens": "local_social",
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% adults agreed they can personally influence decisions affecting local area",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
+    "granularity": "National (England)",
+    "notes": "Same DCMS Community Life Survey 2024/25 release and same England-only/no-2022/23-round caveats as the civic participation indicator above. This measure has fallen to its lowest recorded level in 2023/24-2024/25 (23-24%), below the 25-28% band held in every year from 2013/14 to 2021/22."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults agreed that people in neighbourhood can be trusted",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+    "granularity": "England",
+    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. DCMS/MHCLG boosted the sample from 2023/24 (to ~175,000 respondents, from ~10,000) specifically to enable local-authority-level estimates and maps, and a London (ITL1) regional breakdown is also published (running well below the England average, in the low-to-mid 30s%), but no reliable London-region or Lewisham-specific figure could be confirmed this session because gov.uk data-table hosts were blocked by this environment's network egress policy. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults agreed people from different backgrounds get along well together",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+    "granularity": "England",
+    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. A regional/local-authority breakdown is also published but no London-region or Lewisham-specific figure could be confirmed this session (same access restrictions as the trust indicator above). No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% proud to live in their local area",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
+    "granularity": "England",
+    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. This question was first introduced in 2023/24, so only two years of trend data exist (59% 2023/24, 60% 2024/25) - no earlier trend is available from this or a predecessor survey. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults that have participated in formal/informal volunteering",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication",
-    "granularity": null
+    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-volunteering-and-charitable-giving",
+    "granularity": "England",
+    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. Figure used is the combined formal-or-informal measure, 'at least once in the last 12 months' (54% in 2024/25) rather than the stricter 'at least once a month' variant (33%) - see source notes in build_local_social_with_real_data.py for the full formal/informal split. Local-authority-level estimates are also published since the 2023/24 sample boost but no Lewisham-specific figure could be confirmed this session. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",

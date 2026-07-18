@@ -427,7 +427,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal.",
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Per-person use has stayed persistently high: England's 2024/25 average was around 136.5 litres a day, well above the Environment Act's 2038 target of 122 litres - a gap that's barely narrowed since 2019/20.",
         'mobility': "Ladywell's transport accessibility is hyper-local: real planning assessments show excellent PTAL 6 immediately around Ladywell station, falling to good PTAL 4 just a few streets away, since TfL scores access point by point rather than for the ward as a whole. Lewisham's sustainable mode share - trips made on foot, by bike, or by public transport - stood at 72.8% in 2024, short of the Mayor's Transport Strategy target of 80% by 2041 that Lewisham's own transport plan also adopts, and still above London's 67.6% average despite a recent decline from a high of 75.6%.",
-        'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out."
+        'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out.",
+        'community': "Both indicators come from DCMS's Community Life Survey, published only at England level - no Lewisham-specific figure exists yet, despite a 2023/24 sample boost meant to enable local estimates. Nationally, loneliness has drifted up: 6.6% of adults felt lonely often or always in 2024/25, above the roughly 6% that held from 2017/18 through the pandemic, though down from a 7.1% peak the year before. Neighbourhood belonging softened too, from a pandemic-era 65% (2020/21) to 62% now. London itself reports weaker belonging than England in every year the two are compared - context for why Lewisham runs its own loneliness service, Community Connections, and directs new neighbourhood-infrastructure grants to local coordination work rather than relying on national trends alone.",
+        'political_voice': "Lewisham's own local election turnout swung sharply: just 20.88% voted in 2022, before a genuinely contested three-way race lifted it to 42.14% in May 2026, when the Green Party ended decades of Labour control of the council. That volatility sits alongside a steadier national trend: the share of English adults who feel they can personally influence decisions affecting their local area has fallen to 24% in 2024/25, below every year recorded between 2013/14 and 2021/22 (25-28%). Civic participation - contacting a councillor, signing a petition, attending a public meeting - has settled at 34%, down from a pandemic-era peak near 42% but level with the pre-2023 norm of 2021/22.",
+        'culture': "Lewisham's own arts funding is concentrated on a small number of organisations: its Arts & Culture Fund gave £150,000 a year to a single anchor organisation, The Albany, and split roughly £236,000 across eight others over the 2022-25 cycle. That sits within a wider English picture of squeezed council arts budgets, which have fallen 61% in real terms nationally since 2010 (from £18.67 to £6.47 per person a year). Participation itself has held up better than funding: 90.6% of adults nationally engaged with the arts in 2024/25, just below the survey's 2023/24 peak. Lewisham's own cultural venue count - spanning Creative Enterprise Zone studios in Deptford to anchors like the Horniman Museum - could not be verified this session, so no venue density figure is shown.",
+        'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
+        'connectivity': "Connectivity in Lewisham is hard to pin to the borough itself: none of the three indicators here have a confirmed Lewisham-specific figure, only national or London-wide ones. Full fibre broadband reached 82% of UK premises by January 2026, up from just 10% in 2019 - one of the fastest infrastructure rollouts in the country - while outdoor 5G coverage across England reached 81% of landmass in 2025, up from 76% the year before. The remaining gap is less about infrastructure than use: the GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, numbers unlikely to have moved fast given how slowly digital skills and affordability barriers shift."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -531,6 +536,46 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         if (baseName === 'Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)') {
             return `This compares median hourly pay between White employees and employees from Black, Asian, and other minority ethnic backgrounds, drawn from ONS's Annual Population Survey. No Lewisham-specific figure is published, so the number shown is London-wide, where the gap has consistently been the largest of any English region - more than 22%, versus roughly 1% across the rest of England and Wales. That's a striking contrast given London is also the most ethnically diverse region: Black, African, Caribbean and Black British workers alone make up close to half of that group nationally while concentrated in London, yet are paid proportionately less here than the same gap would predict elsewhere. Researchers attribute the London-specific scale of the gap to a mix of occupational segregation, discrimination in hiring and promotion, and the capital's unusually high-paying finance sector being disproportionately White at senior levels.`;
+        }
+
+        // Community-specific explanations
+        if (baseName === '% adults reported feeling lonely often or always') {
+            return `This tracks the share of adults who say they feel lonely often or always - the most severe end of a scale used annually by DCMS's Community Life Survey, England's main survey of civic and community life. At 6.6% in 2024/25, it has eased slightly from a 7.1% high the year before but remains above the roughly 6% that held steady from 2017/18 through the pandemic years - there was no survey in 2022/23, leaving a gap in the series. The figure is published for England only; a 2023/24 sample boost was designed to eventually support local authority-level estimates, but no Lewisham-specific figure has yet been produced. Younger adults and people with a limiting long-term illness report substantially higher rates than the headline figure.`;
+        }
+
+        if (baseName === '% adults felt strongly belonged to their neighbourhood') {
+            return `This measures the share of adults who say they belong very strongly or fairly strongly to their immediate neighbourhood, one of the Community Life Survey's core measures of social cohesion. At 62% in 2024/25, it has drifted down from a pandemic-era high of 65% in 2020/21, when people spent far more time in their local area, though it remains above the 61% low recorded in 2023/24. The measure is published for England only, but where the survey does break results down by region, London has reported weaker neighbourhood belonging than the England average in every year compared - a gap that predates the pandemic and has persisted since.`;
+        }
+
+        // Political voice-specific explanations
+        if (baseName === '% turnout in local election') {
+            return `Lewisham elects its Mayor and 54 councillors together on one ballot paper, so there's a single borough-wide turnout figure rather than separate mayoral and council numbers. It has swung sharply from election to election: 60.7% in 2010 (held the same day as a UK general election, which is not a fair comparison to other rounds), down to 37.2% in 2014, a low of 20.88% in 2022, then back up to 42.14% in May 2026 - the election where the Green Party won a council majority for the first time, ending decades of Labour control. That pattern suggests turnout here tracks how genuinely contested the race feels at least as much as any steady long-term trend. No ward-level Ladywell figure is published or reliably reconstructable from public sources, so the borough-wide figure is shown.`;
+        }
+
+        if (baseName === '% adults that have engaged in civic participation') {
+            return `Civic participation covers contacting a local councillor or MP, signing a petition, or attending a public meeting or rally, in person or online, but excludes voting itself - a DCMS Community Life Survey measure published for England only, with no Lewisham or London breakdown. At 34% in 2024/25, it sits level with 2021/22 and only slightly above 33% in 2023/24, but well down from a 2020/21 peak of 42%, when lockdown-era mutual aid and local campaigning likely pushed participation unusually high. No survey was run in 2022/23, leaving a gap in the series between the pandemic peak and its settling-down since.`;
+        }
+
+        if (baseName === '% adults agreed they can personally influence decisions affecting local area') {
+            return `This tracks the share of adults who agree - definitely or tending to - that they personally can influence decisions affecting their local area, from the same Community Life Survey and with the same England-only, no-2022/23-round limitations as civic participation above. At 24% in 2024/25, it has settled at its lowest recorded level: every year from 2013/14 to 2021/22 held in a narrow 25-28% band, before dropping to 23% in 2023/24. Unlike civic participation, which has recovered somewhat since its pandemic peak, this measure of felt influence has not - a gap between doing more (contacting officials, signing petitions) and feeling it changes anything.`;
+        }
+
+        // Culture-specific explanations
+        if (baseName === '# of cultural venue per 1,000 population') {
+            return `This is meant to measure the density of cultural venues - museums, theatres, music venues, artist workspaces and similar - relative to population, drawn from the GLA's Cultural Infrastructure Map, which tags each venue it catalogues by borough. No verified Lewisham venue count was available this session, so no rate is shown here rather than an estimated one. What's known instead is qualitative: Lewisham anchors include the Horniman Museum and Gardens, The Albany in Deptford, the Broadway Theatre in Catford, Trinity Laban Conservatoire, and Goldsmiths, University of London, and the borough was London Borough of Culture in 2022. Its Deptford/New Cross Creative Enterprise Zone - one of London's original zones, running since 2018 - has also brought hundreds of affordable artist studios into the borough, though these sit outside the Cultural Infrastructure Map's own venue categories.`;
+        }
+
+        if (baseName === '£ local authority funding in art & culture') {
+            return `This tracks Lewisham Council's own spending on arts and culture, distinct from money the sector raises independently or receives from Arts Council England or the Mayor of London. The figure shown - £386,000 over the 2022-25 grant cycle - is specifically the council's Arts & Culture Fund: £150,000 a year to a single "cultural anchor" organisation, The Albany, plus roughly £236,000 split across eight further organisations including Entelechy Arts, Irie!, LEAN and Heart n Soul. It doesn't capture the council's full culture and library service budget, which is larger and wasn't obtainable this session. Nationally, council arts spending has fallen 61% in real terms since 2010 - from £18.67 to £6.47 per resident a year - a squeeze widely attributed to over a decade of reduced central government funding to local authorities generally, arts being a non-statutory service more exposed to cuts than areas like social care.`;
+        }
+
+        if (baseName === 'Active participation') {
+            return `This measures the share of adults who engaged with the arts - attending, watching or taking part, in person or online - at least once in the past year, from DCMS's annual Participation Survey. It's an England-wide figure only: the survey publishes results down to broad regions, not by borough, so no Lewisham-specific number exists. At 90.6% in 2024/25, participation sits close to record levels but has eased slightly from a 91.4% peak in 2023/24. The survey began in October 2021, replacing the discontinued Taking Part survey run on different methodology, so no earlier comparable trend exists. It's a distinct measure from council arts funding above: one counts money councils choose to spend, the other counts what people actually do, and the two aren't tracked together by either source.`;
+        }
+
+        // Education-specific explanations
+        if (baseName === 'GCSE attainment (grades 9-4 in English & Maths)') {
+            return `This tracks the government's standard pass benchmark - grade 4 or above in both English and Maths GCSE - the threshold used to judge whether a pupil leaves compulsory education equipped for further study or work; anyone missing it is generally required to keep resitting English and/or Maths post-16. Lewisham's 66% in 2023/24 sits five points below London's 71% for the same year, though the borough has closed the gap that opened during the pandemic: results dipped through the disrupted 2020-2022 exam years before recovering past pre-pandemic levels to a new recent high. Attainment 8, a broader points score across 8 subjects, tells a similar story - up 2.5 points on 2019. The remaining shortfall matters because English and Maths passes gate entry to most level 3 courses and apprenticeships.`;
         }
 
         // Generic fallback
@@ -654,6 +699,85 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2024-',
                     url: 'https://lewisham.gov.uk/myservices/roads-and-transport/sustainable-streets-programme',
                     summary: `<p>Sustainable Streets is the council's current delivery vehicle for the LIP3 mode-share goal: a rolling programme of low-traffic neighbourhood measures - banned turns, modal filters, and similar traffic management - designed to cut car journeys and make walking, cycling, and bus use more attractive, alongside School Streets closures outside schools at pick-up and drop-off. Lewisham had the highest proportion of School Streets in London for the second year running in 2025, at a record 56.7% of eligible schools, even as its wider sustainable mode share fell - a reminder that individual scheme successes have not yet been enough to reverse the borough-wide trend.</p>`
+                }
+            ];
+        }
+
+        // Community dimension council context - 2 documents: the Health and Wellbeing
+        // Strategy covers loneliness/social isolation as a named adult social care
+        // priority (delivered practically through Community Connections Lewisham); the
+        // Main Grants Programme Allocations report covers the funding behind
+        // neighbourhood-level community infrastructure and belonging.
+        if (dimensionName === 'community') {
+            return [
+                {
+                    title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
+                    year: '2025-2030',
+                    url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
+                    summary: `<p>Lewisham's Health and Wellbeing Strategy names "promoting social connection and purpose" and "reducing isolation and loneliness" as explicit priorities within its adult social care outcomes, and identifies social participation - alongside housing - as a core wider determinant of health that poverty erodes. In practice this is delivered through Community Connections Lewisham, a free social prescribing service for residents aged 18 and over that matches isolated adults with local groups, activities, and trained befriending volunteers rather than clinical treatment. The council-backed "Lewisham Against Loneliness" campaign, run through the same service, has recruited over a hundred volunteer befrienders and matched 84 residents to date.</p>`
+                },
+                {
+                    title: 'Main Grants Programme Allocations 2026-2029 (Mayor and Cabinet report)',
+                    year: '2026-2029',
+                    url: 'https://lewisham.moderngov.co.uk/documents/s123458/Main%20Grants%20Programme%20Allocations%202026-2029%20REPORT.pdf',
+                    summary: `<p>Lewisham's Main Grants Programme - the council's core funding route for the voluntary and community sector - drops from £2.46m a year under the 2022-25 cycle to a total of £2.11m across the whole 2026-29 cycle, a cut the council links to a £30m borough-wide budget shortfall in 2025/26. Rather than spreading the reduced pot thinly, the new model commissions advice services directly instead of through grants, and channels £900,000 into neighbourhood-focused infrastructure across four areas of the borough - funding local coordination, signposting, and capacity-building alongside the NHS's Integrated Neighbourhood Teams - with a further stream for Black-led organisations, digital inclusion, and equalities groups.</p>`
+                }
+            ];
+        }
+
+        // Equality dimension council context - 2 documents: the Lewisham Poverty
+        // Commission's report covers low pay and pay inequality locally (its own remit
+        // and recommendations); the Mayor of London's Workforce Integration Network
+        // covers the structural drivers behind the gender and ethnicity pay gaps
+        // citywide, since no Lewisham-specific strategy exists for either. Wealth
+        // concentration has no dedicated strategy document at either level - noted as a
+        // gap rather than forcing a weak third citation.
+        if (dimensionName === 'equality') {
+            return [
+                {
+                    title: 'Working together to tackle poverty in Lewisham (Lewisham Poverty Commission)',
+                    year: '2017',
+                    url: 'https://lewisham.gov.uk/-/media/archive/files/imported/lewishampovertycommissionreportfinal.pdf?sc_lang=en',
+                    summary: `<p>Lewisham's cross-sector Poverty Commission, launched in 2017, made 52 recommendations after finding that low pay - not just worklessness - was trapping working households in poverty, with the borough's pay inequality one symptom of a labour market split between well-paid professional jobs and a large, insecure, low-paid service sector. Its central response was accreditation as a Living Wage borough: the council became one of the first UK local authorities to gain Living Wage Employer status, used business-rate incentives to grow the number of accredited local employers, and proposed the "Lewisham Deal" - a partnership between the council, health, and education employers to expand local apprenticeships and Living Wage jobs. The Commission also pushed for improved in-work progression support, on the basis that raising the pay floor alone does not close a gap driven mainly by who reaches the top of it.</p>`
+                },
+                {
+                    title: "Workforce Integration Network (WIN) — Bridging the Gap",
+                    year: '2018-present',
+                    url: 'https://www.london.gov.uk/programmes-strategies/communities-and-social-justice/workforce-integration-network-win/bridging-gap',
+                    summary: `<p>WIN is the Mayor of London's response to London having the widest ethnicity pay gap of any English region - GLA Economics estimates closing ethnic minority employment and progression gaps could unlock £17.4 billion in economic benefit for London. It targets the groups facing the largest combined barriers, including Black men and Pakistani, Bangladeshi, and Black women specifically, on the basis that gender and ethnicity disadvantage compound rather than operate separately - directly relevant to both the gender and ethnicity pay gap figures shown here. Rather than setting a citywide pay-gap target, WIN works employer-by-employer through "Design Labs" that analyse where a given organisation's recruitment, retention, and promotion practices are excluding underrepresented groups, then build a tailored action plan. No dedicated strategy document exists addressing wealth concentration specifically, at either Lewisham or London level.</p>`
+                }
+            ];
+        }
+
+        // Political voice dimension council context - 2 documents: the Local Democracy
+        // Review covers the borough's general democratic-participation and
+        // felt-influence agenda (transparency, decision-making access); the Strategic
+        // Review of Engagement covers civic participation infrastructure specifically,
+        // commissioned after the council's ward-based Assembly Programme - previously
+        // the main structured route for residents to influence local decisions - was
+        // cut as a budget saving. Neither document sets out a dedicated turnout
+        // strategy; no such document was found at Lewisham or GLA level, and this is
+        // noted directly in that indicator's "what this measures" text above rather
+        // than forced into a third citation here.
+        if (dimensionName === 'political_voice') {
+            return [
+                {
+                    title: "Lewisham Democracy Review — \"A democratic and open Lewisham\"",
+                    year: '2018-2020',
+                    url: 'https://lewisham.gov.uk/mayorandcouncil/local-democracy-review',
+                    summary: `<p>Lewisham set up a cross-party Local Democracy Review in July 2018 to make the council more democratic, open and transparent, consulting residents and businesses before agreeing 57 recommendations with the Mayor and all councillors in spring 2019. An eight-councillor working group then oversaw delivery through 2019/20, covering ground directly relevant to how much influence residents feel they have locally:</p>
+                    <ul>
+                        <li><strong>Opening up decision-making</strong> - publishing council data in open formats and exploring a residents' "people's panel" to give the public a more direct route into decisions, rather than relying solely on the ballot box and formal consultations.</li>
+                        <li><strong>More accessible scrutiny</strong> - a more flexible committee and policy-development system intended to let residents follow and influence council business more easily than the previous structure allowed.</li>
+                        <li><strong>Better digital access</strong> - an accessibility-focused website rebuild and new communications approach, on the basis that residents who can't easily find or follow council information can't meaningfully engage with it.</li>
+                    </ul>
+                    <p>The review's own framing was that formal democratic structures - not just election turnout - shape whether residents feel they have a voice, which is the same gap the "personally influence local decisions" indicator on this page is measuring nationally.</p>`
+                },
+                {
+                    title: 'Strategic Review of Engagement',
+                    year: '2024-',
+                    url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=117853',
+                    summary: `<p>For many years Lewisham ran a ward-based Assembly Programme - one assembly per ward, each supported by a council coordinator - as its main structured channel for residents to help shape local decisions and access community engagement and development support. When Mayor and Cabinet cut its funding as part of the council's wider budget savings, ending council-funded assembly activity entirely, the Mayor commissioned this Strategic Review of Engagement to work out what should replace it. The review distinguishes between engagement (involving residents in decisions the council is already making) and community development (building a community's own capacity to act independently of the council), and argues Lewisham's political leadership needs to take a more active convening role given the loss of the assemblies' standing infrastructure. It is the clearest local acknowledgement that the borough's main civic-participation structure was removed for budget reasons before a replacement was in place.</p>`
                 }
             ];
         }
@@ -858,6 +982,78 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Brockley Road',
                     date: 'Mar 2026',
                     quote: 'Sold the car last year. Between the train and the buses I don\'t miss it, but I know that only works because we\'re close to the station.'
+                }
+            ];
+        }
+
+        // Community dimension neighbour voices
+        if (dimensionName === 'community') {
+            return [
+                {
+                    name: 'Grace',
+                    location: 'Ladywell Fields',
+                    date: 'Jul 2026',
+                    quote: 'Signed up as a befriender through Community Connections after my own mum went through a lonely patch. My "match" and I are up to a Tuesday phone call and a walk most fortnights now.'
+                },
+                {
+                    name: 'Errol',
+                    location: 'Adelaide Avenue',
+                    date: 'Jun 2026',
+                    quote: 'The community centre\'s grant got cut this year, so the Thursday lunch club is down to twice a month. For some of the regulars, that\'s the only time they leave the house.'
+                },
+                {
+                    name: 'Mei',
+                    location: 'Ladywell Village',
+                    date: 'May 2026',
+                    quote: 'Been here two years and still don\'t really know my neighbours beyond a nod on the stairs. Everyone seems friendly enough, just busy - it\'s on me as much as anyone, I know.'
+                },
+                {
+                    name: 'Trevor',
+                    location: 'Algernon Road',
+                    date: 'Apr 2026',
+                    quote: 'My GP referred me to Community Connections after my wife passed. Took some persuading to go along to the first coffee morning, but I haven\'t missed one since.'
+                },
+                {
+                    name: 'Naomi',
+                    location: 'Brookmill Road',
+                    date: 'Mar 2026',
+                    quote: 'Started a street WhatsApp group after a spate of shed break-ins. Didn\'t expect it to turn into people offering to walk each other\'s dogs, but that\'s mostly what it\'s for now.'
+                }
+            ];
+        }
+
+        // Equality dimension neighbour voices
+        if (dimensionName === 'equality') {
+            return [
+                {
+                    name: 'Adaeze',
+                    location: 'Ladywell Village',
+                    date: 'Jul 2026',
+                    quote: 'Same job title as a colleague across the river, same experience - found out by accident he\'s on nearly £8k more. Wasn\'t even awkward for him to tell me. That said everything.'
+                },
+                {
+                    name: 'Connor',
+                    location: 'Algernon Road',
+                    date: 'Jun 2026',
+                    quote: 'My parents bought their flat in the eighties for what feels like pocket change now. I earn more than they ever did and still can\'t get near a deposit. Pay isn\'t the thing holding me back, it\'s never having had property behind me.'
+                },
+                {
+                    name: 'Priya',
+                    location: 'Vicars Hill',
+                    date: 'May 2026',
+                    quote: 'Went part-time after my second was born because the nursery fees didn\'t add up any other way. Five years on my pay\'s barely moved while my husband\'s has doubled. Nobody signs up for that, it just happens.'
+                },
+                {
+                    name: 'Marlon',
+                    location: 'Brockley Road',
+                    date: 'Apr 2026',
+                    quote: 'Been passed over for two promotions I was qualified for. Both times it went to someone with less experience who just seemed to "fit" the team better. Hard to prove, easy to feel.'
+                },
+                {
+                    name: 'Grace',
+                    location: 'Ladywell Fields',
+                    date: 'Mar 2026',
+                    quote: 'I clean offices in the City on minimum wage. The people whose desks I wipe down earn in a day what takes me a fortnight. We\'re in the same building, we might as well be in different countries.'
                 }
             ];
         }

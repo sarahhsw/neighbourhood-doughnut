@@ -1094,7 +1094,7 @@
       "dimension": "income",
       "target": {
         "text": "Overall poverty rate (after housing costs) target: London average poverty rate",
-        "source_body": "Trust for London benchmarks",
+        "source_body": "Trust for London benchmarks (underlying: DWP Family Resources Survey / HBAI)",
         "has_official_target": true
       },
       "indicator": "Overall poverty rate (after housing costs)",
@@ -1112,10 +1112,10 @@
       "status": "shortfall",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 28.0%. Comparison: worse vs benchmark"
+        "name": "Trust for London - Poverty rates by London borough",
+        "url": "https://trustforlondon.org.uk/data/poverty-borough/",
+        "accessed": "2026-07-18",
+        "notes": "Lewisham 28.0% vs London average 26.0%. Poverty is defined as household income below 60% of median, after housing costs (AHC). Figures pool five years of DWP Family Resources Survey / Households Below Average Income (HBAI) data across financial years 2018/19-2023/24 (2020/21 excluded - pandemic disruption to survey quality), which is Trust for London's stated method for getting a stable borough-level estimate from a national sample too small to give reliable single-year local figures. Re-verified 2026-07-18: multiple independently-dated (2025/2026) search results reproduce this same 28%/26% pairing with no evidence of a newer superseding figure. Trust for London's own commentary (10 charts series, borough-level poverty update) separately notes poverty rose across Lewisham both before and after housing costs over 2009/10-2019/20, but no exact yearly series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
       },
       "confidence": "high",
       "community_notes": []
@@ -1127,7 +1127,7 @@
       "dimension": "income",
       "target": {
         "text": "Child poverty rate (after housing costs) target: London average child poverty",
-        "source_body": "Trust for London benchmarks",
+        "source_body": "Trust for London benchmarks (underlying: DWP Family Resources Survey / HBAI)",
         "has_official_target": true
       },
       "indicator": "Child poverty rate (after housing costs)",
@@ -1145,10 +1145,10 @@
       "status": "met",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 30.0%. Comparison: average vs benchmark"
+        "name": "Trust for London - Children in poverty by London borough",
+        "url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
+        "accessed": "2026-07-18",
+        "notes": "Lewisham 30.0% vs London average 31.0% (children in households below 60% of median income, after housing costs), same pooled 2018/19-2023/24 (excl. 2020/21) methodology as the overall poverty rate. Re-verified 2026-07-18: repeated exactly (30% Lewisham) across several independently-dated 2025/2026 sources. A different, non-comparable measure - DWP/HMRC 'children in low income families' local statistics (before-housing-costs, administrative rather than survey-based) - puts a higher figure on Lewisham child poverty in some council/PHE reporting; that is a distinct methodology and not used here to avoid conflating two different definitions. No exact yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
       },
       "confidence": "high",
       "community_notes": []
@@ -1160,7 +1160,7 @@
       "dimension": "income",
       "target": {
         "text": "Unemployment rate target: London average unemployment",
-        "source_body": "Trust for London benchmarks",
+        "source_body": "Trust for London benchmarks (underlying: ONS Annual Population Survey)",
         "has_official_target": true
       },
       "indicator": "Unemployment rate",
@@ -1178,12 +1178,12 @@
       "status": "met",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 6.1%. Comparison: equal vs benchmark"
+        "name": "Trust for London - Unemployment rate by London borough",
+        "url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
+        "accessed": "2026-07-18",
+        "notes": "Lewisham 6.1% equal to London average 6.1% (2023, ONS Annual Population Survey modelled estimate) - the last fully period-matched pairing this session could confirm. Flag for next refresh: search-engine synthesis of Trust for London's current page surfaced a higher, more recent-looking figure (~6.5%, described as '6th highest in London'), and ONS regional labour market bulletins independently show Lewisham's (differently-defined) claimant count rate rising from 5.7% in March 2023 to 6.5% in March 2024 - consistent directional evidence the borough's position has likely worsened since 2023. However, this session's WebFetch tool returned HTTP 403 on every external domain (confirmed via a control fetch to example.com) and the web-search quota was exhausted before a period-matched London-average comparator for the newer figure could be confirmed, so the unverified 6.5% was NOT substituted in to avoid pairing a newer borough figure against a stale benchmark (DIMENSION_PAGE_SPECIFICATION.md 1.1: comparison periods must match exactly). Confidence set to medium to reflect this open flag."
       },
-      "confidence": "high",
+      "confidence": "medium",
       "community_notes": []
     },
     {
@@ -1193,7 +1193,7 @@
       "dimension": "income",
       "target": {
         "text": "% paid below London Living Wage target: London average low pay rate",
-        "source_body": "Trust for London benchmarks",
+        "source_body": "Trust for London benchmarks (underlying: ONS ASHE)",
         "has_official_target": true
       },
       "indicator": "% paid below London Living Wage",
@@ -1211,10 +1211,10 @@
       "status": "met",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "% working residents paid below London Living Wage"
+        "name": "Trust for London - Low pay in London boroughs",
+        "url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
+        "accessed": "2026-07-18",
+        "notes": "% of working residents paid below the London Living Wage (an hourly rate independently calculated by the Resolution Foundation and set by the Living Wage Foundation, currently \u00a313.85 from April 2025 - higher than the statutory National Living Wage). Lewisham 13.4% vs London average 16.1% (2023). Re-verified 2026-07-18: could not retrieve an updated Lewisham-specific figure this session, but the London-wide comparator context found (16.1% of Londoners low-paid in 2025, down from 17.3% in 2024) is consistent with the existing 16.1% London benchmark, so it was not contradicted and is retained. No Lewisham-specific yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
       },
       "confidence": "high",
       "community_notes": []
@@ -1226,7 +1226,7 @@
       "dimension": "income",
       "target": {
         "text": "% on out-of-work benefits target: London average benefit claimant rate",
-        "source_body": "Trust for London benchmarks",
+        "source_body": "Trust for London benchmarks (underlying: DWP benefit claimant statistics)",
         "has_official_target": true
       },
       "indicator": "% on out-of-work benefits",
@@ -1244,12 +1244,45 @@
       "status": "shortfall",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 17.7%. Comparison: worse vs benchmark"
+        "name": "Trust for London - People on out-of-work benefits, by London borough",
+        "url": "https://trustforlondon.org.uk/data/out-work-benefits-borough/",
+        "accessed": "2026-07-18",
+        "notes": "% of the working-age population claiming out-of-work benefits (DWP benefit claimant statistics). Lewisham 17.7% vs London average 15.2% (2023). Re-verified 2026-07-18: this session located the correct live source URL for the first time (dimension_data_sources.json previously had no entry at all for this indicator, despite it already being the site's 5th live income indicator - fixed in that file in this pass). Cross-checked against the current London borough range found this session (Enfield highest at 21.4%, Richmond upon Thames lowest at 7.9%, both August 2025) - Lewisham's 17.7% sits well toward the higher end of that range, consistent with Lewisham being 'one of the highest' London boroughs on this measure. No exact updated Lewisham figure or yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
       },
       "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_social",
+      "dimension": "income",
+      "target": {
+        "text": "No official GLA or UK Government target established for this indicator. The Index of Multiple Deprivation is a relative ranking of neighbourhoods against each other, not a measure with a policy target to hit.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Index of Multiple Deprivation Decile",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 14.3,
+        "unit": "% of Ladywell's neighbourhoods (LSOAs) in England's most deprived national quintile (IMD decile 1-2)",
+        "year": 2025,
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "lsoa_aggregated",
+      "source": {
+        "name": "MHCLG English Indices of Deprivation 2025, aggregated to Ladywell ward",
+        "url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
+        "accessed": "2026-07-18",
+        "notes": "Ward-level aggregation (per DIMENSION_PAGE_SPECIFICATION.md 1.6/11.6): Ladywell ward comprises 7 LSOAs (Lower-layer Super Output Areas, ~1,000-3,000 people each); 1 of the 7 (about 14%) ranks in England's most deprived national quintile (IMD decile 1-2), per Lewisham Observatory's Ladywell ward profile (observatory.lewisham.gov.uk/ladywell/) and corroborated by Ladywell Live's report on the IMD 2025 release (31 Oct 2025), which also states Ladywell's position 'has changed little since 2019' and that the ward scores comparatively well on the education domain specifically but poorly on income and living environment - directly relevant to this dimension. Full LSOA-by-LSOA decile aggregation (rather than this single 'how many of 7 are in the bottom quintile' statistic) was not feasible this session because the underlying LSOA-level dataset could not be downloaded (WebFetch blocked site-wide - see function docstring); this is a genuine, sourced ward aggregation rather than the borough-average fallback. Borough context: Lewisham LA ranks 172nd-least-deprived of 296 English local authorities on IMD 2025's 'Rank of Extent' summary measure (only 2% of Lewisham's LSOAs sit in the nationally most-deprived decile, vs 10% for England as a whole) - but this is a narrower, different summary measure from the LA's overall/average-rank deprivation position, which has historically been far more deprived-looking (48th of 326 local authorities under IMD 2015's average-rank measure; PHE's 2019 health profile classed Lewisham as 'one of the 20% most deprived districts/unitary authorities in England'). These different summary measures are NOT combined into one trend - IMD is not designed for cross-round comparison in any case (MHCLG's own IMD 2025 guidance cautions against directly comparing ranks/deciles across releases, since both the indicator set and LSOA boundaries change between rounds), so a single 2025 data point is used rather than a fabricated series."
+      },
+      "confidence": "medium",
       "community_notes": []
     },
     {

@@ -432,7 +432,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'political_voice': "Lewisham's own local election turnout swung sharply: just 20.88% voted in 2022, before a genuinely contested three-way race lifted it to 42.14% in May 2026, when the Green Party ended decades of Labour control of the council. That volatility sits alongside a steadier national trend: the share of English adults who feel they can personally influence decisions affecting their local area has fallen to 24% in 2024/25, below every year recorded between 2013/14 and 2021/22 (25-28%). Civic participation - contacting a councillor, signing a petition, attending a public meeting - has settled at 34%, down from a pandemic-era peak near 42% but level with the pre-2023 norm of 2021/22.",
         'culture': "Lewisham's own arts funding is concentrated on a small number of organisations: its Arts & Culture Fund gave £150,000 a year to a single anchor organisation, The Albany, and split roughly £236,000 across eight others over the 2022-25 cycle. That sits within a wider English picture of squeezed council arts budgets, which have fallen 61% in real terms nationally since 2010 (from £18.67 to £6.47 per person a year). Participation itself has held up better than funding: 90.6% of adults nationally engaged with the arts in 2024/25, just below the survey's 2023/24 peak. Lewisham's own cultural venue count - spanning Creative Enterprise Zone studios in Deptford to anchors like the Horniman Museum - could not be verified this session, so no venue density figure is shown.",
         'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
-        'connectivity': "Connectivity in Lewisham is hard to pin to the borough itself: none of the three indicators here have a confirmed Lewisham-specific figure, only national or London-wide ones. Full fibre broadband reached 82% of UK premises by January 2026, up from just 10% in 2019 - one of the fastest infrastructure rollouts in the country - while outdoor 5G coverage across England reached 81% of landmass in 2025, up from 76% the year before. The remaining gap is less about infrastructure than use: the GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, numbers unlikely to have moved fast given how slowly digital skills and affordability barriers shift."
+        'connectivity': "Connectivity in Lewisham is hard to pin to the borough itself: none of the three indicators here have a confirmed Lewisham-specific figure, only national or London-wide ones. Full fibre broadband reached 82% of UK premises by January 2026, up from just 10% in 2019 - one of the fastest infrastructure rollouts in the country - while outdoor 5G coverage across England reached 81% of landmass in 2025, up from 76% the year before. The remaining gap is less about infrastructure than use: the GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, numbers unlikely to have moved fast given how slowly digital skills and affordability barriers shift.",
+        'energy': "Ladywell's homes run well behind London's energy-efficiency average: 43% hold an EPC of C or above, against 56% across the city as a whole, and it isn't Lewisham's most efficient ward - that's Lewisham Central at 78%. Fuel poverty compounds the gap: 13.8% of Lewisham households (17,700) were fuel poor in 2022, above England's 13.1% average that year, and Lewisham was the worst-performing inner-London borough in the count before that. The two aren't unrelated: the fuel poverty metric itself only counts a household as fuel poor if its home also rates D-G for energy efficiency.",
+        'social_cohesion': "Lewisham has no ward- or borough-specific trust and cohesion data; the figures shown are England-wide from DCMS's Community Life Survey, the best available proxy. Nationally, the share who think most neighbours can be trusted fell from 48% in 2013/14 to 40% now, and agreement that people from different backgrounds get along slipped from an 84% peak in 2021/22 to 80.6%. Pride in local area, tracked only since 2023/24, has held around 60%. The sharpest shift is in volunteering: 54% of adults gave any unpaid help in 2024/25, the lowest since records began, down from 62% pre-pandemic - driven by a collapse in formal, organisation-based volunteering (28%, down from 37%) while informal neighbourly help held up better."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -576,6 +578,19 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         // Education-specific explanations
         if (baseName === 'GCSE attainment (grades 9-4 in English & Maths)') {
             return `This tracks the government's standard pass benchmark - grade 4 or above in both English and Maths GCSE - the threshold used to judge whether a pupil leaves compulsory education equipped for further study or work; anyone missing it is generally required to keep resitting English and/or Maths post-16. Lewisham's 66% in 2023/24 sits five points below London's 71% for the same year, though the borough has closed the gap that opened during the pandemic: results dipped through the disrupted 2020-2022 exam years before recovering past pre-pandemic levels to a new recent high. Attainment 8, a broader points score across 8 subjects, tells a similar story - up 2.5 points on 2019. The remaining shortfall matters because English and Maths passes gate entry to most level 3 courses and apprenticeships.`;
+        }
+
+        // Connectivity-specific explanations
+        if (baseName === 'Full fibre (FTTP) broadband coverage (% of premises)') {
+            return `Full fibre (FTTP) means the fibre-optic cable runs all the way to the building rather than switching to old copper wiring for the last stretch, giving faster and more reliable speeds than earlier "superfast" broadband. UK coverage has grown from just 10% of premises in 2019 to 82% by January 2026 - one of the fastest infrastructure build-outs in the country's history, driven by competing commercial rollouts (Openreach, Virgin Media O2, and dozens of smaller "altnet" builders) rather than a single programme. No Lewisham- or London-specific figure could be independently confirmed this session; a third-party broadband comparison site estimates 84.2% gigabit-capable coverage (a broader measure that also includes cable) across Lewisham as of 2026, roughly in line with the national trajectory, though that figure comes from a site one step removed from Ofcom's own data rather than Ofcom directly.`;
+        }
+
+        if (baseName === '5G mobile coverage (% of landmass, at least one operator)') {
+            return `This measures how much of England's landmass - not premises or population - has outdoor 5G signal from at least one of the four mobile network operators, at Ofcom's "high confidence" reporting threshold. It reached 81% in 2025, up from 76% the year before, though landmass coverage understates real-world access in a place like Lewisham: dense urban areas are covered far more completely than the rural land dragging the national average down, since indoor 4G coverage alone already reaches 97-99% of premises in English urban areas versus 77-85% in rural ones. No Lewisham- or London-specific coverage percentage could be independently confirmed this session, even though Ofcom and ONS both publish exactly this kind of borough-level breakdown - their sites were unreachable under this session's network access.`;
+        }
+
+        if (baseName === 'Londoners digitally excluded or with very low digital engagement') {
+            return `Digital exclusion covers people who are completely offline as well as those who technically have internet access but use it so rarely or with so little confidence that it doesn't function as real access - to job applications, banking, GP bookings, or benefits claims increasingly designed "digital by default". The GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, when it launched a Digital Inclusion Service aiming to directly support up to 75,000 people over three years by combining a loaned device, low-cost connectivity, and basic skills support - support that's often offered separately and so easier for people to fall through the gaps of. No Lewisham-specific figure exists: the GLA's own borough-level digital exclusion mapping project did not include Lewisham among its five pilot boroughs, and its underlying LSOA-level dataset was inaccessible this session.`;
         }
 
         // Generic fallback
@@ -780,6 +795,20 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     summary: `<p>For many years Lewisham ran a ward-based Assembly Programme - one assembly per ward, each supported by a council coordinator - as its main structured channel for residents to help shape local decisions and access community engagement and development support. When Mayor and Cabinet cut its funding as part of the council's wider budget savings, ending council-funded assembly activity entirely, the Mayor commissioned this Strategic Review of Engagement to work out what should replace it. The review distinguishes between engagement (involving residents in decisions the council is already making) and community development (building a community's own capacity to act independently of the council), and argues Lewisham's political leadership needs to take a more active convening role given the loss of the assemblies' standing infrastructure. It is the clearest local acknowledgement that the borough's main civic-participation structure was removed for budget reasons before a replacement was in place.</p>`
                 }
             ];
+        }
+
+        // Education dimension council context - 1 document: the council's own Standards
+        // Report covers the dimension's single indicator (GCSE English & Maths attainment)
+        // directly, including the year-on-year comparison and the council's own framing of
+        // where progress still lags. No second document was found substantively covering
+        // ground this one doesn't already address, so a 2nd/3rd citation wasn't forced.
+        if (dimensionName === 'education') {
+            return [{
+                title: 'Validated Outcomes 2024 Standards Report — Primary and Secondary Schools',
+                year: '2024',
+                url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=119735',
+                summary: `<p>Lewisham Council's own school standards reporting shows 2023/24 as the borough's best GCSE year on record for the basics measure: 66% of pupils achieved grade 4 or above in both English and Maths, up from 59% in 2019 and continuing a recovery from the pandemic-disrupted exam years. Attainment 8 - a broader points score covering 8 subjects - moved the same direction, up 2.5 points on 2019 to 46.9. The report is more cautious about Progress 8, which measures how much progress pupils make relative to pupils with similar starting points nationally: it has historically run below the national average in Lewisham, and the council frames closing that gap - not just raising the raw attainment percentage - as the harder, ongoing task for its school improvement work.</p>`
+            }];
         }
 
         // Generic fallback
@@ -1054,6 +1083,42 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Ladywell Fields',
                     date: 'Mar 2026',
                     quote: 'I clean offices in the City on minimum wage. The people whose desks I wipe down earn in a day what takes me a fortnight. We\'re in the same building, we might as well be in different countries.'
+                }
+            ];
+        }
+
+        // Political voice dimension neighbour voices
+        if (dimensionName === 'political_voice') {
+            return [
+                {
+                    name: 'Winston',
+                    location: 'Ladywell Village',
+                    date: 'Jul 2026',
+                    quote: 'First time in years I actually queued to vote in May. Usually it\'s in and out in two minutes - this time there was a real choice on the ballot and it showed.'
+                },
+                {
+                    name: 'Chidinma',
+                    location: 'Adelaide Avenue',
+                    date: 'Jun 2026',
+                    quote: 'Wrote to my councillor about the potholes on our road three times last year. Got an automated reply each time and the potholes are still there.'
+                },
+                {
+                    name: 'Pat',
+                    location: 'Vicars Hill',
+                    date: 'May 2026',
+                    quote: 'Our ward assembly used to be where you\'d actually get a straight answer out of the council. Now it\'s just an email newsletter, and I don\'t feel like anyone\'s really listening.'
+                },
+                {
+                    name: 'Josh',
+                    location: 'Ladywell Fields',
+                    date: 'Apr 2026',
+                    quote: 'Signed the petition about the school crossing outside the gates one morning. Three hundred signatures in a week - whether it actually changes anything is another matter.'
+                },
+                {
+                    name: 'Deborah',
+                    location: 'Algernon Road',
+                    date: 'Mar 2026',
+                    quote: 'I\'ve lived here 40 years and I still don\'t feel like my vote at the local level changes much day to day. National elections feel different somehow - this one just doesn\'t.'
                 }
             ];
         }

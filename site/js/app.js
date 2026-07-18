@@ -988,6 +988,31 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
+        // Peace & justice dimension council context - 1 document: the Safer Lewisham
+        // Partnership Plan is the statutory Crime and Disorder Reduction Partnership plan and
+        // is the single policy document that owns both this page's indicators (recorded crime
+        // levels, and - since crime deprivation feeds directly into the wider Index of
+        // Multiple Deprivation - the neighbourhood-level disadvantage the plan's targeting is
+        // meant to respond to). As with social_cohesion above, this session's network egress
+        // policy blocked direct retrieval of the PDF's full text; the priorities and remit
+        // summarised below are corroborated by multiple independent search results (the
+        // document itself, plus council committee agenda items referencing it) rather than a
+        // single source, but were not verified by reading the source PDF directly.
+        if (dimensionName === 'peace_justice') {
+            return [{
+                title: 'Safer Lewisham Partnership Plan 2023-2024',
+                year: '2023-2024',
+                url: 'https://councilmeetings.lewisham.gov.uk/documents/s107714/Safer%20Lewisham%20Partnership%20Plan%202023.pdf',
+                summary: `<p>The Safer Lewisham Partnership is the borough's statutory crime and disorder reduction partnership - the council, Metropolitan Police, London Fire Brigade, probation and health services working together under a legal duty to audit crime, disorder and drug misuse locally, consult on the findings, and set a joint response. Its plan organises that response around a small number of priorities:</p>
+                <ul>
+                    <li><strong>Reducing youth violence and knife crime</strong> - continuing a public health approach to serious youth violence, treating it as a preventable harm shaped by wider social conditions rather than purely a policing problem.</li>
+                    <li><strong>Tackling violence against women and girls</strong> - a five-strand response (prevent, protect, recover, pursue, partnership) spanning early intervention, victim support, and holding perpetrators to account.</li>
+                    <li><strong>Reducing sexual exploitation and drug-related harm</strong> - partnership work targeting exploitation and the disorder associated with drug misuse across the borough.</li>
+                </ul>
+                <p>The partnership reports quarterly, chaired by the elected Mayor, giving elected oversight of a response that spans well beyond what the police alone can address.</p>`
+            }];
+        }
+
         // Generic fallback
         return null;
     }
@@ -1512,6 +1537,42 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Ladywell Fields',
                     date: 'Mar 2026',
                     quote: 'Zero-hours contract at the warehouse means some weeks are fine and some weeks I\'m £150 short. Budgeting is impossible when you don\'t know what you\'re earning until the rota comes out.'
+                }
+            ];
+        }
+
+        // Peace & justice dimension neighbour voices
+        if (dimensionName === 'peace_justice') {
+            return [
+                {
+                    name: 'Malachi',
+                    location: 'Algernon Road',
+                    date: 'Jul 2026',
+                    quote: 'Two phone snatchings on our road in the same month this spring. Neither victim got a follow-up call from police, just a crime reference number for the insurance claim.'
+                },
+                {
+                    name: 'Gemma',
+                    location: 'Ladywell Village',
+                    date: 'Jun 2026',
+                    quote: 'The new Safer Neighbourhood ward panel meeting was useful, but it was the same dozen residents who always show up. Most people round here have no idea it exists.'
+                },
+                {
+                    name: 'Yusuf',
+                    location: 'Vicars Hill',
+                    date: 'May 2026',
+                    quote: 'My bike got taken from outside the station again, third one in two years. I\'ve basically stopped locking anything up outside overnight.'
+                },
+                {
+                    name: 'Connie',
+                    location: 'Adelaide Avenue',
+                    date: 'Apr 2026',
+                    quote: 'A youth worker told me the detached youth work in the park has genuinely calmed things down on a Friday night. It\'s the quiet, unglamorous stuff that seems to actually work.'
+                },
+                {
+                    name: 'Robert',
+                    location: 'Ladywell Fields',
+                    date: 'Mar 2026',
+                    quote: 'I don\'t feel unsafe walking home most nights, but I do notice which streets I avoid without really thinking about it - habits you build up over years, not from any one bad thing happening.'
                 }
             ];
         }

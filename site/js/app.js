@@ -646,6 +646,11 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return `The Index of Multiple Deprivation ranks every neighbourhood in England (LSOAs, small areas of 1,000-3,000 people) against every other on a composite of income, employment, education, health, crime, housing and living-environment deprivation, then groups them into ten equal-sized deciles from 1 (most deprived nationally) to 10 (least). Ladywell ward is made up of 7 such neighbourhoods; one of them - about 14% - falls within the most deprived national fifth (decile 1-2) under the October 2025 release, a position local reporting describes as little changed since the index was last published in 2019. That single deprived neighbourhood sits alongside six others that are not, illustrating how deprivation in Ladywell is localised rather than ward-wide - consistent with the ward's own domain breakdown, which scores comparatively well on education but poorly on income and living environment specifically. Lewisham as a whole ranks 172nd-least-deprived of England's 296 local authorities on the IMD's "extent" measure (only 2% of its neighbourhoods are in the nationally most-deprived decile, against 10% for England), though the borough has historically scored as more deprived on other summary measures - a reminder that "how deprived is Lewisham" depends on which of several official measures is used, and the IMD does not have an official comparative target the way a rate-based indicator would.`;
         }
 
+        // Peace & justice-specific explanations
+        if (baseName === 'Crime rate per 1,000 population') {
+            return `This is Lewisham's recorded crime rate - crimes reported to and recorded by the Metropolitan Police, divided by population, not a survey of residents' experience of crime. At roughly 93 per 1,000 residents in the year to early 2026, the borough runs a little above London's own average, though exactly how far above depends on which population base is used for the comparison. Violence and sexual offences are the single largest category the police record here, both boroughwide and in Ladywell specifically, ahead of theft, robbery and criminal damage. The Metropolitan Police also publishes this data at ward level every month, which would let a genuinely Ladywell-specific rate be calculated directly against the ward's own population rather than the borough-wide figure shown here - a more precise version of this indicator to pursue as that dataset becomes easier to draw from directly.`;
+        }
+
         // Generic fallback
         return null;
     }
@@ -947,6 +952,40 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 url: 'https://lewisham.gov.uk/myservices/business/london-living-wage',
                 summary: `<p>Lewisham Council is itself accredited as a London Living Wage employer and runs a local scheme encouraging other borough employers to accredit too, on top of the Living Wage Foundation's national accreditation programme. As of this session's research, 95 employers in the borough were accredited, covering 7,605 employees paid at or above the London Living Wage rather than the lower statutory minimum. Accreditation is the main lever a council has some direct control over on this indicator - it can set pay for its own staff and contracts and lobby local employers, but it cannot set the statutory minimum wage or compel private employers to pay above it, which is why the borough's 13.4% low-pay rate reflects the wider London labour market as much as any single local policy.</p>`
             }];
+        }
+
+        // Social cohesion dimension council context - 2 documents, both current and
+        // cross-referenced across multiple independent official URLs (launch announcements,
+        // committee/decision records, an official launch-event video for the Action Plan),
+        // which is why they're used despite a constraint worth stating plainly: this
+        // session's network egress policy blocked every attempt to directly fetch and read
+        // either document's full text (gov.uk, moderngov.co.uk and every other external
+        // domain returned connection-level rejections, confirmed via repeated direct and
+        // proxied attempts). The specific facts below - dates, partner organisations,
+        // priority/objective names - are corroborated by multiple independent search results
+        // rather than a single source, but were not verified by reading the source PDFs
+        // directly, so summaries are kept to what could be cross-confirmed rather than
+        // written as if the full documents had been read. Two older Lewisham documents
+        // specifically about volunteering (a 2012-2017 Volunteering Strategy titled "Valuing
+        // Our Community", and a 2011/12 Community and Voluntary Sector Review) were also
+        // found but are now well past their own end dates with no confirmed successor, so
+        // are not used here - DIMENSION_PAGE_SPECIFICATION.md 3.1 requires verifying a
+        // document is the latest version, and neither of those two is current policy.
+        if (dimensionName === 'social_cohesion') {
+            return [
+                {
+                    title: 'Lewisham Community Action Plan 2024 (Lewisham Strategic Partnership)',
+                    year: '2024-2030',
+                    url: 'https://lewisham.gov.uk/-/media/0-mayor-and-council/strategic-partnership/lewisham-community-action-plan-2024---print-file.pdf',
+                    summary: `<p>Lewisham's Strategic Partnership - the council working alongside the NHS, the Metropolitan Police, London Fire Brigade, Goldsmiths University of London, Phoenix Community Housing and voluntary-sector partners including Lewisham Local - launched a Community Action Plan in July 2024, shaped by engagement with over 1,000 residents and building on an earlier borough-wide "Lewisham 2030" listening campaign. It sets six long-term objectives running to 2030; two speak directly to this page's indicators - improving residents' health, wellbeing and housing, and celebrating the borough's diverse communities while challenging inequality based on race, disability, sexuality, gender and other characteristics. Lewisham Local, the charity behind the borough's volunteering and community-group infrastructure (500+ groups supported, 4,000+ volunteering hours facilitated a year), is a named delivery partner, tying the plan directly to this page's volunteering indicator.</p>`
+                },
+                {
+                    title: 'Lewisham Corporate Strategy 2022-2026',
+                    year: '2022-2026',
+                    url: 'https://lewisham.gov.uk/-/media/files/lewisham-council-corporate-plan-2022-2026.ashx',
+                    summary: `<p>Lewisham's Corporate Strategy organises the council's work around seven priorities, including Open Lewisham, Health and Wellbeing, Safer Communities and Cleaner and Greener. Two threads running through it speak to trust and cohesion specifically: a commitment to listen to and co-design services with residents, reaching people whose voices are seldom heard, and the council's own description of Lewisham as a "Borough of Sanctuary" and London's leading borough for refugee resettlement. It also commits to what it calls the "Lewisham Way" of working - maintaining and strengthening the council's collaboration with the borough's voluntary and community sector rather than running services alone, the same sector this page's volunteering indicator tracks participation in.</p>`
+                }
+            ];
         }
 
         // Generic fallback

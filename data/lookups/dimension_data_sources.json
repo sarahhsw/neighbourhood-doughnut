@@ -204,15 +204,17 @@
     "category": "Connected",
     "indicator": "# of cultural venue per 1,000 population",
     "source_url": "https://data.london.gov.uk/dataset/cultural-infrastructure-map-2025-2rj5o",
-    "granularity": "GLA"
+    "granularity": "London boroughs",
+    "notes": "GLA Cultural Infrastructure Map 2025 tags each catalogued venue (grassroots music venues, artist workspaces, museums, theatres, LGBT+ venues, etc.) by borough, so a per-1,000-population rate is computable in principle. No Lewisham venue count could be extracted this session (data.london.gov.uk and the interactive map at apps.london.gov.uk/cim were both unreachable under this environment's network policy) - see source.notes on the Python dimension for what was and was not found. Lewisham ONS mid-2024 population: 301,255."
   },
   {
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
-    "indicator": "\u00a3 local authority funding in art & culture",
+    "indicator": "£ local authority funding in art & culture",
     "source_url": "https://www.equity.org.uk/campaigns-policy/elections-2026/local-government-arts-funding-tracker",
-    "granularity": null
+    "granularity": "Local authority",
+    "notes": "Equity/Autonomy Institute Local Government Arts Funding Tracker (equity.org.uk) covers 317 English local authorities, 2010/11-2024/25 net arts spend; the site could not be fetched this session, so the Lewisham figure used on the ward page was sourced directly from the council's own committee papers instead (Main Grants Programme 2022-25 appendix, lewisham.moderngov.co.uk, doc ID s113598): the Arts & Culture Fund totalled £386,000 over 2022-25. England-wide comparator from press coverage of the tracker: average council arts spend per resident fell from £18.67/year (2010/11) to £6.47/year (2024/25), a 61% real-terms fall."
   },
   {
     "lens": "local_social",
@@ -220,7 +222,8 @@
     "category": "Connected",
     "indicator": "Active participation",
     "source_url": "https://www.gov.uk/government/statistics/participation-survey-2024-25-annual-publication/main-report-for-the-participation-survey-april-2024-to-march-2025",
-    "granularity": null
+    "granularity": "England",
+    "notes": "DCMS Participation Survey publishes England headline figures plus ITL1/ITL2 regional breakdowns for some sub-questions - no local authority or ward-level breakdown exists. Indicator used: % of adults who engaged with the arts (attending, watching or taking part, physically or digitally) in the last 12 months - 90.6% in 2024/25, down slightly from a 91.4% peak in 2023/24. Survey began October 2021 (replacing the discontinued Taking Part survey, different methodology), so no earlier trend exists."
   },
   {
     "lens": "local_social",
@@ -292,7 +295,7 @@
     "indicator": "% paid below London Living Wage",
     "source_url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
     "granularity": null,
-    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE). London Living Wage is independently calculated by the Resolution Foundation and set by the Living Wage Foundation (\u00a313.85/hour from April 2025) - higher than the statutory National Living Wage."
+    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE). London Living Wage is independently calculated by the Resolution Foundation and set by the Living Wage Foundation (£13.85/hour from April 2025) - higher than the statutory National Living Wage."
   },
   {
     "lens": "local_social",

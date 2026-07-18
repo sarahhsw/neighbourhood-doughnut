@@ -434,7 +434,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
         'connectivity': "Connectivity in Lewisham is hard to pin to the borough itself: none of the three indicators here have a confirmed Lewisham-specific figure, only national or London-wide ones. Full fibre broadband reached 82% of UK premises by January 2026, up from just 10% in 2019 - one of the fastest infrastructure rollouts in the country - while outdoor 5G coverage across England reached 81% of landmass in 2025, up from 76% the year before. The remaining gap is less about infrastructure than use: the GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, numbers unlikely to have moved fast given how slowly digital skills and affordability barriers shift.",
         'energy': "Ladywell's homes run well behind London's energy-efficiency average: 43% hold an EPC of C or above, against 56% across the city as a whole, and it isn't Lewisham's most efficient ward - that's Lewisham Central at 78%. Fuel poverty compounds the gap: 13.8% of Lewisham households (17,700) were fuel poor in 2022, above England's 13.1% average that year, and Lewisham was the worst-performing inner-London borough in the count before that. The two aren't unrelated: the fuel poverty metric itself only counts a household as fuel poor if its home also rates D-G for energy efficiency.",
-        'social_cohesion': "Lewisham has no ward- or borough-specific trust and cohesion data; the figures shown are England-wide from DCMS's Community Life Survey, the best available proxy. Nationally, the share who think most neighbours can be trusted fell from 48% in 2013/14 to 40% now, and agreement that people from different backgrounds get along slipped from an 84% peak in 2021/22 to 80.6%. Pride in local area, tracked only since 2023/24, has held around 60%. The sharpest shift is in volunteering: 54% of adults gave any unpaid help in 2024/25, the lowest since records began, down from 62% pre-pandemic - driven by a collapse in formal, organisation-based volunteering (28%, down from 37%) while informal neighbourly help held up better."
+        'social_cohesion': "Lewisham has no ward- or borough-specific trust and cohesion data; the figures shown are England-wide from DCMS's Community Life Survey, the best available proxy. Nationally, the share who think most neighbours can be trusted fell from 48% in 2013/14 to 40% now, and agreement that people from different backgrounds get along slipped from an 84% peak in 2021/22 to 80.6%. Pride in local area, tracked only since 2023/24, has held around 60%. The sharpest shift is in volunteering: 54% of adults gave any unpaid help in 2024/25, the lowest since records began, down from 62% pre-pandemic - driven by a collapse in formal, organisation-based volunteering (28%, down from 37%) while informal neighbourly help held up better.",
+        'income': "Poverty in Lewisham runs above the London average - 28% of residents after housing costs, against 26% citywide - despite an unemployment rate roughly level with London's. That combination points to low pay rather than joblessness as the sharper driver: 17.7% of working-age residents are on out-of-work benefits, well above London's 15.2%, even though residents in work are less likely than the London average to be paid below the London Living Wage. Deprivation is unevenly spread within the ward itself - one of Ladywell's seven neighbourhoods sits among the most deprived tenth of England, despite the ward scoring comparatively well on education specifically."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -600,6 +601,48 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         if (baseName === '% households in fuel poverty') {
             return `Fuel poverty (the Low Income Low Energy Efficiency, or LILEE, metric DESNZ adopted in 2021) counts a household as fuel poor only if it is both low income and living in a home rated Band D or below for energy efficiency - not simply a measure of who struggles to pay a bill. Lewisham's 13.8% (17,700 households) in the 2022 data year sat above England's 13.1% average for the same year, and in the 2020 data year Lewisham was reported as the worst-performing inner-London borough at 14.1%. Because the metric bundles income with home efficiency, it moves with both energy prices and how much of the housing stock has been retrofitted. Some Lewisham neighbourhoods run far higher than the borough figure - the council's own public health reporting cites rates above 23% in parts of the borough and above 20% in seven small areas.`;
+        }
+
+        // Social cohesion-specific explanations
+        if (baseName === '% adults agreed that people in neighbourhood can be trusted') {
+            return `This asks whether people agree that "many of the people in this neighbourhood can be trusted" - a standard measure of generalised social trust, one of the building blocks researchers use to explain why some communities find it easier than others to organise informally, look out for each other, or resolve local disputes without escalation. Nationally it has fallen from 48% when the survey moved to its current push-to-web method in 2013/14 to 40% now, though it's held in a narrow 40-42% band since 2016/17 rather than continuing to slide. No Lewisham figure could be confirmed this session, but the survey's own regional breakdown shows London running well below the England average - trust tends to read lower in dense, high-turnover urban areas than in smaller or more settled communities, a pattern this borough likely shares.`;
+        }
+
+        if (baseName === '% adults agreed people from different backgrounds get along well together') {
+            return `This tracks agreement that the local area is "a place where people from different backgrounds get along well together" - a direct measure of perceived cohesion in ethnically and culturally mixed areas like Lewisham, one of London's more diverse boroughs. The England figure rose through the pandemic years, from 82% in 2019/20 to an 84% peak in 2021/22, before easing back to 80.6% by 2024/25. Younger adults are consistently the least likely age group to agree (78-79% among 16-34s versus up to 88% among older residents), a gap that has held across multiple survey years rather than being a one-off finding. No Lewisham-specific figure exists, so this shows the national backdrop the borough sits within rather than a local reading.`;
+        }
+
+        if (baseName === '% proud to live in their local area') {
+            return `This is one of the newer questions DCMS added to the Community Life Survey, first asked in 2023/24, so it doesn't yet have the decade-long trend some of the other indicators on this page do. 60% of adults in England agreed they were proud to live in their local area in 2024/25, barely moved from 59% the year before. Where people explained their pride, feeling safe was the most common reason (69%), ahead of green and natural spaces (63%) and friendly, respectful neighbours (58%) - a reminder that "pride" here is downstream of concrete, everyday conditions rather than an abstract attachment. No Lewisham-specific breakdown of this measure has been published yet.`;
+        }
+
+        if (baseName === '% adults that have participated in formal/informal volunteering') {
+            return `This combines two kinds of unpaid help: "formal" volunteering through a group, club or organisation, and "informal" volunteering - helping someone who isn't a relative, unprompted by any organisation, like checking on an elderly neighbour or picking up shopping for someone unwell. 54% of adults in England did at least one of the two in the 12 months to 2024/25, the lowest this combined measure has been since the survey adopted its current method in 2013/14, and down from 62% just before the pandemic. The two halves moved differently: formal volunteering has fallen further and shows no sign of recovering (28%/year, down from 37% pre-pandemic), while informal help - which spiked to 54% in 2020/21 as mutual-aid groups formed during lockdowns - has cooled but held up comparatively better (44%). No Lewisham-specific figure exists; this is the England-wide picture only.`;
+        }
+
+        // Income-specific explanations
+        if (baseName === 'Overall poverty rate (after housing costs)') {
+            return `Poverty here means household income below 60% of the local median, after housing costs are deducted - the standard relative-poverty threshold. At 28% in Lewisham, above London's 26% average, this figure pools five years of national survey data (2018/19-2023/24, excluding the pandemic-disrupted 2020/21) because a single year's sample is too small to give a reliable borough-level estimate on its own - which also means it moves slowly and won't reflect a single year's cost-of-living shock immediately. Trust for London's wider commentary notes poverty rose in Lewisham across the decade to 2019/20, both before and after housing costs, though a precise year-by-year figure for that rise could not be confirmed this session.`;
+        }
+
+        if (baseName === 'Child poverty rate (after housing costs)') {
+            return `This is the same after-housing-costs, 60%-of-median poverty measure as the overall rate, restricted to households with children, using the same pooled 2018/19-2023/24 survey data. At 30%, Lewisham sits fractionally below London's 31% average - a rare indicator on this page where the borough isn't worse than the city as a whole - though both figures mean roughly three in ten local children are growing up below the poverty line. A different, more commonly quoted figure in council and public health reporting - DWP/HMRC's "children in low income families" statistic - uses a before-housing-costs, administrative definition and typically shows a higher number for Lewisham; it isn't used here because mixing the two definitions would overstate the change between them.`;
+        }
+
+        if (baseName === 'Unemployment rate') {
+            return `This is the Annual Population Survey's modelled unemployment rate - the share of economically active residents who are out of work and looking for it - not the narrower claimant count of people actually receiving unemployment-related benefits. At 6.1%, Lewisham matched the London average in 2023, the most recent period this session could confirm with a matching benchmark. Other, differently-defined figures suggest the picture may have worsened since: Lewisham's claimant count rate (a distinct, administrative measure) rose from 5.7% to 6.5% between March 2023 and March 2024. Unemployment being level with London while out-of-work benefit claims and poverty both run higher points toward low pay and economic inactivity, not joblessness itself, as the sharper local pressure.`;
+        }
+
+        if (baseName === '% paid below London Living Wage') {
+            return `The London Living Wage is an hourly rate calculated independently by the Resolution Foundation to reflect London's actual cost of living (£13.85 from April 2025), set by the Living Wage Foundation and higher than the government's statutory National Living Wage - employers who pay it do so voluntarily, through accreditation rather than legal requirement. At 13.4%, the share of Lewisham's working residents paid below it runs well under London's 16.1% average, one of the few indicators on this page where the borough compares favourably. That doesn't mean pay is generous locally - it means a smaller share sits below this specific, London-cost-of-living-adjusted floor than in the city overall, even as poverty and benefit claims here remain above average.`;
+        }
+
+        if (baseName === '% on out-of-work benefits') {
+            return `This tracks the share of working-age residents claiming out-of-work benefits (Universal Credit or legacy equivalents, where claimants are not in paid work) - a DWP administrative count, not a survey estimate. At 17.7%, Lewisham runs well above London's 15.2% average, and sits toward the higher end of the London range found this session (Enfield highest at 21.4%, Richmond upon Thames lowest at 7.9%, August 2025). Combined with an unemployment rate level with London's, this gap suggests the gulf isn't primarily people actively looking for work and not finding it, but a wider group - including those with health conditions, caring responsibilities, or otherwise outside the active labour force - relying on out-of-work support.`;
+        }
+
+        if (baseName === 'Index of Multiple Deprivation Decile') {
+            return `The Index of Multiple Deprivation ranks every neighbourhood in England (LSOAs, small areas of 1,000-3,000 people) against every other on a composite of income, employment, education, health, crime, housing and living-environment deprivation, then groups them into ten equal-sized deciles from 1 (most deprived nationally) to 10 (least). Ladywell ward is made up of 7 such neighbourhoods; one of them - about 14% - falls within the most deprived national fifth (decile 1-2) under the October 2025 release, a position local reporting describes as little changed since the index was last published in 2019. That single deprived neighbourhood sits alongside six others that are not, illustrating how deprivation in Ladywell is localised rather than ward-wide - consistent with the ward's own domain breakdown, which scores comparatively well on education but poorly on income and living environment specifically. Lewisham as a whole ranks 172nd-least-deprived of England's 296 local authorities on the IMD's "extent" measure (only 2% of its neighbourhoods are in the nationally most-deprived decile, against 10% for England), though the borough has historically scored as more deprived on other summary measures - a reminder that "how deprived is Lewisham" depends on which of several official measures is used, and the IMD does not have an official comparative target the way a rate-based indicator would.`;
         }
 
         // Generic fallback
@@ -838,6 +881,48 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2022-',
                     url: 'https://www.london.gov.uk/talk-london/topics/communities/digital-access-all',
                     summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer, aiming to directly support up to 75,000 Londoners over three years.</p>`
+                }
+            ];
+        }
+
+        // Energy dimension council context - 2 documents: Lewisham's own public health
+        // reporting covers the cost-of-living/health angle and the within-borough variation
+        // fuel poverty hides; the national Fuel Poverty Strategy covers the statutory
+        // efficiency-band target both indicators sit against.
+        if (dimensionName === 'energy') {
+            return [
+                {
+                    title: 'Lewisham Annual Public Health Report 2023-24 — The cost-of-living crisis and health: impact and action in Lewisham',
+                    year: '2023-24',
+                    url: 'https://lewisham.moderngov.co.uk/documents/s115875/Appendix%20Lewisham%20Annual%20Public%20Health%20Report%202023-24.pdf',
+                    summary: `<p>The council's public health report treats fuel poverty as a direct driver of ill health, not just a household budgeting problem, given the well-established links between cold homes and respiratory illness, cardiovascular strain, and poor mental health. It identifies stark variation within Lewisham itself: some neighbourhoods have fuel poverty rates above 23%, and seven Lower-layer Super Output Areas exceed 20%, both well above the borough's own 13.8% average. Its response sits within the council's wider cost-of-living programme - welfare and debt advice, the Household Support Fund, and referral routes into energy-efficiency and warm-home schemes - rather than a standalone fuel poverty strategy of its own.</p>`
+                },
+                {
+                    title: 'Fuel Poverty Strategy for England (CP 1497)',
+                    year: '2026',
+                    url: 'https://assets.publishing.service.gov.uk/media/6977461bd345446f8ce71ef1/fuel-poverty-strategy-for-england-2026-print-ready-version.pdf',
+                    summary: `<p>England's fuel poverty strategy carries forward a target first set out in 2021: getting as many fuel-poor homes as reasonably practicable to an EPC Band C by 2030, on the reasoning that a more efficient home needs less energy to heat properly whatever happens to energy prices. That target sits behind schemes like ECO4 and the Warm Homes: Local Grant, both of which fund insulation and heating upgrades for low-income households, including in Lewisham. It reflects a shift in emphasis from earlier fuel poverty policy, which leaned more heavily on income support and short-term energy price interventions, towards home retrofit as the more durable fix - directly relevant to a borough where EPC coverage lags the London average.</p>`
+                }
+            ];
+        }
+
+        // Culture dimension council context - 2 documents: Lewisham's own cultural strategy
+        // covers venue distribution and how the council targets its arts funding; the GLA's
+        // Cultural Infrastructure Plan covers the London-wide policy backdrop for the
+        // venue-density indicator (why the Cultural Infrastructure Map exists at all).
+        if (dimensionName === 'culture') {
+            return [
+                {
+                    title: 'We Are Lewisham — A Cultural Strategy for Lewisham 2023-2028',
+                    year: '2023-2028',
+                    url: 'https://lewisham.gov.uk/-/media/in-my-area/arts-and-culture/we-are-lewisham-a-cultural-strategy-for-lewisham-2023-2028.pdf',
+                    summary: `<p>Lewisham's cultural strategy finds that cultural and creative spaces cluster unevenly across the borough - grouped into named cultural quarters such as Deptford Creekside, New Cross and Forest Hill, with fewer dedicated venues in the south - and that affordable creative workspace remains hard to secure for many practitioners. Its own residents' and visitors' survey found parks and open spaces (89%), outdoor events (66%) and libraries (61%) were the local cultural venues people actually attended, ahead of more traditional "cultural infrastructure" categories. The strategy sits behind the council's Arts & Culture Fund, which channels most of its budget through a single "cultural anchor" organisation (The Albany) alongside smaller grants to a handful of others - a deliberately targeted rather than broad-based funding model.</p>`
+                },
+                {
+                    title: 'Cultural Infrastructure Plan — A Call to Action (Mayor of London)',
+                    year: '2019',
+                    url: 'https://www.london.gov.uk/sites/default/files/cultural_infrastructure_plan_online.pdf',
+                    summary: `<p>The Mayor's Cultural Infrastructure Plan responds to what the GLA describes as a "worrying decline" in London's cultural spaces, with grassroots music venues and LGBT+ venues losing significant numbers over the preceding decade before recently stabilising. It set out a policy "toolbox" for boroughs and developers to protect and grow cultural space through planning decisions, and underpins the Cultural Infrastructure Map that catalogues venues borough by borough - including Lewisham's - to track where infrastructure is being lost or added over time. The plan treats venue density as a planning and land-use issue as much as a cultural-policy one: once a cultural space is lost to redevelopment, it rarely returns.</p>`
                 }
             ];
         }
@@ -1186,6 +1271,114 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Marsala Road',
                     date: 'Mar 2026',
                     quote: 'Volunteer with a homework club near the station. The kids who come every week, their confidence going into exams is night and day compared to the ones who only show up occasionally.'
+                }
+            ];
+        }
+
+        // Connectivity dimension neighbour voices
+        if (dimensionName === 'connectivity') {
+            return [
+                {
+                    name: 'Idris',
+                    location: 'Algernon Road',
+                    date: 'Jul 2026',
+                    quote: 'Full fibre finally got installed on our street after years of "coming soon" on the checker. Working from home doesn\'t mean the video call freezing every time someone else in the house streams something now.'
+                },
+                {
+                    name: 'Pauline',
+                    location: 'Ladywell Village',
+                    date: 'Jun 2026',
+                    quote: 'I\'m 81 and my grandson set up a tablet for me last year. Still won\'t do my prescriptions online though - if I get it wrong I\'ve got no one at the chemist to ask.'
+                },
+                {
+                    name: 'Femi',
+                    location: 'Brookmill Road',
+                    date: 'May 2026',
+                    quote: 'Mobile signal indoors is patchy on our block - I have to stand by the window to take calls. Fine most days, less fine when you\'re on hold to a council department for forty minutes.'
+                },
+                {
+                    name: 'Connor',
+                    location: 'Adelaide Avenue',
+                    date: 'Apr 2026',
+                    quote: 'Cheapest broadband deal near us is still about £24 a month. Doesn\'t sound like much until it\'s one more direct debit you\'re juggling against everything else going up.'
+                },
+                {
+                    name: 'Deborah',
+                    location: 'Ladywell Fields',
+                    date: 'Mar 2026',
+                    quote: 'Run a digital drop-in at the community centre. Most people who come aren\'t scared of computers, they just never had anyone sit with them for twenty minutes and show them once.'
+                }
+            ];
+        }
+
+        // Social cohesion dimension neighbour voices
+        if (dimensionName === 'social_cohesion') {
+            return [
+                {
+                    name: 'Winnie',
+                    location: 'Adelaide Avenue',
+                    date: 'Jul 2026',
+                    quote: 'Been on this street 22 years. Used to know everyone by name; now half the houses turn over every couple of years and I couldn\'t tell you who\'s in most of them.'
+                },
+                {
+                    name: 'Aashiq',
+                    location: 'Algernon Road',
+                    date: 'Jun 2026',
+                    quote: 'Our WhatsApp street group is more active than any actual chatting over the fence these days. Handy when someone\'s bin doesn\'t go out, but it\'s not really the same thing.'
+                },
+                {
+                    name: 'Beatrice',
+                    location: 'Ladywell Village',
+                    date: 'Jun 2026',
+                    quote: 'Used to volunteer at the food bank every Saturday. Had to stop when my hours at work changed - I still feel bad about it, like I dropped something I was supposed to be carrying.'
+                },
+                {
+                    name: 'Youssef',
+                    location: 'Vicars Hill',
+                    date: 'May 2026',
+                    quote: 'What I like about round here is nobody bats an eyelid at difference - my kids\' school run alone tells you ten languages get spoken on that pavement every morning.'
+                },
+                {
+                    name: 'Pat',
+                    location: 'Lewisham Way',
+                    date: 'Apr 2026',
+                    quote: 'Still proud to say I\'m from Ladywell when people ask. Doesn\'t mean I trust every stranger on the street the way I might have twenty years back - that\'s just changed with the area growing.'
+                }
+            ];
+        }
+
+        // Energy dimension neighbour voices
+        if (dimensionName === 'energy') {
+            return [
+                {
+                    name: 'Yusuf',
+                    location: 'Algernon Road',
+                    date: 'Jul 2026',
+                    quote: 'Got quoted £4,000 for loft insulation through a council energy scheme. Sounds like a lot until you\'ve seen what we\'re paying to heat this place every winter.'
+                },
+                {
+                    name: 'Connie',
+                    location: 'Ladywell Fields',
+                    date: 'Jun 2026',
+                    quote: 'Our EPC came back as a D. Landlord says he\'ll "look into it" - he\'s been saying that since 2023.'
+                },
+                {
+                    name: 'Abioye',
+                    location: 'Vicars Hill',
+                    date: 'May 2026',
+                    quote: 'Turned the heating off in February to save money, not because it was warm enough. My kids wore coats indoors for a fortnight.'
+                },
+                {
+                    name: 'Rosa',
+                    location: 'Brookmill Road',
+                    date: 'Apr 2026',
+                    quote: 'New boiler and insulation went in last spring through a grant. First winter since I moved in that the flat actually held the heat.'
+                },
+                {
+                    name: 'Desmond',
+                    location: 'Ladywell Village',
+                    date: 'Mar 2026',
+                    quote: 'Single glazing throughout, Victorian conversion, no cavity walls to insulate even if I could afford to. Some of these houses were never going to hit Band C without gutting them.'
                 }
             ];
         }

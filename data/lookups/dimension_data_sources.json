@@ -271,25 +271,28 @@
     "lens": "local_social",
     "dimension": "income_and_work",
     "category": "Enabled",
-    "indicator": "Poverty rate",
+    "indicator": "Overall poverty rate (after housing costs)",
     "source_url": "https://trustforlondon.org.uk/data/poverty-borough/",
-    "granularity": null
+    "granularity": null,
+    "notes": "Underlying source: DWP Family Resources Survey / Households Below Average Income (HBAI), pooled across financial years 2018/19-2023/24 (2020/21 excluded - pandemic disruption). Poverty = household income below 60% of median, after housing costs."
   },
   {
     "lens": "local_social",
     "dimension": "income_and_work",
     "category": "Enabled",
-    "indicator": "% children in poverty (after housing cost)",
+    "indicator": "Child poverty rate (after housing costs)",
     "source_url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
-    "granularity": null
+    "granularity": null,
+    "notes": "Underlying source: DWP Family Resources Survey / HBAI, same pooled 2018/19-2023/24 (excl. 2020/21) methodology as the overall poverty rate. Distinct from DWP/HMRC \"children in low income families\" local statistics (before-housing-costs, administrative measure) sometimes cited in council/PHE reporting - not used here as it is a different definition."
   },
   {
     "lens": "local_social",
     "dimension": "income_and_work",
     "category": "Enabled",
-    "indicator": "% working residents paid below London Living Wage",
+    "indicator": "% paid below London Living Wage",
     "source_url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
-    "granularity": null
+    "granularity": null,
+    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE). London Living Wage is independently calculated by the Resolution Foundation and set by the Living Wage Foundation (\u00a313.85/hour from April 2025) - higher than the statutory National Living Wage."
   },
   {
     "lens": "local_social",
@@ -297,7 +300,8 @@
     "category": "Enabled",
     "indicator": "Unemployment rate",
     "source_url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
-    "granularity": null
+    "granularity": null,
+    "notes": "Underlying source: ONS Annual Population Survey (APS), modelled local unemployment estimate. Distinct from the DWP/ONS claimant count rate (an administrative measure of benefit claimants, not survey-based unemployment) sometimes quoted alongside it."
   },
   {
     "lens": "local_social",
@@ -305,7 +309,17 @@
     "category": "Enabled",
     "indicator": "Index of Multiple Deprivation Decile",
     "source_url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
-    "granularity": "LSOA"
+    "granularity": "LSOA",
+    "notes": "MHCLG English Indices of Deprivation 2025 (published Oct 2025), LSOA-level scores/ranks aggregated to ward. Ward-level aggregation via Lewisham Observatory's Ladywell ward profile (observatory.lewisham.gov.uk/ladywell/); borough-level context via London Datastore's IMD 2025 exploratory analysis. Not designed for cross-round trend comparison (MHCLG guidance) - indicator set and LSOA boundaries change between releases."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "income_and_work",
+    "category": "Enabled",
+    "indicator": "% on out-of-work benefits",
+    "source_url": "https://trustforlondon.org.uk/data/out-work-benefits-borough/",
+    "granularity": null,
+    "notes": "Underlying source: DWP benefit claimant statistics (working-age population claiming out-of-work benefits). Previously live on site as the dimension's 5th indicator with no entry in this registry at all - added here to close that gap."
   },
   {
     "lens": "local_social",
@@ -392,22 +406,34 @@
     "category": "Empowered",
     "indicator": "Hourly wage ratio",
     "source_url": "https://trustforlondon.org.uk/data/pay-inequality-borough/",
-    "granularity": null
+    "granularity": "London boroughs",
+    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE) via NOMIS. Re-verified 2026-07-17: Lewisham's 80:20 hourly wage ratio is 2.43 vs England's 1.52 average. Trust for London's page shows a 'last updated January 2026' stamp reporting pay inequality has fallen in most London boroughs since the prior release (Lewisham not named among the four exceptions), but this session's WebFetch/curl tools were blocked by the environment's egress policy for trustforlondon.org.uk and ons.gov.uk, so neither the exact updated value nor the multi-year trend behind the interactive chart could be extracted - a follow-up session with working page-fetch access should re-check both."
   },
   {
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
     "indicator": "% wealth hold by poorest 50%",
-    "source_url": null,
-    "granularity": null
+    "source_url": "https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
+    "granularity": "London-wide",
+    "notes": "No Lewisham- or borough-level wealth distribution figure exists (ONS's Wealth and Assets Survey - WAS - isn't designed to support reliable local authority estimates). Uses the GLA's London-wide figure instead: bottom half of London households hold 4% of the capital's total wealth. Underlying source: ONS Wealth and Assets Survey microdata via the GLA's Economic Fairness programme. Caveat: the Office for Statistics Regulation removed WAS's Official Statistics accreditation in June 2025, citing insufficient quality - treat as indicative. An older, now-archived Trust for London page (trustforlondon.org.uk/data/wealth-distribution/, 2018-2020 WAS data) put London's bottom-half wealth share at 6.8% and England's poorest-50%-share at 9%; not used as the headline figure here since it's no longer updated, but kept as background context."
   },
   {
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
-    "indicator": "Pay gap (ethnic, gender)",
-    "source_url": null,
-    "granularity": null
+    "indicator": "Gender pay gap (mean hourly pay)",
+    "source_url": "https://data.london.gov.uk/economic-fairness/labour-market/gender-pay-gap",
+    "granularity": "London-wide",
+    "notes": "Split out from the former combined 'Pay gap (ethnic, gender)' row - gender and ethnicity pay gaps come from different ONS surveys (ASHE vs Annual Population Survey) and are genuinely distinct measures, so combining them into one number would have hidden more than it showed. No Lewisham-specific figure found (ONS ASHE Table 8 could in principle produce a residence-based local authority figure, but this session's tools could not reach ons.gov.uk to extract it). Uses the GLA's London-wide figure: women's mean hourly pay was 14% below men's in 2023. Underlying source: ONS Annual Survey of Hours and Earnings (ASHE)."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "equality",
+    "category": "Empowered",
+    "indicator": "Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)",
+    "source_url": "https://data.london.gov.uk/economic-fairness/labour-market/ethnicity-pay-gap",
+    "granularity": "London-wide",
+    "notes": "Split out from the former combined 'Pay gap (ethnic, gender)' row - see note on the Gender pay gap row above for why. No Lewisham-specific figure exists (sample sizes in ONS's source surveys are too small for reliable local-authority-by-ethnicity breakdowns). Uses the GLA's London-wide figure: median hourly pay gap between White and Black/Asian/minority ethnic employees is 'more than 22%' (most recent), the largest of any English region, vs roughly 1% across England & Wales outside London. Underlying source: ONS Annual Population Survey. Historical points (2018: 21.7%, 2019: 23.8%) are from ONS's own annual 'Ethnicity pay gaps in Great Britain' regional bulletins."
   }
 ]

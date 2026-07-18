@@ -425,7 +425,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability.",
         'housing': "The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem: MHCLG puts 16% of its homes as non-decent in 2024, well above the 12.9% rate for all tenures. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before.",
         'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal.",
-        'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Per-person use has stayed persistently high: England's 2024/25 average was around 136.5 litres a day, well above the Environment Act's 2038 target of 122 litres - a gap that's barely narrowed since 2019/20."
+        'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Per-person use has stayed persistently high: England's 2024/25 average was around 136.5 litres a day, well above the Environment Act's 2038 target of 122 litres - a gap that's barely narrowed since 2019/20.",
+        'mobility': "Ladywell's transport accessibility is hyper-local: real planning assessments show excellent PTAL 6 immediately around Ladywell station, falling to good PTAL 4 just a few streets away, since TfL scores access point by point rather than for the ward as a whole. Lewisham's sustainable mode share - trips made on foot, by bike, or by public transport - stood at 72.8% in 2024, short of the Mayor's Transport Strategy target of 80% by 2041 that Lewisham's own transport plan also adopts, and still above London's 67.6% average despite a recent decline from a high of 75.6%.",
+        'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out."
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -503,6 +505,32 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         if (baseName === 'Areas of water stress') {
             return `This records a one-off regulatory classification, not a measurement that moves year to year: whether a water company's area has enough water resource, relative to expected demand, to avoid regular restrictions during a drought. Thames Water - which supplies Lewisham - was designated "seriously water stressed" when the Environment Agency first ran this assessment in 2013, and remained so when it repeated the exercise in 2021, alongside several other companies newly added to the list. The designation underpins Thames Water's ability to introduce compulsory water metering and its 2024 Water Resources Management Plan, which forecasts a supply deficit in parts of its area by 2050 without further leakage reduction, demand reduction, and new supply projects including a reservoir and a water recycling scheme.`;
+        }
+
+        // Mobility-specific explanations
+        if (baseName === 'Public Transport Accessibility Levels') {
+            return `PTAL scores how easy it is to reach public transport from a given point, combining walk time to the nearest stops with how frequently services run there - it's calculated location by location, not as a single ward or borough figure. Real Lewisham Council planning assessments within Ladywell show that variation directly: sites right by Ladywell station score PTAL 6 ("excellent"), while sites a few streets away score PTAL 4 ("good") - both comfortably above the London-wide low end of the 0-6b scale, but a reminder that "Ladywell's PTAL" depends heavily on which part of the ward you mean. TfL refreshed its scoring toolkit in 2025 to reflect network changes since its 2015 baseline, including the Elizabeth line.`;
+        }
+
+        if (baseName === '% of trips by sustainable modes') {
+            return `This tracks the share of all trips in Lewisham made by walking, cycling, or public transport, drawn from TfL's London Travel Demand Survey - a continuous household survey rather than a full census of journeys, so borough-level figures can move around with sample size. At 72.8% in 2024, Lewisham sits above London's 67.6% average, but the figure has fallen from a recent high of 75.6% and the borough still ranks near the bottom of Inner London. The Mayor's Transport Strategy - and Lewisham's own transport plan - set a shared goal of 80% by 2041, up from a 63% London-wide baseline in 2015; closing that gap is the explicit aim behind the council's low-traffic-neighbourhood and school streets schemes.`;
+        }
+
+        // Equality-specific explanations
+        if (baseName === 'Pay inequality (80th:20th percentile ratio)') {
+            return `This compares hourly pay at the 80th percentile (higher earners) against the 20th percentile (lower earners) among people working in Lewisham, using ONS's Annual Survey of Hours and Earnings. A ratio of 2.43 means the top-paid fifth earn nearly two and a half times more per hour than the bottom-paid fifth here - noticeably wider than England's 1.52 average, and close to London's own average of around 2.5, reflecting a labour market where well-paid professional and financial jobs sit alongside a large low-paid service sector. Trust for London's data page was refreshed in January 2026 and now reports pay inequality falling in most London boroughs since the previous release; Lewisham was not named among the small number of boroughs where it rose, which suggests some narrowing, though this page could not confirm Lewisham's precise updated figure or reconstruct the year-by-year trend behind it this session.`;
+        }
+
+        if (baseName === '% of wealth held by the poorest 50%') {
+            return `This measures how household wealth - property, pensions, savings, and other assets, not income - is split between the richest and poorest halves of the population, drawn from the ONS Wealth and Assets Survey. No Lewisham or borough figure is published, so the number shown is London-wide: households in the bottom half of London's wealth distribution hold just 4% of the capital's total wealth, while the richest tenth hold more than 60%. Because property makes up a larger share of wealth in London than anywhere else in Great Britain, and London property prices have risen far faster than incomes, this gap is structurally wider here than the England-wide picture (where the poorest half hold closer to a tenth of total wealth). Wealth gaps like this tend to compound over generations, since assets - unlike pay - can be passed on and grow largely independently of work.`;
+        }
+
+        if (baseName === 'Gender pay gap (mean hourly pay)') {
+            return `This compares average hourly pay for men and women across all employee jobs, drawn from ONS's Annual Survey of Hours and Earnings. No Lewisham-specific figure is published, so the number shown - a 14% gap in 2023 - is London-wide. It is driven less by unequal pay for the same job (illegal since 1970) than by occupational segregation and the "motherhood penalty": women remain more likely to work part-time or in lower-paid sectors, often after taking on a larger share of childcare and caring responsibilities. London's gap has been reported as unusually persistent, not falling over the past decade the way the national figure has - a pattern researchers link to the capital's especially high childcare costs and its concentration of very high-paying, male-dominated finance and tech roles at the top of the distribution.`;
+        }
+
+        if (baseName === 'Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)') {
+            return `This compares median hourly pay between White employees and employees from Black, Asian, and other minority ethnic backgrounds, drawn from ONS's Annual Population Survey. No Lewisham-specific figure is published, so the number shown is London-wide, where the gap has consistently been the largest of any English region - more than 22%, versus roughly 1% across the rest of England and Wales. That's a striking contrast given London is also the most ethnically diverse region: Black, African, Caribbean and Black British workers alone make up close to half of that group nationally while concentrated in London, yet are paid proportionately less here than the same gap would predict elsewhere. Researchers attribute the London-specific scale of the gap to a mix of occupational segregation, discrimination in hiring and promotion, and the capital's unusually high-paying finance sector being disproportionately White at senior levels.`;
         }
 
         // Generic fallback
@@ -606,6 +634,26 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2021',
                     url: 'https://www.london.gov.uk/what-we-do/planning/london-plan/current-london-plan/london-plan-chapter-five-londons-response/pol-14',
                     summary: `<p>Because Thames Water's area is seriously water-stressed, the Mayor of London's London Plan requires new homes to be built water-efficient rather than relying on the water company alone to close the gap: Policy 5.15 sets a maximum of 105 litres of mains water per person per day for new residential development (110 including a small allowance), and requires major non-residential schemes to meet the BREEAM "excellent" standard for water use. As the local planning authority, Lewisham Council applies this standard - alongside smart metering, water-saving fittings, and retrofit measures - to development it approves, while the Mayor separately holds water companies to account on leakage and demand reduction through the London Environment Strategy.</p>`
+                }
+            ];
+        }
+
+        // Mobility dimension council context - 2 documents: the borough transport
+        // strategy covers the mode-share target (and PTAL's role in planning) while the
+        // Sustainable Streets programme covers the current delivery mechanism.
+        if (dimensionName === 'mobility') {
+            return [
+                {
+                    title: 'Lewisham Transport Strategy and Local Implementation Plan 2019-2041 (LIP3)',
+                    year: '2019-2041',
+                    url: 'https://lewisham.gov.uk/myservices/roads-and-transport/transport-strategy-and-programmes',
+                    summary: `<p>LIP3 is Lewisham's primary transport strategy, adopted locally in support of the Mayor's Transport Strategy. It commits the borough to the same 80%-by-2041 sustainable mode share goal citywide policy sets, alongside a target for residents to do at least 20 minutes of active travel a day. It also set a shorter-term ambition to cut borough car ownership from 77,715 vehicles in 2019 to 75,100 by 2021. Public Transport Accessibility Levels feed directly into where the strategy - and the Lewisham Local Plan it sits alongside - directs new homes and density: better-connected areas near stations, including the area around Ladywell station itself, are prioritised for growth, while lower-PTAL areas further from it are not.</p>`
+                },
+                {
+                    title: 'Lewisham Council - Sustainable Streets Programme',
+                    year: '2024-',
+                    url: 'https://lewisham.gov.uk/myservices/roads-and-transport/sustainable-streets-programme',
+                    summary: `<p>Sustainable Streets is the council's current delivery vehicle for the LIP3 mode-share goal: a rolling programme of low-traffic neighbourhood measures - banned turns, modal filters, and similar traffic management - designed to cut car journeys and make walking, cycling, and bus use more attractive, alongside School Streets closures outside schools at pick-up and drop-off. Lewisham had the highest proportion of School Streets in London for the second year running in 2025, at a record 56.7% of eligible schools, even as its wider sustainable mode share fell - a reminder that individual scheme successes have not yet been enough to reverse the borough-wide trend.</p>`
                 }
             ];
         }
@@ -774,6 +822,42 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     location: 'Hither Green Lane',
                     date: 'Feb 2026',
                     quote: 'Read that our water company still loses something like a fifth of what it treats to leaks before it even reaches a tap. Hard to take the hosepipe ban seriously after that.'
+                }
+            ];
+        }
+
+        // Mobility dimension neighbour voices
+        if (dimensionName === 'mobility') {
+            return [
+                {
+                    name: 'Oliver',
+                    location: 'Ladywell Station',
+                    date: 'Jul 2026',
+                    quote: 'Trains from Ladywell are brilliant, ten minutes to London Bridge. Walk fifteen minutes the other way towards Whitefoot and it\'s a different story entirely.'
+                },
+                {
+                    name: 'Priya',
+                    location: 'Algernon Road',
+                    date: 'Jun 2026',
+                    quote: 'Gave up cycling to work along the South Circular. Never felt unsafe on the quieter streets, always felt unsafe crossing that one road.'
+                },
+                {
+                    name: 'Marcus',
+                    location: 'Ladywell Fields',
+                    date: 'May 2026',
+                    quote: 'The 171 bus used to come every eight minutes. Now I\'m regularly waiting twenty, and I\'ve started just walking to the station instead.'
+                },
+                {
+                    name: 'Fatima',
+                    location: 'Vicars Hill',
+                    date: 'Apr 2026',
+                    quote: 'My daughter\'s school does a School Street now, no cars at drop-off. Wish more of the roads around it felt that calm the rest of the day too.'
+                },
+                {
+                    name: 'Ben',
+                    location: 'Brockley Road',
+                    date: 'Mar 2026',
+                    quote: 'Sold the car last year. Between the train and the buses I don\'t miss it, but I know that only works because we\'re close to the station.'
                 }
             ];
         }

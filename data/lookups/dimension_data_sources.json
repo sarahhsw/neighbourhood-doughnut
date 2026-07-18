@@ -223,7 +223,8 @@
     "category": "Connected",
     "indicator": "Public Transport Accessibility Levels",
     "source_url": "https://gis-tfl.opendata.arcgis.com/search?q=PTAL",
-    "granularity": null
+    "granularity": "Point-level (TfL WebCAT/GIS layer) - no official ward or borough aggregate published",
+    "notes": "TfL calculates PTAL point-by-point (walk time + service frequency to nearest stops), not aggregated to ward/borough. Real point-level values for Ladywell sourced from Lewisham Council planning application assessments: 31 Gillian Street (DC/25/139782, PTAL 4, https://lewisham.moderngov.co.uk/mgAi.aspx?ID=37128) and Ladywell Playtower by the station (DC/22/126038, PTAL 6, https://lewisham.moderngov.co.uk/mgAi.aspx?ID=32690). TfL's toolkit was refreshed to 'WebCAT 3.0' in 2025 (updating the 2015 baseline, with an interim 2019 Lewisham borough PDF release: https://content.tfl.gov.uk/public-transport-access-levels-lewisham.pdf)."
   },
   {
     "lens": "local_social",
@@ -231,7 +232,8 @@
     "category": "Connected",
     "indicator": "% of trips by sustainable modes",
     "source_url": "https://www.healthystreetsscorecard.london/results_2024/results_outcome_indicators_2024/#ResultsModeshare",
-    "granularity": null
+    "granularity": "London boroughs",
+    "notes": "Underlying source: TfL's London Travel Demand Survey (LTDS), a continuous household survey (~8,000 households/year). Target: Mayor's Transport Strategy / Lewisham LIP3 - 80% of trips by sustainable modes by 2041. Methodology changed between Scorecard rounds (2024: single-year LTDS; 2025 onward: two-year rolling average), so treat year-to-year moves with caution."
   },
   {
     "lens": "local_social",

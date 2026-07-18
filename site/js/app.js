@@ -1383,6 +1383,42 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
+        // Culture dimension neighbour voices
+        if (dimensionName === 'culture') {
+            return [
+                {
+                    name: 'Nadia',
+                    location: 'Ladywell Village',
+                    date: 'Jul 2026',
+                    quote: 'Took my daughter to a free workshop at The Albany last month - brilliant, but it made me realise how much of what\'s on around here runs through that one building.'
+                },
+                {
+                    name: 'Connor',
+                    location: 'Adelaide Avenue',
+                    date: 'Jun 2026',
+                    quote: 'Our am-dram group applied to the council\'s arts fund two years running and got nowhere. I get it, there\'s only so much money, but it always seems to go to the same handful of names.'
+                },
+                {
+                    name: 'Ijeoma',
+                    location: 'Algernon Road',
+                    date: 'May 2026',
+                    quote: 'Everything cultural feels like it\'s either Deptford or nothing. We\'re not that far away but it might as well be a different borough some evenings getting back from a gig.'
+                },
+                {
+                    name: 'Robert',
+                    location: 'Lewisham Way',
+                    date: 'Apr 2026',
+                    quote: 'The library\'s the one place I actually still go regularly. Free, warm, and there\'s always something on for the grandkids - more use to us than any gallery, if I\'m honest.'
+                },
+                {
+                    name: 'Priti',
+                    location: 'Vicars Hill',
+                    date: 'Mar 2026',
+                    quote: 'Went to three different open studios weekends this year. Didn\'t cost me a penny and every one was rammed - people clearly want this stuff, it\'s just not always easy to find out about.'
+                }
+            ];
+        }
+
         // Generic fallback
         return null;
     }

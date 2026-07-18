@@ -493,36 +493,6 @@ def build_income():
 
     return [poverty, child_poverty, unemployment, low_pay, out_of_work_benefits, imd_decile]
 
-def build_jobs():
-    """Jobs dimension - using unemployment rate"""
-    return create_targeted_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="jobs",
-        target=Target(
-            text="Unemployment rate ≤ London average",
-            source_body="ONS Labour Force Survey / Trust for London",
-            has_official_target=True
-        ),
-        indicator="% unemployment rate",
-        threshold=Threshold(value=6.1, unit="%", description="London average unemployment"),
-        snapshot=Snapshot(
-            value=6.1,
-            unit="%",
-            year=2023
-        ),
-        status=Status.MET,
-        source=Source(
-            name="Trust for London - Lewisham Poverty Profile",
-            url=lewisham_data["url"],
-            accessed=lewisham_data["accessed"],
-            notes=f"Lewisham: 6.1% equals London avg. However, out-of-work benefits: 17.7% (above London 15.2%). Low pay: 13.4% (better than London 16.1%)"
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH
-    )
-
 def build_equality():
     """
     Equality dimension - 4 indicators matching data/lookups/dimension_data_sources.json
@@ -1520,15 +1490,14 @@ def main():
         *build_connectivity(),
         *build_community(),
         *build_culture_dimensions(),
-        build_mobility(),
+        *build_mobility_dimensions(),
         *build_education(),
-        build_energy(),
-        build_income(),
-        build_jobs(),
-        build_peace_justice(),
+        *build_energy(),
+        *build_income(),
+        *build_peace_justice(),
         *build_political_voice(),
         *build_social_cohesion_dimensions(),
-        build_equality(),
+        *build_equality(),
     ]
 
     # Save to file

@@ -482,74 +482,32 @@
       "lens": "local_social",
       "dimension": "connectivity",
       "target": {
-        "text": "UK Government's Project Gigabit programme has an ambition of nationwide gigabit-capable coverage; an earlier 85%-by-2025 gigabit-capable milestone was already exceeded by July 2025 (88% in England). This session could not directly access gov.uk to confirm the exact current wording/date of the government's longer-range target, so no specific target figure is asserted here rather than risk citing one imprecisely.",
+        "text": "UK Government's Project Gigabit programme has an ambition of nationwide gigabit-capable coverage; an earlier 85%-by-2025 gigabit-capable milestone was already exceeded by July 2025 (88% in England). The government's exact current wording/date for its longer-range target isn't confirmed here, so no specific target figure is asserted rather than risk citing one imprecisely.",
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Full fibre (FTTP) broadband coverage (% of premises)",
+      "indicator": "Full fibre broadband coverage (% of premises)",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 82.0,
+        "value": 81.0,
         "unit": "%",
         "year": 2026,
-        "date": "January 2026 (interim update)"
+        "date": "17 July 2026"
       },
       "status": "descriptive_only",
-      "geography_of_data": "uk",
+      "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Ofcom Connected Nations 2025 (UK Report, published 19 Nov 2025) + Connected Nations update: Spring 2026 (interim, published ~May 2026, data to January 2026)",
-        "url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
+        "name": "thinkbroadband Local Broadband Statistics (Lewisham), derived from Ofcom's postcode-level open coverage data",
+        "url": "https://labs.thinkbroadband.com/local/lewisham,E09000023",
         "accessed": "2026-07-18",
-        "notes": "UK-wide full-fibre (FTTP) premises coverage, not Lewisham- or London-specific: this session could not directly reach ofcom.org.uk (or any government/data-aggregator domain) to pull Ofcom's own local-authority-level breakdown from its interactive Connected Nations report, so the national series is used here as the only figure independently corroborated across multiple sources this session. A separate, Lewisham-specific figure was found via a third-party broadband-comparison site (broadbandexposed.co.uk, citing thinkbroadband's independent analysis of Ofcom's own postcode-level open coverage data): 'gigabit-capable' coverage (a broader measure than full fibre alone - it also includes Virgin Media's DOCSIS3.1 cable network) of 84.2% of premises in Lewisham as of mid-2026, with postcode-level detail of 86.3% in SE23 and 81.4% in SE14. That figure is plausible and roughly consistent with the national picture but is one step removed from Ofcom's primary data and could not be independently verified this session, so it is not used as the indicator's snapshot - it's noted here as the best available local context. Newer 'Connected Nations update: Spring 2026' page exists with fresher headline figures than the Nov 2025 annual report cited in dimension_data_sources.json; both are referenced above since the interim update's full report text could not be directly confirmed, only its headline figures via secondary reporting (ISPreview, thinkbroadband)."
+        "notes": "80.96% of premises in Lewisham (rounded to 81%) have full-fibre (FTTP) access as of 17 July 2026, per thinkbroadband's local broadband statistics for Lewisham (E09000023) - an independent aggregator that builds its local-authority figures from Ofcom's own postcode-level open coverage dataset rather than running its own survey. This replaces the UK-wide 82% figure previously shown here: a genuine Lewisham-specific figure is available and is preferred over the national one. Ofcom's Connected Nations data is also published as a standalone local-authority indicator on ONS's 'Explore local statistics' service ('Gigabit-capable broadband', Ofcom-sourced, January 2026 vintage), confirming this granularity is officially available, though its interactive chart doesn't expose a plain-text figure; thinkbroadband's number is used as the concrete Lewisham figure instead. No ward-level (Ladywell-specific) breakdown exists - Ofcom and its aggregators publish at local-authority and postcode level, not electoral ward - so borough-level is the most granular figure available. Gigabit-capable coverage (a broader measure that also includes Virgin Media's DOCSIS3.1 cable network) is higher, at 91.57% of Lewisham premises. No historical Lewisham-specific series exists - thinkbroadband's figure is a live snapshot, not an archive - so no trend chart is shown here; nationally, UK-wide full-fibre coverage grew from 10% of premises in 2019 to 82% by January 2026, and Lewisham's local figure sits close to that national trajectory."
       },
       "confidence": "medium",
-      "community_notes": [],
-      "trend": [
-        {
-          "period": "2019",
-          "value": 10.0,
-          "note": "UK-wide, ~3.0m premises"
-        },
-        {
-          "period": "2020",
-          "value": 18.0,
-          "note": "~5.1m premises"
-        },
-        {
-          "period": "2021",
-          "value": 28.0,
-          "note": "~8.2m premises"
-        },
-        {
-          "period": "2022",
-          "value": 42.0,
-          "note": "~12.4m premises"
-        },
-        {
-          "period": "2023",
-          "value": 57.0,
-          "note": "~17.1m premises"
-        },
-        {
-          "period": "2024",
-          "value": 69.0,
-          "note": "~20.7m premises"
-        },
-        {
-          "period": "2025",
-          "value": 78.0,
-          "note": "July 2025 (Connected Nations 2025 annual report); ~23.7m premises. England alone: 79%, up 10 percentage points on July 2024."
-        },
-        {
-          "period": "2026",
-          "value": 82.0,
-          "note": "January 2026, Spring 2026 interim update (headline figure only, via secondary reporting - full report not directly accessible this session)"
-        }
-      ]
+      "community_notes": []
     },
     {
       "ward": "Ladywell",
@@ -569,7 +527,7 @@
       },
       "snapshot": {
         "value": 81.0,
-        "unit": "% of landmass (\u22651 operator, high confidence)",
+        "unit": "% of landmass",
         "year": 2025,
         "date": "July 2025"
       },
@@ -601,31 +559,31 @@
       "lens": "local_social",
       "dimension": "connectivity",
       "target": {
-        "text": "The GLA's Digital Access for All Mission aims for 'every Londoner to have access to good connectivity, basic digital skills, and the device or support they need to be online' - stated as an ambition rather than a dated numeric target.",
+        "text": "No official target exists for this composite risk index - it's designed to identify relative risk, not track progress against a threshold. Lower scores indicate lower risk of digital exclusion.",
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Londoners digitally excluded or with very low digital engagement",
+      "indicator": "Digital exclusion risk score (0-10 scale)",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 270000,
-        "unit": "people (London-wide, 'completely offline')",
-        "year": 2022,
-        "date": null
+        "value": 2.5,
+        "unit": "out of 10 (0 = lowest risk, 10 = highest)",
+        "year": 2021,
+        "date": "DERI v1.5"
       },
       "status": "descriptive_only",
-      "geography_of_data": "london_inherited",
+      "geography_of_data": "lsoa_aggregated",
       "source": {
-        "name": "Greater London Authority - Digital Access for All Mission / Digital Inclusion Service pilot",
-        "url": "https://www.london.gov.uk/talk-london/topics/communities/digital-access-all",
+        "name": "Digital Exclusion Risk Index (DERI) v1.5 - Greater Manchester Combined Authority",
+        "url": "https://github.com/GreaterManchesterODA/Digital-Exclusion-Risk-Index",
         "accessed": "2026-07-18",
-        "notes": "GLA's own headline estimate at the June 2022 launch of its Digital Inclusion Service pilot (with LOTI and Good Things Foundation): around 270,000 Londoners completely offline and a further c.2 million with very low digital engagement; the pilot aimed to directly support up to 75,000 people over three years. This is a London-wide figure, not Lewisham-specific, and is now several years old with no confirmed newer London-wide re-estimate found this session. The dimension_data_sources.json-listed source - the GLA's 'Mapping Digital Exclusion - supporting data' dataset on the London Datastore (data.london.gov.uk/dataset/mapping-digital-exclusion-supporting-data-206m8), built with LOTI at LSOA level and in principle aggregatable to any borough - could NOT be accessed in this session: data.london.gov.uk was blocked outright by this session's network egress policy (confirmed via repeated connection-level rejections, not just slow/404 responses), so no Lewisham/Ladywell-specific figure could be extracted or independently aggregated from it. That mapping project's five pilot boroughs (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) notably do not include Lewisham, though its toolkit is designed to be replicated for other boroughs. The closest Lewisham-adjacent figure found - '16,000 people digitally excluded in Southwark and Lewisham', cited in Southwark Council's Technology & Digital Inclusion Strategy 2022-2025 from the 2020 ONS Internet Users dataset - combines two boroughs, cannot be disaggregated to Lewisham alone, and is itself now six years old, so it is not used as the snapshot here. No trend/historical series was found for either figure."
+        "notes": "The GLA/LOTI 'Mapping Digital Exclusion' dataset previously cited as the intended source for this indicator is genuinely limited to its five pilot boroughs (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) - Lewisham isn't covered, and no Lewisham-specific output has been published from it, confirmed via the London Datastore and LOTI's own project pages. GMCA's Digital Exclusion Risk Index (DERI) does cover every LSOA in England, Scotland and Wales, so Ladywell's 7 constituent LSOAs (E01003273/274/275/276/278/279/291, confirmed via ONS's official LSOA-to-ward best-fit lookup) are all scored. 2.5 is the population-weighted average of those 7 LSOAs' individual DERI scores, using DERI's Great-Britain-normalised variant (England IMD basis) - the only one of DERI's three normalisation options (local authority / nation / Great Britain) that's comparable across different areas, per GMCA's own methodology guide. Scores range from 2.06 to 3.18 across the 7 LSOAs, i.e. genuine within-ward variation rather than a flat borough figure. Ladywell's score sits toward the low end of the 0-10 scale, consistent with Trust for London's own commentary that 'much of London, due to its relatively young demographic and good broadband access, is in the lower range' nationally. Caveat: DERI is a composite built from 11 proxy indicators (deprivation, demography, broadband access) across three domains, not a direct survey of who's actually offline, and several of its components are dated - 'no qualifications', 'social grade' and 'day-to-day activities limited' all come from Census 2011, while IMD is 2019-based and broadband/unemployment/pension-credit data is from 2019-2021. GMCA's in-progress v2.0 rebuild moves to 2021 Census data but has not yet published a scored output, so v1.5 remains the latest version with a usable score. The previous indicator here - GLA's 2022 estimate of ~270,000 Londoners completely offline (London-wide, not Lewisham-specific) - is kept as descriptive context below rather than as the snapshot, since it measures something DERI doesn't (an absolute headcount rather than a relative risk score)."
       },
-      "confidence": "low",
+      "confidence": "medium",
       "community_notes": []
     },
     {

@@ -157,10 +157,10 @@
     "lens": "local_social",
     "dimension": "connectivity",
     "category": "Connected",
-    "indicator": "Full fibre (FTTP) broadband coverage (% of premises)",
-    "source_url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
-    "granularity": "UK-wide",
-    "notes": "Original indicator label ('Broadband coverage data') renamed to match what's actually reported. Ofcom's local-authority-level breakdown (via its interactive Connected Nations report / ONS's 'Explore local statistics' borough indicator pages, which republish the same Ofcom data) could not be accessed in this session - ofcom.org.uk, ons.gov.uk and data.london.gov.uk all returned connection-level rejections under this session's network egress policy, not just occasional 403s. UK-wide figure used instead, with a Lewisham-specific secondary-aggregator estimate (thinkbroadband analysis of Ofcom's postcode-level open data, via broadbandexposed.co.uk: 84.2% gigabit-capable coverage, 2026) noted in the pipeline source as context only, since it's one step removed from Ofcom's primary data. A newer 'Connected Nations update: Spring 2026' release exists (~May 2026, data to Jan 2026) - referenced alongside the original Nov 2025 annual report URL since only its headline figures could be confirmed via secondary reporting this session."
+    "indicator": "Full fibre broadband coverage (% of premises)",
+    "source_url": "https://labs.thinkbroadband.com/local/lewisham,E09000023",
+    "granularity": "Borough (Lewisham)",
+    "notes": "Original indicator label ('Broadband coverage data') renamed to match what's actually reported. Ofcom's local-authority-level breakdown is genuinely published (via its interactive Connected Nations report, and republished on ONS's 'Explore local statistics' service as the 'Gigabit-capable broadband' indicator, Jan 2026 vintage), but neither page exposes a plain-text local figure. thinkbroadband's local broadband statistics for Lewisham - built from Ofcom's own postcode-level open coverage data - gives 80.96% full-fibre coverage as of 17 July 2026, and is used as the Lewisham-specific figure instead of the UK-wide one previously shown here. No ward-level breakdown exists; borough is the most granular level available."
   },
   {
     "lens": "local_social",
@@ -175,10 +175,10 @@
     "lens": "local_social",
     "dimension": "connectivity",
     "category": "Connected",
-    "indicator": "Londoners digitally excluded or with very low digital engagement",
-    "source_url": "https://data.london.gov.uk/dataset/mapping-digital-exclusion-supporting-data-206m8",
-    "granularity": "London-wide (LSOA-level source dataset itself inaccessible this session)",
-    "notes": "Original indicator label ('Digital exclusion data') renamed to match what's actually reported. This GLA/LOTI dataset (LSOA-level, in principle aggregatable to any borough) could NOT be accessed in this session - data.london.gov.uk was blocked outright by this session's network egress policy. Its own borough mapping pilot (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) does not include Lewisham. Figure used instead: the GLA's own London-wide headline estimate from its Digital Access for All Mission launch (June 2022) - c.270,000 Londoners completely offline, c.2 million with very low digital engagement - sourced via https://www.london.gov.uk/talk-london/topics/communities/digital-access-all. A Lewisham+Southwark combined figure (16,000 digitally excluded, 2020 ONS data, via Southwark Council's Technology & Digital Inclusion Strategy) was found but could not be disaggregated to Lewisham alone and is now dated, so was not used as the primary figure."
+    "indicator": "Digital exclusion risk score (0-10 scale)",
+    "source_url": "https://github.com/GreaterManchesterODA/Digital-Exclusion-Risk-Index",
+    "granularity": "Neighbourhood (LSOA), aggregated to ward",
+    "notes": "Original indicator label ('Digital exclusion data') renamed to match what's actually reported, then renamed again when the underlying metric changed. The GLA/LOTI 'Mapping Digital Exclusion' dataset previously cited here is genuinely limited to five pilot boroughs (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) - Lewisham isn't covered and no Lewisham-specific output exists from it. Switched to GMCA's Digital Exclusion Risk Index (DERI) v1.5, which scores every LSOA in Great Britain: Ladywell's figure (2.5/10) is the population-weighted average of its 7 constituent LSOAs' individual DERI scores (Great-Britain-normalised, England IMD basis - the only DERI variant comparable across areas). The GLA's 2022 London-wide estimate (c.270,000 Londoners completely offline) is kept as descriptive context in the pipeline source notes rather than as the snapshot, since it measures a different thing (headcount vs. relative risk)."
   },
   {
     "lens": "local_social",

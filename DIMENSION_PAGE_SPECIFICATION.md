@@ -202,6 +202,16 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   shows "264 in 2021/22, peaking at 353 in 2023/24, declining to 325 in 2024/25" don't repeat
   that exact walk-through in prose - readers can see it. Use the words instead to explain
   *why* things moved or *what it means*, not to describe a line's shape.
+- **Lead with a finding, not a data-provenance caveat.** "No local figure exists, so here's
+  the national survey it's drawn from and why" is throat-clearing, not a headline - state
+  what the data actually shows first, and fold the source/no-local-figure caveat into a later
+  clause or sentence instead of opening with it. Revised July 2026 after exactly this happened
+  on three England-only-survey dimensions in the same session (community, social_cohesion,
+  connectivity), all of which opened with a sentence like "no Lewisham-specific figure exists"
+  or "hard to pin to the borough itself" before ever stating what the numbers showed - see Bad
+  example #4 below. Note this rule already existed for indicator descriptions (2.2's "lead with
+  findings, not methodology") when this happened; it just hadn't been written down for the top
+  summary specifically, and got missed here too as a result.
 
 **Good example (single-indicator dimension)**: *"Healthy life expectancy measures the average number of years a person can expect to live in good health from birth. At 58.2 years in Lewisham (approximately 72% of total life expectancy), this sits below London's average of 62.9 years. The indicator has declined by 3.8 years from 62.0 years a decade ago, with a particularly sharp drop during the pandemic years."*
 
@@ -228,6 +238,8 @@ above does.
 
 **Bad example #2 (do not write like this either - overcorrects into genericness)**: *"Housing pressure in Lewisham shows up differently depending on where you look: rents that outpace what people earn, a stretched temporary accommodation system, rough sleeping that hasn't shifted much despite intervention, and private rented homes disproportionately falling short of basic standards. These aren't separate problems - a tight rental market pushes households toward eviction..."* - this was an actual first-attempt fix for Bad example #1, and it *was* a synthesis rather than a stat-dump, but it went too far the other way: strip out every specific number and you're left with a paragraph that could describe housing pressure in almost any London borough. There is nothing here that's identifiably *Lewisham*. **The fix isn't zero numbers, it's the *right* numbers** - 1-3 sharply chosen, borough-specific facts (not one per indicator) that mechanically explain why the indicators move together, the way "40% of residents in PRS, rents +50% vs incomes +12%" does in the good example above.
 
+**Bad example #4 (do not write like this - opens with methodology/caveat instead of a finding)**: *"Both indicators come from DCMS's Community Life Survey, published only at England level - no Lewisham-specific figure exists yet, despite a 2023/24 sample boost meant to enable local estimates. Nationally, loneliness has drifted up: 6.6% of adults felt lonely often or always in 2024/25..."* - the community dimension's actual first-attempt summary. Two full sentences pass - which survey, what geography, why there's no local number, a footnote about a sample-size change - before the reader learns anything about what loneliness or belonging actually look like. The fix: state the finding first ("Loneliness and neighbourhood belonging have moved in the same direction nationally...") and push the source/geography caveat into a subordinate clause later in the paragraph, not the opening sentence.
+
 ### 2.2 Description Writing Style
 
 **CRITICAL: Descriptions must be narrative, concise, and findings-focused**
@@ -241,6 +253,12 @@ above does.
 **When to explain methodology:**
 - ✅ **Composite metrics** (Health Index, IMD, etc.) - DO explain components, weighting, and scoring methodology in detail
 - ❌ **Straightforward metrics** (counts, percentages, rates) - DON'T overly explain how they're calculated
+- ❌ **Forward-looking methodology trivia that doesn't change what's shown today** - e.g. "a
+  2023/24 sample boost was designed to eventually enable local authority-level estimates, but
+  no Lewisham-specific figure has yet been produced" tells the reader about a survey's future
+  plans, not about anything they can use now. If the takeaway is just "no local figure exists
+  yet," say that in a few words and stop - don't explain the mechanism by which a local figure
+  might someday exist.
 
 **Good examples:**
 
@@ -257,7 +275,19 @@ above does.
 - ❌ Restating every datapoint the chart already shows (see word-limit rule in 2.1) - e.g.
   don't write "increased from 264 in 2021/22 to a peak of 353 in 2023/24, then declined to
   325 in 2024/25, then rose again" when that's exactly what the reader is about to see
-  plotted. Say what it *means* instead.
+  plotted. Say what it *means* instead. A real example this rule was written to catch and
+  then still didn't: an election-turnout indicator description read *"60.7% in 2010... down
+  to 37.2% in 2014, a low of 20.88% in 2022, then back up to 42.14% in May 2026"* - four exact
+  chart values in a row. It did earn a "why" at the end (turnout tracks how contested the
+  race feels), but the fix is to make that point with the one or two values that actually
+  support it (the 2022 low and the 2026 rebound), not all four - drop the ones that are pure
+  shape-narration.
+- ❌ Session/process narration leaking into reader-facing copy - e.g. "could not be confirmed
+  this session," "wasn't obtainable this session," "no verified figure was available this
+  session." These describe what happened during a research session, not something a resident
+  reading the page would find meaningful. If a figure couldn't be sourced, either state the
+  gap plainly ("no Lewisham-specific figure is published") or omit the sentence - don't narrate
+  the research process itself.
 - ❌ Restating the headline number as arithmetic the reader can do themselves - e.g. "a
   household earning £42,500 spends £18,530 on rent, leaving £23,970" repeats the same 43.6%
   figure three ways without adding insight. One clear statement of the ratio is enough;
@@ -329,6 +359,21 @@ if (ring === 'social') {
 
 ### 2.5 Data Indicator Cards
 **Location**: Below the plain English summary
+
+**Headline value formatting** (the large bold number/unit, `.big-value` in `app.js`):
+- **No bracketed explainer clauses in the headline stat.** A qualifier like "(≥1 operator,
+  high confidence)" or "(London-wide, 'completely offline')" reads as messy/disjointed
+  stacked onto a big bold number. If the detail matters, it belongs in the grey text next to
+  it - the source line, the indicator-meta line, or the "What this measures" paragraph below
+  - not appended to the unit in the headline itself. Revised July 2026 after this happened on
+  the connectivity dimension's 5G and digital-exclusion indicators; both were trimmed to a
+  plain unit ("% of landmass", "people") with the qualifying detail moved into the
+  description text, which already covered it in both cases.
+- **Numbers of 1,000 or more get comma-separated thousands automatically** - `app.js`
+  formats every numeric `snapshot.value` with `.toLocaleString('en-GB')` before rendering it
+  as the headline (`renderDimensionDetail`'s `indicatorsToShow.forEach` block). Don't
+  hand-format commas into a snapshot value in the pipeline; let the site do it. This also
+  means large snapshot values (counts, £ totals) don't need special-casing when added.
 
 **For each indicator**:
 - **Indicator name** as heading

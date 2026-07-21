@@ -56,3 +56,6 @@ __pycache__/
 .Python
 venv/
 ENV/
+
+# Claude Code agent worktrees (transient, per-session)
+.claude/

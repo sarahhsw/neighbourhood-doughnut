@@ -159,7 +159,61 @@ h1 {
 }
 
 #doughnut-chart {
+    position: relative;
     max-width: 300px;
+}
+
+/* Legend & zoom overlay, styled to match the DEAL portrait tool */
+.chart-legend {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 6px 9px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.9;
+    color: var(--ink);
+    z-index: 2;
+}
+
+.chart-legend-swatch {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    margin-right: 4px;
+}
+
+.chart-zoom {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    z-index: 2;
+}
+
+.chart-zoom-btn {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--ink);
+    border-radius: 5px;
+    background: var(--card);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+}
+
+.chart-zoom-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
 }
 
 /* Torn paper divider */

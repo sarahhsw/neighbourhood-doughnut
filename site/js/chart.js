@@ -21,9 +21,8 @@ const COLORS = {
     // Rings and zones
     paper: '#F2E7D2',            // Background
     safeSpace: '#E8F5E9',        // Light green - the safe space
-    socialRing: '#4B3F8F',       // ringB - social foundation boundary (60% opacity)
-    ecologicalRing: '#E8542D',   // ringA - ecological ceiling boundary (60% opacity)
-    beyondRing: '#FFE0B2'        // Light orange - overshoot zone
+    socialRing: '#4B3F8F',       // ringB - social foundation boundary band
+    ecologicalRing: '#E8542D'    // ringA - ecological ceiling boundary band
 };
 
 class DoughnutChart {
@@ -41,6 +40,12 @@ class DoughnutChart {
         this.socialFoundationRadius = 120;    // Inner boundary (social foundation floor)
         this.ecologicalCeilingRadius = 173;   // Outer boundary (ecological ceiling)
         this.maxOvershootRadius = 220;        // Maximum extent for overshoot bars
+        this.ringBandWidth = 13;              // Thickness of the boundary bands
+        this.wedgeFillFraction = 0.82;        // Portion of each dimension's sector filled by its wedge
+
+        this.zoomLevel = 1;
+        this.minZoom = 0.6;
+        this.maxZoom = 1.8;
     }
 
     groupDimensions(dimensions) {
@@ -106,11 +111,15 @@ class DoughnutChart {
 
     render() {
         this.container.innerHTML = '';
+        this.zoomLevel = 1;
 
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.svgEl = svg;
         svg.setAttribute('width', this.width);
         svg.setAttribute('height', this.height);
         svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`);
+        svg.style.transformOrigin = '50% 50%';
+        svg.style.transition = 'transform 0.15s ease';
 
         // Get dimensions based on view mode
         const socialIndicators = this.viewMode === 'local'
@@ -151,18 +160,48 @@ class DoughnutChart {
         this.drawDimensionBars(svg, socialDimensions, ecologicalDimensions);
 
         this.container.appendChild(svg);
+        this.buildChartControls();
+    }
+
+    buildChartControls() {
+        // Legend (top-left, matches the reference doughnut-visualiser layout)
+        const legend = document.createElement('div');
+        legend.className = 'chart-legend';
+        legend.innerHTML = `
+            <span class="chart-legend-swatch" style="background:${COLORS.shortfall}"></span> Shortfall<br>
+            <span class="chart-legend-swatch" style="background:${COLORS.overshoot}"></span> Overshoot<br>
+            <span class="chart-legend-swatch" style="background:${COLORS.descriptive}"></span> Missing data
+        `;
+        this.container.appendChild(legend);
+
+        // Zoom controls (top-right)
+        const zoom = document.createElement('div');
+        zoom.className = 'chart-zoom';
+        const zoomIn = document.createElement('button');
+        zoomIn.className = 'chart-zoom-btn';
+        zoomIn.type = 'button';
+        zoomIn.textContent = '+';
+        zoomIn.setAttribute('aria-label', 'Zoom in');
+        const zoomOut = document.createElement('button');
+        zoomOut.className = 'chart-zoom-btn';
+        zoomOut.type = 'button';
+        zoomOut.textContent = '−';
+        zoomOut.setAttribute('aria-label', 'Zoom out');
+        zoomIn.addEventListener('click', () => this.applyZoom(0.15));
+        zoomOut.addEventListener('click', () => this.applyZoom(-0.15));
+        zoom.appendChild(zoomIn);
+        zoom.appendChild(zoomOut);
+        this.container.appendChild(zoom);
+    }
+
+    applyZoom(delta) {
+        this.zoomLevel = Math.min(this.maxZoom, Math.max(this.minZoom, this.zoomLevel + delta));
+        if (this.svgEl) {
+            this.svgEl.style.transform = `scale(${this.zoomLevel})`;
+        }
     }
 
     drawZones(svg) {
-        // Overshoot zone (outermost - light orange)
-        const overshootZone = this.createRing(
-            this.centerX, this.centerY,
-            this.ecologicalCeilingRadius,
-            this.maxOvershootRadius,
-            COLORS.beyondRing
-        );
-        svg.appendChild(overshootZone);
-
         // Safe and just space (between social foundation and ecological ceiling)
         const safeSpace = this.createRing(
             this.centerX, this.centerY,
@@ -182,29 +221,60 @@ class DoughnutChart {
     }
 
     drawBoundaryRings(svg) {
-        // Ecological ceiling (outer ring) - ringA at 60% opacity
-        const ecoCeiling = this.createCircle(
-            this.centerX, this.centerY,
-            this.ecologicalCeilingRadius,
-            'none',
-            COLORS.ecologicalRing + '99', // 60% opacity
-            2
-        );
-        svg.appendChild(ecoCeiling);
+        const half = this.ringBandWidth / 2;
 
-        // Social foundation (inner ring) - ringB at 60% opacity
-        const socialFoundation = this.createCircle(
+        // Ecological ceiling band (outer boundary) - solid ringA band with curved label
+        const ecoBand = this.createRing(
             this.centerX, this.centerY,
-            this.socialFoundationRadius,
-            'none',
-            COLORS.socialRing + '99', // 60% opacity
-            2
+            this.ecologicalCeilingRadius - half,
+            this.ecologicalCeilingRadius + half,
+            COLORS.ecologicalRing
         );
-        svg.appendChild(socialFoundation);
+        svg.appendChild(ecoBand);
 
-        // Ring labels
-        this.addRingLabel(svg, 'ECOLOGICAL CEILING', this.ecologicalCeilingRadius + 10, 0);
-        this.addRingLabel(svg, 'SOCIAL FOUNDATION', this.socialFoundationRadius - 10, 180);
+        // Social foundation band (inner boundary) - solid ringB band with curved label
+        const socialBand = this.createRing(
+            this.centerX, this.centerY,
+            this.socialFoundationRadius - half,
+            this.socialFoundationRadius + half,
+            COLORS.socialRing
+        );
+        svg.appendChild(socialBand);
+
+        // Curved ring labels, set directly on the bands (top arc, reading left-to-right)
+        this.addCurvedRingLabel(svg, 'ecoRingPath', 'ECOLOGICAL CEILING', this.ecologicalCeilingRadius);
+        this.addCurvedRingLabel(svg, 'socialRingPath', 'SOCIAL FOUNDATION', this.socialFoundationRadius);
+    }
+
+    addCurvedRingLabel(svg, pathId, text, radius) {
+        // Invisible arc (top half, left-to-right) for the label to follow
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('id', pathId);
+        path.setAttribute(
+            'd',
+            `M ${this.centerX - radius} ${this.centerY} A ${radius} ${radius} 0 0 1 ${this.centerX + radius} ${this.centerY}`
+        );
+        path.setAttribute('fill', 'none');
+        defs.appendChild(path);
+        svg.appendChild(defs);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('font-size', '10px');
+        label.setAttribute('font-weight', 'bold');
+        label.setAttribute('fill', '#FFFFFF');
+        label.setAttribute('letter-spacing', '2px');
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('dy', '3.5'); // Vertically centers the text on the band
+
+        const textPath = document.createElementNS('http://www.w3.org/2000/svg', 'textPath');
+        textPath.setAttribute('href', `#${pathId}`);
+        textPath.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `#${pathId}`);
+        textPath.setAttribute('startOffset', '50%');
+        textPath.textContent = text;
+
+        label.appendChild(textPath);
+        svg.appendChild(label);
     }
 
     drawCenterText(svg) {
@@ -214,24 +284,23 @@ class DoughnutChart {
     drawDimensionBars(svg, socialDimensions, ecologicalDimensions) {
         const totalDimensions = socialDimensions.length + ecologicalDimensions.length;
         const angleStep = (2 * Math.PI) / totalDimensions;
+        const halfWidthRad = (angleStep * this.wedgeFillFraction) / 2;
         let currentAngle = -Math.PI / 2; // Start at top
 
         // Draw social dimensions (bars extending inward for shortfalls)
         socialDimensions.forEach(dim => {
-            this.drawSocialBar(svg, dim, currentAngle);
+            this.drawSocialBar(svg, dim, currentAngle, halfWidthRad);
             currentAngle += angleStep;
         });
 
         // Draw ecological dimensions (bars extending outward for overshoots)
         ecologicalDimensions.forEach(dim => {
-            this.drawEcologicalBar(svg, dim, currentAngle);
+            this.drawEcologicalBar(svg, dim, currentAngle, halfWidthRad);
             currentAngle += angleStep;
         });
     }
 
-    drawSocialBar(svg, dimension, angle) {
-        const barWidth = 10; // Width of bar in pixels
-
+    drawSocialBar(svg, dimension, angle, halfWidthRad) {
         // Determine bar length based on blended status and extent
         let barEndRadius;
         let barColor;
@@ -257,9 +326,9 @@ class DoughnutChart {
             const bar = this.createBar(
                 this.centerX, this.centerY,
                 barEndRadius,
-                this.socialFoundationRadius,
+                this.socialFoundationRadius - this.ringBandWidth / 2,
                 angle,
-                barWidth,
+                halfWidthRad,
                 barColor
             );
             svg.appendChild(bar);
@@ -270,9 +339,7 @@ class DoughnutChart {
         this.addDimensionLabel(svg, dimension.dimension, angle, labelRadius, 'social');
     }
 
-    drawEcologicalBar(svg, dimension, angle) {
-        const barWidth = 10;
-
+    drawEcologicalBar(svg, dimension, angle, halfWidthRad) {
         // Determine bar length based on blended status and extent
         let barEndRadius;
         let barColor;
@@ -297,10 +364,10 @@ class DoughnutChart {
         if (dimension.status !== 'met' && dimension.status !== 'within') {
             const bar = this.createBar(
                 this.centerX, this.centerY,
-                this.ecologicalCeilingRadius,
+                this.ecologicalCeilingRadius + this.ringBandWidth / 2,
                 barEndRadius,
                 angle,
-                barWidth,
+                halfWidthRad,
                 barColor
             );
             svg.appendChild(bar);
@@ -311,12 +378,10 @@ class DoughnutChart {
         this.addDimensionLabel(svg, dimension.dimension, angle, labelRadius, 'ecological');
     }
 
-    createBar(cx, cy, innerR, outerR, angle, width, color) {
+    createBar(cx, cy, innerR, outerR, angle, halfWidthRad, color) {
         // Calculate bar corners
-        const halfWidth = (width / 2) * (Math.PI / 180); // Convert to radians
-
-        const startAngle = angle - halfWidth;
-        const endAngle = angle + halfWidth;
+        const startAngle = angle - halfWidthRad;
+        const endAngle = angle + halfWidthRad;
 
         const x1 = cx + innerR * Math.cos(startAngle);
         const y1 = cy + innerR * Math.sin(startAngle);
@@ -371,23 +436,6 @@ class DoughnutChart {
 
         text.textContent = label;
         svg.appendChild(text);
-    }
-
-    addRingLabel(svg, text, radius, angleOffset) {
-        const angle = (angleOffset * Math.PI / 180) - Math.PI / 2;
-        const x = this.centerX + radius * Math.cos(angle);
-        const y = this.centerY + radius * Math.sin(angle);
-
-        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        label.setAttribute('x', x);
-        label.setAttribute('y', y);
-        label.setAttribute('text-anchor', 'middle');
-        label.setAttribute('font-size', '10px');
-        label.setAttribute('font-weight', 'bold');
-        label.setAttribute('fill', '#666');
-        label.setAttribute('letter-spacing', '1px');
-        label.textContent = text;
-        svg.appendChild(label);
     }
 
     drawEmptyState(svg) {

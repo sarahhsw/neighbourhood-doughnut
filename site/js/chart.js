@@ -43,9 +43,9 @@ class DoughnutChart {
         this.ringBandWidth = 13;              // Thickness of the boundary bands
         this.wedgeFillFraction = 0.82;        // Portion of each dimension's sector filled by its wedge
 
-        this.zoomLevel = 1;
-        this.minZoom = 0.6;
-        this.maxZoom = 1.8;
+        // Tight viewBox around the drawn content (max radius + label/stroke buffer),
+        // so the rendered chart isn't surrounded by large blank margins at big sizes.
+        this.contentRadius = this.maxOvershootRadius + 15;
     }
 
     groupDimensions(dimensions) {
@@ -111,15 +111,14 @@ class DoughnutChart {
 
     render() {
         this.container.innerHTML = '';
-        this.zoomLevel = 1;
 
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         this.svgEl = svg;
-        svg.setAttribute('width', this.width);
-        svg.setAttribute('height', this.height);
-        svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`);
-        svg.style.transformOrigin = '50% 50%';
-        svg.style.transition = 'transform 0.15s ease';
+        const boxSize = this.contentRadius * 2;
+        const boxOrigin = this.centerX - this.contentRadius;
+        svg.setAttribute('width', boxSize);
+        svg.setAttribute('height', boxSize);
+        svg.setAttribute('viewBox', `${boxOrigin} ${boxOrigin} ${boxSize} ${boxSize}`);
 
         // Get dimensions based on view mode
         const socialIndicators = this.viewMode === 'local'
@@ -160,45 +159,6 @@ class DoughnutChart {
         this.drawDimensionBars(svg, socialDimensions, ecologicalDimensions);
 
         this.container.appendChild(svg);
-        this.buildChartControls();
-    }
-
-    buildChartControls() {
-        // Legend (top-left, matches the reference doughnut-visualiser layout)
-        const legend = document.createElement('div');
-        legend.className = 'chart-legend';
-        legend.innerHTML = `
-            <span class="chart-legend-swatch" style="background:${COLORS.shortfall}"></span> Shortfall<br>
-            <span class="chart-legend-swatch" style="background:${COLORS.overshoot}"></span> Overshoot<br>
-            <span class="chart-legend-swatch" style="background:${COLORS.descriptive}"></span> Missing data
-        `;
-        this.container.appendChild(legend);
-
-        // Zoom controls (top-right)
-        const zoom = document.createElement('div');
-        zoom.className = 'chart-zoom';
-        const zoomIn = document.createElement('button');
-        zoomIn.className = 'chart-zoom-btn';
-        zoomIn.type = 'button';
-        zoomIn.textContent = '+';
-        zoomIn.setAttribute('aria-label', 'Zoom in');
-        const zoomOut = document.createElement('button');
-        zoomOut.className = 'chart-zoom-btn';
-        zoomOut.type = 'button';
-        zoomOut.textContent = '−';
-        zoomOut.setAttribute('aria-label', 'Zoom out');
-        zoomIn.addEventListener('click', () => this.applyZoom(0.15));
-        zoomOut.addEventListener('click', () => this.applyZoom(-0.15));
-        zoom.appendChild(zoomIn);
-        zoom.appendChild(zoomOut);
-        this.container.appendChild(zoom);
-    }
-
-    applyZoom(delta) {
-        this.zoomLevel = Math.min(this.maxZoom, Math.max(this.minZoom, this.zoomLevel + delta));
-        if (this.svgEl) {
-            this.svgEl.style.transform = `scale(${this.zoomLevel})`;
-        }
     }
 
     drawZones(svg) {

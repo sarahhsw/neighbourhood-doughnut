@@ -1798,5 +1798,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Set up back button
         document.getElementById('back-button').addEventListener('click', closeDimensionDetail);
+
+        // Ward pill acts as a back button to the homepage
+        const goHome = () => { window.location.href = 'index.html'; };
+        document.getElementById('ward-pill-home').addEventListener('click', goHome);
+        document.getElementById('ward-pill-home-overlay').addEventListener('click', goHome);
     }
 });

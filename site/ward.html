@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ladywell Neighbourhood Doughnut</title>
-    <link rel="stylesheet" href="css/styles.css?v=23">
+    <link rel="stylesheet" href="css/styles.css?v=31">
 </head>
 <body>
     <header>
-        <button class="ward-pill">Ladywell ↓</button>
+        <button class="ward-pill" id="ward-pill-home">← Ladywell</button>
     </header>
 
     <main>
         <div class="content-grid">
             <div class="left-column">
                 <div class="intro-section">
-                    <h1 class="mobile-headline">Ladywell,<br>drawn out.</h1>
                     <h1 class="desktop-headline">Ladywell's neighbourhood doughnut</h1>
-                    <p class="subtitle mobile-only">A doughnut portrait pinned up from public data — tap anything to read what's underneath.</p>
                     <div class="view-toggle">
                         <button id="toggle-local" class="toggle-btn active">Local</button>
                         <button id="toggle-global" class="toggle-btn">Global</button>
@@ -59,6 +57,9 @@
 
     <!-- Dimension detail overlay -->
     <div id="dimension-overlay" class="dimension-overlay hidden">
+        <header>
+            <button class="ward-pill" id="ward-pill-home-overlay">← Ladywell</button>
+        </header>
         <div class="overlay-content">
             <button class="back-button" id="back-button">← Back</button>
             <div class="detail-container" id="detail-container">
@@ -67,7 +68,7 @@
         </div>
     </div>
 
-    <script src="js/chart.js?v=9"></script>
-    <script src="js/app.js?v=55"></script>
+    <script src="js/chart.js?v=11"></script>
+    <script src="js/app.js?v=56"></script>
 </body>
 </html>

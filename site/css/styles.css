@@ -89,38 +89,13 @@ main {
 
 h1 {
     font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 38px;
-    line-height: 0.95;
-    margin: 0 0 6px;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1.1;
+    margin: 6px 0 14px;
     color: var(--ink);
 }
 
-.mobile-headline {
-    transform: rotate(-1.5deg);
-    display: inline-block;
-}
-
-.desktop-headline {
-    display: none;
-}
-
-.mobile-only {
-    display: block;
-}
-
-.subtitle {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--ink);
-    opacity: 0.67;
-    margin: 10px 0 6px;
-    max-width: 280px;
-}
-
-.subtitle::first-letter {
-    /* Ensure proper rendering */
-}
 
 /* Local/Global toggle */
 .view-toggle {
@@ -153,67 +128,22 @@ h1 {
 /* Doughnut chart section */
 .chart-section {
     position: relative;
-    padding: 22px 0 6px;
+    padding: 0 0 6px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 #doughnut-chart {
     position: relative;
-    max-width: 300px;
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-/* Legend & zoom overlay, styled to match the DEAL portrait tool */
-.chart-legend {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    background: var(--card);
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    padding: 6px 9px;
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1.9;
-    color: var(--ink);
-    z-index: 2;
-}
-
-.chart-legend-swatch {
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    border-radius: 2px;
-    margin-right: 4px;
-}
-
-.chart-zoom {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    z-index: 2;
-}
-
-.chart-zoom-btn {
-    width: 22px;
-    height: 22px;
-    border: 1.5px solid var(--ink);
-    border-radius: 5px;
-    background: var(--card);
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
-}
-
-.chart-zoom-btn:hover {
-    background: var(--ink);
-    color: var(--paper);
+#doughnut-chart svg {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 /* Torn paper divider */
@@ -412,13 +342,13 @@ h1 {
     }
 
     main {
-        max-width: 1180px;
+        max-width: 1232px;
         margin: 0 auto;
     }
 
     .content-grid {
         display: grid;
-        grid-template-columns: 1fr 480px;
+        grid-template-columns: minmax(600px, 1fr) 480px;
         gap: 56px;
         padding: 24px 48px;
     }
@@ -433,27 +363,6 @@ h1 {
         margin-bottom: 0;
     }
 
-    .mobile-headline {
-        display: none;
-    }
-
-    .desktop-headline {
-        display: block;
-        font-size: 34px;
-        font-weight: 600;
-        line-height: 1.1;
-        transform: none;
-        margin: 6px 0 14px;
-    }
-
-    .mobile-only {
-        display: none;
-    }
-
-    .subtitle {
-        max-width: 100%;
-    }
-
     .chart-section {
         padding: 0;
         display: flex;
@@ -462,8 +371,9 @@ h1 {
     }
 
     #doughnut-chart {
-        max-width: 440px;
+        max-width: 600px;
         width: 100%;
+        margin: 0;
     }
 
     .torn-divider {

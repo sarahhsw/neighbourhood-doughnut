@@ -607,7 +607,12 @@ h1 {
     margin-bottom: 0;
 }
 
-.neighbour-voices-heading {
+.hmw-prompt {
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.hmw-eyebrow {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
@@ -615,7 +620,7 @@ h1 {
     color: var(--ink);
     opacity: 0.55;
     margin-bottom: 12px;
-    margin-top: 24px;
+    margin-top: 0;
 }
 
 .voice-block {

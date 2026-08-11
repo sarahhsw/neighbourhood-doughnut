@@ -68,7 +68,7 @@ function initializeTooltips(dimensionName) {
 async function loadWardData() {
     try {
         // Add cache-busting parameter
-        const response = await fetch('../data/wards/ladywell.json?v=' + Date.now());
+        const response = await fetch('data/wards/ladywell.json?v=' + Date.now());
         if (!response.ok) throw new Error('Failed to load ward data');
         return await response.json();
     } catch (error) {
@@ -1670,7 +1670,11 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     const neighbourVoices = getNeighbourVoices(dimension.dimension);
     if (neighbourVoices && neighbourVoices.length > 0) {
         html += '<div class="section-divider"></div>';
-        html += '<h3 class="neighbour-voices-heading">Neighbour Voices</h3>';
+        html += `
+            <div class="hmw-prompt">
+                <h3 class="hmw-eyebrow">How might we</h3>
+            </div>
+        `;
 
         const voicesPerPage = 3;
         const totalPages = Math.ceil(neighbourVoices.length / voicesPerPage);
@@ -1687,7 +1691,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             `;
         }
 
-        html += '<button class="add-take-btn">Add your take</button>';
+        html += '<button class="add-take-btn">Share your ideas</button>';
     }
 
     container.innerHTML = html;

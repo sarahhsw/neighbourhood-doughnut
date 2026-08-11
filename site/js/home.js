@@ -62,14 +62,16 @@ function svgEl(tag, attrs) {
  * or 'right' (bulges left, right-cropped — mobile). `size` is only a viewBox coordinate
  * scale; actual rendered size is controlled by CSS on the container.
  */
-function buildHeroDoughnut(size, orientation) {
+function buildHeroDoughnut(size, orientation, containerAspect) {
     const side = orientation === 'right';
+    // Mobile's circle is scaled up 1.2x. Desktop keeps scale 1 (untouched).
+    const mobileScale = side ? 1.2 : 1;
     const cx = side ? size * 0.58 * 0.9655 : size / 2;
-    const cy = side ? size / 2 : size * 0.56;
-    const holeR = size * 0.135;
-    const socialR = size * 0.335;
-    const ecoR = size * 0.445;
-    const maxR = size * 0.5;
+    const holeR = size * 0.135 * mobileScale;
+    const socialR = size * 0.335 * mobileScale;
+    const ecoR = size * 0.445 * mobileScale;
+    const maxR = size * 0.5 * mobileScale;
+    const cy = side ? size - maxR : size * 0.56;
 
     const all = PLACEHOLDER_DIMS.filter(d => d.ring === 'social')
         .concat(PLACEHOLDER_DIMS.filter(d => d.ring === 'ecological'));
@@ -105,11 +107,11 @@ function buildHeroDoughnut(size, orientation) {
         const x3 = cx + barOuter * Math.cos(a2), y3 = cy + barOuter * Math.sin(a2);
         const x4 = cx + barInner * Math.cos(a2), y4 = cy + barInner * Math.sin(a2);
 
-        const labelR = isSocial ? socialR + 15 : ecoR + (maxR - ecoR) + 16;
+        const labelR = isSocial ? socialR + 15 * mobileScale : ecoR + (maxR - ecoR) + 16 * mobileScale;
         const lx = cx + labelR * Math.cos(angle), ly = cy + labelR * Math.sin(angle);
         const label = svgEl('text', {
             x: lx, y: ly, 'text-anchor': 'middle', 'dominant-baseline': 'middle',
-            'font-size': size * 0.03, 'font-family': 'Inter, sans-serif', 'font-weight': 500,
+            'font-size': size * 0.03 * mobileScale, 'font-family': 'Inter, sans-serif', 'font-weight': 500,
             fill: HERO_COLORS.ink + '99'
         });
         label.textContent = dim.name;
@@ -139,9 +141,27 @@ function buildHeroDoughnut(size, orientation) {
 
     let viewBox;
     if (side) {
-        const padH = size * 0.16, padV = size * 0.1, acrossBase = size * 0.58;
-        viewBox = `${-padH} ${-padV} ${acrossBase + padH + size * 0.05} ${size + padV * 2}`;
-        // Fill the box (cover-crop): keep the left bulge and the bottom edge, crop the right/top.
+        const padBottom = size * 0.1, acrossBase = size * 0.58;
+        // The topmost dimension (last item, furthest from the "down" start angle) sits
+        // furthest from center — its label's y-position scales with mobileScale, so the top
+        // padding needed to keep it on-screen is derived rather than a fixed fraction of size
+        // (a fixed fraction only happened to work when mobileScale was 1).
+        const outerLabelR = maxR + 16 * mobileScale;
+        const topmostAngle = startAngle + angleStep * (all.length - 0.5);
+        const topLabelY = cy + outerLabelR * Math.sin(topmostAngle);
+        const labelBuffer = size * 0.05;
+        const padTop = Math.max(padBottom, labelBuffer - topLabelY);
+        const vbH = padTop + size + padBottom;
+        // The container's real aspect ratio varies a lot with how tall the copy above it
+        // renders (short phones leave a flatter box). Cover-crop ("slice") only crops the
+        // intended right edge if the viewBox is at least as wide, relative to its height, as
+        // the container — otherwise it crops the top instead. Widen the viewBox (via padH) to
+        // guarantee that when a flatter container demands it; on typical containers this is a
+        // no-op and falls back to the original fixed padding.
+        const minWidthForContainer = containerAspect ? containerAspect * vbH * 1.05 : 0;
+        const padH = Math.max(size * 0.16, minWidthForContainer - acrossBase - size * 0.05);
+        viewBox = `${-padH} ${-padTop} ${acrossBase + padH + size * 0.05} ${vbH}`;
+        // Fill the box (cover-crop): keep the left bulge and the bottom edge, crop the right.
         svg.setAttribute('preserveAspectRatio', 'xMinYMax slice');
     } else {
         // The desktop hero box is short and very wide, so cover-crop (slice) always ends up
@@ -243,5 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
     new WardSearch(document.getElementById('hero-mobile'));
 
     document.getElementById('doughnut-desktop').appendChild(buildHeroDoughnut(1400, 'up'));
-    document.getElementById('doughnut-mobile').appendChild(buildHeroDoughnut(560, 'right'));
+
+    const mobileContainer = document.getElementById('doughnut-mobile');
+    const mobileRect = mobileContainer.getBoundingClientRect();
+    const mobileAspect = mobileRect.height > 0 ? mobileRect.width / mobileRect.height : null;
+    mobileContainer.appendChild(buildHeroDoughnut(560, 'right', mobileAspect));
 });

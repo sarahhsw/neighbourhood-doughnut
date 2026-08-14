@@ -462,17 +462,6 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             }
         }
 
-        if (baseName === 'Health index score') {
-            if (firstIndicator.trend && firstIndicator.trend.length > 0) {
-                const oldestValue = firstIndicator.trend[0].value;
-                const latestValue = firstIndicator.snapshot.value;
-                const change = latestValue - oldestValue;
-                const changeDirection = change > 0 ? 'increased' : 'decreased';
-
-                return `The Health Index is a composite measure developed by ONS that combines over 50 indicators across three key domains: Healthy Lives (mortality, morbidity, mental health), Healthy People (personal behaviors like smoking, physical activity), and Healthy Places (environmental factors including air quality, crime, housing). Each domain is weighted equally and indexed to England 2015 as a baseline of 100. Lewisham's score of ${latestValue} sits just below the national average, having ${changeDirection} by ${Math.abs(change).toFixed(1)} points since 2015. While the index shows relative stability compared to the sharper decline in healthy life expectancy, it still indicates room for improvement across multiple health domains.`;
-            }
-        }
-
         // Housing-specific explanations
         if (baseName === 'Median rent as % of median pay') {
             return `This indicator measures housing affordability by comparing median private rents to median gross pay. At 43.6% in Lewisham (2025 Q4), it exceeds the 30% threshold that housing experts consider the ceiling for sustainable costs - beyond it, households typically cut back on essentials and have little cushion against a rent rise or income shock. Lewisham's ratio has hovered in the low-to-mid 40s since 2015 rather than trending steadily in either direction, suggesting a persistently strained affordability band rather than a temporary spike. With so little slack, even a modest rent rise or a missed pay cheque can be enough to tip a household toward eviction or needing the council's help to avoid homelessness.`;
@@ -655,6 +644,35 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         return null;
     }
 
+    // Function to get a "Why this is happening" explainer for indicators where a reader's
+    // natural next question ("why?") isn't answered elsewhere on the page. Returns
+    // { localParagraphs, localSources, nationalCard } - localParagraphs is real Ladywell/
+    // Lewisham evidence (may not exist for every indicator); nationalCard is the academic/
+    // global research consensus, included ONLY as a clearly-labelled fallback for the parts
+    // local data can't explain, never presented as a Ladywell-specific finding.
+    function getWhyThisIsHappening(baseName) {
+        if (baseName === 'Healthy life expectancy at birth') {
+            return {
+                localParagraphs: [
+                    `Lewisham's leading causes of death are cancer (30.4%), circulatory disease (28.6%), and respiratory illness (10.8%) (2024/25), with premature death rates worse than England's - 6th-highest in London. The gap is deprivation-linked and widening: men in Lewisham's least deprived areas now live 8.1 years longer than men in the most deprived areas (2021-23), up from 6.6 years in 2020-21. None of this is published at ward level, so it describes Lewisham's pattern as a whole, not Ladywell specifically.`
+                ],
+                localSources: [
+                    { name: 'A Picture of Lewisham 2025 - Lewisham Council Public Health', url: 'https://www.observatory.lewisham.gov.uk/wp-content/uploads/2025/09/Picture_of_Lewisham_2025_updated_September_2025.pdf' }
+                ],
+                nationalCard: {
+                    title: 'Global research consensus on healthy life expectancy',
+                    year: '2010-2025',
+                    summary: `Two strands of research explain what typically drives healthy life expectancy more broadly. The Global Burden of Disease Study 2023 attributes nearly half of all healthy years lost globally to modifiable risk factors, led by high blood pressure, air pollution, high blood glucose, smoking, and low birthweight. Why those risks cluster more heavily in some places is the focus of the UK's Marmot Review: income, employment, education, early-childhood conditions, housing, and access to preventive care - the "causes of the causes." Marmot found healthy life expectancy differs by roughly 12 years between England's most and least deprived areas, a steeper gradient than for life expectancy itself.`,
+                    sources: [
+                        { name: 'GBD 2023 risk factor analysis - The Lancet / PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/41092926/' },
+                        { name: 'Marmot Review 10 Years On - Institute of Health Equity', url: 'https://www.instituteofhealthequity.org/resources-reports/marmot-review-10-years-on/the-marmot-review-10-years-on-full-report.pdf' }
+                    ]
+                }
+            };
+        }
+        return null;
+    }
+
     // Function to get council/government context for each dimension
     // Returns an ARRAY of { title, year, url, summary } objects - most dimensions have one,
     // but a dimension can have up to 3 when its indicators span genuinely distinct policy
@@ -666,7 +684,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
                 year: '2025-2030',
                 url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
-                summary: 'The strategy responds to stark health inequalities in Lewisham, where there\'s a 6.6-year gap in male life expectancy between the most and least deprived areas (2020-21), with cancer and cardiovascular disease as the leading causes of death. Rather than focusing solely on healthcare services, the council is targeting three root causes of poor health: poverty, housing, and education — particularly where these intersect with health and care. The approach emphasizes prevention at the community level, aiming to tackle the fundamental drivers of health inequality before they manifest as serious illness, shifting resources upstream from reactive treatment to proactive intervention.'
+                summary: `<p>Rather than treating healthcare alone as the lever, the strategy organises action around four priority areas, treating poverty, housing and education as the "core determinants" driving the borough's health gap:</p>
+                    <ul>
+                        <li><strong>Poverty</strong> - embedding financial wellbeing and debt advice within GP and social care settings, plus an annual Warm Welcome Scheme.</li>
+                        <li><strong>Housing</strong> - a joint damp-and-mould protocol across health and housing providers, and closer working on hospital discharge.</li>
+                        <li><strong>Education</strong> - embedding prevention within schools for children and young people.</li>
+                        <li><strong>Prevention</strong> - targeting the borough's two leading causes of death directly, via new Neighbourhood Health Equity Teams for cancer and cardiovascular disease.</li>
+                    </ul>
+                    <p>It commits to shifting resources upstream from treatment toward prevention over its 5-year span.</p>`
             }];
         }
 
@@ -1017,567 +1042,40 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         return null;
     }
 
-    // Function to get neighbour voices for each dimension
-    function getNeighbourVoices(dimensionName) {
-        // Health dimension neighbour voices
+    // Function to get concrete, resident-actionable ways to get involved for each dimension,
+    // each paired with a real (verified, sourced) case study for inspiration - never an
+    // invented/generic scenario. Returns null for dimensions without a genuine, checkable
+    // example yet - an empty/fabricated entry is worse than no section at all.
+    function getWaysToGetInvolved(dimensionName) {
         if (dimensionName === 'health') {
             return [
                 {
-                    name: 'Femi',
-                    location: 'Ladywell Road',
-                    date: 'Jul 2026',
-                    quote: 'Two of my neighbours have moved out this year — priced out, not by choice.'
+                    action: 'Show up (or volunteer) at Hilly Fields parkrun',
+                    text: `Free timed 5km every Saturday 9am in Hilly Fields, near Ladywell station. Part of the UK-wide parkrun model linked to better fitness and less loneliness.`,
+                    url: 'https://www.parkrun.org.uk/hillyfields/'
                 },
                 {
-                    name: 'Sarah',
-                    location: 'Hither Green',
-                    date: 'Jun 2026',
-                    quote: 'The new GP surgery closed down before it even opened properly. Now the nearest one has a three-week wait for appointments.'
+                    action: 'Train as a Lewisham Health Equity and Wellbeing Champion',
+                    text: `Train to spot health needs in your community and connect neighbours to NHS checks. North Lewisham's version reached 678 residents and won a national award in 2025.`,
+                    url: 'https://www.selondonics.org/lewisham-het-wins-hsj-award-2025/'
                 },
                 {
-                    name: 'Marcus',
-                    location: 'Brockley',
-                    date: 'May 2026',
-                    quote: 'My dad\'s diabetes clinic moved further away. He\'s 72 and doesn\'t drive — managing his condition just got harder.'
+                    action: 'Start (or join) a Men\'s Shed',
+                    text: `A volunteer-run workshop space giving people, often older residents living alone, a reason to leave the house. Hundreds exist UK-wide - none yet in Ladywell.`,
+                    url: 'https://menssheds.org.uk/find-a-shed/'
                 },
                 {
-                    name: 'Aisha',
-                    location: 'Telegraph Hill',
-                    date: 'Apr 2026',
-                    quote: 'The park near us used to have a running track. Now it\'s just mud. Where are families supposed to stay active?'
+                    action: 'Join the London Renters Union - Lewisham branch',
+                    text: `A tenants' union branch helping members fight unsafe conditions and rent hikes together. Local pressure from members forced Lewisham Council to act on unsafe conditions at Eros House in 2020.`,
+                    url: 'https://londonrentersunion.org/tag/lewisham/'
                 },
                 {
-                    name: 'Tom',
-                    location: 'Crofton Park',
-                    date: 'Mar 2026',
-                    quote: 'Mental health support waiting times are six months. That\'s not support, that\'s abandonment.'
+                    action: 'Volunteer at a Lewisham Warm Welcome space',
+                    text: `Help host a free winter warm space - hot drinks, food, company - for residents facing cold homes and rising bills. Runs across Lewisham each winter.`,
+                    url: 'https://www.lewishamlocal.com/lewisham-warm-welcomes/'
                 }
             ];
         }
-
-        // Housing dimension neighbour voices
-        if (dimensionName === 'housing') {
-            return [
-                {
-                    name: 'Rachel',
-                    location: 'Ladywell Fields',
-                    date: 'Jul 2026',
-                    quote: 'Our landlord raised the rent by £200 a month. We\'re a family of four and now over half my salary goes on rent alone.'
-                },
-                {
-                    name: 'James',
-                    location: 'Hither Green Lane',
-                    date: 'Jun 2026',
-                    quote: 'Been in temporary accommodation for two years now. They call it temporary, but my daughter has started and finished reception year in the same hotel room.'
-                },
-                {
-                    name: 'Amara',
-                    location: 'Ladywell Village',
-                    date: 'May 2026',
-                    quote: 'The damp in our flat keeps coming back. Landlord says he\'ll fix it but never does. My son\'s asthma has gotten worse.'
-                },
-                {
-                    name: 'David',
-                    location: 'Crofton Park',
-                    date: 'Apr 2026',
-                    quote: 'I work full time as a teaching assistant. Can\'t afford a one-bed flat on my own anymore — had to move back with my mum at 34.'
-                },
-                {
-                    name: 'Sofia',
-                    location: 'Brockley Road',
-                    date: 'Mar 2026',
-                    quote: 'We got our eviction notice last month. Section 21, no reason given. Just two months to find somewhere we can afford, which doesn\'t exist.'
-                },
-                {
-                    name: 'Michael',
-                    location: 'Ladywell Station',
-                    date: 'Feb 2026',
-                    quote: 'Three viewings this week. Each flat had 15 other people looking. One landlord asked for six months rent upfront. How is that legal?'
-                }
-            ];
-        }
-
-        // Food dimension neighbour voices
-        if (dimensionName === 'food') {
-            return [
-                {
-                    name: 'Priya',
-                    location: 'Ladywell Fields',
-                    date: 'Jul 2026',
-                    quote: 'The food bank queue outside the community centre used to be short. Now it wraps round the block every Thursday.'
-                },
-                {
-                    name: 'Kwame',
-                    location: 'Verdant Lane',
-                    date: 'Jun 2026',
-                    quote: 'My daughter\'s school stopped doing the fruit and veg scheme this year. Budget cuts, they said.'
-                },
-                {
-                    name: 'Grace',
-                    location: 'Ladywell Village',
-                    date: 'May 2026',
-                    quote: 'Waited four months for an NHS dentist appointment for my son. In the end we paid privately, which we couldn\'t really afford.'
-                },
-                {
-                    name: 'Daniel',
-                    location: 'Brockley Road',
-                    date: 'Apr 2026',
-                    quote: 'Diabetes runs in my family. The GP\'s dietician clinic has a three month wait, so I\'ve mostly had to work it out myself.'
-                },
-                {
-                    name: 'Amaka',
-                    location: 'Hither Green Lane',
-                    date: 'Mar 2026',
-                    quote: 'Since the Healthy Start vouchers got easier to claim, it\'s made a real difference for fruit and milk each week.'
-                },
-                {
-                    name: 'Tomasz',
-                    location: 'Crofton Park',
-                    date: 'Feb 2026',
-                    quote: 'Every fast food place on the high street does a meal deal under £4. The greengrocer can\'t compete on price.'
-                }
-            ];
-        }
-
-        // Water dimension neighbour voices
-        if (dimensionName === 'water') {
-            return [
-                {
-                    name: 'Priya',
-                    location: 'Ladywell Fields',
-                    date: 'Jul 2026',
-                    quote: 'The hosepipe ban again this summer. Feels like every year now, not just the really dry ones.'
-                },
-                {
-                    name: 'Oliver',
-                    location: 'Algernon Road',
-                    date: 'Jun 2026',
-                    quote: 'Thames Water finally fixed the leak that had been running down our street for three months. Took about a dozen calls.'
-                },
-                {
-                    name: 'Fatima',
-                    location: 'Lewisham Way',
-                    date: 'May 2026',
-                    quote: 'Got a smart meter fitted in the spring. Bill actually went down once I stopped topping up the paddling pool every week.'
-                },
-                {
-                    name: 'Ben',
-                    location: 'Ladywell Village',
-                    date: 'Apr 2026',
-                    quote: 'Water pressure drops to nothing most evenings around six. Something to do with everyone on the street cooking dinner at once, apparently.'
-                },
-                {
-                    name: 'Grace',
-                    location: 'Brockley Road',
-                    date: 'Mar 2026',
-                    quote: 'Put a water butt in after the last drought warning. Doesn\'t feel like much on its own, but it\'s something.'
-                },
-                {
-                    name: 'Daniel',
-                    location: 'Hither Green Lane',
-                    date: 'Feb 2026',
-                    quote: 'Read that our water company still loses something like a fifth of what it treats to leaks before it even reaches a tap. Hard to take the hosepipe ban seriously after that.'
-                }
-            ];
-        }
-
-        // Mobility dimension neighbour voices
-        if (dimensionName === 'mobility') {
-            return [
-                {
-                    name: 'Oliver',
-                    location: 'Ladywell Station',
-                    date: 'Jul 2026',
-                    quote: 'Trains from Ladywell are brilliant, ten minutes to London Bridge. Walk fifteen minutes the other way towards Whitefoot and it\'s a different story entirely.'
-                },
-                {
-                    name: 'Priya',
-                    location: 'Algernon Road',
-                    date: 'Jun 2026',
-                    quote: 'Gave up cycling to work along the South Circular. Never felt unsafe on the quieter streets, always felt unsafe crossing that one road.'
-                },
-                {
-                    name: 'Marcus',
-                    location: 'Ladywell Fields',
-                    date: 'May 2026',
-                    quote: 'The 171 bus used to come every eight minutes. Now I\'m regularly waiting twenty, and I\'ve started just walking to the station instead.'
-                },
-                {
-                    name: 'Fatima',
-                    location: 'Vicars Hill',
-                    date: 'Apr 2026',
-                    quote: 'My daughter\'s school does a School Street now, no cars at drop-off. Wish more of the roads around it felt that calm the rest of the day too.'
-                },
-                {
-                    name: 'Ben',
-                    location: 'Brockley Road',
-                    date: 'Mar 2026',
-                    quote: 'Sold the car last year. Between the train and the buses I don\'t miss it, but I know that only works because we\'re close to the station.'
-                }
-            ];
-        }
-
-        // Community dimension neighbour voices
-        if (dimensionName === 'community') {
-            return [
-                {
-                    name: 'Grace',
-                    location: 'Ladywell Fields',
-                    date: 'Jul 2026',
-                    quote: 'Signed up as a befriender through Community Connections after my own mum went through a lonely patch. My "match" and I are up to a Tuesday phone call and a walk most fortnights now.'
-                },
-                {
-                    name: 'Errol',
-                    location: 'Adelaide Avenue',
-                    date: 'Jun 2026',
-                    quote: 'The community centre\'s grant got cut this year, so the Thursday lunch club is down to twice a month. For some of the regulars, that\'s the only time they leave the house.'
-                },
-                {
-                    name: 'Mei',
-                    location: 'Ladywell Village',
-                    date: 'May 2026',
-                    quote: 'Been here two years and still don\'t really know my neighbours beyond a nod on the stairs. Everyone seems friendly enough, just busy - it\'s on me as much as anyone, I know.'
-                },
-                {
-                    name: 'Trevor',
-                    location: 'Algernon Road',
-                    date: 'Apr 2026',
-                    quote: 'My GP referred me to Community Connections after my wife passed. Took some persuading to go along to the first coffee morning, but I haven\'t missed one since.'
-                },
-                {
-                    name: 'Naomi',
-                    location: 'Brookmill Road',
-                    date: 'Mar 2026',
-                    quote: 'Started a street WhatsApp group after a spate of shed break-ins. Didn\'t expect it to turn into people offering to walk each other\'s dogs, but that\'s mostly what it\'s for now.'
-                }
-            ];
-        }
-
-        // Equality dimension neighbour voices
-        if (dimensionName === 'equality') {
-            return [
-                {
-                    name: 'Adaeze',
-                    location: 'Ladywell Village',
-                    date: 'Jul 2026',
-                    quote: 'Same job title as a colleague across the river, same experience - found out by accident he\'s on nearly £8k more. Wasn\'t even awkward for him to tell me. That said everything.'
-                },
-                {
-                    name: 'Connor',
-                    location: 'Algernon Road',
-                    date: 'Jun 2026',
-                    quote: 'My parents bought their flat in the eighties for what feels like pocket change now. I earn more than they ever did and still can\'t get near a deposit. Pay isn\'t the thing holding me back, it\'s never having had property behind me.'
-                },
-                {
-                    name: 'Priya',
-                    location: 'Vicars Hill',
-                    date: 'May 2026',
-                    quote: 'Went part-time after my second was born because the nursery fees didn\'t add up any other way. Five years on my pay\'s barely moved while my husband\'s has doubled. Nobody signs up for that, it just happens.'
-                },
-                {
-                    name: 'Marlon',
-                    location: 'Brockley Road',
-                    date: 'Apr 2026',
-                    quote: 'Been passed over for two promotions I was qualified for. Both times it went to someone with less experience who just seemed to "fit" the team better. Hard to prove, easy to feel.'
-                },
-                {
-                    name: 'Grace',
-                    location: 'Ladywell Fields',
-                    date: 'Mar 2026',
-                    quote: 'I clean offices in the City on minimum wage. The people whose desks I wipe down earn in a day what takes me a fortnight. We\'re in the same building, we might as well be in different countries.'
-                }
-            ];
-        }
-
-        // Political voice dimension neighbour voices
-        if (dimensionName === 'political_voice') {
-            return [
-                {
-                    name: 'Winston',
-                    location: 'Ladywell Village',
-                    date: 'Jul 2026',
-                    quote: 'First time in years I actually queued to vote in May. Usually it\'s in and out in two minutes - this time there was a real choice on the ballot and it showed.'
-                },
-                {
-                    name: 'Chidinma',
-                    location: 'Adelaide Avenue',
-                    date: 'Jun 2026',
-                    quote: 'Wrote to my councillor about the potholes on our road three times last year. Got an automated reply each time and the potholes are still there.'
-                },
-                {
-                    name: 'Pat',
-                    location: 'Vicars Hill',
-                    date: 'May 2026',
-                    quote: 'Our ward assembly used to be where you\'d actually get a straight answer out of the council. Now it\'s just an email newsletter, and I don\'t feel like anyone\'s really listening.'
-                },
-                {
-                    name: 'Josh',
-                    location: 'Ladywell Fields',
-                    date: 'Apr 2026',
-                    quote: 'Signed the petition about the school crossing outside the gates one morning. Three hundred signatures in a week - whether it actually changes anything is another matter.'
-                },
-                {
-                    name: 'Deborah',
-                    location: 'Algernon Road',
-                    date: 'Mar 2026',
-                    quote: 'I\'ve lived here 40 years and I still don\'t feel like my vote at the local level changes much day to day. National elections feel different somehow - this one just doesn\'t.'
-                }
-            ];
-        }
-
-        // Education dimension neighbour voices
-        if (dimensionName === 'education') {
-            return [
-                {
-                    name: 'Nadia',
-                    location: 'Vicars Hill',
-                    date: 'Jul 2026',
-                    quote: 'My daughter got her grade 4s in English and Maths this summer, first in our family to do it. Doesn\'t sound like much from the outside but it changes what doors are open to her.'
-                },
-                {
-                    name: 'Kwame',
-                    location: 'Ladywell Village',
-                    date: 'Jun 2026',
-                    quote: 'Governor at one of the secondaries here. Results have been climbing three years running now, but you can still see which kids are getting extra tutoring at home and which aren\'t.'
-                },
-                {
-                    name: 'Rosa',
-                    location: 'Silver Road',
-                    date: 'May 2026',
-                    quote: 'My son\'s doing an English resit this year after just missing a 4 last summer. Nobody tells you how disruptive that is - it eats into his college timetable for the whole first term.'
-                },
-                {
-                    name: 'Tom',
-                    location: 'Slagrove Place',
-                    date: 'Apr 2026',
-                    quote: 'Moved here from Bromley two years ago and the school gap surprised me. Our old borough\'s results were miles ahead - Lewisham\'s catching up but it\'s starting from further back.'
-                },
-                {
-                    name: 'Ijeoma',
-                    location: 'Marsala Road',
-                    date: 'Mar 2026',
-                    quote: 'Volunteer with a homework club near the station. The kids who come every week, their confidence going into exams is night and day compared to the ones who only show up occasionally.'
-                }
-            ];
-        }
-
-        // Connectivity dimension neighbour voices
-        if (dimensionName === 'connectivity') {
-            return [
-                {
-                    name: 'Idris',
-                    location: 'Algernon Road',
-                    date: 'Jul 2026',
-                    quote: 'Full fibre finally got installed on our street after years of "coming soon" on the checker. Working from home doesn\'t mean the video call freezing every time someone else in the house streams something now.'
-                },
-                {
-                    name: 'Pauline',
-                    location: 'Ladywell Village',
-                    date: 'Jun 2026',
-                    quote: 'I\'m 81 and my grandson set up a tablet for me last year. Still won\'t do my prescriptions online though - if I get it wrong I\'ve got no one at the chemist to ask.'
-                },
-                {
-                    name: 'Femi',
-                    location: 'Brookmill Road',
-                    date: 'May 2026',
-                    quote: 'Mobile signal indoors is patchy on our block - I have to stand by the window to take calls. Fine most days, less fine when you\'re on hold to a council department for forty minutes.'
-                },
-                {
-                    name: 'Connor',
-                    location: 'Adelaide Avenue',
-                    date: 'Apr 2026',
-                    quote: 'Cheapest broadband deal near us is still about £24 a month. Doesn\'t sound like much until it\'s one more direct debit you\'re juggling against everything else going up.'
-                },
-                {
-                    name: 'Deborah',
-                    location: 'Ladywell Fields',
-                    date: 'Mar 2026',
-                    quote: 'Run a digital drop-in at the community centre. Most people who come aren\'t scared of computers, they just never had anyone sit with them for twenty minutes and show them once.'
-                }
-            ];
-        }
-
-        // Social cohesion dimension neighbour voices
-        if (dimensionName === 'social_cohesion') {
-            return [
-                {
-                    name: 'Winnie',
-                    location: 'Adelaide Avenue',
-                    date: 'Jul 2026',
-                    quote: 'Been on this street 22 years. Used to know everyone by name; now half the houses turn over every couple of years and I couldn\'t tell you who\'s in most of them.'
-                },
-                {
-                    name: 'Aashiq',
-                    location: 'Algernon Road',
-                    date: 'Jun 2026',
-                    quote: 'Our WhatsApp street group is more active than any actual chatting over the fence these days. Handy when someone\'s bin doesn\'t go out, but it\'s not really the same thing.'
-                },
-                {
-                    name: 'Beatrice',
-                    location: 'Ladywell Village',
-                    date: 'Jun 2026',
-                    quote: 'Used to volunteer at the food bank every Saturday. Had to stop when my hours at work changed - I still feel bad about it, like I dropped something I was supposed to be carrying.'
-                },
-                {
-                    name: 'Youssef',
-                    location: 'Vicars Hill',
-                    date: 'May 2026',
-                    quote: 'What I like about round here is nobody bats an eyelid at difference - my kids\' school run alone tells you ten languages get spoken on that pavement every morning.'
-                },
-                {
-                    name: 'Pat',
-                    location: 'Lewisham Way',
-                    date: 'Apr 2026',
-                    quote: 'Still proud to say I\'m from Ladywell when people ask. Doesn\'t mean I trust every stranger on the street the way I might have twenty years back - that\'s just changed with the area growing.'
-                }
-            ];
-        }
-
-        // Energy dimension neighbour voices
-        if (dimensionName === 'energy') {
-            return [
-                {
-                    name: 'Yusuf',
-                    location: 'Algernon Road',
-                    date: 'Jul 2026',
-                    quote: 'Got quoted £4,000 for loft insulation through a council energy scheme. Sounds like a lot until you\'ve seen what we\'re paying to heat this place every winter.'
-                },
-                {
-                    name: 'Connie',
-                    location: 'Ladywell Fields',
-                    date: 'Jun 2026',
-                    quote: 'Our EPC came back as a D. Landlord says he\'ll "look into it" - he\'s been saying that since 2023.'
-                },
-                {
-                    name: 'Abioye',
-                    location: 'Vicars Hill',
-                    date: 'May 2026',
-                    quote: 'Turned the heating off in February to save money, not because it was warm enough. My kids wore coats indoors for a fortnight.'
-                },
-                {
-                    name: 'Rosa',
-                    location: 'Brookmill Road',
-                    date: 'Apr 2026',
-                    quote: 'New boiler and insulation went in last spring through a grant. First winter since I moved in that the flat actually held the heat.'
-                },
-                {
-                    name: 'Desmond',
-                    location: 'Ladywell Village',
-                    date: 'Mar 2026',
-                    quote: 'Single glazing throughout, Victorian conversion, no cavity walls to insulate even if I could afford to. Some of these houses were never going to hit Band C without gutting them.'
-                }
-            ];
-        }
-
-        // Culture dimension neighbour voices
-        if (dimensionName === 'culture') {
-            return [
-                {
-                    name: 'Nadia',
-                    location: 'Ladywell Village',
-                    date: 'Jul 2026',
-                    quote: 'Took my daughter to a free workshop at The Albany last month - brilliant, but it made me realise how much of what\'s on around here runs through that one building.'
-                },
-                {
-                    name: 'Connor',
-                    location: 'Adelaide Avenue',
-                    date: 'Jun 2026',
-                    quote: 'Our am-dram group applied to the council\'s arts fund two years running and got nowhere. I get it, there\'s only so much money, but it always seems to go to the same handful of names.'
-                },
-                {
-                    name: 'Ijeoma',
-                    location: 'Algernon Road',
-                    date: 'May 2026',
-                    quote: 'Everything cultural feels like it\'s either Deptford or nothing. We\'re not that far away but it might as well be a different borough some evenings getting back from a gig.'
-                },
-                {
-                    name: 'Robert',
-                    location: 'Lewisham Way',
-                    date: 'Apr 2026',
-                    quote: 'The library\'s the one place I actually still go regularly. Free, warm, and there\'s always something on for the grandkids - more use to us than any gallery, if I\'m honest.'
-                },
-                {
-                    name: 'Priti',
-                    location: 'Vicars Hill',
-                    date: 'Mar 2026',
-                    quote: 'Went to three different open studios weekends this year. Didn\'t cost me a penny and every one was rammed - people clearly want this stuff, it\'s just not always easy to find out about.'
-                }
-            ];
-        }
-
-        // Income dimension neighbour voices
-        if (dimensionName === 'income') {
-            return [
-                {
-                    name: 'Denise',
-                    location: 'Algernon Road',
-                    date: 'Jul 2026',
-                    quote: 'I work full time on minimum wage and still had to use the food bank twice this year. People assume it\'s only for people who don\'t work.'
-                },
-                {
-                    name: 'Kwabena',
-                    location: 'Vicars Hill',
-                    date: 'Jun 2026',
-                    quote: 'My Universal Credit got reassessed and dropped for six weeks while they "checked something." Six weeks with no explanation is a long time when you\'ve got a kid to feed.'
-                },
-                {
-                    name: 'Lorna',
-                    location: 'Ladywell Village',
-                    date: 'May 2026',
-                    quote: 'Our street looks fine from the outside, nice Victorian houses, but three doors down is a family I know are really struggling. You wouldn\'t guess it from the street.'
-                },
-                {
-                    name: 'Idris',
-                    location: 'Adelaide Avenue',
-                    date: 'Apr 2026',
-                    quote: 'Got my employer accredited as a Living Wage payer last year after I pushed for it. Small thing, but it\'s the difference between me covering the bills and not.'
-                },
-                {
-                    name: 'Bethany',
-                    location: 'Ladywell Fields',
-                    date: 'Mar 2026',
-                    quote: 'Zero-hours contract at the warehouse means some weeks are fine and some weeks I\'m £150 short. Budgeting is impossible when you don\'t know what you\'re earning until the rota comes out.'
-                }
-            ];
-        }
-
-        // Peace & justice dimension neighbour voices
-        if (dimensionName === 'peace_justice') {
-            return [
-                {
-                    name: 'Malachi',
-                    location: 'Algernon Road',
-                    date: 'Jul 2026',
-                    quote: 'Two phone snatchings on our road in the same month this spring. Neither victim got a follow-up call from police, just a crime reference number for the insurance claim.'
-                },
-                {
-                    name: 'Gemma',
-                    location: 'Ladywell Village',
-                    date: 'Jun 2026',
-                    quote: 'The new Safer Neighbourhood ward panel meeting was useful, but it was the same dozen residents who always show up. Most people round here have no idea it exists.'
-                },
-                {
-                    name: 'Yusuf',
-                    location: 'Vicars Hill',
-                    date: 'May 2026',
-                    quote: 'My bike got taken from outside the station again, third one in two years. I\'ve basically stopped locking anything up outside overnight.'
-                },
-                {
-                    name: 'Connie',
-                    location: 'Adelaide Avenue',
-                    date: 'Apr 2026',
-                    quote: 'A youth worker told me the detached youth work in the park has genuinely calmed things down on a Friday night. It\'s the quiet, unglamorous stuff that seems to actually work.'
-                },
-                {
-                    name: 'Robert',
-                    location: 'Ladywell Fields',
-                    date: 'Mar 2026',
-                    quote: 'I don\'t feel unsafe walking home most nights, but I do notice which streets I avoid without really thinking about it - habits you build up over years, not from any one bad thing happening.'
-                }
-            ];
-        }
-
-        // Generic fallback
         return null;
     }
 
@@ -1642,6 +1140,46 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             `;
         }
 
+        // Add "Why this is happening" section for this group, where available - followed
+        // immediately by this indicator's own council context and the national/global
+        // research fallback, so the narrative reads what -> why -> what's being done ->
+        // wider evidence, instead of council context being stranded at the dimension's end.
+        const whyThisIsHappening = getWhyThisIsHappening(baseName);
+        if (whyThisIsHappening) {
+            html += `
+                <div class="detail-section why-section">
+                    <h3>Why this is happening</h3>
+                    ${whyThisIsHappening.localParagraphs.map(p => `<p>${p}</p>`).join('')}
+                    <div class="source-line">${whyThisIsHappening.localSources.length > 1 ? 'Sources' : 'Source'}: ${whyThisIsHappening.localSources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>
+                </div>
+            `;
+
+            const inlineCouncilContexts = getCouncilContext(dimension.dimension);
+            if (inlineCouncilContexts && inlineCouncilContexts.length > 0) {
+                html += '<h3 class="council-context-heading">Local & Broader Context</h3>';
+                inlineCouncilContexts.forEach(ctx => {
+                    html += `
+                        <div class="council-context">
+                            <h4>${ctx.title}</h4>
+                            <div class="council-date">${ctx.year}</div>
+                            <div class="council-summary">${ctx.summary}</div>
+                            ${ctx.url ? `<div class="source-line">Source: <a href="${ctx.url}" target="_blank">${ctx.title}</a></div>` : ''}
+                        </div>
+                    `;
+                });
+            }
+
+            const nc = whyThisIsHappening.nationalCard;
+            html += `
+                <div class="council-context">
+                    <h4>${nc.title}</h4>
+                    <div class="council-date">${nc.year}</div>
+                    <div class="council-summary">${nc.summary}</div>
+                    <div class="source-line">Sources: ${nc.sources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>
+                </div>
+            `;
+        }
+
         // Add divider after each group except the last
         if (groupIndex < groupKeys.length - 1) {
             html += '<div class="section-divider"></div>';
@@ -1649,8 +1187,10 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     });
 
     // Add council/government context section(s) for the entire dimension - up to 3 documents
-    // when the dimension's indicators span genuinely distinct policy areas (see 3.2 in spec)
-    const councilContexts = getCouncilContext(dimension.dimension);
+    // when the dimension's indicators span genuinely distinct policy areas (see 3.2 in spec).
+    // Health is excluded here because its context is rendered inline under the specific
+    // indicator it explains (see getWhyThisIsHappening above) rather than dimension-wide.
+    const councilContexts = dimension.dimension === 'health' ? [] : getCouncilContext(dimension.dimension);
     if (councilContexts && councilContexts.length > 0) {
         html += '<div class="section-divider"></div>';
         html += '<h3 class="council-context-heading">Council & Government Context</h3>';
@@ -1666,96 +1206,33 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         });
     }
 
-    // Add neighbour voices section for the entire dimension
-    const neighbourVoices = getNeighbourVoices(dimension.dimension);
-    if (neighbourVoices && neighbourVoices.length > 0) {
+    // Add "How might we" section for the entire dimension: real, sourced ideas ordinary
+    // residents can act on, plus a CTA for residents to contribute their own - submitted
+    // ideas would join these same cards in the scroller, not a separate list.
+    const waysToGetInvolved = getWaysToGetInvolved(dimension.dimension);
+    if (waysToGetInvolved && waysToGetInvolved.length > 0) {
         html += '<div class="section-divider"></div>';
         html += `
             <div class="hmw-prompt">
-                <h3 class="hmw-eyebrow">How might we</h3>
+                <h3 class="hmw-eyebrow">Get Involved</h3>
             </div>
         `;
 
-        const voicesPerPage = 3;
-        const totalPages = Math.ceil(neighbourVoices.length / voicesPerPage);
-
-        html += `<div id="voices-container-${dimension.dimension}" class="voices-container"></div>`;
-
-        if (totalPages > 1) {
-            html += `
-                <div class="voice-pagination">
-                    <button class="voice-nav-btn" id="voice-prev-${dimension.dimension}">←</button>
-                    <span class="voice-page-indicator" id="voice-page-indicator-${dimension.dimension}">1 / ${totalPages}</span>
-                    <button class="voice-nav-btn" id="voice-next-${dimension.dimension}">→</button>
-                </div>
-            `;
-        }
+        html += `
+            <div class="involve-scroll">
+                ${waysToGetInvolved.map(w => `
+                    <a class="involve-card" href="${w.url}" target="_blank">
+                        <h4>${w.action}</h4>
+                        <p>${w.text}</p>
+                    </a>
+                `).join('')}
+            </div>
+        `;
 
         html += '<button class="add-take-btn">Share your ideas</button>';
     }
 
     container.innerHTML = html;
-
-    // Set up pagination for neighbour voices
-    if (neighbourVoices && neighbourVoices.length > 0) {
-        let currentVoicePage = 0;
-        const voicesPerPage = 3;
-        const totalPages = Math.ceil(neighbourVoices.length / voicesPerPage);
-
-        function renderVoicesPage(page) {
-            const start = page * voicesPerPage;
-            const end = start + voicesPerPage;
-            const voicesToShow = neighbourVoices.slice(start, end);
-
-            const voicesContainer = document.getElementById(`voices-container-${dimension.dimension}`);
-            if (voicesContainer) {
-                let voicesHtml = '';
-                voicesToShow.forEach(voice => {
-                    voicesHtml += `
-                        <div class="voice-block">
-                            <div class="voice-meta">${voice.name}, ${voice.location} · ${voice.date}</div>
-                            <div class="voice-body">${voice.quote}</div>
-                        </div>
-                    `;
-                });
-                voicesContainer.innerHTML = voicesHtml;
-            }
-
-            // Update pagination controls
-            const prevBtn = document.getElementById(`voice-prev-${dimension.dimension}`);
-            const nextBtn = document.getElementById(`voice-next-${dimension.dimension}`);
-            const indicator = document.getElementById(`voice-page-indicator-${dimension.dimension}`);
-
-            if (prevBtn) prevBtn.disabled = page === 0;
-            if (nextBtn) nextBtn.disabled = page === totalPages - 1;
-            if (indicator) indicator.textContent = `${page + 1} / ${totalPages}`;
-        }
-
-        // Initial render
-        renderVoicesPage(0);
-
-        // Set up event listeners for pagination
-        const prevBtn = document.getElementById(`voice-prev-${dimension.dimension}`);
-        const nextBtn = document.getElementById(`voice-next-${dimension.dimension}`);
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                if (currentVoicePage > 0) {
-                    currentVoicePage--;
-                    renderVoicesPage(currentVoicePage);
-                }
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                if (currentVoicePage < totalPages - 1) {
-                    currentVoicePage++;
-                    renderVoicesPage(currentVoicePage);
-                }
-            });
-        }
-    }
 }
 
 function switchView(newView) {

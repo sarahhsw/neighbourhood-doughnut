@@ -38,6 +38,33 @@
 - Note `"accessed": "2026-07-13"` to show when you retrieved the data
 - Add `"notes"` field with publication date: "Published June 2024, covering period 2022-2024"
 
+**Hard cutoff: do not cite any data point more than 10 years old, even if it's the only
+figure available at that geography.** Added August 2026 after the Health dimension's "Why
+this is happening" section cited a 2003-2007 ward-level cardiovascular mortality figure from
+a 2009 Director of Public Health report - the *only* genuinely ward-level (not
+borough-inherited) health data found anywhere in the dimension, which made it tempting to
+keep despite being ~17-20 years old. It was cut once a user pointed out the age. **Rarity of
+granularity does not override freshness** - a stale ward-level figure is not better than no
+ward-level figure; state plainly that no recent ward-level breakdown exists instead of
+reaching for an old one to fill the gap.
+
+**Also re-verify comparative/"driver" claims against current data, not just the mechanism.**
+A related issue in the same session: a paragraph named smoking as a shared driver behind
+Lewisham's leading causes of death, sourced to that same 2009 report, which also stated
+Lewisham's smoking rate was "significantly higher than England." That comparison was true in
+2005-09 but is no longer true - current OHID/Fingertips data (Annual Population Survey,
+"current smokers" indicator) shows Lewisham's smoking rate has since converged with, and in
+the most recent single years (2023: 9.8% vs England 10.9%; 2024: 8.8% vs England 10.4%) fallen
+*below*, both London and England. The underlying medical mechanism (smoking causes
+circulatory disease and lung disease) is still textbook-true and didn't need re-verifying -
+but the *comparative* claim ("Lewisham smokes more than average, which is part of why its
+outcomes are worse") did, and turned out to be stale. When a sentence pairs a general
+causal mechanism with a local comparative claim, re-check the comparative half specifically -
+don't assume it's still true just because the mechanism is permanent. In this case the
+comparative claim added nothing to the actual local narrative once verified, so it was
+removed rather than corrected - see 2.8 for when a fact belongs in the page at all versus
+being cut as a tangent.
+
 ### 1.3 Historical Data & Trend Analysis
 
 **CRITICAL: For EACH indicator, always extract and plot historical data**
@@ -296,6 +323,15 @@ above does.
   inevitable, the council..." Cut the throat-clearing half of the sentence and start with
   what the council actually did. Every sentence should earn its place; if deleting a phrase
   loses no information, delete it.
+- ❌ Making the same comparative point twice in one short paragraph with different wording -
+  e.g. a draft said both "premature death rates worse than England's" and, two sentences
+  later, "a Lewisham death rate well above England's" about the same underlying comparison.
+  Say it once; spend the second mention's word budget on a fact that adds information instead.
+- ❌ Unexplained acronyms, including inside citation/source names, not just body prose - e.g.
+  "85% of COPD" or a source labelled "Lewisham DPH Annual Report" without ever spelling out
+  Chronic Obstructive Pulmonary Disease or Director of Public Health. Expand on first use
+  everywhere it appears on the page, including small print like source lines - a reader
+  encountering the source line first shouldn't hit an acronym before the prose ever defines it.
 
 **Every specific factual claim needs a real source - including ones you didn't write.**
 When editing or rewriting *existing* description text (not just adding new indicators),
@@ -474,6 +510,70 @@ in the live data:
 actually measured (check the source's own methodology/coverage notes, not just its name -
 "National X Survey" is frequently England-only), not the value that sounds most authoritative.
 
+### 2.8 "Why This Is Happening" Section (Local Causal Context)
+
+**Added August 2026, after a user looked at the Healthy Life Expectancy chart and asked "why
+is it declining?" - a question the page didn't answer anywhere.** Not every indicator needs
+this section; add it only where a reader's obvious next question genuinely isn't covered by
+"What this measures" or the council-context card, and only where you have real evidence to
+answer it with (see the "don't pad with tangents" rule below).
+
+**Purpose**: bridge the gap between "what the number is" (2.5) and "what's being done about
+it" (Section 3) by explaining, with real evidence, *why the pattern looks the way it does
+locally*.
+
+**Structure and sourcing**:
+- Written as `getWhyThisIsHappening(baseName)` in `app.js`, returning
+  `{ localParagraphs, localSources, nationalCard }`, rendered inside the same per-indicator
+  loop as "What this measures" (immediately after it), not as a dimension-wide section - so
+  the narrative reads **what → why → what's being done → wider evidence**, all under the one
+  indicator it explains, rather than council context being stranded at the bottom of the whole
+  dimension.
+- `localParagraphs`: real Ladywell/Lewisham evidence. **One tight paragraph is usually
+  right, capped at the same ~130-word budget as every other description block (2.1/2.2) -
+  don't let it become two or three paragraphs just because there's more to say.** An early
+  draft used two paragraphs (191 words combined) to fit in an extra dated ward-level stat;
+  once asked to cap it like every other paragraph on the page, it consolidated to one 78-110
+  word paragraph without losing the load-bearing facts.
+- `localSources`: an **array**, not a single object - render as "Source:" when it has one
+  entry, "Sources:" when it has more than one. **Attribute claims to the document that
+  actually contains them, not to whichever document is most convenient to cite once.** A real
+  bug caught in this session: a paragraph combined facts from two different Lewisham public
+  health documents (a 2025 borough report for cause-of-death shares, and an older
+  DPH report for a ward-level figure), but only the 2025 report's URL was attached as "the"
+  source. A user asked "where is [claim] - I can't find it in the source link" and found the
+  claim simply wasn't in that document. Fix: list every document actually drawn from, each
+  labelled with which specific claims it supports if that's not obvious from the summary/date
+  alone (e.g. `{ name: 'A Picture of Lewisham 2025 - ... (causes of death, deprivation gap)',
+  url: '...' }`).
+- `nationalCard`: an **optional fallback**, used only for the portion of the "why" that local
+  data genuinely can't explain (e.g. no ward-level breakdown exists at all). Render it as a
+  normal `.council-context` card - same title/date/summary/source-line structure as the local
+  council-context card right above it - **not** a visually distinct box. An earlier version
+  gave it a dashed border, a coloured left accent bar, and an uppercase "NOT LADYWELL-SPECIFIC"
+  badge; all three were removed on request in favour of just an accurately worded `<h4>` title
+  (e.g. "Global research consensus on healthy life expectancy") and one plain sentence in the
+  summary itself. **If the heading text alone already tells the reader what they need to know,
+  don't also add a badge, a border, and a repeated disclaimer sentence - pick one signal, not
+  three.**
+- Section heading: when a dimension has both a local council-context card and a
+  `nationalCard` under the same indicator, head the combined block **"Local & Broader
+  Context"**, not "Council & Government Context" - the latter stops being accurate once a
+  global research card sits under it too. Dimensions with only a local council-context card
+  (the common case) keep "Council & Government Context" as before; this rename is scoped to
+  the health-style combined case, implemented as a second call site for the same
+  `council-context-heading` class with different text, not a global rename.
+
+**Don't pad it with tangential facts just because they're true.** Two things were cut from
+the Health dimension's "why" paragraph after being added: a sentence naming smoking as a
+"shared driver" (cut once the underlying comparative claim about Lewisham's smoking rate
+turned out to be outdated - see 1.2's freshness rule above), and an opening throat-clearing
+line ("Where local causal data runs out, two strands of research explain...") that described
+the page's own research process rather than stating a finding (the same anti-pattern as
+2.1's Bad example #4 and 2.2's "session narration" bullet - this section is not exempt from
+those rules just because it's new). If a fact doesn't currently help explain the local trend,
+leave it out rather than including it as general-knowledge colour.
+
 ---
 
 ## 3. Council & Government Context Section
@@ -577,9 +677,6 @@ made a real four-priority strategy read as one dense wall of text).
 - ❌ Empty scene-setting phrases ("Rather than...") that could be deleted with no loss of information
 - ❌ Omitting the source line/hyperlink
 
-**Good example (single-theme, narrative)**:
-*"The strategy responds to stark health inequalities in Lewisham, where there's a 6.6-year gap in male life expectancy between the most and least deprived areas (2020-21), with cancer and cardiovascular disease as the leading causes of death. The council is targeting three root causes of poor health: poverty, housing, and education — particularly where these intersect with health and care, emphasizing prevention at the community level before problems manifest as serious illness."*
-
 **Good example (multi-theme, bulleted)**:
 *"The council assisted over 3,000 households experiencing homelessness in the past year, driven by cost-of-living pressures and the lasting impact of COVID-19 on vulnerable residents. It organises its response around four priorities:*
 - *__Prevention first__ - early intervention, financial help with rent arrears, and protection from illegal eviction, connecting at-risk residents to support before they lose their home.*
@@ -588,6 +685,31 @@ made a real four-priority strategy read as one dense wall of text).
 
 *Its stated commitment: "no individual should be forced to sleep on the streets" - despite 13 years of budget cuts constraining what the council can do alone."*
 *[Source: Lewisham Homelessness and Rough Sleeping Strategy →]*
+
+**Good example (multi-theme, bulleted - Health, August 2026 rewrite)**: an earlier version of
+this card opened with the dimension's headline stats ("6.6-year gap in male life expectancy...
+cancer and cardiovascular disease as the leading causes of death") before ever describing what
+the strategy actually *does*. Once a "Why this is happening" section (2.8) existed to carry
+those stats, the council-context card was rewritten to focus purely on the strategy's actions:
+
+*"Rather than treating healthcare alone as the lever, the strategy organises action around four
+priority areas, treating poverty, housing and education as the "core determinants" driving the
+borough's health gap:*
+- *__Poverty__ - embedding financial wellbeing and debt advice within GP and social care
+  settings, plus an annual Warm Welcome Scheme.*
+- *__Housing__ - a joint damp-and-mould protocol across health and housing providers, and
+  closer working on hospital discharge.*
+- *__Education__ - embedding prevention within schools for children and young people.*
+- *__Prevention__ - targeting the borough's two leading causes of death directly, via new
+  Neighbourhood Health Equity Teams for cancer and cardiovascular disease.*
+
+*It commits to shifting resources upstream from treatment toward prevention over its 5-year
+span."*
+
+This is also the general rule once a dimension has both 2.8 ("Why this is happening") and a
+council-context card: **stats and causal explanation belong in 2.8; the council-context card
+should describe what's being done, not re-explain why it's needed.** Splitting them this way
+removed the duplication that existed when one card tried to do both jobs.
 
 **Bad example** (do not write like this):
 *"Strategic aim: Improve health and wellbeing. Three priority determinants: poverty, housing, education. Key finding: 6.6-year gap in life expectancy. Strategic approach: Population-level prevention interventions."*
@@ -601,47 +723,129 @@ made a real four-priority strategy read as one dense wall of text).
 
 ---
 
-## 4. Neighbour Voices Section
+## 4. "Get Involved" Section
 
-### 4.1 Requirements
-- **Section divider** before neighbour voices
-- **Heading**: "Neighbour Voices" (uppercase, small size, opacity 0.55)
-- **Display**: Show 3 quotes per page
-- **Pagination**: If more than 3 quotes exist, implement prev/next navigation
-  - Page indicator showing "1 / 2" format
-  - Prev/next buttons disabled at boundaries
-  - Navigation buttons styled with opacity states
-- **Call-to-action button**: "Add your take" button at bottom
-  - Must be highly visible and prominent
-  - Orange background (var(--ringA) = #E8542D) matching the ward selector
-  - NO border
-  - Cream text color (var(--paper))
-  - Generous padding: 14px 32px
-  - Font size: 15px, weight: 700
-  - Border radius: 24px
-  - Hover effect: inverts to cream background with orange text
-  - Example styling: `background: var(--ringA); color: var(--paper); border: none;`
+**Replaced August 2026.** This section used to be "Neighbour Voices" - a fictional-but-realistic
+quote feed ("Femi, Ladywell Road... Two of my neighbours have moved out this year") under a
+"How might we" prompt, with an "Add your take" CTA. It was removed entirely (function, HTML,
+CSS, ~560 lines) and replaced with something structurally different: **real, sourced, resident-
+actionable ideas**, because invented quotes - however realistic-sounding - sit uneasily next to
+a page otherwise built entirely from verified data and real citations. If you're extending an
+older checkout of this codebase and still see `getNeighbourVoices`/`.voice-block`/"Neighbour
+Voices", treat it as superseded by this section, not a pattern to keep building on.
 
-### 4.2 Quote Format
-Each voice block includes:
-- **Name**: First name only
-- **Location**: Specific area within ward
-- **Date**: Month and year (e.g., "Jul 2026")
-- **Quote**: Personal, concrete observation or experience related to the dimension
+### 4.1 Purpose and Content Rules
 
-**Visual**:
-```css
-.voice-block {
-    margin-bottom: 16px;
-}
-.voice-meta {
-    font-size: 12px;
-    opacity: 0.5;
-}
-.voice-body {
-    font-size: 14px;
-}
-```
+**Every idea must be real and independently checkable - never an invented or generic
+scenario.** This is the same "no fabrication" discipline as the rest of the page (2.2, 2.8),
+applied to a new content type. Concretely:
+
+- Each idea names a **specific real thing** a resident can do - an event, a volunteer role, an
+  organisation, a movement - not a generic instruction like "eat healthily" or "talk to your
+  neighbours."
+- Each idea is paired with a **real case study**, verified by you, not written from general
+  knowledge of "this sort of thing exists somewhere." Search for it, fetch the source, confirm
+  the specifics (numbers, dates, current status) before writing the card.
+- **If no genuine local example exists, say so rather than implying one does.** The Health
+  dimension's Men's Shed card is the worked example: "The UK Men's Sheds movement now has
+  hundreds of active sheds nationally, but none listed for Ladywell or central Lewisham yet -
+  a real gap a few residents could fill." That's honest inspiration (a real, checkable national
+  movement) without pretending a local chapter exists.
+- **Return `null` for a dimension you haven't researched real ideas for yet.** An empty or
+  templated "get involved" card is worse than no section - don't pad every dimension just to
+  have something under this heading.
+
+**Think cross-dimension, not just the dimension's direct topic.** A reader's obvious next
+question after "why is this happening" (2.8) is often answered by *root causes*, not just
+direct interventions - and those root causes usually belong to other dimensions on this same
+site. The Health dimension's five ideas illustrate this: two are health-direct (a parkrun,
+becoming an NHS-linked community health volunteer), but the other three target the "core
+determinants" the dimension's own council-context card already names - housing (joining the
+local tenants' union branch), poverty/fuel poverty (volunteering at a winter warm space), and
+social isolation (starting a Men's Shed). Look at what 2.8 and the council-context card already
+identified as root causes, then find real, joinable local answers to those, not just to the
+dimension's headline indicator.
+
+**Aim for 5 ideas per dimension** once fully built out (fewer is fine while still researching -
+don't pad to hit 5).
+
+### 4.2 Format and Length
+
+**One merged paragraph per idea, roughly 25-30 words - not a description followed by a
+separate "case study" block.** An earlier draft wrote a ~50-word description paragraph, then a
+separately-labelled "CASE STUDY" paragraph underneath it for the same idea - functionally
+correct but visually and editorially bloated once several ideas are stacked. Merge the action
+context and the case-study evidence into one tight sentence-or-two, in the same spirit as the
+130-word cap elsewhere on the page (2.1/2.2), just shorter because these cards are meant to be
+scannable at a glance, not read like an indicator description.
+
+**Good example** (Health dimension, actual live copy):
+> **Show up (or volunteer) at Hilly Fields parkrun** - Free timed 5km every Saturday 9am in
+> Hilly Fields, near Ladywell station. Part of the UK-wide parkrun model linked to better
+> fitness and less loneliness.
+
+**Bad example** (an earlier draft of the same idea, before being asked to cut it down): a
+~50-word description paragraph ("A free, timed 5km run/walk every Saturday at 9am in Hilly
+Fields, a short walk from Ladywell station - open to any pace from first-timers to regulars,
+with just a one-off online registration needed before your first go.") followed by a separate
+~55-word "Case study" paragraph repeating and expanding on the same parkrun-movement fact. Two
+paragraphs saying related things about one idea is padding, not two pieces of information.
+
+**No separate "Source:" line - the whole card is the link.** Unlike indicator descriptions,
+council-context cards, and the "why this is happening" section (all of which use an explicit
+`Source: <a>...</a>` line because they're citing evidence for a claim), a "get involved" card
+*is* an invitation to go somewhere - so the natural interaction is the whole card being
+clickable (`<a class="involve-card" href="${idea.url}" target="_blank">`), not a citation
+pattern. Signal "this is a link" with a hover state (title underline + shadow lift), not with
+link-blue text - and if you make a block-level element like `<a class="involve-card">` a flex/
+block container, explicitly set `color: var(--ink)` on it, or child headings will inherit the
+browser's default link-blue rather than the page's ink colour. This exact bug shipped once in
+this session (an unstyled `<h4>` inside the new `<a>` wrapper rendered blue) before being
+caught and fixed.
+
+### 4.3 Visual Treatment: Horizontal Scroll, Not a Vertical List
+
+**Deliberately different from every other card pattern on the page**, added for visual variety
+rather than functional necessity - council-context cards, the "why this is happening" section,
+and indicator cards are all vertically stacked full-width blocks; this section scrolls
+horizontally instead.
+
+- `.involve-scroll`: `display: flex; overflow-x: auto; scroll-snap-type: x mandatory;` with a
+  visible thin scrollbar (`::-webkit-scrollbar` styled, not hidden) so it reads as scrollable
+  rather than looking cut off. Bleeds to the container's edges via negative margin matching
+  `.overlay-content`'s own padding (22px mobile, 48px desktop - override both breakpoints, see
+  `.involve-scroll` in `styles.css`).
+- `.involve-card`: fixed width (`flex: 0 0 250px`), `scroll-snap-align: start`, same
+  noticeboard-collage treatment as `.dimension-card` (2px ink border, drop shadow) rather than
+  the softer `.council-context` card look - this is what makes the section visually distinct
+  from the rest of the page, not just structurally distinct.
+- **Colour variety via a cycling top border, not the whole card**: `border-top: 5px solid`
+  cycling through `var(--ringA)` / `var(--ringB)` / `var(--met)` via
+  `:nth-child(3n+1/2/3)`. Added specifically because an early all-one-colour version of this
+  section was flagged as visually monotonous next to the page's otherwise-varied palette.
+  Keep it to the border/accent, not the card background or heading text colour - those stay
+  the page's standard ink/paper so the cards don't clash with the rest of the page.
+
+### 4.4 Section Heading
+
+**"Get Involved"**, not "How might we" or "Neighbour Voices". This section went through both
+those names during development: "Neighbour Voices" no longer fit once the quotes were replaced
+with actionable cards, and "How might we" (a design-thinking-style open question) stopped
+fitting once the cards became concrete answers rather than a prompt still being posed. The
+rule of thumb: **name the heading for what's actually under it, and re-check the name whenever
+the content type changes** - the same issue happened with "Council & Government Context" once
+a global-research card was added alongside it (2.8) and had to be renamed "Local & Broader
+Context" for the dimensions where both exist.
+
+### 4.5 The "Share your ideas" CTA
+
+The CTA button (`.add-take-btn`, unchanged styling from the old "Add your take" button) sits
+directly below the `.involve-scroll` carousel, positioned so that resident-submitted ideas
+would conceptually extend the same card set, not populate a separate list. There is currently
+no backend to actually persist submitted ideas - the button is a placeholder for that future
+capability, styled and positioned as if it already worked. Don't wire it to do anything until
+that backend exists; don't remove it either, since the positioning next to the real cards is
+itself communicating the intended behaviour.
 
 ---
 
@@ -652,8 +856,10 @@ Each voice block includes:
 
 **Functions required**:
 - `getCouncilContext(dimensionName)` - Returns council strategy info for the dimension
-- `getNeighbourVoices(dimensionName)` - Returns array of voice objects
-- Pagination logic for neighbour voices (renderVoicesPage, event listeners)
+- `getWhyThisIsHappening(baseName)` - Optional, per-indicator (not per-dimension) local causal
+  explainer; returns `null` for indicators that don't need one. See 2.8.
+- `getWaysToGetInvolved(dimensionName)` - Returns array of real, sourced, resident-actionable
+  ideas for the "Get Involved" section, or `null` if none researched yet. See Section 4.
 
 ### 5.2 CSS Requirements
 **File**: `css/styles.css`
@@ -661,9 +867,9 @@ Each voice block includes:
 **Classes needed**:
 - `.section-divider` - Visual separator between sections
 - `.plain-english` - Top description paragraph
-- `.neighbour-voices-heading` - Section heading
-- `.voice-block`, `.voice-meta`, `.voice-body` - Quote styling
-- `.voice-pagination`, `.voice-nav-btn`, `.voice-page-indicator` - Pagination controls
+- `.hmw-prompt`, `.hmw-eyebrow` - "Get Involved" section heading (class names predate the
+  August 2026 rename from "How might we" - not renamed in code, just in the displayed text)
+- `.involve-scroll`, `.involve-card` - Horizontal-scroll "Get Involved" cards (Section 4.3)
 - `.add-take-btn` - CTA button (must be prominent)
 
 **Gotcha: shared classes need context-specific overrides, not new classes.** `.source-line`
@@ -708,8 +914,10 @@ Before completing a dimension page, verify:
 
 **Technical Implementation:**
 - [ ] Section dividers are in place
-- [ ] Neighbour voices pagination works (if >3 quotes)
-- [ ] "Add your take" button is highly visible
+- [ ] "Get Involved" cards (Section 4) scroll horizontally and snap correctly; every card's
+      heading renders in ink colour, not link-blue (check after wrapping cards in `<a>` - see
+      4.2's gotcha)
+- [ ] "Share your ideas" button is highly visible
 - [ ] No JavaScript syntax errors (apostrophes escaped in strings)
 - [ ] Vertical spacing is adequate (48px+ between chart and cards)
 - [ ] Cache versions bumped in ward.html
@@ -740,6 +948,24 @@ Before completing a dimension page, verify:
 - [ ] Council context: up to 3 documents, but only as many as are actually needed (2 is often
       enough - don't force a 3rd, see 3.2); bullets used only if there are 3+ genuinely
       distinct themes within a document; every document has a hyperlinked source line
+- [ ] **No data point older than 10 years is cited anywhere on the page**, including in a
+      "Why this is happening" section (2.8) - not even a rare ward-level figure with no
+      more-recent equivalent (see 1.2). If the only local data is stale, say plainly that no
+      recent figure is published rather than citing the old one.
+- [ ] **Every claim in a multi-source paragraph is attributed to the specific document that
+      actually contains it** - if a "Why this is happening" paragraph draws on two documents,
+      both are listed in `localSources`, not just whichever one is cited as "the" source (2.8).
+      Test: for any claim a reader might ask "where does this come from?", could you point to
+      one of the listed sources and actually find it there?
+- [ ] Comparative/"driver" claims ("X is significantly higher/lower than Y") are checked
+      against *current* data, not just assumed still true because an older source states them
+      and the underlying mechanism is permanent (see 1.2's smoking-prevalence example)
+- [ ] No unexplained acronyms anywhere on the page, including inside source/citation names
+      (see 2.2)
+- [ ] If a "Why this is happening" section (2.8) exists for an indicator with its own
+      council-context card, stats and causal explanation live in 2.8, not duplicated into the
+      council-context summary - the latter should describe actions, not re-argue why they're
+      needed (see 3.2's Health example)
 
 **Pipeline & Multi-File Sync (see Section 13):**
 - [ ] `site/data/wards/ladywell.json`, `data/wards/ladywell.json`, and
@@ -792,6 +1018,21 @@ Before completing a dimension page, verify:
 22. **Do not run scripts with relative output paths from inside `data/pipeline/`** - always
     run from the repo root and verify the output landed in `data/wards/`, not
     `data/pipeline/wards/` (13.5)
+
+**Editorial Errors (added August 2026, see Section 1.2, 2.2, 2.8):**
+23. **Do not cite any data point more than 10 years old**, even a rare ward-level figure with
+    no more-recent equivalent - state the gap instead of reaching for a stale number (1.2)
+24. **Do not trust a comparative claim ("higher/lower than England") just because the general
+    mechanism behind it is still true** - re-verify the comparison itself against current data;
+    a driver can remain real while a decade-old magnitude claim about it goes stale (1.2)
+25. **Do not attach one document's URL as "the" source for a paragraph that actually draws on
+    two** - list every source actually used, or a claim will be uncheckable against the source
+    given (2.8)
+26. **Do not over-signal "this isn't local data"** with a badge, coloured border, *and* a
+    repeated disclaimer sentence - an accurately worded heading is usually enough on its own
+    (2.8)
+27. **Do not leave unexplained acronyms anywhere**, including inside source/citation names, not
+    just body prose (2.2)
 
 ---
 
@@ -968,11 +1209,16 @@ Before completing a dimension page, verify:
 5. Verify year is correct (e.g., 2025-2030 not 2023-2028)
 6. Get actual URL to document
 
-### Step 5: Neighbour Voices
-1. Create 5+ authentic-sounding quotes related to dimension
-2. Include name, location, date, and concrete observation
-3. Implement pagination if >3 quotes
-4. Style "Add your take" button prominently
+### Step 5: "Get Involved"
+1. Identify the dimension's real root causes (from 2.8's "why this is happening" and the
+   council-context card) as well as its direct topic - ideas should span both
+2. Research and verify 5 real, checkable local/inspirational examples, one per idea - search,
+   fetch the source, confirm specifics before writing anything
+3. Write one merged ~25-30 word paragraph per idea (action + case study together, not two
+   separate blocks) - see 4.2
+4. Wire each card as a whole-card link (`<a class="involve-card" href="...">`) to its source,
+   no separate "Source:" line
+5. Return `null` for any dimension without real researched ideas yet, rather than padding
 
 ### Step 6: Testing & Verification
 1. Check JavaScript syntax: `node -c js/app.js`
@@ -1265,5 +1511,11 @@ afterwards that it landed in `data/wards/` and nowhere else - not from inside `d
 *This specification is based on the Health dimension implementation (July 2026), and revised
 after the Housing dimension deep-dive (July 2026) which surfaced most of the pipeline-sync,
 sourcing-discipline, and editorial issues addressed in sections 1.5a, 2.1, 2.2, 2.6, 3.2, and
-13. Follow these requirements for all future dimension pages to maintain consistency and
-quality.*
+13. Revised again after a second Health dimension pass (August 2026) that added the "Why This
+Is Happening" section (2.8) and surfaced the 10-year data-freshness cutoff, per-claim source
+attribution, and stale-comparative-claim issues addressed in sections 1.2, 2.2, 2.8, 3.2, 6,
+and 7. Revised a third time in the same August 2026 session, which replaced the invented-quote
+"Neighbour Voices" section with the real, sourced, cross-dimension "Get Involved" section
+(Section 4, fully rewritten) and updated the JS/CSS technical references in 5.1/5.2
+accordingly. Follow these requirements for all future dimension pages to maintain consistency
+and quality.*

@@ -172,69 +172,6 @@
       "ward": "Ladywell",
       "ward_code": "E05013725",
       "lens": "local_social",
-      "dimension": "health",
-      "target": {
-        "text": "No official target set",
-        "source_body": null,
-        "has_official_target": false
-      },
-      "indicator": "Health index score",
-      "threshold": {
-        "value": null,
-        "unit": null,
-        "description": null
-      },
-      "snapshot": {
-        "value": 99.1,
-        "unit": "index",
-        "year": "2021",
-        "date": null
-      },
-      "status": "descriptive_only",
-      "geography_of_data": "borough_inherited",
-      "source": {
-        "name": "Office for National Statistics - Health Index for England",
-        "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/datasets/healthindexscoresengland",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 99.1 (2021). England baseline: 100.0. Index measures overall health across multiple domains."
-      },
-      "confidence": "high",
-      "community_notes": [],
-      "trend": [
-        {
-          "period": "2015",
-          "value": 96.5
-        },
-        {
-          "period": "2016",
-          "value": 96.5
-        },
-        {
-          "period": "2017",
-          "value": 96.6
-        },
-        {
-          "period": "2018",
-          "value": 99.8
-        },
-        {
-          "period": "2019",
-          "value": 98.5
-        },
-        {
-          "period": "2020",
-          "value": 96.9
-        },
-        {
-          "period": "2021",
-          "value": 99.1
-        }
-      ]
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_social",
       "dimension": "housing",
       "target": {
         "text": "Median rent as % of median pay target: 30% rent-to-income ratio (affordable threshold)",

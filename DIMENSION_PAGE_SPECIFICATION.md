@@ -65,6 +65,20 @@ comparative claim added nothing to the actual local narrative once verified, so 
 removed rather than corrected - see 2.8 for when a fact belongs in the page at all versus
 being cut as a tangent.
 
+**Open-ended phrasing ("since X") on a source that actually stops years ago silently claims
+currency the data doesn't have - check the phrasing, not just the number.** Caught by the
+`fact-checker` subagent (2.9) on the housing dimension: the top summary read "rents up 50%
+since 2011... incomes rose barely 12%," and both numbers were individually correct and
+Lewisham-specific - but Lewisham's Housing Strategy actually states them as "50% between 2011
+and 2017" and "12% between 2010 and 2018." "Since 2011" (with no end date) reads as an
+ongoing trend still true today; the source's own window ends 8-9 years before the page's 2026
+publish date. The number wasn't wrong, wasn't fabricated, and traced cleanly to a real
+document - it just wasn't being presented with the date range that makes its actual currency
+clear. **Fix: always carry a source's own start *and* end date into the page text** ("between
+2011 and 2017"), never compress a bounded historical range into open-ended "since X" phrasing,
+which implies the trend is still running through to today even when the source stopped
+measuring it years ago.
+
 ### 1.3 Historical Data & Trend Analysis
 
 **CRITICAL: For EACH indicator, always extract and plot historical data**
@@ -207,10 +221,28 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   together - and build the synthesis around those, instead of either the full stat-dump or
   no numbers at all.
 - **Do not assume or imply a single "the solution."** Describing what the council is doing
-  belongs in Section 3 (Council & Government Context), not here - and even there, don't
+  belongs in Section 3 (Local & Broader Context), not here - and even there, don't
   present one lever (e.g. "build more homes") as *the* fix when the underlying reality is more
   contested or multi-sided (e.g. long-term empty homes existing alongside a housing
   shortage). State the situation; let the reader draw conclusions.
+- **A genuine, sourced single cause for *some* of a dimension's indicators is not license to
+  claim it explains *all* of them - check whether the source supports causation or only
+  correlation for each indicator before folding it into one narrative thread.** Revised
+  August 2026 after a draft housing summary opened "Lewisham's housing pressures trace back
+  to one thing" and then used that framing to cover all four housing indicators. For three of
+  them (rent-to-income ratio, temporary accommodation, rough sleeping) the council's own
+  Housing Strategy genuinely does draw a direct causal line: unaffordable rents end tenancies,
+  and ending of a private tenancy is the single biggest named cause of local homelessness. But
+  the fourth indicator, non-decent homes, is only linked to the same population by
+  *correlation* in the sourced "what this measures" text - poor conditions "cluster in the
+  same low-income, high-rent households" - not by the same causal mechanism (disrepair is
+  driven more by landlord under-investment and weak enforcement than by the rent-income gap
+  itself). Claiming all four "trace back to one thing" quietly upgrades a correlation into a
+  causal claim the source never makes. **Fix: state the causal chain for the indicators that
+  genuinely share it, then introduce the correlated-but-distinct indicator as a separate,
+  clearly-marked fact** ("the same stretched, low-income renters are *also* disproportionately
+  likely to be living in one of the borough's non-decent homes") rather than folding it into
+  the single-cause framing. See Bad example #6 below.
 - Compare to regional (London) or national average where it clarifies the overall picture
 - **Cap comparison points at two in the headline description - don't stack a third.** Once
   you've picked two things worth comparing (e.g. a target and a current value), resist
@@ -242,7 +274,23 @@ top block's job is to say what the *collection* of indicators illustrates togeth
 
 **Good example (single-indicator dimension)**: *"Healthy life expectancy measures the average number of years a person can expect to live in good health from birth. At 58.2 years in Lewisham (approximately 72% of total life expectancy), this sits below London's average of 62.9 years. The indicator has declined by 3.8 years from 62.0 years a decade ago, with a particularly sharp drop during the pandemic years."*
 
-**Good example (multi-indicator dimension, synthesized AND borough-specific)**: *"The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem - a quarter of its homes are estimated to fall short of basic decency standards. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before."*
+**Good example (multi-indicator dimension, synthesized AND borough-specific; this is the
+current live text for the housing dimension, after also passing an adversarial fact-check -
+see 2.9)**: *"The private rented sector now houses 27% of Lewisham residents, nearly double
+its 14% share in 2001. Lewisham's Housing Strategy found rents grew 50% between 2011 and 2017,
+against incomes up just 12% between 2010 and 2018 - and names ending of a private tenancy as
+the single biggest cause of local homelessness, behind roughly half of cases as of its 2020
+assessment, more than any other reason. That shows up in both temporary accommodation and
+rough sleeping, up nearly a third since 2021/22 to 345 people in 2025/26. The same stretched,
+low-income renters are also more likely to live in a non-decent home: MHCLG puts 16% of
+private rented homes as non-decent in 2024, above the 12.9% average for all tenures."* Two
+things worth noting about how this differs from an earlier draft: (1) the rent/income growth
+figures carry explicit year ranges (2011-2017, 2010-2018) rather than an open-ended "since
+2011," because the fact-checker traced them to Lewisham's Housing Strategy and found the
+source data stops well before the present - open-ended phrasing implied they were current
+through today when they aren't (see 2.9); (2) the last sentence uses "also" rather than
+folding non-decent homes into the causal chain - see the correlation-vs-causation bullet above
+and Bad example #6 below for why.
 
 **Bad example #3 (do not write like this - unsourced causal glue between two real facts)**:
 an earlier draft of the good example above read: *"...it's the most common reason a
@@ -263,9 +311,48 @@ above does.
 
 **Bad example #1 (do not write like this - restates headline numbers)**: *"Housing affordability in Lewisham shows median private rent consuming 43.6% of median household pay... With 18.9 households per 1,000 in temporary accommodation (2,363 households)... and 345 people seen sleeping rough..."* - this just re-lists the headline numbers from the cards below, and ignores any indicator not mentioned in the first sentence.
 
-**Bad example #2 (do not write like this either - overcorrects into genericness)**: *"Housing pressure in Lewisham shows up differently depending on where you look: rents that outpace what people earn, a stretched temporary accommodation system, rough sleeping that hasn't shifted much despite intervention, and private rented homes disproportionately falling short of basic standards. These aren't separate problems - a tight rental market pushes households toward eviction..."* - this was an actual first-attempt fix for Bad example #1, and it *was* a synthesis rather than a stat-dump, but it went too far the other way: strip out every specific number and you're left with a paragraph that could describe housing pressure in almost any London borough. There is nothing here that's identifiably *Lewisham*. **The fix isn't zero numbers, it's the *right* numbers** - 1-3 sharply chosen, borough-specific facts (not one per indicator) that mechanically explain why the indicators move together, the way "40% of residents in PRS, rents +50% vs incomes +12%" does in the good example above.
+**Bad example #2 (do not write like this either - overcorrects into genericness)**: *"Housing pressure in Lewisham shows up differently depending on where you look: rents that outpace what people earn, a stretched temporary accommodation system, rough sleeping that hasn't shifted much despite intervention, and private rented homes disproportionately falling short of basic standards. These aren't separate problems - a tight rental market pushes households toward eviction..."* - this was an actual first-attempt fix for Bad example #1, and it *was* a synthesis rather than a stat-dump, but it went too far the other way: strip out every specific number and you're left with a paragraph that could describe housing pressure in almost any London borough. There is nothing here that's identifiably *Lewisham*. **The fix isn't zero numbers, it's the *right* numbers** - 1-3 sharply chosen, borough-specific facts (not one per indicator) that mechanically explain why the indicators move together, the way "27% of residents in PRS, rents +50% vs incomes +12%" does in the good example above.
 
 **Bad example #4 (do not write like this - opens with methodology/caveat instead of a finding)**: *"Both indicators come from DCMS's Community Life Survey, published only at England level - no Lewisham-specific figure exists yet, despite a 2023/24 sample boost meant to enable local estimates. Nationally, loneliness has drifted up: 6.6% of adults felt lonely often or always in 2024/25..."* - the community dimension's actual first-attempt summary. Two full sentences pass - which survey, what geography, why there's no local number, a footnote about a sample-size change - before the reader learns anything about what loneliness or belonging actually look like. The fix: state the finding first ("Loneliness and neighbourhood belonging have moved in the same direction nationally...") and push the source/geography caveat into a subordinate clause later in the paragraph, not the opening sentence.
+
+**Bad example #5 (do not write like this - an uncited "scene-setting" stat presented as fact)**:
+the housing dimension's top summary shipped for weeks reading "The private rented sector now
+houses 40% of Lewisham residents, nearly double its share 20 years ago" with no inline
+citation anywhere in the code. A user later flagged that this contradicted ONS Census figures
+they'd found independently: Lewisham's PRS share was actually 27.2% in 2021 (up from 24.3% in
+2011). Tracing the likely origin, Lewisham's own selective-licensing evidence base (Sept 2021)
+gives a ward-level PRS range of 23.8%-41.1%, with **Lewisham Central at 41.1%** - almost
+certainly the real source of the "40%" figure, mistakenly generalised from one high-PRS ward
+to the whole borough (or to Ladywell, neither of which it describes). The "nearly double"
+*trend* was directionally salvageable once the correct 2001 baseline was used (14.3% → 27.2%
+is genuinely close to double) - it was specifically the *headline figure* that was wrong, sitting
+unnoticed in the page for weeks because nothing forced it to be checked. **The root cause: this
+number wasn't attached to any of the dimension's tracked indicators (it's not one of the four
+housing indicator cards), so it read as safe "context" that didn't need the same sourcing
+discipline as an indicator description.** It needed exactly the same discipline. **Every
+specific number in the top summary - including scene-setting or "context" stats that aren't
+literally one of the dimension's tracked indicators - needs a traceable source before it goes
+live**, the same as any other claim on the page (see 2.2's "every specific factual claim needs
+a real source"). If you can't find or verify a source for a number you're about to use for
+scene-setting, either search until you can, use a figure you've already sourced elsewhere on
+the page, or cut the number rather than assert it from memory or a plausible-sounding guess.
+
+**Bad example #6 (do not write like this - a real, sourced single cause overextended to cover
+an indicator it doesn't explain)**: a draft rewrite of the good example above opened
+"Lewisham's housing pressures trace back to one thing" and then described all four housing
+indicators - including non-decent homes - as downstream of the private-rented affordability
+gap. The affordability-gap-to-homelessness chain (rent-to-income ratio → temporary
+accommodation → rough sleeping) is genuinely sourced to the council's own Housing Strategy.
+Non-decent homes is not part of that chain in any source - the page's own "what this measures"
+text for it only says poor conditions "cluster in the same low-income, high-rent households,"
+which is a claim about *which households* are affected, not about what *causes* their homes to
+be non-decent (that's more plausibly landlord under-investment and weak enforcement). "Trace
+back to one thing" silently converted a shared-population correlation into a shared-cause
+claim. The fix: scope the causal language to the indicators that actually share it, and
+introduce the correlated one separately ("the same stretched, low-income renters are *also*
+disproportionately likely to be living in one of the borough's non-decent homes") rather than
+folding it into the single-cause frame. See the correlation-vs-causation bullet earlier in this
+section.
 
 ### 2.2 Description Writing Style
 
@@ -338,12 +425,19 @@ When editing or rewriting *existing* description text (not just adding new indic
 audit every specific claim in it - rankings, named statistics, "top N" comparisons,
 attributed figures - for a traceable source before keeping it, even if it was already
 sitting in the file. Existing text is not pre-verified just because it's already there.
-(This project has already had one fabricated-looking claim - "Lewisham ranks among London's
-top five boroughs for homelessness presentations" - sitting unnoticed in committed code
-with no source anywhere in the repo. It was removed once caught, but should have been
-caught on first edit, not after a user flagged it.) If you can't find a source for an
-inherited claim in a few minutes of searching, cut it - don't assume it's fine because it
-predates your session.
+(This project has already had two fabricated-or-wrong claims sit unnoticed in committed code
+this way: "Lewisham ranks among London's top five boroughs for homelessness presentations" -
+no source anywhere in the repo - and, months later, the housing summary's "40% of Lewisham
+residents" PRS figure, which turned out to be a ward-level number (Lewisham Central, 41.1%)
+mistaken for a borough-wide one - see 2.1 Bad example #5 for the full trace. Both were removed
+once caught, but both should have been caught on first edit, not after a user flagged it.) If
+you can't find a source for an inherited claim in a few minutes of searching, cut it - don't
+assume it's fine because it predates your session. **This applies just as much to
+"scene-setting" or "context" numbers in the top plain-English summary (2.1) as to indicator
+descriptions** - a stat feels safer to leave unsourced when it isn't one of the dimension's
+tracked indicator cards, but readers can't tell the difference between a verified number and
+an asserted one unless every number is actually checked. Treat "I recall this is roughly
+right" as equivalent to "unsourced" - verify it fresh or cut it.
 
 **Structure for indicator descriptions:**
 1. **What it shows** (the finding/current state) - 1-2 sentences
@@ -556,13 +650,13 @@ locally*.
   summary itself. **If the heading text alone already tells the reader what they need to know,
   don't also add a badge, a border, and a repeated disclaimer sentence - pick one signal, not
   three.**
-- Section heading: when a dimension has both a local council-context card and a
-  `nationalCard` under the same indicator, head the combined block **"Local & Broader
-  Context"**, not "Council & Government Context" - the latter stops being accurate once a
-  global research card sits under it too. Dimensions with only a local council-context card
-  (the common case) keep "Council & Government Context" as before; this rename is scoped to
-  the health-style combined case, implemented as a second call site for the same
-  `council-context-heading` class with different text, not a global rename.
+- Section heading: all dimensions head this block **"Local & Broader Context"** (the
+  `council-context-heading` class is unchanged - only the display text was renamed). This
+  was originally scoped only to the health-style case where a local council-context card and
+  a `nationalCard` sit under the same indicator, since "Council & Government Context" stopped
+  being accurate once a global research card sat under it too - but the label was later
+  renamed everywhere for consistency, including dimensions with only a local council-context
+  card.
 
 **Don't pad it with tangential facts just because they're true.** Two things were cut from
 the Health dimension's "why" paragraph after being added: a sentence naming smoking as a
@@ -576,7 +670,54 @@ leave it out rather than including it as general-knowledge colour.
 
 ---
 
-## 3. Council & Government Context Section
+### 2.9 Mandatory Adversarial Fact-Check
+
+**Every single number or claim anywhere on the page must be independently verifiable - this is
+a hard requirement, not a best-effort goal.** Verifiable doesn't mean "I found something like
+this while researching" - it means you (or the dedicated fact-checker below) can currently
+point to a specific, live, primary source and confirm the claim as stated - right geography,
+right year, right causal relationship - matches what that source actually says.
+
+**Why this exists**: this project has shipped wrong claims that read as entirely plausible
+before a user caught them - a fabricated "top five boroughs for homelessness presentations"
+ranking with no source anywhere in the repo, and a housing-tenure figure ("40% of Lewisham
+residents" in the PRS) that turned out to be a single ward's number (Lewisham Central, 41.1%)
+mistaken for a borough-wide one (see 2.1 Bad example #5). Neither was caught by the person who
+wrote it, because a claim you've just written yourself is the hardest one to doubt - you
+already believe it, or you wouldn't have written it that way.
+
+**The fix: an adversarial check must be done by someone who did NOT write the text**, using a
+dedicated subagent so the check is systematic rather than "did it look wrong to me on
+re-reading" (re-reading your own prose rarely catches your own errors - if it did, the two
+incidents above would have been caught before they shipped).
+
+**Process - required, not optional, every time page text is written or edited:**
+1. After writing or editing any user-facing text on a dimension page (top summary, "what this
+   measures", "why this is happening", council-context summaries, "Get Involved" cards), spawn
+   the `fact-checker` subagent (`.claude/agents/fact-checker.md`) via the Agent tool with
+   `subagent_type: "fact-checker"`.
+2. Give it the exact text, which dimension/indicator it's for, and any claim it's meant to
+   support (e.g. "this is the top plain-English summary for the housing dimension - it should
+   synthesize across all 4 housing indicators"). Don't summarise the text for it - give it the
+   literal string that's about to go live.
+3. It reports PASS/FAIL/UNVERIFIED per distinct claim, including causal/connective language
+   between two individually-true facts (see Bad example #3 and #6 in 2.1) - not just the raw
+   numbers.
+4. **Do not consider the edit done until every FAIL and UNVERIFIED item is resolved** - either
+   fixed to match what a real source says, or you've gone and independently re-checked and can
+   explain in the commit/conversation why the fact-checker's finding was itself wrong (this
+   should be rare; treat its findings as correct by default).
+5. This applies to edits to *existing* text too, not just new indicators - see 2.2's "every
+   specific factual claim needs a real source - including ones you didn't write."
+
+**What this doesn't replace**: your own judgement while researching (1.1-1.5), and the reader
+spot-checking things that surprise them - both incidents above were ultimately caught by a
+human noticing something felt off. The fact-checker step exists to catch what slips past both
+of those *before* a user has to be the one who finds it.
+
+---
+
+## 3. Local & Broader Context Section
 
 **CRITICAL REQUIREMENTS**:
 
@@ -925,14 +1066,24 @@ Before completing a dimension page, verify:
 **Editorial Quality (see Section 2.1, 2.2, 2.6, 3.2):**
 - [ ] Every description is ≤130 words (actually counted, not estimated)
 - [ ] No sentence just restates a datapoint the chart already shows
-- [ ] **Every specific factual claim on the page - top summary, indicator descriptions, AND
-      every council-context summary - has a traceable source you have personally checked**,
-      including claims you inherited from existing text and ones you wrote fresh this
-      session. This is not scoped to indicator descriptions only: the top summary and
-      council-context blocks routinely carry fresh numeric claims (e.g. "40% of residents in
-      PRS", "civil penalties up to £30,000") that need the same source-checking as anything
-      else, precisely because they feel like "just framing" and are easy to wave through
-      unverified.
+- [ ] **Every single number or claim on the page - without exception - must be independently
+      verifiable.** This covers the top summary, indicator descriptions, "why this is
+      happening" text, every council-context summary, and every "Get Involved" card - top
+      summary and council-context blocks routinely carry fresh numeric claims (e.g. "27% of
+      residents in PRS", "civil penalties up to £30,000") that need the same source-checking as
+      anything else, precisely because they feel like "just framing" and are easy to wave
+      through unverified. A claim you inherited from existing text is not pre-verified just
+      because it's already there (see 2.2). "I recall this is roughly right" is not
+      verification - if you cannot currently point to a source you have actually checked, the
+      claim is unverified regardless of how it got there or how long it's been live.
+- [ ] **The `fact-checker` subagent (`.claude/agents/fact-checker.md`) has been run on any new
+      or edited page text before the edit is considered done - this is a required step, not an
+      optional check.** Spawn it with the Agent tool (`subagent_type: "fact-checker"`), give it
+      the exact new/changed text plus which dimension/indicator it belongs to, and do not ship
+      the edit until every claim it flags is resolved (fixed, or you've independently confirmed
+      its finding is wrong and can say why). Treat its FAIL and UNVERIFIED items the same way -
+      "unverified" is not "probably fine," it's "not checked yet." See 2.9 below for exactly
+      when in the workflow to run it.
 - [ ] **Check the connective tissue, not just the individual stats.** When a sentence links
       two real, individually-sourced facts with causal language ("X, which is why Y", "X,
       and that's part of why Y"), that causal link is itself a claim needing its own source -
@@ -1222,12 +1373,16 @@ Before completing a dimension page, verify:
 
 ### Step 6: Testing & Verification
 1. Check JavaScript syntax: `node -c js/app.js`
-2. Verify all data against sources
-3. Confirm strategy year and URL are correct
-4. Test pagination functionality
-5. Review button visibility
-6. Bump version numbers
-7. Cross-check against quality checklist
+2. **Run the `fact-checker` subagent (see 2.9) on every piece of new/edited page text** - do
+   not skip this because you already checked sources while researching; the point is an
+   independent second pass by something that didn't write the text
+3. Resolve every FAIL/UNVERIFIED the fact-checker reports before moving on
+4. Verify all data against sources
+5. Confirm strategy year and URL are correct
+6. Test pagination functionality
+7. Review button visibility
+8. Bump version numbers
+9. Cross-check against quality checklist
 
 ---
 

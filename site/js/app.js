@@ -423,7 +423,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // Custom descriptions for specific dimensions
     const dimensionDescriptions = {
         'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability.",
-        'housing': "The private rented sector now houses 40% of Lewisham residents, nearly double its share 20 years ago - and rents in it have grown 50% since 2011 (70% in the borough's historically cheaper streets) while incomes rose barely 12%. The council's own strategy identifies that gap as the single biggest cause of homelessness here: the ending of a private tenancy is behind roughly half of homelessness cases, more than any other reason. The same private rented sector also has a quality problem: MHCLG puts 16% of its homes as non-decent in 2024, well above the 12.9% rate for all tenures. Rough sleeping, meanwhile, has proven hard to shift - up nearly a third since 2021/22 to 345 people in 2025/26, despite a brief dip the year before.",
+        'housing': "The private rented sector now houses 27% of Lewisham residents, nearly double its 14% share in 2001. Lewisham's Housing Strategy found rents grew 50% between 2011 and 2017, against incomes up just 12% between 2010 and 2018 - and names ending of a private tenancy as the single biggest cause of local homelessness, behind roughly half of cases as of its 2020 assessment, more than any other reason. That shows up in both temporary accommodation and rough sleeping, up nearly a third since 2021/22 to 345 people in 2025/26. The same stretched, low-income renters are also more likely to live in a non-decent home: MHCLG puts 16% of private rented homes as non-decent in 2024, above the 12.9% average for all tenures.",
         'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal.",
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Per-person use has stayed persistently high: England's 2024/25 average was around 136.5 litres a day, well above the Environment Act's 2038 target of 122 litres - a gap that's barely narrowed since 2019/20.",
         'mobility': "Ladywell's transport accessibility is hyper-local: real planning assessments show excellent PTAL 6 immediately around Ladywell station, falling to good PTAL 4 just a few streets away, since TfL scores access point by point rather than for the ward as a whole. Lewisham's sustainable mode share - trips made on foot, by bike, or by public transport - stood at 72.8% in 2024, short of the Mayor's Transport Strategy target of 80% by 2041 that Lewisham's own transport plan also adopts, and still above London's 67.6% average despite a recent decline from a high of 75.6%.",
@@ -464,7 +464,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Housing-specific explanations
         if (baseName === 'Median rent as % of median pay') {
-            return `This indicator measures housing affordability by comparing median private rents to median gross pay. At 43.6% in Lewisham (2025 Q4), it exceeds the 30% threshold that housing experts consider the ceiling for sustainable costs - beyond it, households typically cut back on essentials and have little cushion against a rent rise or income shock. Lewisham's ratio has hovered in the low-to-mid 40s since 2015 rather than trending steadily in either direction, suggesting a persistently strained affordability band rather than a temporary spike. With so little slack, even a modest rent rise or a missed pay cheque can be enough to tip a household toward eviction or needing the council's help to avoid homelessness.`;
+            return `This indicator compares mean rent for a one-bed property to median gross pay - a standard measure of housing affordability. At 43.6% in Lewisham (2025 Q4), it sits below London's own 52% average for the same measure, but well above both the 42% average for the rest of England and the 30%-of-income rule of thumb widely used to judge whether housing costs are sustainable. The ratio has held in the low-to-mid 40s since 2015 rather than easing or worsening steadily, suggesting a persistently strained affordability band rather than a temporary spike - one that's typical for London, not exceptional to Lewisham. With so little slack, even a modest rent rise or a missed pay cheque can be enough to tip a household toward eviction or needing the council's help.`;
         }
 
         if (baseName === 'Households in temporary accommodation') {
@@ -654,14 +654,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         if (baseName === 'Healthy life expectancy at birth') {
             return {
                 localParagraphs: [
-                    `Lewisham's leading causes of death are cancer (30.4%), circulatory disease (28.6%), and respiratory illness (10.8%) (2024/25), with premature death rates worse than England's - 6th-highest in London. The gap is deprivation-linked and widening: men in Lewisham's least deprived areas now live 8.1 years longer than men in the most deprived areas (2021-23), up from 6.6 years in 2020-21. None of this is published at ward level, so it describes Lewisham's pattern as a whole, not Ladywell specifically.`
+                    `Lewisham's leading causes of death are cancer (30.4%), circulatory disease (28.6%), and respiratory illness (10.8%) (2024/25), with premature death rates worse than England's - 6th-highest in London. The gap is deprivation-linked and widening: men in Lewisham's least deprived areas now live 8.1 years longer than men in the most deprived areas (2021-23), up from 6.6 years in 2020-21.`
                 ],
                 localSources: [
                     { name: 'A Picture of Lewisham 2025 - Lewisham Council Public Health', url: 'https://www.observatory.lewisham.gov.uk/wp-content/uploads/2025/09/Picture_of_Lewisham_2025_updated_September_2025.pdf' }
                 ],
                 nationalCard: {
-                    title: 'Global research consensus on healthy life expectancy',
-                    year: '2010-2025',
+                    title: 'Perspectives from global health research',
                     summary: `Two strands of research explain what typically drives healthy life expectancy more broadly. The Global Burden of Disease Study 2023 attributes nearly half of all healthy years lost globally to modifiable risk factors, led by high blood pressure, air pollution, high blood glucose, smoking, and low birthweight. Why those risks cluster more heavily in some places is the focus of the UK's Marmot Review: income, employment, education, early-childhood conditions, housing, and access to preventive care - the "causes of the causes." Marmot found healthy life expectancy differs by roughly 12 years between England's most and least deprived areas, a steeper gradient than for life expectancy itself.`,
                     sources: [
                         { name: 'GBD 2023 risk factor analysis - The Lancet / PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/41092926/' },
@@ -708,7 +707,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     title: "Lewisham's Housing Strategy 2020-26",
                     year: '2020-2026',
                     url: 'https://lewisham.moderngov.co.uk/documents/s75863/Housing%20Strategy%202020-26.pdf',
-                    summary: `<p>Lewisham's housing strategy sets out five priorities: delivering more genuinely affordable homes, preventing homelessness, improving housing quality and safety, supporting independent living, and strengthening communities. It documents private rented sector rents growing 50% between 2011-2017 (70% in the borough's historically cheaper areas) while household incomes rose only around 12% over a comparable period - the gap it identifies as the single biggest driver of homelessness, since the ending of a private tenancy is the most common reason households approach the council for help. The strategy also estimates a quarter of private rented homes are non-decent. Its actions span all of this: building new council and social rent homes, bringing empty properties back into use, pushing for longer and more secure private tenancies, and expanding licensing to raise standards.</p>`
+                    summary: `<p>Lewisham's housing strategy sets out five priorities: delivering more genuinely affordable homes, preventing homelessness, improving housing quality and safety, supporting independent living, and strengthening communities. It identifies the widening gap between private rents and incomes as the single biggest driver of homelessness locally, and estimates a quarter of private rented homes are non-decent. Its actions span building new council and social rent homes, bringing empty properties back into use, pushing for longer and more secure private tenancies, and expanding licensing to raise standards.</p>`
                 },
                 {
                     title: 'Lewisham Homelessness and Rough Sleeping Strategy',
@@ -722,6 +721,17 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                         <li><strong>Cross-service partnership</strong> - mobilising council departments alongside borough-wide charities and public services.</li>
                     </ul>
                     <p>Its stated commitment: "no individual should be forced to sleep on the streets" - despite 13 years of budget cuts constraining what the council can do alone.</p>`
+                },
+                {
+                    title: 'Perspectives from global housing research',
+                    summary: `<p>Finland is the clearest global example of what works against chronic homelessness: a national "Housing First" programme that gives people permanent housing immediately, without requiring sobriety or treatment first, then wraps support around them, with retention rates typically around 70-80%. But US research found unsheltered homelessness kept rising even as Housing First expanded nationally - researchers trace this to an "inflow" problem: keeping already-housed people housed doesn't stop new people becoming homeless, and that inflow is tied to the same supply and affordability pressures below. On affordability itself, both under-building and over-investment appear to matter: constrained supply where land-use rules limit new homes, and demand from housing treated as a financial asset - buy-to-let purchases and homes left vacant for capital appreciation - both push rents up independent of each other. On housing quality, the World Health Organization has documented direct health harms from poor housing - damp and mould linked to asthma, cold homes to cardiovascular illness - making substandard housing a measurable population health risk, not just a comfort issue.</p>`,
+                    sources: [
+                        { name: 'Finnish Housing First Policy - United Nations DESA', url: 'https://www.un.org/development/desa/dspd/wp-content/uploads/sites/22/2019/05/Taina-Finnish-Housing-First-Policy.pdf' },
+                        { name: 'Housing Supply and the Drivers of Homelessness - Bipartisan Policy Center', url: 'https://bipartisanpolicy.org/report/housing-supply-and-homelessness/' },
+                        { name: 'Land Use Reforms and Housing Costs - Urban Institute', url: 'https://www.urban.org/research/publication/land-use-reforms-and-housing-costs' },
+                        { name: 'Rapid Evidence Assessment: Buy-to-Let Housing - Sheffield Hallam University', url: 'https://www.shu.ac.uk/-/media/home/research/cresr/reports/r/rapid-evidence-assessment-buytolet-housing.pdf' },
+                        { name: 'WHO Housing and Health Guidelines (2018)', url: 'https://www.who.int/publications/i/item/9789289041683' }
+                    ]
                 }
             ];
         }
@@ -750,6 +760,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2026',
                     url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=121820',
                     summary: `<p>Lewisham's NHS dental commissioning is run jointly across South East London by the ICB rather than the council, but the council receives regular updates because access shapes outcomes like decay rates. Lewisham has 35 NHS general dental practices, delivering 98.1% of its contracted treatment target in 2024/25 - above the South East London average. Community Dental Services (run by King's) provide targeted outreach - supervised toothbrushing, oral health education and personalised support for children with visible decay - through food banks, libraries and family hubs; paediatric referrals into these services have risen 40% since before the pandemic. Lewisham's 2024 child dental decay rate was the fourth-lowest of London's 33 boroughs.</p>`
+                },
+                {
+                    title: 'Perspectives from global food research',
+                    summary: `<p>On food insecurity, research from bodies like the UN Food and Agriculture Organization finds that in high-income countries, insecurity is overwhelmingly an income/access problem rather than a food-availability one - food banks treat the symptom, while income support treats the cause. On diet quality, an emerging body of nutrition research, built around the NOVA classification system developed at the University of São Paulo and already written into national dietary guidelines in several countries, links ultra-processed food (UPF) consumption to poor health outcomes independent of a food's individual nutrient content - packaged, industrially formulated products now make up more than half of dietary energy intake in the UK. Both point the same way: the World Cancer Research Fund's "NOURISHING" framework - fiscal tools like sugar taxes, marketing restrictions, reformulation targets and food labelling - treats poor diet as a food-system problem to fix at the shelf and in policy, not a matter of individual willpower.</p>`,
+                    sources: [
+                        { name: 'The State of Food Security and Nutrition in the World - UN FAO', url: 'https://openknowledge.fao.org/server/api/core/bitstreams/5277b379-0acb-4d97-a6a3-602774104629/content' },
+                        { name: 'Ultra-processed foods and calorie intake in the UK - MRC Epidemiology Unit, Cambridge', url: 'https://www.mrc-epid.cam.ac.uk/blog/2024/07/17/upf-two-thirds-calorie-intake-uk-adolescents/' },
+                        { name: 'NOURISHING policy framework - World Cancer Research Fund International', url: 'https://www.wcrf.org/research-policy/policy/nutrition-policy/nourishing-framework/' }
+                    ]
                 }
             ];
         }
@@ -777,6 +796,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2021',
                     url: 'https://www.london.gov.uk/what-we-do/planning/london-plan/current-london-plan/london-plan-chapter-five-londons-response/pol-14',
                     summary: `<p>Because Thames Water's area is seriously water-stressed, the Mayor of London's London Plan requires new homes to be built water-efficient rather than relying on the water company alone to close the gap: Policy 5.15 sets a maximum of 105 litres of mains water per person per day for new residential development (110 including a small allowance), and requires major non-residential schemes to meet the BREEAM "excellent" standard for water use. As the local planning authority, Lewisham Council applies this standard - alongside smart metering, water-saving fittings, and retrofit measures - to development it approves, while the Mayor separately holds water companies to account on leakage and demand reduction through the London Environment Strategy.</p>`
+                },
+                {
+                    title: 'Perspectives from global water research',
+                    summary: `<p>Global water stress is being pushed up by three forces largely outside any single utility's control: climate change, which is shifting when and how much rain falls rather than just annual totals; population growth; and rising economic demand as agriculture, industry and households all draw more water. That pressure lands unevenly - the World Resources Institute's Aqueduct tool measures stress as water withdrawn relative to how much renewable supply is actually available in a catchment, not total rainfall, which is why a moderately dry but densely populated, high-demand region like South East England registers as more water-stressed than many drier-looking but sparsely populated places. Within that structural pressure, though, international comparisons show real headroom on the supply side: the UK loses around 20% of treated water to leaking pipes, roughly the international middle, while Tokyo - a comparably dense city - has brought its leakage down to around 3% through sustained investment in pipe replacement and leak detection, proof that high leakage reflects investment choices, not an unavoidable cost of an old, dense network.</p>`,
+                    sources: [
+                        { name: 'Aqueduct 4.0 - Updated Decision-Relevant Global Water Risk Indicators - World Resources Institute', url: 'https://www.wri.org/research/aqueduct-40-updated-decision-relevant-global-water-risk-indicators' },
+                        { name: '25 Countries, Housing One-Quarter of the Population, Face Extremely High Water Stress - World Resources Institute', url: 'https://www.wri.org/insights/highest-water-stressed-countries' },
+                        { name: 'Leakage - Water UK', url: 'https://www.water.org.uk/water-supply/leakage' },
+                        { name: "The Secret to Tokyo's Low Water Leakage Rate - Outokumpu", url: 'https://www.outokumpu.com/en/expertise/2021/the-secret-to-tokyos-low-water-leakage-rate' }
+                    ]
                 }
             ];
         }
@@ -797,6 +826,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2024-',
                     url: 'https://lewisham.gov.uk/myservices/roads-and-transport/sustainable-streets-programme',
                     summary: `<p>Sustainable Streets is the council's current delivery vehicle for the LIP3 mode-share goal: a rolling programme of low-traffic neighbourhood measures - banned turns, modal filters, and similar traffic management - designed to cut car journeys and make walking, cycling, and bus use more attractive, alongside School Streets closures outside schools at pick-up and drop-off. Lewisham had the highest proportion of School Streets in London for the second year running in 2025, at a record 56.7% of eligible schools, even as its wider sustainable mode share fell - a reminder that individual scheme successes have not yet been enough to reverse the borough-wide trend.</p>`
+                },
+                {
+                    title: 'Perspectives from global mobility research',
+                    summary: `<p>Transport research distinguishes accessibility - whether people can actually reach jobs, healthcare, education and amenities - from transport infrastructure itself. The UK's own foundational research here, the government's 2003 "Making the Connections" report, found this gap falls hardest on disabled people, older residents and people on low incomes: good transport coverage on a map doesn't mean much if the people most likely to need it can't actually use it to reach the things that matter.</p><p>On sustainable travel, transport economics has a well-replicated finding for why simply adding road capacity doesn't relieve congestion: "induced demand" research, most influentially Duranton and Turner's study across US cities, finds new road capacity gets filled by new traffic almost one-for-one. Investment in public transport and cycling infrastructure runs into a different problem: reviews of these schemes consistently find they mostly attract people who'd otherwise have walked, cycled or used transit anyway, with real reductions in driving only appearing when better alternatives are paired with something that makes driving itself less convenient, like road pricing or reduced parking. Shifting trips away from cars usually needs both a pull toward alternatives and a push away from driving, not either alone.</p>`,
+                    sources: [
+                        { name: 'Making the Connections: Final Report on Transport and Social Exclusion - UK Social Exclusion Unit (2003)', url: 'https://www.ilo.org/media/312721/download' },
+                        { name: 'The Fundamental Law of Road Congestion - Duranton & Turner, American Economic Review (2011)', url: 'https://www.nber.org/papers/w15376' }
+                    ]
                 }
             ];
         }
@@ -819,6 +856,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2026-2029',
                     url: 'https://lewisham.moderngov.co.uk/documents/s123458/Main%20Grants%20Programme%20Allocations%202026-2029%20REPORT.pdf',
                     summary: `<p>Lewisham's Main Grants Programme - the council's core funding route for the voluntary and community sector - drops from £2.46m a year under the 2022-25 cycle to a total of £2.11m across the whole 2026-29 cycle, a cut the council links to a £30m borough-wide budget shortfall in 2025/26. Rather than spreading the reduced pot thinly, the new model commissions advice services directly instead of through grants, and channels £900,000 into neighbourhood-focused infrastructure across four areas of the borough - funding local coordination, signposting, and capacity-building alongside the NHS's Integrated Neighbourhood Teams - with a further stream for Black-led organisations, digital inclusion, and equalities groups.</p>`
+                },
+                {
+                    title: 'Perspectives from global community research',
+                    summary: `<p>WHO's Commission on Social Connection has declared loneliness a global public health priority: worldwide, it's linked to roughly 871,000 deaths a year, with poor social connection raising mortality risk by around a quarter to a third. Sociologist Eric Klinenberg's research into Chicago's 1995 heat wave found why: neighbourhoods with near-identical poverty had very different death tolls depending on their "social infrastructure" - libraries, shops, parks and community spaces that gave isolated residents somewhere to go and someone nearby to notice if they went missing. Shared public spaces aren't just amenities, they're protective infrastructure - without them, isolated residents have no safety net, no matter how caring their neighbours might otherwise be.</p>`,
+                    sources: [
+                        { name: 'From Loneliness to Social Connection - WHO Commission on Social Connection', url: 'https://www.who.int/news/item/30-06-2025-social-connection-linked-to-improved-heath-and-reduced-risk-of-early-death' },
+                        { name: 'Loneliness and Social Isolation as Risk Factors for Mortality - Holt-Lunstad et al., 2015', url: 'https://journals.sagepub.com/doi/full/10.1177/1745691614568352' },
+                        { name: 'Safety and Community: A Tale of Two Neighborhoods (Klinenberg\'s Chicago research) - Congress for the New Urbanism', url: 'https://www.cnu.org/publicsquare/safety-and-community-tale-two-neighborhoods' }
+                    ]
                 }
             ];
         }
@@ -843,6 +889,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2018-present',
                     url: 'https://www.london.gov.uk/programmes-strategies/communities-and-social-justice/workforce-integration-network-win/bridging-gap',
                     summary: `<p>WIN is the Mayor of London's response to London having the widest ethnicity pay gap of any English region - GLA Economics estimates closing ethnic minority employment and progression gaps could unlock £17.4 billion in economic benefit for London. It targets the groups facing the largest combined barriers, including Black men and Pakistani, Bangladeshi, and Black women specifically, on the basis that gender and ethnicity disadvantage compound rather than operate separately - directly relevant to both the gender and ethnicity pay gap figures shown here. Rather than setting a citywide pay-gap target, WIN works employer-by-employer through "Design Labs" that analyse where a given organisation's recruitment, retention, and promotion practices are excluding underrepresented groups, then build a tailored action plan. No dedicated strategy document exists addressing wealth concentration specifically, at either Lewisham or London level.</p>`
+                },
+                {
+                    title: 'Perspectives from global equality research',
+                    summary: `<p>Wealth is far more unequally shared than income almost everywhere researchers have looked, and one of the clearest findings on why is about housing specifically, not investments or business ownership: economist Matthew Rognlie found that nearly all of the long-term growth in wealth compared to earnings in Britain and similar countries comes down to how much homes are worth, not other kinds of wealth. In practice, that means who owns property, and how fast house prices rise compared to wages, is doing most of the work in pulling wealth away from people who don't own a home and towards those who do.</p><p>That housing-driven wealth gap connects to a much larger one across ethnic groups, though the drivers turn out to be broader than housing alone: UK research finds under a third of Black African adults own their own home, against around 70% of White British and Indian adults, but Resolution Foundation research points to inheritance and savings as the bigger factors overall - White British households inherit roughly 50% more on average than Indian households, and at least half of Black African, Bangladeshi and Black Caribbean households have under £1,000 in savings. Homeownership alone doesn't tell the whole story either: Pakistani households have high homeownership rates but still end up with less wealth than Indian households. However it breaks down, the result is stark - Black African and Bangladeshi households hold roughly a tenth of the wealth of the average White British household.</p><p>On gender pay gaps specifically, the most consistent finding across countries with very different labour laws is the "child penalty": pay gaps between men and women are close to zero before a first child and open up sharply afterward, driven by mothers reducing hours or stepping back from careers in ways fathers largely don't.</p>`,
+                    sources: [
+                        { name: "Das House Kapital: The Evolution of Housing Wealth - Rognlie's finding, summarised by CEPR", url: 'https://cepr.org/voxeu/columns/das-house-kapital-evolution-housing-wealth' },
+                        { name: "A gap that won't close - Resolution Foundation", url: 'https://www.resolutionfoundation.org/app/uploads/2020/12/A-gap-that-wont-close.pdf' },
+                        { name: 'The Colour of Money - Runnymede Trust', url: 'https://www.runnymedetrust.org/publications/the-colour-of-money' },
+                        { name: 'The Child Penalty Atlas - Kleven et al., NBER', url: 'https://www.nber.org/papers/w31649' }
+                    ]
                 }
             ];
         }
@@ -876,6 +932,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2024-',
                     url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=117853',
                     summary: `<p>For many years Lewisham ran a ward-based Assembly Programme - one assembly per ward, each supported by a council coordinator - as its main structured channel for residents to help shape local decisions and access community engagement and development support. When Mayor and Cabinet cut its funding as part of the council's wider budget savings, ending council-funded assembly activity entirely, the Mayor commissioned this Strategic Review of Engagement to work out what should replace it. The review distinguishes between engagement (involving residents in decisions the council is already making) and community development (building a community's own capacity to act independently of the council), and argues Lewisham's political leadership needs to take a more active convening role given the loss of the assemblies' standing infrastructure. It is the clearest local acknowledgement that the borough's main civic-participation structure was removed for budget reasons before a replacement was in place.</p>`
+                },
+                {
+                    title: 'Perspectives from global political voice research',
+                    summary: `<p>Political scientists have long explained why local election turnout runs lower than national turnout almost everywhere through "second-order election" theory: voters correctly see less at stake politically in local elections, since they don't determine who runs national government, which depresses participation regardless of how well local democracy is actually run - even though local government controls much of what shapes daily life directly, from bins to social care to schools. A separate body of research points to another driver: the UK has lost over 290 local newspaper titles since 2005, and their closure is consistently linked to falling local turnout in the areas affected, since residents lose the everyday coverage of council decisions and candidates that informed voting depends on, with social media not filling the gap with anything comparably reliable.</p><p>Research on political efficacy adds a second, more actionable layer to why people do or don't get involved beyond voting: willingness to participate locally depends heavily on "external efficacy" - whether people believe the system would actually respond if they did - meaning participation tends to track trust that engagement is worth it as much as it tracks interest itself.</p>`,
+                    sources: [
+                        { name: 'Second-order election - overview', url: 'https://en.wikipedia.org/wiki/Second-order_election' },
+                        { name: 'UK local newspaper closures tracker - Press Gazette', url: 'https://pressgazette.co.uk/news/uk-local-newspaper-closures-at-least-265-local-newspaper-titles-gone-since-2005-but-pace-of-decline-has-slowed/' }
+                    ]
                 }
             ];
         }
@@ -891,6 +955,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 year: '2024',
                 url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=119735',
                 summary: `<p>Lewisham Council's own school standards reporting shows 2023/24 as the borough's best GCSE year on record for the basics measure: 66% of pupils achieved grade 4 or above in both English and Maths, up from 59% in 2019 and continuing a recovery from the pandemic-disrupted exam years. Attainment 8 - a broader points score covering 8 subjects - moved the same direction, up 2.5 points on 2019 to 46.9. The report is more cautious about Progress 8, which measures how much progress pupils make relative to pupils with similar starting points nationally: it has historically run below the national average in Lewisham, and the council frames closing that gap - not just raising the raw attainment percentage - as the harder, ongoing task for its school improvement work.</p>`
+            },
+            {
+                title: 'Perspectives from global education research',
+                summary: `<p>International research separates two different questions about attainment gaps: how early they open, and how big they get by the end of school. The OECD's International Early Learning and Child Well-being Study finds socioeconomic gaps in foundational skills are measurable by around age 5, before most formal schooling has even started. Its PISA study, testing 15-year-olds across many countries, finds these early gaps typically persist rather than narrow by the end of compulsory schooling - though some school systems manage a much flatter socioeconomic gradient than others, showing the gap isn't inevitable. That early opening is why OECD research finds the most cost-effective lever is early: high-quality early childhood education and care closes gaps before they become entrenched. The catch is that access to good early years provision is itself unequal - children from lower-income families are both less likely to attend, and more likely to attend lower-quality provision when they do.</p>`,
+                sources: [
+                    { name: 'Building Strong Foundations for Life - OECD International Early Learning and Child Well-being Study', url: 'https://www.oecd.org/en/publications/building-strong-foundations-for-life_02bf8efe-en/full-report/equity-gaps-in-early-learning-and-development_326c1b3e.html' },
+                    { name: 'Reducing Inequalities by Investing in Early Childhood Education and Care - OECD', url: 'https://www.oecd.org/en/publications/reducing-inequalities-by-investing-in-early-childhood-education-and-care_b78f8b25-en/full-report.html' }
+                ]
             }];
         }
 
@@ -912,6 +984,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2022-',
                     url: 'https://www.london.gov.uk/talk-london/topics/communities/digital-access-all',
                     summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer, aiming to directly support up to 75,000 Londoners over three years.</p>`
+                },
+                {
+                    title: 'Perspectives from global connectivity research',
+                    summary: `<p>Digital-divide research distinguishes three separate levels of exclusion, and finds they compound rather than substitute for each other: a "first-level" divide in physical access to infrastructure, a "second-level" divide in the skills, confidence and devices needed to actually use it, and a "third-level" divide in whether people convert use into real educational, economic or civic benefit. The practical implication: rolling out full broadband and 5G coverage closes only the first gap. Ofcom's own research finds most people who remain offline say it's because they're not interested or don't see the need for it, though a substantial share also cite cost or a lack of skills and confidence - meaning coverage statistics alone can overstate how "connected" an area really is.</p>`,
+                    sources: [
+                        { name: 'The three levels of the urban digital divide - ScienceDirect', url: 'https://www.sciencedirect.com/science/article/pii/S0016718521001378' },
+                        { name: 'Digital Exclusion Review 2022 - Ofcom', url: 'https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/media-literacy-research/adults/adults-media-use-and-attitudes-2022/digital-exclusion-review-2022.pdf' }
+                    ]
                 }
             ];
         }
@@ -933,6 +1013,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2026',
                     url: 'https://assets.publishing.service.gov.uk/media/6977461bd345446f8ce71ef1/fuel-poverty-strategy-for-england-2026-print-ready-version.pdf',
                     summary: `<p>England's fuel poverty strategy carries forward a target first set out in 2021: getting as many fuel-poor homes as reasonably practicable to an EPC Band C by 2030, on the reasoning that a more efficient home needs less energy to heat properly whatever happens to energy prices. That target sits behind schemes like ECO4 and the Warm Homes: Local Grant, both of which fund insulation and heating upgrades for low-income households, including in Lewisham. It reflects a shift in emphasis from earlier fuel poverty policy, which leaned more heavily on income support and short-term energy price interventions, towards home retrofit as the more durable fix - directly relevant to a borough where EPC coverage lags the London average.</p>`
+                },
+                {
+                    title: 'Perspectives from global energy research',
+                    summary: `<p>Fuel poverty research since Brenda Boardman's foundational 1991 work frames it as three factors interacting, not one: low income, high energy prices, and poor home energy efficiency - any two together can push a household into fuel poverty even without the third being severe, which is why efficiency upgrades alone don't always lift a household out of it. Energy-efficiency research adds an important complication to the "just insulate everything" response: studies of home retrofits consistently find a "rebound effect" - households often use some of the efficiency gain to heat their home more rather than banking the full bill saving, particularly in previously under-heated homes. That's not a reason to abandon retrofit, but it does mean efficiency upgrades and income support work best as complements, not substitutes.</p>`,
+                    sources: [
+                        { name: 'Brenda Boardman - Fuel Poverty: From Cold Homes to Affordable Warmth (1991)', url: 'https://en.wikipedia.org/wiki/Brenda_Boardman' },
+                        { name: 'The Rebound Effect in Home Heating - a guide for policymakers and practitioners', url: 'https://www.researchgate.net/publication/347492593_The_Rebound_Effect_in_Home_Heating_A_guide_for_policymakers_and_practitioners' }
+                    ]
                 }
             ];
         }
@@ -954,6 +1042,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2019',
                     url: 'https://www.london.gov.uk/sites/default/files/cultural_infrastructure_plan_online.pdf',
                     summary: `<p>The Mayor's Cultural Infrastructure Plan responds to what the GLA describes as a "worrying decline" in London's cultural spaces, with grassroots music venues and LGBT+ venues losing significant numbers over the preceding decade before recently stabilising. It set out a policy "toolbox" for boroughs and developers to protect and grow cultural space through planning decisions, and underpins the Cultural Infrastructure Map that catalogues venues borough by borough - including Lewisham's - to track where infrastructure is being lost or added over time. The plan treats venue density as a planning and land-use issue as much as a cultural-policy one: once a cultural space is lost to redevelopment, it rarely returns.</p>`
+                },
+                {
+                    title: 'Perspectives from global culture research',
+                    summary: `<p>Cultural policy research distinguishes two different goals that arts investment can pursue, and cautions against treating them as the same thing: "democratization of culture" - getting more people through the doors of existing institutions - versus "cultural democracy" - recognising and resourcing the culture people already make and do themselves, from community choirs to informal music nights, rather than only the venues that get counted in official statistics. Both forms of engagement carry a benefit research increasingly documents: a major evidence review commissioned by WHO's European Region, synthesising over 900 studies worldwide, found engaging with the arts has a measurable relationship with health - helping prevent mental and physical ill health and supporting recovery once someone is unwell - whether that engagement happens in a gallery or a front room.</p>`,
+                    sources: [
+                        { name: 'Cultural Democracy vs. the Democratization of High Culture - Americans for the Arts', url: 'https://www.americansforthearts.org/by-program/reports-and-data/legislation-policy/naappd/cultural-democracy-vs-the-democratization-of-high-culture' },
+                        { name: 'What is the evidence on the role of the arts in improving health and well-being? - WHO Health Evidence Network', url: 'https://www.who.int/europe/publications/i/item/9789289054553' }
+                    ]
                 }
             ];
         }
@@ -976,6 +1072,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 year: '2026',
                 url: 'https://lewisham.gov.uk/myservices/business/london-living-wage',
                 summary: `<p>Lewisham Council is itself accredited as a London Living Wage employer and runs a local scheme encouraging other borough employers to accredit too, on top of the Living Wage Foundation's national accreditation programme. 95 employers in the borough are accredited, covering 7,605 employees paid at or above the London Living Wage rather than the lower statutory minimum. Accreditation is the main lever a council has some direct control over on this indicator - it can set pay for its own staff and contracts and lobby local employers, but it cannot set the statutory minimum wage or compel private employers to pay above it, which is why the borough's 13.4% low-pay rate reflects the wider London labour market as much as any single local policy.</p>`
+            },
+            {
+                title: 'Perspectives from global income research',
+                summary: `<p>Two distinct strands of labour economics explain persistent low pay in modern economies. One, most associated with David Autor's work on job polarisation, finds technology and globalisation have hollowed out the middle of the job market - mid-skill roles have shrunk fastest, while both high-skill and low-paid service jobs have grown. A separate, more recent strand looks at power rather than job type: when only a handful of employers are hiring for a given role in a local area, workers have fewer places to go, and economists find this lets employers pay less than they otherwise could - not because the work itself is low-value, but because switching employers is hard. This helps explain something that surprised economists: real-world studies keep finding that raising the minimum or living wage doesn't cost jobs the way basic supply-and-demand theory predicts, because wages in many workplaces were being held down by a lack of options for workers, not by what employers could actually afford to pay.</p><p>Separately, unemployment and economic inactivity are increasingly different problems in rich-country labour markets: unemployment counts people actively looking for work, while inactivity counts everyone else outside the labour force, including a fast-growing group out of work due to long-term sickness - a group that has grown sharply since the pandemic, faster than unemployment itself, which is why an area's unemployment rate can look unremarkable even as claims for out-of-work support rise.</p>`,
+                sources: [
+                    { name: 'The Growth of Low-Skill Service Jobs and the Polarization of the US Labor Market - Autor & Dorn', url: 'https://www.ddorn.net/papers/Autor-Dorn-LowSkillServices-Polarization.pdf' },
+                    { name: 'Monopsony in Local Labour Markets - Alan Manning, IFS Deaton Review', url: 'https://ifs.org.uk/inequality/wp-content/uploads/2022/03/Monopsony-in-local-labour-markets-IFS-Deaton-Review-of-Inequalities.pdf' },
+                    { name: 'Rising Ill-Health and Economic Inactivity Because of Long-Term Sickness, UK - ONS', url: 'https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/economicinactivity/articles/risingillhealthandeconomicinactivitybecauseoflongtermsicknessuk/2019to2023' }
+                ]
             }];
         }
 
@@ -1009,6 +1114,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     year: '2022-2026',
                     url: 'https://lewisham.gov.uk/-/media/files/lewisham-council-corporate-plan-2022-2026.ashx',
                     summary: `<p>Lewisham's Corporate Strategy organises the council's work around seven priorities, including Open Lewisham, Health and Wellbeing, Safer Communities and Cleaner and Greener. Two threads running through it speak to trust and cohesion specifically: a commitment to listen to and co-design services with residents, reaching people whose voices are seldom heard, and the council's own description of Lewisham as a "Borough of Sanctuary" and London's leading borough for refugee resettlement. It also commits to what it calls the "Lewisham Way" of working - maintaining and strengthening the council's collaboration with the borough's voluntary and community sector rather than running services alone, the same sector this page's volunteering indicator tracks participation in.</p>`
+                },
+                {
+                    title: 'Perspectives from global social cohesion research',
+                    summary: `<p>Trust and cohesion research points to both a structural and an interpersonal driver. On the structural side, most cross-country research finds income inequality erodes generalised trust - people are less likely to trust strangers in more unequal places, independent of overall wealth. On the interpersonal side, social psychology's intergroup contact theory, dating to Gordon Allport's work in the 1950s and confirmed across hundreds of later studies, finds sustained, positive contact between people from different backgrounds - not just living nearby - reliably increases trust, particularly when working toward a shared goal together.</p>`,
+                    sources: [
+                        { name: 'Income Inequality and Generalised Trust - Social Indicators Research', url: 'https://link.springer.com/article/10.1007/s11205-014-0777-5' },
+                        { name: 'A Meta-Analytic Test of Intergroup Contact Theory - Pettigrew & Tropp, 2006', url: 'https://www.researchgate.net/publication/7046266_A_Meta-Analytic_Test_of_Intergroup_Contact_Theory' }
+                    ]
                 }
             ];
         }
@@ -1035,6 +1148,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     <li><strong>Reducing sexual exploitation and drug-related harm</strong> - partnership work targeting exploitation and the disorder associated with drug misuse across the borough.</li>
                 </ul>
                 <p>The partnership reports quarterly, chaired by the elected Mayor, giving elected oversight of a response that spans well beyond what the police alone can address.</p>`
+            },
+            {
+                title: 'Perspectives from global peace & justice research',
+                summary: `<p>Criminology offers two different, complementary lenses on why crime happens where it does. The structural lens - relative deprivation - finds income inequality within an area predicts violent crime more reliably than how poor the area is overall, a pattern replicated across countries with very different income levels and welfare systems. A separate, situational lens - routine activity theory - explains not who commits crime but when and where: it happens when a motivated offender, a suitable target, and the absence of anyone able to intervene converge in the same place at the same time, regardless of the wider deprivation context. The World Health Organization's INSPIRE framework for preventing violence against children reflects both lenses directly in its seven strategies: "income and economic strengthening" addresses the structural driver, while "safe environments" - better street lighting, reducing access to weapons in high-risk locations - addresses the situational one routine activity theory points to.</p>`,
+                sources: [
+                    { name: 'Routine Activity Theory - overview', url: 'https://www.ebsco.com/research-starters/law/routine-activity-theory' },
+                    { name: 'INSPIRE: Seven Strategies for Ending Violence Against Children - WHO/PAHO', url: 'https://www.paho.org/en/topics/violence-against-children/inspire-seven-strategies-ending-violence-against-children' }
+                ]
             }];
         }
 
@@ -1076,6 +1197,282 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 }
             ];
         }
+
+        if (dimensionName === 'housing') {
+            return [
+                {
+                    action: "Join RUSS, Ladywell's community land trust",
+                    text: `A 1,000+ member community land trust based at Church Grove, Ladywell - self-built 36 affordable homes and a Community Hub in 2019. Open member meetings welcome newcomers.`,
+                    url: 'https://www.theruss.org/about/'
+                },
+                {
+                    action: 'Volunteer with the 999 Club',
+                    text: `South East London's year-round homelessness charity, running Lewisham's emergency night shelter and its Bridge day centre alongside NHS mental health services. Several former guests have gone on to volunteer themselves.`,
+                    url: 'https://999club.org/join-the-999-club-community/'
+                },
+                {
+                    action: 'Report an unlicensed rented home',
+                    text: `Since July 2024 nearly all privately rented homes in Lewisham need a council licence, covering around 20,000 properties. Report a suspected unlicensed one by phone or email and the council must investigate.`,
+                    url: 'https://lewisham.gov.uk/selectivelicensing'
+                },
+                {
+                    action: 'Join the London Renters Union - Lewisham branch',
+                    text: `A tenants' union branch helping members fight unsafe conditions and rent hikes together. Local pressure from members forced Lewisham Council to act on unsafe conditions at Eros House in 2020.`,
+                    url: 'https://londonrentersunion.org/tag/lewisham/'
+                }
+            ];
+        }
+
+        if (dimensionName === 'food') {
+            return [
+                {
+                    action: 'Volunteer at Lewisham Foodbank',
+                    text: `Part of the Trussell Trust network, running welcome, warehouse, van and admin roles from its Bromley Road warehouse. Apply online - minimum age 16, references and induction required.`,
+                    url: 'https://lewisham.foodbank.org.uk/volunteering/'
+                },
+                {
+                    action: "Dig in at Grow Lewisham's community growing site",
+                    text: `A permaculture growing space on the Oldstead Road allotments, open to volunteers every Sunday 1-4pm, March to October - the food grown goes directly to local food banks.`,
+                    url: 'https://www.growlewisham.com/the-plot'
+                },
+                {
+                    action: 'Join the waiting list at Evelyn Community Store',
+                    text: `A volunteer-run social supermarket in Deptford where members pay £3.50 for £30 of FareShare groceries, started by Lewisham Homes in 2019. Volunteering currently runs via a waiting list.`,
+                    url: 'https://www.lewishamhomes.org.uk/evelyn-community-store-continues-to-thrive/'
+                }
+            ];
+        }
+
+        if (dimensionName === 'water') {
+            return [
+                {
+                    action: 'Join the 3 Rivers Clean Up on the Ravensbourne',
+                    text: `An annual three-week volunteer campaign clearing rubbish and invasive species from the Ravensbourne, Pool and Quaggy - the river that runs straight through Ladywell Fields. 2026 dates: 27 June-17 July.`,
+                    url: 'https://3riverscleanup.co.uk/'
+                },
+                {
+                    action: 'Join Quaggy Waterways Action Group',
+                    text: `A long-running South East London volunteer group restoring local rivers, including coordinating work on the Ravensbourne catchment - one Lee Green clean-up alone removed over 200 bags of rubbish and medical waste.`,
+                    url: 'https://qwag.org.uk/about-us/join-qwag/'
+                },
+                {
+                    action: 'Book a free Thames Water home visit',
+                    text: `Thames Water - Lewisham's supplier, in an area classed as seriously water-stressed - fits free water-saving devices to taps, showers and toilets; high-usage households typically save around 100 litres a day.`,
+                    url: 'https://www.thameswater.co.uk/help/water-saving/smarter-home-visits'
+                }
+            ];
+        }
+
+        if (dimensionName === 'mobility') {
+            return [
+                {
+                    action: 'Ride or volunteer with Lewisham Cyclists',
+                    text: `700+ members strong, this London Cycling Campaign group runs family-friendly rides, a Cycle Buddy scheme pairing new and experienced riders, and donation-based bike maintenance sessions across the borough.`,
+                    url: 'https://lewishamcyclists.org.uk/'
+                },
+                {
+                    action: "Join Living Streets' Lewisham Local Group",
+                    text: `The local branch of the national walking charity, campaigning for better pedestrian conditions and organising Car Free Day activity in the borough. Meets bi-monthly; new members are welcome.`,
+                    url: 'https://www.livingstreets.org.uk/get-involved/local-groups/lewisham-local-group/'
+                },
+                {
+                    action: 'Apply to close your street for a Play Street',
+                    text: `Lewisham Council lets residents apply, with six weeks' notice, to close their street to through-traffic so children can play outside - reclaiming space for active, car-free use.`,
+                    url: 'https://lewisham.gov.uk/myservices/roads-and-transport/closing-a-road-for-a-play-street-event'
+                }
+            ];
+        }
+
+        if (dimensionName === 'community') {
+            return [
+                {
+                    action: 'Volunteer with Community Connections Lewisham',
+                    text: `The charity behind 'Lewisham Against Loneliness', matching isolated residents with local groups, activities and trained volunteers. It currently needs Transport and Cancer Champion volunteers, alongside general roles.`,
+                    url: 'https://communityconnectionslewisham.org/volunteer/'
+                },
+                {
+                    action: 'Join Rushey Green Time Bank',
+                    text: `A multi-award-winning time bank based at PLACE/Ladywell on Lewisham High Street, where members trade an hour of help given for an hour of help received - skills for connection, not money.`,
+                    url: 'https://timebanking.org/timebanks/rushey-green-time-bank/'
+                }
+            ];
+        }
+
+        if (dimensionName === 'equality') {
+            return [
+                {
+                    action: 'Sign up to Lewisham Works',
+                    text: `The council's free employment service for unemployed residents aged 18+, helping people into the better-paid work that narrows the borough's pay gap - it helped over 330 residents into jobs or training in its first year.`,
+                    url: 'https://lewisham.gov.uk/myservices/employment-support-and-careers-advice/lewisham-works'
+                }
+            ];
+        }
+
+        if (dimensionName === 'political_voice') {
+            return [
+                {
+                    action: 'Join the Ladywell Society',
+                    text: `A community group running since 1984, holding regular meetings on local issues - in 2025 it formally objected to the council's proposed loading-bay changes on Ladywell Road, an example of resident voice shaping a decision.`,
+                    url: 'https://ladywell-live.org/about-ladywell-society/'
+                },
+                {
+                    action: 'Submit or back a council petition',
+                    text: `Any resident, worker or student in the borough can start or sign a paper or e-petition; the council must acknowledge it within 10 working days, and a large one can trigger a full debate.`,
+                    url: 'https://lewisham.gov.uk/mayorandcouncil/influence/submit-or-view-a-petition'
+                },
+                {
+                    action: 'Question a council scrutiny meeting',
+                    text: `Lewisham's Overview and Scrutiny Committee holds public meetings where residents can suggest an issue to scrutinise or ask a question directly - agendas and papers are published online in advance.`,
+                    url: 'https://lewisham.gov.uk/mayorandcouncil/overview-scrutiny/about-overview-and-scrutiny'
+                },
+                {
+                    action: 'Stand to become a local councillor',
+                    text: `The council's own guide for residents considering standing for election frames it as the most direct route to decision-making power: "whatever needs changing in your neighbourhood, you could be the person to change it."`,
+                    url: 'https://www.lewisham.gov.uk/mayorandcouncil/wards/how-to-become-a-councillor'
+                }
+            ];
+        }
+
+        if (dimensionName === 'education') {
+            return [
+                {
+                    action: 'Become a Learning Partners reading volunteer',
+                    text: `Lewisham Council's own scheme trains adult volunteers, about an hour a week, as reading and numeracy partners for local children - run out of its Hither Green office.`,
+                    url: 'https://lewisham.gov.uk/organizations/learning-partners'
+                },
+                {
+                    action: 'Become a school governor',
+                    text: `Lewisham Council partners with the charity Governors for Schools to match residents with local governing boards - no special qualifications needed, just enthusiasm, to help close the borough's attainment gap.`,
+                    url: 'https://governorsforschools.org.uk/'
+                },
+                {
+                    action: 'Tutor with Action Tutoring',
+                    text: `A national charity giving free one-to-one English and maths tutoring to disadvantaged pupils across South East London school programmes; Ladywell's own community news site has promoted it directly to local residents.`,
+                    url: 'https://actiontutoring.org.uk/get-involved/volunteer/'
+                }
+            ];
+        }
+
+        if (dimensionName === 'connectivity') {
+            return [
+                {
+                    action: 'Volunteer or drop in with Catbytes',
+                    text: `A Lewisham charity running 18 free weekly digital drop-ins across the borough - nearest to Ladywell at Crofton Park Library on Tuesdays - plus a device-loan scheme and volunteer roles.`,
+                    url: 'https://catbytes.community/'
+                },
+                {
+                    action: 'Become an AbilityNet tech volunteer',
+                    text: `A national charity with 450+ volunteers giving free one-to-one tech support, remote or via home visits, to older and disabled people who are digitally excluded - no confirmed Ladywell-specific group yet.`,
+                    url: 'https://abilitynet.org.uk/free-tech-support-and-info/join-our-volunteers'
+                }
+            ];
+        }
+
+        if (dimensionName === 'energy') {
+            return [
+                {
+                    action: 'Train as a SELCE volunteer energy advisor',
+                    text: `South East London Community Energy, founded by Lewisham and Greenwich residents, trains volunteers one day a week toward a national energy qualification, giving free advice to fuel-poor households at local "energy cafe" drop-ins.`,
+                    url: 'https://selce.org.uk/about-us/jobsvolunteering/'
+                },
+                {
+                    action: 'Apply for the Warm Homes: Local Grant',
+                    text: `A government grant, delivered locally via the GLA, offering up to £15,000 for insulation and glazing and another £15,000 for low-carbon heating in low-income, poorly insulated Lewisham homes.`,
+                    url: 'https://www.gov.uk/apply-warm-homes-local-grant'
+                }
+            ];
+        }
+
+        if (dimensionName === 'culture') {
+            return [
+                {
+                    action: 'Volunteer with Meet Me at the Albany',
+                    text: `A weekly arts club for over-65s, run jointly by The Albany and Entelechy Arts in Deptford - volunteers support singing, painting, crafts and phone-support shifts, and can earn free event tickets.`,
+                    url: 'https://www.thealbany.org.uk/jobs/volunteer-with-us/'
+                },
+                {
+                    action: 'Volunteer at Irie! Dance Theatre',
+                    text: `Britain's leading African and Caribbean dance-fusion theatre, based at the council-owned Moonshot Centre in New Cross since 2007 - volunteers support performances, workshops and school visits, no experience required.`,
+                    url: 'https://www.iriedancetheatre.org/volunteer-with-us'
+                },
+                {
+                    action: "Visit Deptford Foundry's Open Studios weekend",
+                    text: `An annual free open-studio weekend in the Deptford/New Cross Creative Enterprise Zone, where 85 resident artists open their doors to the public to meet artists and buy work directly.`,
+                    url: 'https://www.secondfloor.co.uk/open-studios'
+                },
+                {
+                    action: "Join Heart n Soul's Taking Part sessions",
+                    text: `Creative sessions - Tai Chi, arts, "Speaking Up" chats - run by and for people with learning disabilities and autistic people at The Albany, £5 a day; currently full, so joining means the waiting list.`,
+                    url: 'https://www.heartnsoul.co.uk/taking-part-events'
+                }
+            ];
+        }
+
+        if (dimensionName === 'income') {
+            return [
+                {
+                    action: 'Volunteer as a Citizens Advice Lewisham adviser',
+                    text: `Free, confidential advice on debt, benefits, housing and employment, based at the Leemore Community Hub - currently recruiting Telephone Assessors and Advisers, with full training given.`,
+                    url: 'https://citizensadvicelewisham.org.uk/volunteer-with-us/'
+                },
+                {
+                    action: 'Join Lewisham Plus Credit Union',
+                    text: `A not-for-profit financial co-operative founded in 1992, now serving 13,000+ members across Lewisham and Bromley - an ethical, member-owned alternative to high-cost credit, with branches including Lewisham and Catford.`,
+                    url: 'https://pluscu.co.uk/'
+                },
+                {
+                    action: 'Become a Grandmentors volunteer mentor',
+                    text: `Adults aged 50+ are matched with young people leaving the care system for weekly mentoring over at least a year, tackling the employment and skills gaps behind local poverty.`,
+                    url: 'https://volunteeringmatters.org.uk/opportunity/grandmentors-volunteer-lewisham/'
+                },
+                {
+                    action: 'Push your employer to become Living Wage accredited',
+                    text: `Lewisham Council funds accreditation fees for three years for newly-accredited local businesses. 95 employers already cover 7,605 employees at the London Living Wage rather than the lower statutory minimum.`,
+                    url: 'https://lewisham.gov.uk/myservices/business/london-living-wage'
+                }
+            ];
+        }
+
+        if (dimensionName === 'social_cohesion') {
+            return [
+                {
+                    action: 'Befriend a resettled refugee family',
+                    text: `Volunteers give about two hours a week helping Syrian and Iraqi families resettled in Lewisham - the first UK council awarded "Borough of Sanctuary" status, in 2021 - with English practice and local life.`,
+                    url: 'https://www.lewishamrefugeewelcome.org/'
+                },
+                {
+                    action: 'Walk the Lewisham Interfaith Walk for Peace',
+                    text: `An annual multi-faith walk, started in 2015 after the Charlie Hebdo attack, taking in a synagogue, church, mosque and Hindu temple, organised with the council and Met Police. Open to any faith or none.`,
+                    url: 'https://www.lewishaminterfaithforum.org.uk/'
+                }
+            ];
+        }
+
+        if (dimensionName === 'peace_justice') {
+            return [
+                {
+                    action: "Volunteer with Power the Fight's My Lewisham project",
+                    text: `A community-led violence-prevention consortium, funded by London's Violence Reduction Unit, working across Pepys Estate, Turnham/Honor Oak and New Cross - a public-health approach to youth violence rather than policing alone.`,
+                    url: 'https://www.powerthefight.org.uk/my-lewisham/'
+                },
+                {
+                    action: "Support Refuge's Athena service in Lewisham",
+                    text: `Refuge's Lewisham service for survivors of gender-based abuse of all genders offers refuge accommodation, advocates and outreach support - residents can register interest in volunteering by contacting the service directly.`,
+                    url: 'https://refuge.org.uk/i-need-help-now/the-athena-gender-based-abuse-service-in-lewisham/'
+                },
+                {
+                    action: 'Attend the Lewisham Safer Neighbourhood Board',
+                    text: `An independent resident forum meeting quarterly at Lewisham Town Hall, where locals question the police, council and partners directly on crime and policing priorities across the borough.`,
+                    url: 'https://snblewisham.org.uk/'
+                },
+                {
+                    action: 'Register interest in a Youth Offender Panel',
+                    text: `Lewisham's "Good"-rated Youth Justice Service uses volunteer panel members to meet young people who've offended and their victims, agreeing a reparative contract together - recruitment is paused but the council is taking names for its next intake.`,
+                    url: 'https://lewisham.gov.uk/inmyarea/publicsafety/reducing-violence/our-public-health-approach-to-reducing-violence---how-you-can-get-involved/get-paid-or-voluntary-work-with-young-offenders'
+                }
+            ];
+        }
+
         return null;
     }
 
@@ -1156,6 +1553,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
             const inlineCouncilContexts = getCouncilContext(dimension.dimension);
             if (inlineCouncilContexts && inlineCouncilContexts.length > 0) {
+                html += '<div class="section-divider"></div>';
                 html += '<h3 class="council-context-heading">Local & Broader Context</h3>';
                 inlineCouncilContexts.forEach(ctx => {
                     html += `
@@ -1173,7 +1571,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             html += `
                 <div class="council-context">
                     <h4>${nc.title}</h4>
-                    <div class="council-date">${nc.year}</div>
+                    ${nc.year ? `<div class="council-date">${nc.year}</div>` : ''}
                     <div class="council-summary">${nc.summary}</div>
                     <div class="source-line">Sources: ${nc.sources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>
                 </div>
@@ -1193,14 +1591,17 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     const councilContexts = dimension.dimension === 'health' ? [] : getCouncilContext(dimension.dimension);
     if (councilContexts && councilContexts.length > 0) {
         html += '<div class="section-divider"></div>';
-        html += '<h3 class="council-context-heading">Council & Government Context</h3>';
+        html += '<h3 class="council-context-heading">Local & Broader Context</h3>';
         councilContexts.forEach(ctx => {
+            const sourceLine = ctx.sources
+                ? `<div class="source-line">${ctx.sources.length > 1 ? 'Sources' : 'Source'}: ${ctx.sources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>`
+                : (ctx.url ? `<div class="source-line">Source: <a href="${ctx.url}" target="_blank">${ctx.title}</a></div>` : '');
             html += `
                 <div class="council-context">
                     <h4>${ctx.title}</h4>
-                    <div class="council-date">${ctx.year}</div>
+                    ${ctx.year ? `<div class="council-date">${ctx.year}</div>` : ''}
                     <div class="council-summary">${ctx.summary}</div>
-                    ${ctx.url ? `<div class="source-line">Source: <a href="${ctx.url}" target="_blank">${ctx.title}</a></div>` : ''}
+                    ${sourceLine}
                 </div>
             `;
         });

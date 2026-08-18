@@ -106,7 +106,7 @@
       "dimension": "housing",
       "target": {
         "text": "Median rent as % of median pay target: 30% rent-to-income ratio (affordable threshold)",
-        "source_body": "Trust for London benchmarks",
+        "source_body": "General UK housing-affordability rule of thumb (30% of gross income) - not a Trust for London-published benchmark; Trust for London's own page gives London (52%) and rest-of-England (42%) averages for regional comparison instead",
         "has_official_target": true
       },
       "indicator": "Median rent as % of median pay",

@@ -805,16 +805,16 @@ def build_community():
             name="DCMS Community Life Survey 2024/25 - Loneliness and support networks",
             url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-loneliness-and-support-networks",
             accessed="2026-07-17",
-            notes="6.6% of adults in England reported feeling lonely 'often' or 'always' in 2024/25, a small decrease from 7.1% in 2023/24, but still above the roughly 6% that held broadly stable from 2017/18 through the pandemic years. No Community Life Survey was conducted in 2022/23 (an extended development period was used instead to build the new boosted sample design), so that year is missing from the series entirely - not just this indicator. This is an England-wide figure, not Lewisham- or London-specific: the survey is designed and published at England level. DCMS/MHCLG's 2023/24 sample boost (to ~175,000 respondents) was intended to eventually support local-authority-level estimates, and the 2024/25 report does include a chart of loneliness by ITL1 region and local authority, but a reliable Lewisham-specific figure could not be confirmed via the sources accessible in this exercise - unlike the neighbourhood-belonging indicator below, where a London-specific regional breakdown was found."
+            notes="6.6% of adults in England reported feeling lonely 'often' or 'always' in 2024/25, a small decrease from 7.1% in 2023/24. The 2017/18-2021/22 trend points below were re-checked individually against each year's own official Community Life Survey report/fact sheet (five separate DCMS publications, not one reused summary line): each independently confirms 6% as that year's own headline 'often or always lonely' figure. DCMS published those five years' headline figures as whole percentages (no decimal place); only the more recent 2023/24 and 2024/25 reports publish to one decimal. The trend below uses 6 (not 6.0) for those years to avoid implying decimal precision that was never published - a genuine per-year decimal figure beneath that whole-percent rounding could not be confirmed, since the underlying fact sheets/PDFs are blocked by this session's network egress policy and only report-page search snippets were reachable. No Community Life Survey was conducted in 2022/23 (an extended development period was used instead to build the new boosted sample design), so that year is missing from the series entirely - not just this indicator. This is an England-wide figure, not Lewisham- or London-specific: the survey is designed and published at England level. DCMS/MHCLG's 2023/24 sample boost (to ~175,000 respondents) was intended to eventually support local-authority-level estimates, and the 2024/25 report does include a chart of loneliness by ITL1 region and local authority, but a reliable Lewisham-specific figure could not be confirmed via the sources accessible in this exercise - unlike the neighbourhood-belonging indicator below, where a London-specific regional breakdown was found."
         ),
         geography=GeographyLevel.ENGLAND,
         confidence=Confidence.MEDIUM,
         trend=[
-            {"period": "2017/18", "value": 6.0},
-            {"period": "2018/19", "value": 6.0},
-            {"period": "2019/20", "value": 6.0},
-            {"period": "2020/21", "value": 6.0},
-            {"period": "2021/22", "value": 6.0},
+            {"period": "2017/18", "value": 6, "note": "DCMS's own 2017/18 fact sheet headline figure, published as a whole percentage"},
+            {"period": "2018/19", "value": 6, "note": "DCMS's own 2018/19 fact sheet headline figure, published as a whole percentage"},
+            {"period": "2019/20", "value": 6, "note": "DCMS's own 2019/20 report headline figure, published as a whole percentage"},
+            {"period": "2020/21", "value": 6, "note": "DCMS's own 2020/21 report headline figure, published as a whole percentage"},
+            {"period": "2021/22", "value": 6, "note": "DCMS's own 2021/22 report headline figure, published as a whole percentage"},
             {"period": "2023/24", "value": 7.1, "note": "No Community Life Survey conducted in 2022/23"},
             {"period": "2024/25", "value": 6.6},
         ]

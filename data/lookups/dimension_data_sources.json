@@ -167,9 +167,9 @@
     "dimension": "connectivity",
     "category": "Connected",
     "indicator": "5G mobile coverage (% of landmass, at least one operator)",
-    "source_url": "https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/connected-nations-20252",
-    "granularity": "England-wide",
-    "notes": "Original indicator label ('Mobile coverage data') renamed to match what's actually reported. England-wide outdoor 5G coverage from Ofcom's Connected Nations 2025 England Report; no Lewisham/London-borough-level figure could be confirmed (same access restrictions as the broadband indicator above). Only two comparable annual data points (2024, 2025) were found."
+    "source_url": "https://www.ons.gov.uk/explore-local-statistics/areas/E09000023-lewisham/indicators",
+    "granularity": "Borough (Lewisham)",
+    "notes": "Original indicator label ('Mobile coverage data') renamed to match what's actually reported. A Lewisham-specific figure is now confirmed and used instead of the England-wide one previously shown here: 99.8% of Lewisham's geographic area has outdoor 5G signal from at least one operator, per Ofcom Connected Nations data (January 2026), published via ONS's 'Explore local statistics' local-authority indicator - same metric definition as the England figure it replaces. The live ONS/Ofcom pages are still blocked under this session's network policy, so the figure is sourced from search-engine snippets of those pages plus independent corroboration from a third-party aggregator (connection-technologies.co.uk), hence 'medium' rather than 'high' confidence. No ward-level breakdown exists; borough is the most granular figure available."
   },
   {
     "lens": "local_social",

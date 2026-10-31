@@ -251,7 +251,7 @@ function renderTrendChart(allIndicators, dimension) {
     const colors = ['#E8542D', '#4B3F8F', '#3F8F5B', '#E8A23A'];
 
     // Get common indicator name (without gender suffix)
-    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female)\)$/, '');
+    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
 
     let svg = `
         <div class="detail-section">
@@ -294,12 +294,16 @@ function renderTrendChart(allIndicators, dimension) {
         });
 
         // Legend (only needed to distinguish multiple lines - the chart title
-        // already names the indicator when there's just one)
+        // already names the indicator when there's just one). Use the same suffix
+        // extraction as the headline value-readout labels, not the full indicator name -
+        // otherwise a long base name (e.g. "% of children with obesity (Reception)") gets
+        // clipped by the chart's fixed-width right margin instead of just reading "Reception".
         if (indicatorsWithTrend.length > 1) {
             const legendY = margin.top + indIndex * 20;
+            const legendLabel = ind.indicator.replace(chartTitle, '').trim().replace(/^\(|\)$/g, '') || ind.indicator;
             svg += `
                 <line x1="${width - margin.right + 10}" y1="${legendY}" x2="${width - margin.right + 30}" y2="${legendY}" stroke="${color}" stroke-width="2"/>
-                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${ind.indicator.replace('Healthy life expectancy at birth ', '')}</text>
+                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${legendLabel}</text>
             `;
         }
     });
@@ -410,10 +414,10 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'overshoot': 'Overshoot'
     }[status] || 'No data';
 
-    // Group indicators by their base name (without gender suffix)
+    // Group indicators by their base name (without gender/age-group suffix)
     const indicatorGroups = {};
     allIndicators.forEach(ind => {
-        const baseName = ind.indicator.replace(/\s*\((Male|Female)\)$/, '');
+        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
         if (!indicatorGroups[baseName]) {
             indicatorGroups[baseName] = [];
         }
@@ -422,17 +426,17 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
     // Custom descriptions for specific dimensions
     const dimensionDescriptions = {
-        'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years a decade ago, with a sharp drop during the pandemic. This gap suggests health inequalities are affecting how long residents live without serious illness or disability.",
-        'housing': "The private rented sector now houses 27% of Lewisham residents, nearly double its 14% share in 2001. Lewisham's Housing Strategy found rents grew 50% between 2011 and 2017, against incomes up just 12% between 2010 and 2018 - and names ending of a private tenancy as the single biggest cause of local homelessness, behind roughly half of cases as of its 2020 assessment, more than any other reason. That shows up in both temporary accommodation and rough sleeping, up nearly a third since 2021/22 to 345 people in 2025/26. The same stretched, low-income renters are also more likely to live in a non-decent home: MHCLG puts 16% of private rented homes as non-decent in 2024, above the 12.9% average for all tenures.",
-        'food': "Lewisham's diet-related health mostly compares favourably with London: food insecurity risk (7.8% of residents) and dental decay in five-year-olds (18.9%) both run below the London average, and diagnosed diabetes (7.2% of adults) sits well under England's rate. Child obesity is the exception. Reception-age obesity (10%) is close to average, but by Year 6 it has climbed to 24.5% - more than double - a jump repeated every year since national measurement began in 2006/07, and slightly worse than London's Year 6 average. That reception-to-Year-6 widening, rather than any single indicator in isolation, is the borough's clearest diet-related health signal.",
-        'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Per-person use has stayed persistently high: England's 2024/25 average was around 136.5 litres a day, well above the Environment Act's 2038 target of 122 litres - a gap that's barely narrowed since 2019/20.",
+        'health': "Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The gap is deprivation-linked: as of 2022-24, men in Lewisham's least deprived areas lived 8.8 years longer than men in the most deprived areas. These health inequalities shape how long residents can expect to live without serious illness or disability.",
+        'housing': "The private rented sector now houses 27% of Lewisham residents, up from 24% in 2011. Lewisham's Housing Strategy found rents grew 50% against incomes up just 12% in the years to 2018 - and names ending of a private tenancy as the single biggest cause of local homelessness, behind roughly half of cases as of 2020. Rough sleeping is up nearly a third over four years, to 345 people in 2025/26, while temporary accommodation has eased from a 2024 peak but stayed persistently high. The same stretched, low-income renters are also more likely to live in a non-decent home: 16% of private rented homes are non-decent in 2024, against a 12.9% average for all tenures.",
+        'food': "Lewisham's diet-related health is mixed. Dental decay in five-year-olds runs below both the London and England averages, and diagnosed diabetes stays well below England's rate too (though now almost identical to London's). Demand on local foodbanks tells a starker story: Trussell network parcels distributed in Lewisham tripled between 2018 and 2025. Child obesity near-doubles between Reception and Year 6 - a pattern repeated every year since measurement began in 2006/07, and slightly worse than London's Year 6 average.",
+        'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Two of the company's three levers for closing that gap are moving at different speeds: per-person water use has fallen modestly since 2019/20, though unevenly, with a pandemic-era spike and a recent uptick; leakage - after falling from close to a third of supply in the mid-2000s to around a fifth by 2019/20 - has barely moved since. Both remain well short of what's needed: the Environment Act's 2038 demand-reduction target and the water industry's 2018 commitment to halve leakage by 2050 both require considerably faster progress than either metric is currently making.",
         'mobility': "Ladywell's transport accessibility is hyper-local: real planning assessments show excellent PTAL 6 immediately around Ladywell station, falling to good PTAL 4 just a few streets away, since TfL scores access point by point rather than for the ward as a whole. Lewisham's sustainable mode share - trips made on foot, by bike, or by public transport - stood at 72.8% in 2024, short of the Mayor's Transport Strategy target of 80% by 2041 that Lewisham's own transport plan also adopts, and still above London's 67.6% average despite a recent decline from a high of 75.6%.",
         'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out.",
-        'community': "Loneliness and neighbourhood belonging have moved in the same direction nationally: the share of adults feeling lonely often or always crept up to 6.6% in 2024/25, while strong neighbourhood belonging slipped to 62%, down from a pandemic-era high of 65% in 2020/21. Neither figure has a Lewisham-specific equivalent - both come from DCMS's England-only Community Life Survey - though London itself has reported weaker neighbourhood belonging than the England average in every year the two are compared.",
+        'community': "Lewisham's own loneliness rate is now measured locally for the first time: 8% felt lonely often or always in 2025/26, little changed from 7% the year before. Neighbourhood belonging, still only measured at England level, slipped to 62%, down from a pandemic-era high of 65% in 2020/21, with London consistently below the England average. Support networks look sturdier: 95% of adults across inner-east London, the sub-region that includes Lewisham, agreed people would be there for them if they needed help in 2025/26 - the strongest of these three measures, and little changed over the two years it has been tracked.",
         'political_voice': "Lewisham's own local election turnout swung sharply: just 20.88% voted in 2022, before a genuinely contested three-way race lifted it to 42.14% in May 2026, when the Green Party ended decades of Labour control of the council. That volatility sits alongside a steadier national trend: the share of English adults who feel they can personally influence decisions affecting their local area has fallen to 24% in 2024/25, below every year recorded between 2013/14 and 2021/22 (25-28%). Civic participation - contacting a councillor, signing a petition, attending a public meeting - has settled at 34%, down from a pandemic-era peak near 42% but level with the pre-2023 norm of 2021/22.",
         'culture': "Lewisham's own arts funding is concentrated on a small number of organisations: its Arts & Culture Fund gave £150,000 a year to a single anchor organisation, The Albany, and split roughly £236,000 across eight others over the 2022-25 cycle. That sits within a wider English picture of squeezed council arts budgets, which have fallen 61% in real terms nationally since 2010 (from £18.67 to £6.47 per person a year). Participation itself has held up better than funding: 90.6% of adults nationally engaged with the arts in 2024/25, just below the survey's 2023/24 peak.",
         'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
-        'connectivity': "Broadband and mobile infrastructure have expanded fast nationally - full fibre reached 82% of UK premises by January 2026, up from just 10% in 2019 - and Lewisham's own coverage (81%) sits close to that national figure. 5G is even further ahead locally: 99.8% of Lewisham's geographic area has outdoor 5G signal from at least one operator, well above England's 81% landmass average, since that national figure is dragged down by rural not-spots that a fully built-up borough like Lewisham simply doesn't have. Usage lags behind availability, though: Ladywell scores 2.5 out of 10 on a composite digital-exclusion risk index, toward the low end nationally, consistent with London's younger demographic and stronger broadband access generally - but that gap is more about skills and affordability than infrastructure, and is unlikely to have closed quickly given how slowly those barriers typically shift.",
+        'connectivity': "Ladywell's physical connectivity is strong and unremarkable: full fibre broadband and 5G coverage both sit close to or above typical levels. The more revealing picture is who's actually at risk of being left behind. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, is low by national standards, reflecting London's younger, well-connected population. But that single score flattens real variation: applying a London-wide framework for who's most likely excluded - older people, low-income families, disabled residents, the unemployed, ethnic-minority communities and small businesses - to Ladywell's own data (Lewisham isn't covered by the framework's own pilot boroughs) shows a third of local children live in income-deprived households and 15% of residents are disabled. Usage, not access, is where the borough's digital divide actually sits.",
         'energy': "Ladywell's homes run well behind London's energy-efficiency average: 43% hold an EPC of C or above, against 56% across the city as a whole, and it isn't Lewisham's most efficient ward - that's Lewisham Central at 78%. Fuel poverty compounds the gap: 13.8% of Lewisham households (17,700) were fuel poor in 2022, above England's 13.1% average that year, and Lewisham was the worst-performing inner-London borough in the count before that. The two aren't unrelated: the fuel poverty metric itself only counts a household as fuel poor if its home also rates D-G for energy efficiency.",
         'social_cohesion': "Trust, cross-background cohesion and volunteering have all drifted down together nationally over the past decade: the share who think most neighbours can be trusted fell from 48% to 40%, and adults giving any unpaid help slipped to 54%, the lowest since records began. That volunteering fall is driven almost entirely by formal, organisation-based volunteering (down to 28%, from 37%), while informal neighbourly help has held up far better - the erosion looks concentrated in structured civic participation rather than in people helping each other directly. Pride in local area, tracked only since 2023/24, has stayed flat around 60%. None of these figures has a Lewisham-specific equivalent; all come from DCMS's England-wide Community Life Survey.",
         'income': "Poverty in Lewisham runs above the London average - 28% of residents after housing costs, against 26% citywide - despite an unemployment rate roughly level with London's. That combination points to low pay rather than joblessness as the sharper driver: 17.7% of working-age residents are on out-of-work benefits, well above London's 15.2%, even though residents in work are less likely than the London average to be paid below the London Living Wage. Deprivation is unevenly spread within the ward itself - one of Ladywell's seven neighbourhoods sits among the most deprived tenth of England, despite the ward scoring comparatively well on education specifically.",
@@ -453,26 +457,26 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 const oldestValue = maleData.trend[0].value;
                 const decline = oldestValue - latestValue;
 
-                // Approximate total life expectancy (HLE is typically ~70-80% of total LE)
-                // Using rough estimate of 80 years total LE for Lewisham
-                const estimatedTotalLE = 80;
+                // Lewisham male total life expectancy at birth, 2021-23: 78.3 years
+                // (A Picture of Lewisham 2025 - Lewisham Council Public Health)
+                const estimatedTotalLE = 78.3;
                 const hlePercentage = ((latestValue / estimatedTotalLE) * 100).toFixed(0);
 
-                return `Healthy life expectancy measures the average number of years a person can expect to live in good health from birth. At ${latestValue} years in Lewisham (approximately ${hlePercentage}% of total life expectancy), this sits below London's average of 62.9 years. The indicator has declined by ${decline.toFixed(1)} years from ${oldestValue} years a decade ago, with a particularly sharp drop during the pandemic years. This widening gap suggests growing health inequalities affecting how long residents live without serious illness or disability.`;
+                return `Healthy life expectancy measures the average number of years a person can expect to live in good health from birth. At ${latestValue} years in Lewisham (approximately ${hlePercentage}% of total life expectancy), this sits below London's average of 62.9 years. The indicator has declined by ${decline.toFixed(1)} years from ${oldestValue} years just over a decade ago, with a particularly sharp drop during the pandemic years. This gap points to health inequalities affecting how long residents live without serious illness or disability.`;
             }
         }
 
         // Housing-specific explanations
         if (baseName === 'Median rent as % of median pay') {
-            return `This indicator compares mean rent for a one-bed property to median gross pay - a standard measure of housing affordability. At 43.6% in Lewisham (2025 Q4), it sits below London's own 52% average for the same measure, but well above both the 42% average for the rest of England and the 30%-of-income rule of thumb widely used to judge whether housing costs are sustainable. The ratio has held in the low-to-mid 40s since 2015 rather than easing or worsening steadily, suggesting a persistently strained affordability band rather than a temporary spike - one that's typical for London, not exceptional to Lewisham. With so little slack, even a modest rent rise or a missed pay cheque can be enough to tip a household toward eviction or needing the council's help.`;
+            return `This indicator compares mean rent for a one-bed property to median gross pay - a standard measure of housing affordability. At 43.6% in Lewisham (2025 Q4), it sits below London's own 52% average for the same measure, but well above both the 42% England-wide average and the 30%-of-income rule of thumb widely used to judge whether housing costs are sustainable. The ratio has held in the low-to-mid 40s since 2015 rather than easing or worsening steadily, suggesting a persistently strained affordability band rather than a temporary spike - one that's typical for London, not exceptional to Lewisham. A ratio this high leaves little room for a rent rise or income shock before a household is at risk.`;
         }
 
         if (baseName === 'Households in temporary accommodation') {
-            return `Temporary accommodation is emergency housing the council must provide to households legally assessed as homeless and in priority need - nightly-paid hotels (the most expensive and often least suitable), council-owned properties, and privately leased units. Despite the name, stays commonly run for years rather than months, so families can spend a child's entire primary school career in a single hotel room. Its use here has been driven by rising private rents pricing people out of the market and by evictions outpacing the supply of settled homes to move people into. It functions as both a safety net keeping people off the street and a warning sign of how much strain the wider housing system is under.`;
+            return `Temporary accommodation is emergency housing the council must provide to households legally assessed as homeless and in priority need - nightly-paid hotels (the most expensive and often least suitable), council-owned properties, and privately leased units. Nightly-paid hotel stays for families are capped at six weeks by law, but stays overall commonly run for years: as of early 2025, London's average stay was 3 years 11 months, almost three times the 1 year 4 months average outside London. Its use here has been driven by rising rents pricing people out of the market and evictions outpacing the supply of settled homes. It functions as both a safety net keeping people off the street and a warning sign of how much strain the housing system is under.`;
         }
 
-        if (baseName === '% non-decent homes (all tenure)') {
-            return `A home is "non-decent" if it fails to meet basic standards for safety, state of repair, facilities, or thermal comfort - the Decent Homes Standard the government has used since 2006 to judge housing quality. These are modelled estimates from national survey data rather than an inspection of every home, so year-to-year movement should be read as broad direction rather than precise change. Lewisham's rate has run below the London average in three of the last four rounds, but the 2024 uptick is worth watching alongside the borough's other housing pressures: disrepair and overcrowding often cluster in the same low-income, high-rent households already stretched by rent affordability and temporary accommodation.`;
+        if (baseName === '% non-decent homes') {
+            return `A home is "non-decent" if it fails to meet basic standards for safety, repair, facilities or thermal comfort - the government's Decent Homes Standard. Private rented homes are typically the least decent of Lewisham's three tenures, and Ladywell is one of five wards the council placed under selective licensing specifically because of poor private-rented conditions, after a 2021 stock survey found serious safety hazards in 22.7% of local PRS homes.`;
         }
 
         if (baseName === 'Rough sleepers') {
@@ -480,29 +484,33 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         }
 
         // Food-specific explanations
-        if (baseName === '% population with moderate to severe food insecurity') {
-            return `This measures the share of Lewisham residents living in neighbourhoods classed by government modelling as at highest risk of food insecurity - not a direct survey of household experience. At 7.8% in 2022, Lewisham sits comfortably below both the London (13.3%) and England (10%) averages, and the risk fell from 9.6% in 2021. The council's own Food Justice Action Plan cites the same figure as evidence that, despite the visible strain on foodbanks since the cost-of-living crisis, structural food insecurity risk here is lower than in most of London - though only two years of data exist so far, too short to call this a settled trend.`;
+        if (baseName === 'Emergency food parcels distributed (Trussell network)') {
+            return `Lewisham's Trussell-network foodbanks distributed 22,476 emergency parcels in 2025 (7 locations), used here as a proxy for the local food insecurity trend. That's nearly tripled since 2018's 7,311, tracking the national rise Trussell attributes to the cost-of-living crisis. It peaked in 2023 at 25,659 and has eased by over 12% since, as inflation has cooled - though it remains far above pre-pandemic levels.`;
         }
 
-        if (baseName === '% of children in reception and year 6 with obesity') {
-            return `Obesity is measured separately for Reception-age children (4-5) and Year 6 (10-11) through the National Child Measurement Programme; Lewisham's 2024/25 rates were 10.0% and 24.5%. The near-doubling between the two ages has held in every year since measurement began in 2006/07, both nationally and in Lewisham, and points to the primary-school years as where obesity risk accumulates fastest. Lewisham's Year 6 rate has run above the London average every year on record; Reception has mostly tracked close to it. The council's Whole Systems Approach to Obesity has an explicit ambition to halve childhood obesity by 2030.`;
+        if (baseName === '% of children with obesity') {
+            return `This comes from the National Child Measurement Programme, which weighs and measures children in Reception and Year 6 each year. The near-doubling between the two ages has held in Lewisham every year since measurement began in 2006/07; weight tends to persist or worsen between the two ages in the same children. Lewisham's Year 6 rate has run consistently above the London average. The borough's Whole Systems Approach to Obesity works toward the government's 2018 ambition to halve childhood obesity by 2030 - but Lewisham's Year 6 rate has barely moved since then, leaving that goal looking increasingly out of reach with about three years left.`;
         }
 
-        if (baseName === '% of children in reception and year 6 with dental decay') {
-            return `Tooth decay in children is tracked through separate national surveys: a biennial one for 5-year-olds (Reception age) and a single one-off survey of Year 6 children in 2022/23, the first and only time that age group has been surveyed nationally. Lewisham's most recent Reception figure (18.9%, 2023/24) and Year 6 figure (9.9%, 2022/23) both sit below the London and England averages - Lewisham had the 4th-lowest Reception decay rate of London's 33 boroughs in 2024. The Reception trend has been volatile rather than steadily improving, dropping to 12.4% in 2021/22 before rising again, which NHS commissioners partly attribute to reduced dental access during and after the pandemic.`;
+        if (baseName === '% of children with dental decay') {
+            return `Tooth decay in children is tracked through separate national surveys: a biennial one for 5-year-olds (Reception age) and a single one-off survey of Year 6 children in 2022/23, the first and only time that age group has been surveyed nationally. Lewisham's most recent Reception figure (18.9%, 2023/24) and Year 6 figure (9.9%, 2022/23) both sit below the London and England averages - one of London's six lowest Reception rates that round. The Reception trend has been volatile rather than steadily improving, dropping to 12.4% in 2021/22 before rising again, consistent with reduced dental access across the borough during and after the pandemic.`;
         }
 
         if (baseName === '% of people over 17 years old with type 2 diabetes') {
-            return `This tracks the share of Lewisham residents aged 17+ with diabetes recorded on their GP's disease register (both type 1 and type 2, though type 2 accounts for roughly 90% of diagnosed cases). At 7.2% in 2024/25, up steadily from 5.7% in 2012/13, Lewisham has stayed significantly below the England average (7.9%) throughout, and close to London's (7.1%). The rise mirrors a national trend in an ageing, increasingly overweight population; Lewisham's Whole Systems Approach to Obesity explicitly frames type 2 diabetes prevention as one of the direct health benefits of its weight-management work, alongside cardiovascular risk and joint disease.`;
+            return `This tracks the share of Lewisham residents aged 17+ with diabetes recorded on their GP's disease register (both type 1 and type 2, though type 2 accounts for roughly 90% of diagnosed cases). At 7.2% in 2024/25, up steadily from 5.7% in 2012/13, Lewisham has stayed significantly below the England average (7.9%) throughout, and is now almost level with London's (7.2%). The rise mirrors a national trend in an ageing, increasingly overweight population; Lewisham's Whole Systems Approach to Obesity explicitly frames type 2 diabetes prevention as one of the direct health benefits of its weight-management work, alongside cardiovascular risk and joint disease.`;
         }
 
         // Water-specific explanations
         if (baseName === 'Per capita water consumption (litres/day)') {
-            return `Per capita consumption measures the average litres of water each person uses per day, drawn from national statutory reporting rather than metered data specific to Lewisham (no ward or borough breakdown is published). England-wide use was around 136.5 litres per person per day in 2024/25, down only slightly from the 140-litre 2019/20 baseline the government uses to track progress. The Environment Act 2021 target - 122 litres by 2038, 110 by 2050 - exists because the Environment Agency's National Framework for Water Resources projects a supply-demand gap of several billion litres a day by mid-century, driven by climate change shrinking supply, population growth increasing demand, and a parallel push to cut unsustainable abstraction from rivers and aquifers. Cutting demand is the fastest and cheapest of the three levers used to close that gap (alongside cutting leakage and building new supply), which is why it was set as a statutory target rather than left as an aspiration. Thames Water's own resource plan commits to a less ambitious 123-litre target by 2050, citing insufficient confidence that the tighter national goal is achievable in its area.`;
+            return `Per capita consumption measures the average litres of water each person uses per day - no ward or borough breakdown is published, but Thames Water's own figure is, used here as the most relevant geography. Use spiked during the pandemic, then eased back before ticking up again in the latest year - a bumpier path than a steady decline, leaving little net progress since the 2019/20 baseline. The Environment Act 2021 target - 122 litres by 2038, 110 by 2050 - responds to a growing supply-demand gap from climate change, population growth, and unsustainable abstraction from rivers and aquifers. Demand reduction is the fastest, cheapest of the three levers used, alongside leakage and new supply, and Thames Water's approved resource plan commits to meeting the same 110-litre target.`;
         }
 
         if (baseName === 'Areas of water stress') {
-            return `This records a one-off regulatory classification, not a measurement that moves year to year: whether a water company's area has enough water resource, relative to expected demand, to avoid regular restrictions during a drought. Thames Water - which supplies Lewisham - was designated "seriously water stressed" when the Environment Agency first ran this assessment in 2013, and remained so when it repeated the exercise in 2021, alongside several other companies newly added to the list. The designation underpins Thames Water's ability to introduce compulsory water metering and its 2024 Water Resources Management Plan, which forecasts a supply deficit in parts of its area by 2050 without further leakage reduction, demand reduction, and new supply projects including a reservoir and a water recycling scheme.`;
+            return `This records a one-off regulatory classification, not a measurement that moves year to year: whether a water company's area has enough water resource, relative to expected demand, to avoid regular restrictions during a drought. Thames Water - which supplies Lewisham - was designated "seriously water stressed" when the Environment Agency first ran this assessment in 2013, and remained so when it repeated the exercise in 2021. The designation underpins Thames Water's ability to introduce compulsory water metering and its 2024 Water Resources Management Plan, which forecasts a supply deficit in parts of its area by 2050 without further leakage reduction, demand reduction, and new supply projects including a reservoir and a water recycling scheme.`;
+        }
+
+        if (baseName === 'Water leakage (% of total supply)') {
+            return `Leakage is the share of water Thames Water puts into its network that's lost to bursts and background leaks before reaching a customer's tap. It sat close to a third of supply in the mid-2000s and has fallen fairly steadily since, to just over a fifth more recently. The water industry committed in 2018 to halve total leakage by volume from 2017/18 levels by 2050, a target folded into the Environment Agency's National Framework for Water Resources - the same framework behind the per capita consumption target above.`;
         }
 
         // Mobility-specific explanations
@@ -533,11 +541,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Community-specific explanations
         if (baseName === '% adults reported feeling lonely often or always') {
-            return `This tracks the share of adults who say they feel lonely often or always - the most severe end of a scale used annually by DCMS's Community Life Survey, England's main survey of civic and community life. It's published for England only, with no Lewisham-specific figure available. Younger adults and people with a limiting long-term illness report substantially higher rates than the headline figure.`;
+            return `Lewisham's own rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26, little changed from 7% the year before (not a statistically significant shift). This is the first year a genuinely local figure exists: the survey - now the Community and Engagement Survey, DCMS's successor to the Community Life Survey - only began publishing local-authority breakdowns in 2025/26. Loneliness is far from evenly spread: it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
         }
 
         if (baseName === '% adults felt strongly belonged to their neighbourhood') {
             return `This measures the share of adults who say they belong very strongly or fairly strongly to their immediate neighbourhood, one of the Community Life Survey's core measures of social cohesion. The pandemic-era peak, when people spent far more time in their local area, has since eased. The measure is published for England only, but where the survey does break results down by region, London has reported weaker neighbourhood belonging than the England average in every year compared - a gap that predates the pandemic and has persisted since.`;
+        }
+
+        if (baseName === '% adults agreed that if they needed help, there would be people there for them') {
+            return `This asks adults how strongly they agree that people would be there for them in a crisis - one of the Community and Engagement Survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any local authority; the most local figure available covers inner-east London, the sub-region Lewisham sits within. There, 95% agreed in 2025/26, essentially unchanged from 93% the year before, and a point below England's own 96% - in line with London's wider regional average on this measure.`;
         }
 
         // Political voice-specific explanations
@@ -577,11 +589,21 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         }
 
         if (baseName === '5G mobile coverage (% of landmass, at least one operator)') {
-            return `This measures how much of Lewisham's geographic area - not premises or population - has outdoor 5G signal from at least one of the four mobile network operators, at Ofcom's "high confidence" reporting threshold. Lewisham reaches 99.8%, per Ofcom's Connected Nations data (January 2026) as published through ONS's local-authority "Explore local statistics" service - well above England's 81% landmass average (2025, up from 76% the year before), because that national figure is dragged down by rural not-spots that a small, fully built-up borough like Lewisham doesn't have. It's consistent with indoor 4G coverage, which already reaches 97-99% of premises in English urban areas versus 77-85% in rural ones. No ward-level (Ladywell-specific) figure exists - Ofcom and ONS publish at local-authority level, not electoral ward - so borough is the most granular figure available, same as the full-fibre broadband indicator above.`;
+            return `This measures how much of Lewisham's geographic area - not premises or population - has outdoor 5G signal from at least one of the four mobile network operators, at Ofcom's "high confidence" reporting threshold. Lewisham reaches 99.8%, per Ofcom's Connected Nations data (January 2026) as published through ONS's local-authority "Explore local statistics" service - well above England's 81% landmass average (2025, up from 76% the year before), because that national figure is dragged down by rural not-spots that a small, fully built-up borough like Lewisham doesn't have. It's consistent with indoor 4G coverage, which already reaches 97-99% of premises in English urban areas versus 77-85% in rural ones. No ward-level figure exists; borough is the most granular level available, as with the full-fibre broadband indicator above.`;
         }
 
         if (baseName === 'Digital exclusion risk score (0-10 scale)') {
-            return `Ladywell scores 2.5 out of 10 on the Digital Exclusion Risk Index (DERI), a composite built from 11 indicators - age, disability, lack of qualifications, social grade, and broadband access and speed - across the ward's 7 constituent neighbourhoods, normalised so the score is comparable across Great Britain rather than just within Lewisham. That's toward the low end of the scale, consistent with London generally scoring low nationally thanks to its younger demographic and stronger broadband access - though risk isn't uniform across the ward: individual neighbourhood scores within Ladywell range from 2.1 to 3.2. Several of the index's components are dated (some drawn from the 2011 Census), so it's best read as relative risk rather than a precise current count. For an absolute sense of scale, if London-wide rather than Lewisham-specific: the GLA estimated around 270,000 Londoners were completely offline in 2022, with a further 2 million using the internet only rarely, when it launched a Digital Inclusion Service combining a loaned device, low-cost connectivity, and basic skills support.`;
+            return `<p>Ladywell scores 2.5 out of 10 on the Digital Exclusion Risk Index (DERI), a composite of 11 indicators - age, disability, qualifications, social grade, broadband access - normalised for comparison across Great Britain. That score is low, consistent with London's younger, well-connected population, though it masks real variation: scores for Ladywell's 7 neighbourhoods range from 2.1 to 3.2, and several components are dated (some from the 2011 Census). The London Office of Technology and Innovation (LOTI) names the groups most likely to sit on the wrong side of that range - older people, low-income families, ethnic communities (especially Bangladeshi families in low-income households), unemployed people, disabled residents, and small or micro businesses. Applying that framework to Ladywell's own data shows how large each group actually is here.</p>
+                <div class="loti-snapshot">
+                    <div class="loti-row"><span class="loti-label">Children in income-deprived households</span><span class="loti-track"><span class="loti-fill" style="width:33.6%"></span></span><span class="loti-value">33.6%</span></div>
+                    <div class="loti-row"><span class="loti-label">Black African/Caribbean residents</span><span class="loti-track"><span class="loti-fill" style="width:25.1%"></span></span><span class="loti-value">25.1%</span></div>
+                    <div class="loti-row"><span class="loti-label">Disabled under the Equality Act</span><span class="loti-track"><span class="loti-fill" style="width:15.0%"></span></span><span class="loti-value">15.0%</span></div>
+                    <div class="loti-row"><span class="loti-label">Residents aged 65 and over</span><span class="loti-track"><span class="loti-fill" style="width:10.0%"></span></span><span class="loti-value">10.0%</span></div>
+                    <div class="loti-row"><span class="loti-label">Unemployed residents</span><span class="loti-track"><span class="loti-fill" style="width:7.4%"></span></span><span class="loti-value">7.4%</span></div>
+                    <div class="loti-row"><span class="loti-label">Bangladeshi residents</span><span class="loti-track"><span class="loti-fill" style="width:0.4%"></span></span><span class="loti-value">0.4%</span></div>
+                    <div class="loti-note">Each bar is that group's share of its own relevant Ladywell population (all residents, children, or economically active residents, as appropriate) - not shares of one shared total, so they aren't additive. Separately, Lewisham-wide (no ward figure is published): 93.9% of enterprises are small or micro businesses (fewer than 10 employees) - LOTI's sixth group, most likely to struggle getting online or hiring digitally skilled staff.</div>
+                </div>
+                <div class="source-line">Sources: <a href="https://loti.london/wp-content/uploads/2021/07/Mapping-Digital-Exclusion-in-London-LOTI-Toolkit.pdf" target="_blank">Mapping Digital Exclusion in London - LOTI Toolkit (key groups framework)</a> · <a href="https://www.nomisweb.co.uk/sources/census_2021_bulk" target="_blank">ONS Census 2021 - Age, Ethnic group, Disability and Economic activity status by ward</a> · <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025" target="_blank">English Indices of Deprivation 2025, File 7 (IDACI)</a> · <a href="https://www.nomisweb.co.uk/sources/ukbc" target="_blank">UK Business Counts - ONS</a></div>`;
         }
 
         // Energy-specific explanations
@@ -654,10 +676,11 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         if (baseName === 'Healthy life expectancy at birth') {
             return {
                 localParagraphs: [
-                    `Lewisham's leading causes of death are cancer (30.4%), circulatory disease (28.6%), and respiratory illness (10.8%) (2024/25), with premature death rates worse than England's - 6th-highest in London. The gap is deprivation-linked and widening: men in Lewisham's least deprived areas now live 8.1 years longer than men in the most deprived areas (2021-23), up from 6.6 years in 2020-21.`
+                    `Lewisham's leading causes of death are cancer (30.4%), circulatory disease (28.6%), and respiratory illness (10.8%) (2024/25), with premature death rates worse than England's - 6th-highest in London. The gap is deprivation-linked and widening: men in Lewisham's least deprived areas now live 8.8 years longer than men in the most deprived areas (2022-24), up from 7.3 years in 2019-21.`
                 ],
                 localSources: [
-                    { name: 'A Picture of Lewisham 2025 - Lewisham Council Public Health', url: 'https://www.observatory.lewisham.gov.uk/wp-content/uploads/2025/09/Picture_of_Lewisham_2025_updated_September_2025.pdf' }
+                    { name: 'A Picture of Lewisham 2025 - Lewisham Council Public Health', url: 'https://www.observatory.lewisham.gov.uk/wp-content/uploads/2025/09/Picture_of_Lewisham_2025_updated_September_2025.pdf' },
+                    { name: 'OHID Fingertips - Public Health Outcomes Framework (Inequality in life expectancy at birth, indicator A02a)', url: 'https://fingertips.phe.org.uk/profile/public-health-outcomes-framework' }
                 ],
                 nationalCard: {
                     title: 'Perspectives from global health research',
@@ -669,6 +692,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 }
             };
         }
+
         return null;
     }
 
@@ -686,68 +710,89 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 summary: `<p>Rather than treating healthcare alone as the lever, the strategy organises action around four priority areas, treating poverty, housing and education as the "core determinants" driving the borough's health gap:</p>
                     <ul>
                         <li><strong>Poverty</strong> - embedding financial wellbeing and debt advice within GP and social care settings, plus an annual Warm Welcome Scheme.</li>
-                        <li><strong>Housing</strong> - a joint damp-and-mould protocol across health and housing providers, and closer working on hospital discharge.</li>
+                        <li><strong>Housing</strong> - training health and social care staff to spot and report damp and mould in people's homes, and strengthening joint working between health and housing services so people leaving hospital aren't discharged back into unsafe housing.</li>
                         <li><strong>Education</strong> - embedding prevention within schools for children and young people.</li>
-                        <li><strong>Prevention</strong> - targeting the borough's two leading causes of death directly, via new Neighbourhood Health Equity Teams for cancer and cardiovascular disease.</li>
+                        <li><strong>Prevention</strong> - targeting the borough's two leading causes of death: increasing cancer screening coverage, and new Neighbourhood Health Equity Teams focused on cardiovascular disease prevention.</li>
                     </ul>
-                    <p>It commits to shifting resources upstream from treatment toward prevention over its 5-year span.</p>`
+                    <p>Health and wellbeing partners say they're committed to maintaining, and where possible increasing, investment in prevention despite a challenging financial context.</p>`
             }];
         }
 
-        // Housing dimension council context - 2 documents for now (capped per current
-        // guidance): Housing Strategy covers rent affordability, supply, AND housing
-        // conditions/non-decent homes (its Priority 3); Homelessness Strategy covers
-        // temporary accommodation + rough sleeping. A dedicated enforcement/licensing
-        // document exists (Policies to Support the Regulation and Enforcement of the
-        // Private Rented Housing Sector, 2021) but was judged less interesting to surface
-        // here - see git history if it's wanted back.
+        // Housing dimension council context - 2 documents (capped per current guidance):
+        // Housing Strategy covers rent affordability, supply, housing conditions/non-decent
+        // homes, AND (via its homelessness priority) temporary accommodation + rough
+        // sleeping context. The dedicated Lewisham Homelessness and Rough Sleeping Strategy
+        // card was removed 2026-10-31 after fact-checking found a fabricated quote ("no
+        // individual should be forced to sleep on the streets" does not appear in the
+        // document) and a stale/mischaracterized figure (3,723 households *approaching* the
+        // council in 2021/22, presented as "assisted... in the past year") - see git history
+        // if a corrected version of this card is wanted back. A dedicated enforcement/
+        // licensing document exists (Policies to Support the Regulation and Enforcement of
+        // the Private Rented Housing Sector, 2021) but was judged less interesting to
+        // surface here - see git history if it's wanted back.
         if (dimensionName === 'housing') {
             return [
                 {
                     title: "Lewisham's Housing Strategy 2020-26",
                     year: '2020-2026',
                     url: 'https://lewisham.moderngov.co.uk/documents/s75863/Housing%20Strategy%202020-26.pdf',
-                    summary: `<p>Lewisham's housing strategy sets out five priorities: delivering more genuinely affordable homes, preventing homelessness, improving housing quality and safety, supporting independent living, and strengthening communities. It identifies the widening gap between private rents and incomes as the single biggest driver of homelessness locally, and estimates a quarter of private rented homes are non-decent. Its actions span building new council and social rent homes, bringing empty properties back into use, pushing for longer and more secure private tenancies, and expanding licensing to raise standards.</p>`
+                    summary: `<p>Lewisham's housing strategy names the ending of a private rented tenancy as the single biggest cause of homelessness here, linked to private rents growing 50% between 2011 and 2017 against incomes up 12% between 2010 and 2018. It estimates a quarter of private rented homes are non-decent. Its response spans five priorities:</p>
+                    <ul>
+                        <li><strong>Delivering the homes Lewisham needs</strong> - more council-owned social rent homes and privately rented homes with secure tenancies.</li>
+                        <li><strong>Preventing homelessness</strong> - stronger housing advice and less reliance on costly nightly-paid B&amp;Bs, needed because social lettings to waiting-list households have fallen 45% since 2011.</li>
+                        <li><strong>Improving housing quality and safety</strong> - wider private rented licensing and investment in fire and building safety.</li>
+                        <li><strong>Supporting independent living</strong> - disabled facilities grants for a disabled population growing nearly 30% by 2033.</li>
+                        <li><strong>Strengthening communities</strong> - a residents' charter and backing a private renters' union.</li>
+                    </ul>
+                    <p>Its stated vision: "everyone has a safe, stable and genuinely affordable home" - against a nine-year wait to house the 9,800+ households currently on the register.</p>`
                 },
                 {
-                    title: 'Lewisham Homelessness and Rough Sleeping Strategy',
-                    year: '2023-2026',
-                    url: 'https://lewisham.moderngov.co.uk/ieDecisionDetails.aspx?ID=9725',
-                    summary: `<p>The council assisted over 3,000 households experiencing homelessness in the past year, driven by cost-of-living pressures and the lasting impact of COVID-19 on vulnerable residents. It organises its response around four priorities:</p>
-                    <ul>
-                        <li><strong>Prevention first</strong> - early intervention, financial help with rent arrears, and protection from illegal eviction, connecting at-risk residents to support before they lose their home.</li>
-                        <li><strong>Expanding supply</strong> - building new council homes, bringing empty properties back into use, and increasing temporary accommodation capacity for families facing sudden housing loss.</li>
-                        <li><strong>Health-led support for rough sleepers</strong> - closer working with health services on the physical and mental health needs and substance misuse that often accompany rough sleeping, with specific provision for people with unclear immigration status and for women's needs.</li>
-                        <li><strong>Cross-service partnership</strong> - mobilising council departments alongside borough-wide charities and public services.</li>
-                    </ul>
-                    <p>Its stated commitment: "no individual should be forced to sleep on the streets" - despite 13 years of budget cuts constraining what the council can do alone.</p>`
+                    title: 'Community-Led Housing and Registered Providers Housing Delivery Strategy',
+                    sources: [
+                        { name: 'Lewisham launches strategy to boost community-led housing - LocalGov', url: 'https://www.localgov.co.uk/Lewisham-launches-strategy-to-boost-community-led-housing/65069' },
+                        { name: 'Lewisham community-led housing plan considers free land - Planning Geek', url: 'https://www.planninggeek.co.uk/2026/lewisham-community-led-housing/' }
+                    ],
+                    summary: `<p>On 7 October 2026, Mayor and Cabinet noted the development of a new strategy to grow community-led and co-operative housing, building on the 2020-26 Housing Strategy's affordable-homes priority above. Officers say they're prepared to consider discounted or nil-value transfers of council-owned land for schemes delivering at least 50% social rent, backed by a new partnership forum bringing together community groups, co-operatives, smaller housing associations, council officers and funders.</p>
+                    <p>It names existing Lewisham schemes as the model to build on - RUSS's 36 self-build homes at Church Grove (completed 2024) and the nil-cost land transfer behind Brasted Close's Citizens House (11 homes, 2023). But nothing has been approved yet: no site, funding or land transfer has been agreed, and a further report is due around March 2027.</p>`
                 },
                 {
                     title: 'Perspectives from global housing research',
-                    summary: `<p>Finland is the clearest global example of what works against chronic homelessness: a national "Housing First" programme that gives people permanent housing immediately, without requiring sobriety or treatment first, then wraps support around them, with retention rates typically around 70-80%. But US research found unsheltered homelessness kept rising even as Housing First expanded nationally - researchers trace this to an "inflow" problem: keeping already-housed people housed doesn't stop new people becoming homeless, and that inflow is tied to the same supply and affordability pressures below. On affordability itself, both under-building and over-investment appear to matter: constrained supply where land-use rules limit new homes, and demand from housing treated as a financial asset - buy-to-let purchases and homes left vacant for capital appreciation - both push rents up independent of each other. On housing quality, the World Health Organization has documented direct health harms from poor housing - damp and mould linked to asthma, cold homes to cardiovascular illness - making substandard housing a measurable population health risk, not just a comfort issue.</p>`,
+                    summary: `<p><strong>Homelessness:</strong> Finland is the clearest global example of what works against chronic homelessness - a national "Housing First" programme that gives people permanent housing immediately, without requiring sobriety or treatment first, then wraps support around them. Around 82% remain stably housed two years in. But Housing First alone hasn't ended US unsheltered homelessness even as it expanded nationally - researchers trace this to an "inflow" problem: keeping people housed doesn't stop new people becoming homeless, and that inflow is tied to the affordability pressures below.</p>
+                    <p><strong>Affordability:</strong> Constrained supply is one driver - loosening land-use rules modestly increases housing supply, though the effect is too small to fix affordability for low- and middle-income renters alone. Housing bought as an investment rather than a home is another: roughly one in five UK homes is now owned by a landlord rather than an owner-occupier, a shift researchers link to easier buy-to-let mortgage credit that has helped drive real UK house prices up fivefold.</p>
+                    <p><strong>Housing quality:</strong> The World Health Organization has documented direct health harms from poor housing - damp and mould linked to asthma, cold homes to cardiovascular illness - making substandard housing a measurable population health risk, not just a comfort issue.</p>`,
                     sources: [
                         { name: 'Finnish Housing First Policy - United Nations DESA', url: 'https://www.un.org/development/desa/dspd/wp-content/uploads/sites/22/2019/05/Taina-Finnish-Housing-First-Policy.pdf' },
+                        { name: 'Y-Foundation Annual Report 2024', url: 'https://ysaatio.fi/wp-content/uploads/2025/06/Y-Saatio_Annual-Report_2024.pdf' },
                         { name: 'Housing Supply and the Drivers of Homelessness - Bipartisan Policy Center', url: 'https://bipartisanpolicy.org/report/housing-supply-and-homelessness/' },
                         { name: 'Land Use Reforms and Housing Costs - Urban Institute', url: 'https://www.urban.org/research/publication/land-use-reforms-and-housing-costs' },
-                        { name: 'Rapid Evidence Assessment: Buy-to-Let Housing - Sheffield Hallam University', url: 'https://www.shu.ac.uk/-/media/home/research/cresr/reports/r/rapid-evidence-assessment-buytolet-housing.pdf' },
+                        { name: 'The Demand for Housing as an Investment - Josh Ryan-Collins, UCL Bartlett', url: 'https://www.ucl.ac.uk/bartlett/sites/bartlett/files/2025-05/The%20Demand%20for%20Housing%20as%20an%20Investment_0.pdf' },
                         { name: 'WHO Housing and Health Guidelines (2018)', url: 'https://www.who.int/publications/i/item/9789289041683' }
                     ]
                 }
             ];
         }
 
-        // Food dimension council context - 3 documents: Food Justice Action Plan covers
-        // food insecurity; Whole Systems Approach to Obesity covers obesity and touches
-        // diabetes (explicitly framed as a prevention benefit); a dedicated NHS dental
-        // commissioning presentation covers dental decay, which neither of the other two
-        // documents addresses.
+        // Food dimension council context - 3 cards total (at the cap): Food Justice Action
+        // Plan covers food insecurity/foodbank demand; Whole Systems Approach to Obesity
+        // covers obesity (and touches diabetes, framed as a prevention benefit) - both tied
+        // to the dimension's pressing, worsening indicators. A dedicated NHS dental
+        // commissioning document existed here too (covering dental decay) but was dropped
+        // 2026-10-31 to stay within the 3-card cap: dental decay is this dimension's one
+        // genuinely positive-trending indicator (Lewisham runs below London/England, 4th-
+        // lowest in London), so it lost out to the two documents addressing indicators that
+        // are actually under strain - see DIMENSION_PAGE_SPECIFICATION.md 3.2's "pressing
+        // problem" prioritisation rule. Re-add from git history if a 4-indicator version of
+        // this dimension's context section is wanted back (would need the cap itself revisited).
         if (dimensionName === 'food') {
             return [
                 {
                     title: 'Lewisham Food Justice Action Plan - Update Report (Health & Wellbeing Board)',
                     year: '2023-2027',
-                    url: 'https://lewisham.moderngov.co.uk/documents/s123350/6%20Food%20Justice%20action%20plan%20update%20REPORT.pdf',
-                    summary: `<p>Lewisham launched its Food Justice Action Plan in April 2023 as food bank demand rose sharply after the pandemic and into the cost-of-living crisis, and has since become a Sustainable Food Places Silver Award borough and passed a motion to become a "Right to Food" borough. Its Community Food Justice Grants had, by December 2025, funded 31 local organisations reaching over 20,000 people, and the programme - now funded to April 2027 - sits formally under the council's Whole Systems Approach to Obesity as part of the wider food environment.</p>`
+                    sources: [
+                        { name: 'Lewisham Food Justice Action Plan - Update Report (Health & Wellbeing Board)', url: 'https://lewisham.moderngov.co.uk/documents/s123350/6%20Food%20Justice%20action%20plan%20update%20REPORT.pdf' },
+                        { name: 'Lewisham Health & Wellbeing Strategy 2025-2030', url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf' }
+                    ],
+                    summary: `<p>Lewisham launched its Food Justice Action Plan in April 2023 as food bank demand rose sharply after the pandemic and into the cost-of-living crisis, and has since become a Sustainable Food Places Silver Award borough and passed a motion to become a "Right to Food" borough. Its Community Food Justice Grants funded 19 local organisations reaching over 20,000 people between April 2023 and March 2025, with a further funding round in November 2025 bringing the total to 31 organisations; the programme - now funded to April 2027 - sits formally under the council's Whole Systems Approach to Obesity as part of the wider food environment.</p>`
                 },
                 {
                     title: 'Lewisham Whole Systems Approach to Obesity and weight management medication',
@@ -756,18 +801,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     summary: `<p>Lewisham's Whole Systems Approach to Obesity (WSAO), running since 2016, is the council's system-wide response to a borough where 21.8% of Reception children and 39% of Year 6 children carry excess weight, and where obesity-related hospital admissions run three times the national rate (62 vs 20 per 100,000, 2019-20). Its most recent focus is integrating new weight-loss medications (Wegovy, Mounjaro) into wider prevention work rather than a standalone fix - both are limited to patients with a BMI over 35 and a weight-related condition, referred through specialist NHS services, since unsupported use tends to see weight regained within two years of stopping. The council frames type 2 diabetes prevention as a direct benefit of this work.</p>`
                 },
                 {
-                    title: 'Dental Services Lewisham (NHS South East London ICB)',
-                    year: '2026',
-                    url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=121820',
-                    summary: `<p>Lewisham's NHS dental commissioning is run jointly across South East London by the ICB rather than the council, but the council receives regular updates because access shapes outcomes like decay rates. Lewisham has 35 NHS general dental practices, delivering 98.1% of its contracted treatment target in 2024/25 - above the South East London average. Community Dental Services (run by King's) provide targeted outreach - supervised toothbrushing, oral health education and personalised support for children with visible decay - through food banks, libraries and family hubs; paediatric referrals into these services have risen 40% since before the pandemic. Lewisham's 2024 child dental decay rate was the fourth-lowest of London's 33 boroughs.</p>`
-                },
-                {
                     title: 'Perspectives from global food research',
-                    summary: `<p>On food insecurity, research from bodies like the UN Food and Agriculture Organization finds that in high-income countries, insecurity is overwhelmingly an income/access problem rather than a food-availability one - food banks treat the symptom, while income support treats the cause. On diet quality, an emerging body of nutrition research, built around the NOVA classification system developed at the University of São Paulo and already written into national dietary guidelines in several countries, links ultra-processed food (UPF) consumption to poor health outcomes independent of a food's individual nutrient content - packaged, industrially formulated products now make up more than half of dietary energy intake in the UK. Both point the same way: the World Cancer Research Fund's "NOURISHING" framework - fiscal tools like sugar taxes, marketing restrictions, reformulation targets and food labelling - treats poor diet as a food-system problem to fix at the shelf and in policy, not a matter of individual willpower.</p>`,
+                    summary: `<p>On food insecurity, research from bodies like the UN Food and Agriculture Organization finds that in high-income countries, insecurity is overwhelmingly an income/access problem rather than a food-availability one - food banks treat the symptom, while income support treats the cause. On diet quality, an emerging body of nutrition research, built around the NOVA classification system developed at the University of São Paulo and already written into Brazil's and Uruguay's national dietary guidelines, links ultra-processed food consumption to poor health outcomes independent of a food's individual nutrient content - though critics argue NOVA's categories are too broad and the mostly observational evidence can't yet prove processing itself, rather than a food's fat, sugar or salt content, is what causes harm. Packaged, industrially formulated products still make up more than half of UK dietary energy intake. Both strands point toward food-system fixes over individual willpower: the World Cancer Research Fund's "NOURISHING" framework proposes fiscal tools like sugar taxes, marketing restrictions, reformulation targets and food labelling.</p>`,
                     sources: [
                         { name: 'The State of Food Security and Nutrition in the World - UN FAO', url: 'https://openknowledge.fao.org/server/api/core/bitstreams/5277b379-0acb-4d97-a6a3-602774104629/content' },
-                        { name: 'Ultra-processed foods and calorie intake in the UK - MRC Epidemiology Unit, Cambridge', url: 'https://www.mrc-epid.cam.ac.uk/blog/2024/07/17/upf-two-thirds-calorie-intake-uk-adolescents/' },
-                        { name: 'NOURISHING policy framework - World Cancer Research Fund International', url: 'https://www.wcrf.org/research-policy/policy/nutrition-policy/nourishing-framework/' }
+                        { name: 'Ultra-processed foods and calorie intake in the UK - Medical Research Council Epidemiology Unit, Cambridge', url: 'https://www.mrc-epid.cam.ac.uk/blog/2024/07/17/upf-two-thirds-calorie-intake-uk-adolescents/' },
+                        { name: 'NOURISHING policy framework - World Cancer Research Fund International', url: 'https://www.wcrf.org/research-policy/policy/nutrition-policy/nourishing-framework/' },
+                        { name: 'A critical review of the NOVA classification system - Proceedings of the Nutrition Society', url: 'https://www.cambridge.org/core/journals/proceedings-of-the-nutrition-society/article/are-all-ultraprocessed-foods-bad-a-critical-review-of-the-nova-classification-system/16D07B81A1587340B3EE847F3C662E60' }
                     ]
                 }
             ];
@@ -785,17 +825,17 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     url: 'https://www.thameswater.co.uk/news/2024/oct/thames-water-publishes-its-water-resources-management-plan',
                     summary: `<p>Thames Water forecasts it will need an extra one billion litres of water a day for its customers by 2050, and that several of its supply zones would run into deficit under severe drought conditions without further action. Its October 2024 plan, approved by government, sets out three strands:</p>
                     <ul>
-                        <li><strong>Cutting leakage</strong> - reducing losses from the distribution network to around 14.9% of total supply by 2049/50.</li>
-                        <li><strong>Reducing demand</strong> - bringing average consumption down to 123 litres per person per day by 2050, looser than the government's 110-litre goal because the company says it isn't yet confident the tighter figure is achievable.</li>
+                        <li><strong>Cutting leakage</strong> - continuing to drive down losses from the distribution network, building on the reduction already achieved since the mid-2000s.</li>
+                        <li><strong>Reducing demand</strong> - bringing average consumption down to 110 litres per person per day by 2050, matching the government's national target.</li>
                         <li><strong>New supply</strong> - a new reservoir for the South East and a water recycling project in West London, to close the gap leakage and demand reduction alone can't cover.</li>
                     </ul>
                     <p>Leakage and demand reduction together account for roughly four-fifths of the plan's contribution to closing the supply-demand gap.</p>`
                 },
                 {
-                    title: "The London Plan — Policy 5.15 (Water use and supplies)",
+                    title: "The London Plan — Policy SI5 (Water infrastructure)",
                     year: '2021',
-                    url: 'https://www.london.gov.uk/what-we-do/planning/london-plan/current-london-plan/london-plan-chapter-five-londons-response/pol-14',
-                    summary: `<p>Because Thames Water's area is seriously water-stressed, the Mayor of London's London Plan requires new homes to be built water-efficient rather than relying on the water company alone to close the gap: Policy 5.15 sets a maximum of 105 litres of mains water per person per day for new residential development (110 including a small allowance), and requires major non-residential schemes to meet the BREEAM "excellent" standard for water use. As the local planning authority, Lewisham Council applies this standard - alongside smart metering, water-saving fittings, and retrofit measures - to development it approves, while the Mayor separately holds water companies to account on leakage and demand reduction through the London Environment Strategy.</p>`
+                    url: 'https://www.london.gov.uk/programmes-strategies/planning/london-plan/the-london-plan-2021-online/chapter-9-sustainable-infrastructure',
+                    summary: `<p>Because Thames Water's area is seriously water-stressed, the Mayor of London's London Plan requires new homes to be built water-efficient rather than relying on the water company alone to close the gap: Policy SI5 sets a maximum of 105 litres of mains water per person per day for new residential development (110 including a small allowance), and requires major non-residential schemes to meet the BREEAM "excellent" standard for water use. As the local planning authority, Lewisham Council applies this standard - alongside smart metering, water-saving fittings, and retrofit measures - to development it approves, while the Mayor separately holds water companies to account on leakage and demand reduction through the London Environment Strategy.</p>`
                 },
                 {
                     title: 'Perspectives from global water research',
@@ -1182,7 +1222,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: 'Start (or join) a Men\'s Shed',
-                    text: `A volunteer-run workshop space giving people, often older residents living alone, a reason to leave the house. Hundreds exist UK-wide - none yet in Ladywell.`,
+                    text: `A volunteer-run workshop space giving people, often older residents living alone, a reason to leave the house. Over 1,000 exist UK-wide - none yet in Ladywell.`,
                     url: 'https://menssheds.org.uk/find-a-shed/'
                 },
                 {
@@ -1202,12 +1242,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: "Join RUSS, Ladywell's community land trust",
-                    text: `A 1,000+ member community land trust based at Church Grove, Ladywell - self-built 36 affordable homes and a Community Hub in 2019. Open member meetings welcome newcomers.`,
+                    text: `A 1,000+ member community land trust based at Church Grove, Ladywell - its Community Hub opened in 2019, followed by 36 self-built affordable homes completed in 2024. Open member meetings welcome newcomers.`,
                     url: 'https://www.theruss.org/about/'
                 },
                 {
                     action: 'Volunteer with the 999 Club',
-                    text: `South East London's year-round homelessness charity, running Lewisham's emergency night shelter and its Bridge day centre alongside NHS mental health services. Several former guests have gone on to volunteer themselves.`,
+                    text: `South East London's year-round homelessness charity - its Gateway day centre and Bridge evening crisis service (run with NHS mental health support) help people off the street and into support. At least one former guest has gone on to sit on its Client Committee as a volunteer.`,
                     url: 'https://999club.org/join-the-999-club-community/'
                 },
                 {
@@ -1236,9 +1276,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     url: 'https://www.growlewisham.com/the-plot'
                 },
                 {
-                    action: 'Join the waiting list at Evelyn Community Store',
-                    text: `A volunteer-run social supermarket in Deptford where members pay £3.50 for £30 of FareShare groceries, started by Lewisham Homes in 2019. Volunteering currently runs via a waiting list.`,
-                    url: 'https://www.lewishamhomes.org.uk/evelyn-community-store-continues-to-thrive/'
+                    action: 'Join Evelyn Community Store in Deptford',
+                    text: `A volunteer-run social supermarket in Deptford, one of eight now across Lewisham, where members pay £3.50 for a mix of groceries. Join by collecting a paper form on-site, Tuesdays 2-4:30pm.`,
+                    url: 'https://www.goodfoodlewisham.org/post/lewisham-s-growing-community-store-movement'
                 }
             ];
         }
@@ -1247,7 +1287,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: 'Join the 3 Rivers Clean Up on the Ravensbourne',
-                    text: `An annual three-week volunteer campaign clearing rubbish and invasive species from the Ravensbourne, Pool and Quaggy - the river that runs straight through Ladywell Fields. 2026 dates: 27 June-17 July.`,
+                    text: `An annual three-week volunteer campaign clearing rubbish and invasive species from the Ravensbourne, Pool and Quaggy - the river that runs straight through Ladywell Fields. Check the website for this year's dates.`,
                     url: 'https://3riverscleanup.co.uk/'
                 },
                 {
@@ -1490,10 +1530,17 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         const indicators = indicatorGroups[baseName];
         const firstIndicator = indicators[0];
 
-        // Show snapshot values for all indicators in this group
-        // For the first group (HLE), only show Male. For others, show all.
-        const indicatorsToShow = (groupIndex === 0 && indicators.length > 1)
-            ? indicators.filter(ind => ind.indicator.includes('Male'))
+        // Show snapshot values for all indicators in this group, unless the group is
+        // listed here - then show just one sub-type's headline figure (whichever carries
+        // the more meaningful story), whatever position this group happens to render in.
+        // The trend chart below still plots every sub-type regardless of this filter.
+        const singleHeadlineFilter = {
+            'Healthy life expectancy at birth': 'Male',
+            '% of children with obesity': 'Year 6',
+            '% non-decent homes': 'Private rented'
+        };
+        const indicatorsToShow = (indicators.length > 1 && singleHeadlineFilter[baseName])
+            ? indicators.filter(ind => ind.indicator.includes(singleHeadlineFilter[baseName]))
             : indicators;
 
         indicatorsToShow.forEach((ind, idx) => {
@@ -1532,7 +1579,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             html += `
                 <div class="detail-section">
                     <h3>What this measures</h3>
-                    <p>${whatThisMeasures}</p>
+                    ${whatThisMeasures.trim().startsWith('<') ? whatThisMeasures : `<p>${whatThisMeasures}</p>`}
                 </div>
             `;
         }
@@ -1546,7 +1593,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             html += `
                 <div class="detail-section why-section">
                     <h3>Why this is happening</h3>
-                    ${whyThisIsHappening.localParagraphs.map(p => `<p>${p}</p>`).join('')}
+                    ${whyThisIsHappening.localParagraphs.map(p => p.trim().startsWith('<') ? p : `<p>${p}</p>`).join('')}
                     <div class="source-line">${whyThisIsHappening.localSources.length > 1 ? 'Sources' : 'Source'}: ${whyThisIsHappening.localSources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>
                 </div>
             `;
@@ -1556,26 +1603,31 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 html += '<div class="section-divider"></div>';
                 html += '<h3 class="council-context-heading">Local & Broader Context</h3>';
                 inlineCouncilContexts.forEach(ctx => {
+                    const sourceLine = ctx.sources
+                        ? `<div class="source-line">${ctx.sources.length > 1 ? 'Sources' : 'Source'}: ${ctx.sources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>`
+                        : (ctx.url ? `<div class="source-line">Source: <a href="${ctx.url}" target="_blank">${ctx.title}</a></div>` : '');
                     html += `
                         <div class="council-context">
                             <h4>${ctx.title}</h4>
-                            <div class="council-date">${ctx.year}</div>
+                            ${ctx.year ? `<div class="council-date">${ctx.year}</div>` : ''}
                             <div class="council-summary">${ctx.summary}</div>
-                            ${ctx.url ? `<div class="source-line">Source: <a href="${ctx.url}" target="_blank">${ctx.title}</a></div>` : ''}
+                            ${sourceLine}
                         </div>
                     `;
                 });
             }
 
             const nc = whyThisIsHappening.nationalCard;
-            html += `
-                <div class="council-context">
-                    <h4>${nc.title}</h4>
-                    ${nc.year ? `<div class="council-date">${nc.year}</div>` : ''}
-                    <div class="council-summary">${nc.summary}</div>
-                    <div class="source-line">Sources: ${nc.sources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>
-                </div>
-            `;
+            if (nc) {
+                html += `
+                    <div class="council-context">
+                        <h4>${nc.title}</h4>
+                        ${nc.year ? `<div class="council-date">${nc.year}</div>` : ''}
+                        <div class="council-summary">${nc.summary}</div>
+                        <div class="source-line">Sources: ${nc.sources.map(s => `<a href="${s.url}" target="_blank">${s.name}</a>`).join(' · ')}</div>
+                    </div>
+                `;
+            }
         }
 
         // Add divider after each group except the last
@@ -1588,7 +1640,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // when the dimension's indicators span genuinely distinct policy areas (see 3.2 in spec).
     // Health is excluded here because its context is rendered inline under the specific
     // indicator it explains (see getWhyThisIsHappening above) rather than dimension-wide.
-    const councilContexts = dimension.dimension === 'health' ? [] : getCouncilContext(dimension.dimension);
+    // Connectivity briefly had a "why this is happening" entry too (LOTI framework addition,
+    // October 2026) but that content was folded into "what this measures" instead - so
+    // connectivity's council-context cards (e.g. the Digital Inclusion Service card) need the
+    // normal dimension-wide renderer below, not this inline-only path.
+    const inlineRenderedDimensions = ['health'];
+    const councilContexts = inlineRenderedDimensions.includes(dimension.dimension) ? [] : getCouncilContext(dimension.dimension);
     if (councilContexts && councilContexts.length > 0) {
         html += '<div class="section-divider"></div>';
         html += '<h3 class="council-context-heading">Local & Broader Context</h3>';
@@ -1630,7 +1687,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             </div>
         `;
 
-        html += '<button class="add-take-btn">Share your ideas</button>';
+        // Hidden for now: html += '<button class="add-take-btn">Share your ideas</button>';
     }
 
     container.innerHTML = html;

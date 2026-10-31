@@ -12,7 +12,9 @@ indicator.
 ### Indicators & Current Values
 
 #### 1. Temporary Accommodation
-- **Current**: 18.90 per 1,000 households / 2,363 households (Lewisham, 31 Dec 2025)
+- **Current**: 18.40 per 1,000 households / 2,317 households (Lewisham, 31 Mar 2026) -
+  updated 2026-10-31 from the previous 18.90/2,363 (31 Dec 2025) snapshot, which is now
+  one quarter behind the latest MHCLG release (published 13 Aug 2026)
 - **Trend**: 7 years (FY2019-20 to FY2025-26)
 - **Source**: MHCLG Detailed Local Authority Tables, Table TA1 (quarterly)
 
@@ -26,14 +28,31 @@ indicator.
 - **Trend**: 11 years (2015-2025), quarterly resolution available if needed
 - **Source**: Trust for London chart data export (ONS PIPR + ASHE via NOMIS underneath)
 
-#### 4. % Non-Decent Homes
-- **Current**: 12.9% (Lewisham, 2024) vs London average 13.2% - status MET
-- **Trend**: 4 rounds (2019, 2020, 2023, 2024; no round in 2021/2022)
-- **Source**: MHCLG English Housing Survey - Local Authority Housing Stock Condition Modelling
+#### 4. % Non-Decent Homes - split into 3 tenure-specific indicators on 2026-10-31
+- **Change**: replaced the single "% non-decent homes (all tenure)" indicator (one aggregate
+  trend line) with three indicators - `% non-decent homes (Owner-occupied)`, `(Private
+  rented)`, `(Social rented)` - each with its own 4-round trend, so the dimension's trend
+  chart now plots one line per tenure. Requested by the user specifically to split the chart
+  by tenure rather than show the aggregate.
+- **Current (2024)**: owner-occupied 12.0% (status SHORTFALL vs London 11.7%), private
+  rented 16.0% (status MET vs London 16.3%), social rented 11.4% (status MET vs London 11.8%).
+  The old all-tenure figure (12.9% vs London 13.2%, MET) is no longer its own tracked
+  indicator but remains cited in the housing top summary and in each tenure indicator's
+  `source.notes` for context.
+- **Trend**: 4 rounds per tenure (2019, 2020, 2023, 2024; no round in 2021/2022) - see
+  `HOUSING_TREND_DATA_STATUS.md` for the full by-tenure/by-round figures and the
+  least-decent/most-decent tenure pattern across rounds.
+- **Source**: MHCLG English Housing Survey - Local Authority Housing Stock Condition
+  Modelling. Tenure breakdown sheet per round: `Decent_Homes_LA_Tenure` (2019, 2020 - each
+  a standalone Annex ODS), `AT1_2` (2023, 2024 - part of each round's combined Annex Table 1
+  workbook). All 4 rounds' by-tenure sheets were downloaded and parsed directly (same
+  unzip-and-regex-`content.xml` method as 1.6) and Lewisham's row matched by ONS code
+  E09000023, not name substring.
 - **Caveat**: these are modelled estimates from EHS survey data, not a census, and MHCLG's
   own guidance says not to directly compare LA estimates across releases due to methodology
-  changes between rounds - treat the trend as indicative rather than precise. Confidence
-  set to MEDIUM (vs HIGH for the other 3) to reflect this.
+  changes between rounds - treat each tenure's trend as indicative rather than precise.
+  Confidence kept at MEDIUM (vs HIGH for the other 3 housing indicators) for all three new
+  indicators, same reasoning as before the split.
 
 **Empty homes (long-term vacant dwellings) was extracted (MHCLG Live Table 615, 19-year
 trend 2007-2025) but subsequently removed from this dimension at the user's request on

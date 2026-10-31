@@ -136,46 +136,110 @@ def build_housing_dimensions():
         ]
     )
 
-    non_decent_homes = create_targeted_dimension(
+    non_decent_homes_owner = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="housing",
         target=Target(
-            text="% non-decent homes target: London average non-decent homes rate",
+            text="% non-decent homes (owner-occupied) target: London owner-occupied non-decent homes rate",
             source_body="MHCLG English Housing Survey benchmarks",
             has_official_target=True
         ),
-        indicator="% non-decent homes (all tenure)",
-        threshold=Threshold(value=13.2, unit="%", description="London average non-decent homes rate"),
-        snapshot=Snapshot(value=12.9, unit="%", year=2024),
-        status=Status.MET,
+        indicator="% non-decent homes (Owner-occupied)",
+        threshold=Threshold(value=11.7, unit="%", description="London owner-occupied non-decent homes rate"),
+        snapshot=Snapshot(value=12.0, unit="%", year=2024),
+        status=Status.SHORTFALL,
         source=Source(
             name="MHCLG English Housing Survey - Local Authority Housing Stock Condition Modelling",
             url="https://www.gov.uk/government/statistics/english-housing-survey-local-authority-housing-stock-condition-modelling-2024/local-authority-housing-stock-condition-modelling-2024-main-report",
-            accessed="2026-07-14",
-            notes="12.9% of Lewisham homes modelled as failing the Decent Homes Standard in 2024 (17,235 of 133,335 dwellings), just below the London average of 13.2%. These are modelled estimates from English Housing Survey stock data, not a census - MHCLG's own guidance cautions against directly comparing local authority estimates across releases due to methodology changes between rounds, so treat the trend as indicative rather than precise."
+            accessed="2026-10-31",
+            notes="12.0% of Lewisham's owner-occupied homes were modelled as failing the Decent Homes Standard in 2024, just above the London owner-occupied average of 11.7% (Lewisham's all-tenure rate that year was 12.9%, against London's 13.2%). Across the four survey rounds with a published tenure breakdown, Lewisham's owner-occupied rate has been 13.4% (2019), 8.5% (2020), 10.0% (2023) and 12.0% (2024) - the lowest (most decent) of the three tenures in three of those four rounds. These are modelled estimates from English Housing Survey stock data, not a census; MHCLG's own guidance cautions against directly comparing local authority estimates across releases due to methodology changes between rounds, so treat the trend as indicative rather than precise. Source: Annex Table 1.2 (2023/2024 rounds, sheet AT1_2) / 'Decent_Homes_LA_Tenure' sheet (2019/2020 rounds), each release's Local Authority Housing Stock Condition Modelling workbook, matched to Lewisham by ONS code E09000023."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
         trend=[
-            {"period": "2019", "value": 15.0, "note": "London average: 14.0%"},
-            {"period": "2020", "value": 13.2, "note": "London average: 12.0%"},
-            {"period": "2023", "value": 11.6, "note": "London average: 10.7% (no 2021/2022 round)"},
-            {"period": "2024", "value": 12.9, "note": "London average: 13.2%"},
+            {"period": "2019", "value": 13.4, "note": "London average: 12.9%"},
+            {"period": "2020", "value": 8.5, "note": "London average: 7.9%"},
+            {"period": "2023", "value": 10.0, "note": "London average: 9.0% (no 2021/2022 round)"},
+            {"period": "2024", "value": 12.0, "note": "London average: 11.7%"},
         ]
     )
 
-    return [rent, temp_accommodation, rough_sleepers, non_decent_homes]
+    non_decent_homes_private = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="housing",
+        target=Target(
+            text="% non-decent homes (private rented) target: London private rented non-decent homes rate",
+            source_body="MHCLG English Housing Survey benchmarks",
+            has_official_target=True
+        ),
+        indicator="% non-decent homes (Private rented)",
+        threshold=Threshold(value=16.3, unit="%", description="London private rented non-decent homes rate"),
+        snapshot=Snapshot(value=16.0, unit="%", year=2024),
+        status=Status.MET,
+        source=Source(
+            name="MHCLG English Housing Survey - Local Authority Housing Stock Condition Modelling",
+            url="https://www.gov.uk/government/statistics/english-housing-survey-local-authority-housing-stock-condition-modelling-2024/local-authority-housing-stock-condition-modelling-2024-main-report",
+            accessed="2026-10-31",
+            notes="16.0% of Lewisham's private rented homes were modelled as failing the Decent Homes Standard in 2024, just below the London private rented average of 16.3%. Across the four survey rounds with a published tenure breakdown, Lewisham's private rented rate has been 17.7% (2019), 21.6% (2020), 12.7% (2023) and 16.0% (2024) - the highest (least decent) of the three tenures in three of those four rounds. These are modelled estimates from English Housing Survey stock data, not a census; MHCLG's own guidance cautions against directly comparing local authority estimates across releases due to methodology changes between rounds, so treat the trend as indicative rather than precise. Source: Annex Table 1.2 (2023/2024 rounds, sheet AT1_2) / 'Decent_Homes_LA_Tenure' sheet (2019/2020 rounds), each release's Local Authority Housing Stock Condition Modelling workbook, matched to Lewisham by ONS code E09000023."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        trend=[
+            {"period": "2019", "value": 17.7, "note": "London average: 17.2%"},
+            {"period": "2020", "value": 21.6, "note": "London average: 20.0%"},
+            {"period": "2023", "value": 12.7, "note": "London average: 12.4% (no 2021/2022 round)"},
+            {"period": "2024", "value": 16.0, "note": "London average: 16.3%"},
+        ]
+    )
+
+    non_decent_homes_social = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="housing",
+        target=Target(
+            text="% non-decent homes (social rented) target: London social rented non-decent homes rate",
+            source_body="MHCLG English Housing Survey benchmarks",
+            has_official_target=True
+        ),
+        indicator="% non-decent homes (Social rented)",
+        threshold=Threshold(value=11.8, unit="%", description="London social rented non-decent homes rate"),
+        snapshot=Snapshot(value=11.4, unit="%", year=2024),
+        status=Status.MET,
+        source=Source(
+            name="MHCLG English Housing Survey - Local Authority Housing Stock Condition Modelling",
+            url="https://www.gov.uk/government/statistics/english-housing-survey-local-authority-housing-stock-condition-modelling-2024/local-authority-housing-stock-condition-modelling-2024-main-report",
+            accessed="2026-10-31",
+            notes="11.4% of Lewisham's social rented homes were modelled as failing the Decent Homes Standard in 2024, just below the London social rented average of 11.8% - the lowest (most decent) of the three tenures that round, after being the highest (least decent) tenure in 2023 (13.4%, against a London rate of 12.6%). Across all four survey rounds with a published tenure breakdown, Lewisham's social rented rate has been 14.3% (2019), 12.9% (2020), 13.4% (2023) and 11.4% (2024) - the most volatile ranking of the three tenures. These are modelled estimates from English Housing Survey stock data, not a census; MHCLG's own guidance cautions against directly comparing local authority estimates across releases due to methodology changes between rounds, so treat the trend as indicative rather than precise. Source: Annex Table 1.2 (2023/2024 rounds, sheet AT1_2) / 'Decent_Homes_LA_Tenure' sheet (2019/2020 rounds), each release's Local Authority Housing Stock Condition Modelling workbook, matched to Lewisham by ONS code E09000023."
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        trend=[
+            {"period": "2019", "value": 14.3, "note": "London average: 13.4%"},
+            {"period": "2020", "value": 12.9, "note": "London average: 11.8%"},
+            {"period": "2023", "value": 13.4, "note": "London average: 12.6% (no 2021/2022 round)"},
+            {"period": "2024", "value": 11.4, "note": "London average: 11.8%"},
+        ]
+    )
+
+    return [rent, temp_accommodation, rough_sleepers, non_decent_homes_owner, non_decent_homes_private, non_decent_homes_social]
 
 def build_food_dimensions():
     """
-    Food dimension - 4 indicators, each with real Lewisham (borough-level) data pulled
-    directly from OHID Fingertips / NHS Digital NDEP source datasets (not the Food
-    Foundation's own modelled constituency estimates - those are LSHTM model outputs
+    Food dimension - 4 indicators, each with real Lewisham (borough-level) data. Three
+    are pulled directly from OHID Fingertips / NHS Digital NDEP source datasets (not the
+    Food Foundation's own modelled constituency estimates - those are LSHTM model outputs
     derived FROM these same underlying LA datasets, so the primary source is used
-    directly here for higher precision and longer trends). See
-    DIMENSION_PAGE_SPECIFICATION.md 1.4 (trace back to underlying government source).
+    directly here for higher precision and longer trends). The food insecurity indicator
+    instead uses Trussell's own Local Authority parcel-distribution data (2026-10-31) -
+    the previous OHID Fingertips modelled risk measure only had two years published
+    (2021-22) with no newer round in sight, so a differently-sourced but more current and
+    more frequently updated proxy was substituted. See DIMENSION_PAGE_SPECIFICATION.md 1.4
+    (trace back to underlying government source).
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     food_insecurity = create_descriptive_dimension(
@@ -183,20 +247,22 @@ def build_food_dimensions():
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="food",
-        indicator="% population with moderate to severe food insecurity",
-        snapshot=Snapshot(value=7.83, unit="%", year=2022),
+        indicator="Emergency food parcels distributed (Trussell network)",
+        snapshot=Snapshot(value=22476, unit="parcels/year", year=2025),
         source=Source(
-            name="OHID Fingertips - Wider Determinants of Health (Food Insecurity, indirect measure)",
-            url="https://fingertips.phe.org.uk/profile/wider-determinants/data#page/6/gid/1938133045/pat/501/par/E92000001/ati/501/are/E09000023/iid/93864/age/1/sex/4/cat/-1/ctp/-1/yrr/1/cid/4/tbm/1",
-            accessed="2026-07-15",
-            notes="7.83% of Lewisham's population lived in areas at highest risk of food insecurity in 2022 (down from 9.57% in 2021); London average 13.27% (2022), 14.58% (2021). This is a DWP Family Resources Survey-derived small-area risk model published via OHID Fingertips (the same underlying indicator the Food Foundation's constituency dashboard models down to constituency level) - it measures the % of the population living in neighbourhoods classed as high-risk, not individual households' self-reported food insecurity experience. Corroborated by Lewisham Council's own Food Justice Action Plan Update (Health & Wellbeing Board, 19 Jan 2026), which cites '7.8% of Lewisham's population... living in areas at highest risk of food insecurity in 2022/23' against an England figure of 10%. Only 2 years of data have been published for this indicator so far."
+            name="Trussell - End of Year Stats (Local Authority data)",
+            url="https://www.trussell.org.uk/news-and-research/latest-stats/end-of-year-stats",
+            accessed="2026-10-31",
+            notes="Lewisham's Trussell-network foodbanks distributed 22,476 emergency parcels in 2025 (14,961 for adults, 7,515 for children) across 7 locations - down 12% from a 2023 peak of 25,659, but still more than triple 2018's 7,311. Trussell switched from financial-year to calendar-year reporting in this release; data pulled directly from its 'Local authority' breakdown sheet (eys_2025_parcel_stats.xlsx, published March 2026). Counts parcels given out by Trussell-affiliated foodbanks only - excludes independent food banks and social supermarkets (e.g. Evelyn Community Store, see Get Involved) that aren't part of the Trussell network, so it understates total local food-aid demand. Replaces the previous indicator here (OHID Fingertips 'moderate to severe food insecurity' modelled risk measure, indicator 93864), which had only two years published (2021, 2022) with no newer round in sight - this dataset is genuinely local-authority level and updates annually."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM,
+        confidence=Confidence.HIGH,
         target_text="No official GLA or UK Government target established for this indicator.",
         trend=[
-            {"period": "2021", "value": 9.57},
-            {"period": "2022", "value": 7.83},
+            {"period": "2018", "value": 7311}, {"period": "2019", "value": 9018},
+            {"period": "2020", "value": 16968}, {"period": "2021", "value": 19889},
+            {"period": "2022", "value": 18532}, {"period": "2023", "value": 25659},
+            {"period": "2024", "value": 24264}, {"period": "2025", "value": 22476},
         ]
     )
 
@@ -215,7 +281,7 @@ def build_food_dimensions():
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH,
-        target_text="No official GLA or UK Government target established for this indicator. National ambition (NHS 10 Year Health Plan, 2025) is to raise 'the healthiest generation of children'; Lewisham's own ambition (Whole Systems Approach to Obesity) is to halve childhood obesity by 2030.",
+        target_text="No official GLA or UK Government target established for this indicator. National ambition (NHS 10 Year Health Plan, 2025) is to raise 'the healthiest generation of children'. Separately, the 2018 Childhood Obesity Plan set a national ambition to halve childhood obesity by 2030 - Lewisham's own Whole Systems Approach to Obesity programme states it 'works toward the government's ambition', rather than setting its own distinct local target.",
         trend=[
             {"period": "2006/07", "value": 20.22}, {"period": "2007/08", "value": 18.25},
             {"period": "2008/09", "value": 17.78}, {"period": "2009/10", "value": 19.34},
@@ -235,13 +301,13 @@ def build_food_dimensions():
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="food",
-        indicator="% of children in reception and year 6 with dental decay",
-        snapshot=Snapshot(value=14.40, unit="%", year="2022/23-2023/24"),
+        indicator="% of children with dental decay (Reception)",
+        snapshot=Snapshot(value=18.90, unit="%", year="2023/24"),
         source=Source(
             name="OHID National Dental Epidemiology Programme (NDEP) - oral health surveys of 5-year-olds and Year 6 children",
             url="https://fingertips.phe.org.uk/profile/child-health-profiles",
             accessed="2026-07-15",
-            notes="Combines the most recent Reception-age (5-year-old) survey round (18.90%, 2023/24) with the Year 6 survey (9.90%, academic year 2022/23 - the only year Year 6 has ever been surveyed nationally; no repeat round exists yet) to a blended 14.40%. Reception has been surveyed roughly every 2 years since 2007/08 with a well-established Lewisham time series (used for the trend below); Year 6 has no historical series to plot. England averages for the same rounds: Reception 22.4%, Year 6 16.15% - Lewisham runs below England and well below the London average (27.4% Reception, 2024) on both age groups. Corroborated by an NHS South East London ICB Dental Services presentation to Lewisham Council (2026), which shows Lewisham's 2024 Reception decay rate (18.9%) as the 4th-lowest of London's 33 boroughs."
+            notes="Headline and chart show Reception (5-year-olds) only: 18.90% in 2023/24, the most recent round, surveyed roughly every 2 years since 2007/08 with a well-established Lewisham time series. Year 6 has only ever been surveyed once nationally (9.90%, academic year 2022/23) - no repeat round exists yet, so it has no trend to chart and isn't blended into the headline figure (an earlier version averaged the two ages into an artificial 14.40%, which matched neither age group's own number nor the Reception-only chart - see 'what this measures' below for both figures stated separately). England averages for the same rounds: Reception 22.4%, Year 6 16.15% - Lewisham runs below England and well below the London average (27.4% Reception, 2024) on both age groups. Direct extraction of the official NDEP 2023/24 round results (UTLA table) ranks Lewisham's 18.9% as the 6th-lowest of 32 London boroughs (tied with Bromley) that round - corrects an earlier, unverifiable claim sourced to an NHS South East London ICB presentation that cited '4th-lowest of 33 boroughs', which could not be traced to a genuine 33-borough comparison (the only '4th-lowest' ranking found was among a 6-borough South East London ICB subset, not all London boroughs)."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
@@ -268,7 +334,7 @@ def build_food_dimensions():
             name="OHID Fingertips Diabetes Profile - QOF prevalence, 17+",
             url="https://fingertips.phe.org.uk/profile/diabetes-ft",
             accessed="2026-07-15",
-            notes="7.22% of Lewisham residents aged 17+ had diabetes recorded on GP disease registers in 2024/25 (QOF prevalence), up from 5.67% in 2012/13. This QOF measure records all diagnosed diabetes (type 1 and type 2 combined); type 2 accounts for around 90% of diagnosed cases nationally. A type-2-only measure (National Diabetes Audit) is published only at South East London ICB level (covering Lewisham, Southwark, Lambeth, Greenwich, Bromley and Bexley together), where it stood at 6.35% in 2024/25 - consistent with Lewisham's QOF figure once the ~90% type-2 share is applied. Lewisham has run significantly below the England average (7.89% in 2024/25) throughout this series, and close to the London average (7.08%)."
+            notes="7.22% of Lewisham residents aged 17+ had diabetes recorded on GP disease registers in 2024/25 (QOF prevalence), up from 5.67% in 2012/13. This QOF measure records all diagnosed diabetes (type 1 and type 2 combined); type 2 accounts for around 90% of diagnosed cases nationally. A type-2-only measure (National Diabetes Audit) is published only at South East London ICB level (covering Lewisham, Southwark, Lambeth, Greenwich, Bromley and Bexley together), where it stood at 6.35% in 2024/25 - consistent with Lewisham's QOF figure once the ~90% type-2 share is applied. Lewisham has run significantly below the England average (7.89% in 2024/25) throughout this series, and is now almost identical to the London average (7.22% in 2024/25, re-pulled directly from the Fingertips API 2026-10-31 - supersedes an earlier 7.08% figure, a genuine data revision between pulls, not an error in either)."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH,
@@ -653,11 +719,11 @@ def build_equality():
 # Keep existing dimensions from build_local_social_full.py for dimensions without new data
 def build_water_dimensions():
     """
-    Water dimension - 2 indicators matching data/lookups/dimension_data_sources.json
+    Water dimension - 3 indicators matching data/lookups/dimension_data_sources.json
     ("water_and_sanitation"). No ward- or borough-specific water data is published (water
-    is supplied and regulated at the water-company level, not by the council), so both
-    indicators use the best available company/national-level figures - see source notes
-    for exactly what's inherited from where.
+    is supplied and regulated at the water-company level, not by the council), so all
+    three indicators use the best available company/national-level figures - see source
+    notes for exactly what's inherited from where.
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     per_capita_consumption = create_targeted_dimension(
@@ -666,27 +732,30 @@ def build_water_dimensions():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="water",
         target=Target(
-            text="Reduce average per capita water use in England by 20% from the 2019/20 baseline (140 litres/person/day) to 122 litres/person/day by March 2038, and to 110 litres/person/day by 2050 (Environment Act 2021 statutory target).",
-            source_body="Defra / Environment Act 2021 target framework",
+            text="Reduce Thames Water's average per capita water use to 110 litres/person/day by 2050, matching the Environment Act 2021 national statutory target (122 litres/person/day by March 2038 from the 2019/20 baseline).",
+            source_body="Defra / Environment Act 2021 target framework; Thames Water's government-approved WRMP24 (October 2024)",
             has_official_target=True
         ),
         indicator="Per capita water consumption (litres/day)",
-        threshold=Threshold(value=122.0, unit="litres/person/day", description="Environment Act 2021 target: 122 l/p/d by March 2038 (20% cut from 2019/20 baseline); 110 l/p/d by 2050"),
-        snapshot=Snapshot(value=136.5, unit="litres/person/day", year="2024/25"),
+        threshold=Threshold(value=122.0, unit="litres/person/day", description="Environment Act 2021 target: 122 l/p/d by March 2038 (from a 2019/20 baseline); 110 l/p/d by 2050, which Thames Water's approved WRMP24 commits to matching."),
+        snapshot=Snapshot(value=139.01, unit="litres/person/day", year="2025/26"),
         status=Status.SHORTFALL,
         source=Source(
-            name="Environment Agency / Defra - Water resources: analysis of the water industry's annual water resources performance",
-            url="https://www.gov.uk/government/publications/water-resources-2024-2025-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2024-to-2025-analysis-of-the-water-industrys-annual-water-resources-performance",
-            accessed="2026-07-15",
-            notes="dimension_data_sources.json's original indicator label ('Per household water consumption') pointed to the company-level Water Resource Management Plan Annual Review Data (data.gov.uk); that dataset publishes per capita consumption (PCC) by water company, not per household - relabelled here to match what the source actually measures. Its underlying spreadsheets, and Thames Water's own company-level annual performance report, could not be downloaded and parsed directly in this session (data.gov.uk and thameswater.co.uk were both blocked by this environment's network egress policy, unlike the direct file access used for prior dimensions). Figures shown here are the England-wide PCC published in Defra/EA's annual water resources performance analysis, since a reliable Thames-Water-specific multi-year series could not be obtained via web search alone. Thames Water's own reporting states a 4.8% PCC reduction in 2024-25 but that it remained in the industry's 'lagging behind' performance category for the fourth year running (with Southern Water) - i.e. Thames Water's actual consumption is likely somewhat above the England average shown here, not below it. Separately, the Mayor of London's own reporting put London-wide consumption at 152.2 litres/person/day in 2020/21, falling to 144.4 in 2021/22 against a 142.6 target - consistent in direction with the national series but on a different measurement basis, so not merged into the trend below.",
+            name="Environment Agency / Defra - Water resources 2025 to 2026: analysis of the water industry's annual water resources performance",
+            url="https://www.gov.uk/government/publications/water-resources-2025-2026-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2025-to-2026-analysis-of-the-water-industrys-annual-water-resources-performance",
+            accessed="2026-10-31",
+            notes="Replaces the previous England-wide snapshot with Thames Water's own company-level per capita consumption (PCC), more granular and more relevant to Ladywell (entirely within Thames Water's supply area) than the national average - the earlier session's note that company-level data 'could not be downloaded... blocked by this environment's network egress policy' did not hold on retry; both data.gov.uk and the EA's gov.uk report pages were directly fetchable. 2025/26 figure (139.01 l/p/d) taken directly from the EA's published report tables - the England-wide average for the same year is 136.87 l/p/d, slightly lower, confirming Thames Water's own PCC genuinely runs a little above the national figure (correcting an earlier version of this indicator that implied otherwise by substituting the national figure for Lewisham's actual supplier). Earlier years (2019/20-2024/25) are Thames Water's own 'Average household - pcc' figures from the same WRMP Annual Review Data workbook used for the leakage indicator below (data.gov.uk dataset 87b59684-3da3-45cf-8881-e4727cfd1415, file 'Annual Review Historic Data- For publication 17112025.xlsx', one tab per year). The 2024/25 figure from that workbook (137.69) matches the EA's separately-published 2024/25 report (137.70) almost exactly, cross-confirming both sources. The 2025/26 figure isn't yet in that workbook (published before that year's data existed), so it's taken from the EA's standalone 2025/26 report instead.",
         ),
-        geography=GeographyLevel.ENGLAND,
-        confidence=Confidence.MEDIUM,
+        geography=GeographyLevel.WATER_COMPANY,
+        confidence=Confidence.HIGH,
         trend=[
-            {"period": "2019/20", "value": 140.0, "note": "Environment Act 2021 baseline year"},
-            {"period": "2022/23", "value": 141.0},
-            {"period": "2023/24", "value": 137.0},
-            {"period": "2024/25", "value": 136.5},
+            {"period": "2019/20", "value": 145.0, "note": "Environment Act 2021 baseline year (national baseline is 140 l/p/d; Thames Water's own 2019/20 figure was higher, at 145)"},
+            {"period": "2020/21", "value": 152.0},
+            {"period": "2021/22", "value": 145.0},
+            {"period": "2022/23", "value": 140.0},
+            {"period": "2023/24", "value": 138.0},
+            {"period": "2024/25", "value": 137.7},
+            {"period": "2025/26", "value": 139.01},
         ]
     )
 
@@ -708,7 +777,53 @@ def build_water_dimensions():
         target_text="No official GLA or UK Government target established for this indicator - this is a regulatory classification, not a target."
     )
 
-    return [per_capita_consumption, water_stress]
+    leakage = create_targeted_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="water",
+        target=Target(
+            text="Halve total leakage (by volume, Ml/d) from 2017/18 levels by 2050 - a public commitment made by English and Welsh water companies in 2018, incorporated into the Environment Agency's National Framework for Water Resources (March 2020), the same long-term framework behind the per capita consumption target above.",
+            source_body="Water UK industry commitment / Environment Agency National Framework for Water Resources",
+            has_official_target=True
+        ),
+        indicator="Water leakage (% of total supply)",
+        threshold=Threshold(value=None, unit=None, description="The 2050 commitment is a volume reduction (halve total leakage in Ml/d from a 2017/18 baseline), not a percentage-of-supply figure, so no single numeric threshold translates directly onto this chart."),
+        snapshot=Snapshot(value=22.5, unit="% of total supply", year="2024/25"),
+        status=Status.SHORTFALL,
+        source=Source(
+            name="Environment Agency - Water Resources Management Plan (WRMP) Annual Review Data",
+            url="https://www.data.gov.uk/dataset/87b59684-3da3-45cf-8881-e4727cfd1415/wrmp-annual-review-data",
+            accessed="2026-10-31",
+            notes="Calculated from the Annual Review Data workbook (file 'Annual Review Historic Data- For publication 17112025.xlsx', one tab per reporting year, downloaded directly from the Environment Agency's file host linked from this data.gov.uk dataset page): Thames Water's 'Total leakage (Ml/d)' divided by its 'Distribution input (Ml/d)' (the water put into its network), x100, for each year 2005/06-2024/25 - the standard industry 'leakage as % of distribution input' measure, not a column the source publishes directly as a percentage. The 2024/25 tab publishes two variants, 'OT' (actual outturn) and 'OTDYAA' (dry-year-annual-average-adjusted forecast); 'OT' is used here to stay methodologically consistent with every earlier year, which are all reported as actual outturns rather than weather-normalised estimates.",
+        ),
+        geography=GeographyLevel.WATER_COMPANY,
+        confidence=Confidence.HIGH,
+        trend=[
+            {"period": "2005/06", "value": 30.9},
+            {"period": "2006/07", "value": 30.1},
+            {"period": "2007/08", "value": 27.9},
+            {"period": "2008/09", "value": 27.3},
+            {"period": "2009/10", "value": 26.2},
+            {"period": "2010/11", "value": 25.8},
+            {"period": "2011/12", "value": 25.1},
+            {"period": "2012/13", "value": 25.7},
+            {"period": "2013/14", "value": 25.2},
+            {"period": "2014/15", "value": 25.6},
+            {"period": "2015/16", "value": 24.9},
+            {"period": "2016/17", "value": 25.3},
+            {"period": "2017/18", "value": 25.6, "note": "2017/18 - baseline year for the industry's 50%-by-2050 leakage reduction commitment"},
+            {"period": "2018/19", "value": 25.3},
+            {"period": "2019/20", "value": 22.6},
+            {"period": "2020/21", "value": 22.8},
+            {"period": "2021/22", "value": 23.4},
+            {"period": "2022/23", "value": 24.2},
+            {"period": "2023/24", "value": 22.7},
+            {"period": "2024/25", "value": 22.5},
+        ]
+    )
+
+    return [per_capita_consumption, water_stress, leakage]
 
 def build_connectivity():
     """
@@ -784,14 +899,18 @@ def build_connectivity():
 
 def build_community():
     """
-    Community dimension - 2 indicators from DCMS's Community Life Survey (loneliness,
-    neighbourhood belonging). Both are designed and published at England level - there is
-    no Lewisham- or ward-specific figure. DCMS/MHCLG boosted the survey's sample from
-    2023/24 (to ~175,000 respondents) specifically to enable local-authority-level
-    estimates for the first time, and the 2024/25 loneliness report does publish a
-    by-local-authority chart, but a reliable Lewisham-specific figure could not be
-    confirmed in this exercise - see per-indicator source notes. No official GLA or UK
-    Government target exists for either indicator, so both are descriptive_only.
+    Community dimension - 3 indicators. DCMS replaced the Community Life Survey (CLS) with
+    the Community and Engagement Survey (CES) in October 2025; CES partnered with MHCLG to
+    boost its sample specifically to produce local-authority-level estimates for the first
+    time (CES data tables, Note 3). That makes 2025/26 the first year loneliness has a
+    genuine Lewisham-specific figure (previously England-only, 2017/18-2024/25 under CLS) -
+    switched to borough-level per this project's "most granular available" rule. Support
+    networks ("people there for them") is NOT published at local-authority level even under
+    CES (the report states this explicitly), so its snapshot uses the next most granular
+    breakdown available: the ITL2 sub-region "Inner London - East", which includes Lewisham.
+    Neighbourhood belonging is untouched this session (still England-only CLS-era data; due
+    a refresh against CES in a future pass). No official GLA or UK Government target exists
+    for any of the three, so all three are descriptive_only.
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     loneliness = create_descriptive_dimension(
@@ -800,24 +919,27 @@ def build_community():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="community",
         indicator="% adults reported feeling lonely often or always",
-        snapshot=Snapshot(value=6.6, unit="%", year="2024/25"),
+        snapshot=Snapshot(value=8, unit="%", year="2025/26"),
         source=Source(
-            name="DCMS Community Life Survey 2024/25 - Loneliness and support networks",
-            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-loneliness-and-support-networks",
-            accessed="2026-07-17",
-            notes="6.6% of adults in England reported feeling lonely 'often' or 'always' in 2024/25, a small decrease from 7.1% in 2023/24. The 2017/18-2021/22 trend points below were re-checked individually against each year's own official Community Life Survey report/fact sheet (five separate DCMS publications, not one reused summary line): each independently confirms 6% as that year's own headline 'often or always lonely' figure. DCMS published those five years' headline figures as whole percentages (no decimal place); only the more recent 2023/24 and 2024/25 reports publish to one decimal. The trend below uses 6 (not 6.0) for those years to avoid implying decimal precision that was never published - a genuine per-year decimal figure beneath that whole-percent rounding could not be confirmed, since the underlying fact sheets/PDFs are blocked by this session's network egress policy and only report-page search snippets were reachable. No Community Life Survey was conducted in 2022/23 (an extended development period was used instead to build the new boosted sample design), so that year is missing from the series entirely - not just this indicator. This is an England-wide figure, not Lewisham- or London-specific: the survey is designed and published at England level. DCMS/MHCLG's 2023/24 sample boost (to ~175,000 respondents) was intended to eventually support local-authority-level estimates, and the 2024/25 report does include a chart of loneliness by ITL1 region and local authority, but a reliable Lewisham-specific figure could not be confirmed via the sources accessible in this exercise - unlike the neighbourhood-belonging indicator below, where a London-specific regional breakdown was found."
+            name="Community and Engagement Survey 2025/26 - Loneliness, by local authority (DCMS, successor to the Community Life Survey)",
+            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
+            accessed="2026-10-31",
+            notes="8% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 6-11%, 61 respondents, unweighted base 869), up from 7% in 2024/25 (95% CI 5-10%, 42 respondents, base 651) - the survey's own significance test flags this as 'No Change' given the overlapping, sample-driven confidence intervals. Table C3 of the CES 2025/26 loneliness data tables (ODS) gives this local-authority breakdown directly: row 'Lewisham', LAD25 code E09000023, ITL2 'Inner London - East', ITL1 'London'. This is the first genuinely Lewisham-specific figure for this indicator; every prior Community Life Survey round (2017/18-2024/25, trend points below with their own notes) published England-level data only, since DCMS/MHCLG's local-authority sample boost only took effect for the 2025/26 CES round (Note 3 of the data tables). England's own headline rate held flat at 7% across both 2024/25 and 2025/26 (Table C1; previously reported as 6.6% to one decimal place under the old CLS release before this year's whole-percent-only LA tables), so Lewisham now sits a point above the national rate in both years rather than matching it. Demographic breakdown (Table C2, England-wide, not Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among 16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic groups (10-16% vs 6% White British, with White Gypsy/Irish Traveller highest at 16%)."
         ),
-        geography=GeographyLevel.ENGLAND,
+        geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
         trend=[
-            {"period": "2017/18", "value": 6, "note": "DCMS's own 2017/18 fact sheet headline figure, published as a whole percentage"},
-            {"period": "2018/19", "value": 6, "note": "DCMS's own 2018/19 fact sheet headline figure, published as a whole percentage"},
-            {"period": "2019/20", "value": 6, "note": "DCMS's own 2019/20 report headline figure, published as a whole percentage"},
-            {"period": "2020/21", "value": 6, "note": "DCMS's own 2020/21 report headline figure, published as a whole percentage"},
-            {"period": "2021/22", "value": 6, "note": "DCMS's own 2021/22 report headline figure, published as a whole percentage"},
-            {"period": "2023/24", "value": 7.1, "note": "No Community Life Survey conducted in 2022/23"},
-            {"period": "2024/25", "value": 6.6},
-        ]
+            {"period": "2024/25", "value": 7, "note": "First Lewisham-specific figure ever published (CES 2025/26 data tables, Table C3); 95% CI 5-10%, 61 respondents' worth of base recalculated retrospectively alongside the 2025/26 round"},
+            {"period": "2025/26", "value": 8, "note": "95% CI 6-11%, 61 respondents (unweighted base 869); not a statistically significant change from 2024/25 per the survey's own test"},
+        ],
+        # Superseded England-level series (2017/18-2024/25), kept here for provenance only -
+        # NOT merged into the live trend above, since mixing a national-geography series with
+        # a borough-geography one in one chart would misrepresent what's being plotted (see
+        # DIMENSION_PAGE_SPECIFICATION.md 2.7/2.1 on not merging mismatched geographies):
+        # 2017/18: 6%, 2018/19: 6%, 2019/20: 6%, 2020/21: 6%, 2021/22: 6% (all DCMS's own
+        # whole-percentage fact-sheet headline figures); no survey in 2022/23; 2023/24: 7.1%;
+        # 2024/25: 6.6% (England headline under the old CLS one-decimal-place release, now
+        # superseded by CES's own whole-percent 7% for the same year - see source notes above).
     )
 
     belonging = create_descriptive_dimension(
@@ -845,7 +967,28 @@ def build_community():
         ]
     )
 
-    return [loneliness, belonging]
+    support_networks = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="community",
+        indicator="% adults agreed that if they needed help, there would be people there for them",
+        snapshot=Snapshot(value=95, unit="%", year="2025/26"),
+        source=Source(
+            name="Community and Engagement Survey 2025/26 - Support Networks (DCMS, successor to the Community Life Survey)",
+            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
+            accessed="2026-10-31",
+            notes="England-wide, 96% of adults agreed (definitely or tended to agree) that if they needed help there are people who would be there for them in 2025/26, up from 94% in 2024/25 (Table F12) - a statistically significant rise (non-overlapping 95% CIs: 96% CI 96-96% vs 94% CI 94-95%). This question is NOT published at local-authority level even under CES's 2025/26 sample boost - the report states explicitly that 'data are not available at LA level' for support-network questions, and Lewisham is never named in either table. The most granular breakdown available is Table F13's ITL2 regional split: the 'Inner London - East' sub-region (Hackney, Haringey, Islington, Lambeth, Lewisham, Newham, Southwark, Tower Hamlets) scored 95% in 2025/26 (95% CI 94-96%, 1,661 respondents), up from 93% in 2024/25 (95% CI 92-95%, 1,458 respondents) - not a statistically significant change given the overlapping CIs. Used as the snapshot/trend here in place of the England figure per this project's most-granular-available rule. The wider ITL1 'London' region runs almost identically (95% in 2025/26, 93% in 2024/25), so the ITL2 sub-region figure isn't meaningfully different from simply using all of London - it's just the more granular of the two genuinely published breakdowns. These support-network questions were asked online-only in both survey years (Note 6 of the data tables), so results reflect the online-responding population specifically, not the full mixed online/paper sample. New indicator - no prior trend exists on this page to reconcile against."
+        ),
+        geography=GeographyLevel.LONDON_INHERITED,
+        confidence=Confidence.MEDIUM,
+        trend=[
+            {"period": "2024/25", "value": 93, "note": "ITL2 'Inner London - East' sub-region (includes Lewisham); 95% CI 92-95%, 1,458 respondents"},
+            {"period": "2025/26", "value": 95, "note": "95% CI 94-96%, 1,661 respondents; not a statistically significant change from 2024/25"},
+        ]
+    )
+
+    return [loneliness, belonging, support_networks]
 
 def build_culture_dimensions():
     """

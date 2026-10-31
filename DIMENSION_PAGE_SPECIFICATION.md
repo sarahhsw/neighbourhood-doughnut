@@ -79,6 +79,31 @@ clear. **Fix: always carry a source's own start *and* end date into the page tex
 which implies the trend is still running through to today even when the source stopped
 measuring it years ago.
 
+**Relaxation (October 2026): two different-but-close windows may share one merged, approximate
+date reference if it stays honest about both - but use a hedged reference, not a false-precise
+shared range.** The rule above is about *open-ended* phrasing ("since X" with no end), not
+about every pair of distinct date ranges needing their own separate "between A and B" clause
+forever. When two figures from the same comparison have start years within 1 year of each
+other AND end years within 1 year of each other (e.g. rent "2011-2017" vs income "2010-2018" -
+1 year off at each end), they can share one bounded, *openly approximate* reference instead of
+two near-identical "between X and Y" clauses back to back.
+
+**First attempt at this got it wrong and is worth recording as its own lesson**: the first
+version used the outer/encompassing exact years as if they applied precisely to both figures
+("rents grew 50% against incomes up just 12% **between 2010 and 2018**"). A fact-checker pass
+caught that this is itself a new inaccuracy, not just a simplification - it asserts the rent
+figure spans a precise 8-year window (2010-2018) when the source's own window for that figure
+is 6 years (2011-2017), which overstates how slowly rent grew relative to the real data. Exact-
+looking merged ranges manufacture false precision for whichever figure doesn't actually match
+the stated range. **Fix: use a reference that's openly approximate rather than one that looks
+exact** - "in the years to 2018" (bounded at the later, shared-ish end point, deliberately
+vague on the exact start rather than asserting a start neither figure's own window agrees on).
+An openly-hedged reference is honest about its own imprecision; a confidently-stated exact
+range that happens to be wrong for one of the two figures is not. **Still never merge windows
+that aren't genuinely close** (e.g. a 2015 figure and a 2024 figure) just to save words, and
+still never collapse a merged reference back into open-ended "since X" with no end at all - a
+bounded (even if approximate) end point stays mandatory either way.
+
 ### 1.3 Historical Data & Trend Analysis
 
 **CRITICAL: For EACH indicator, always extract and plot historical data**
@@ -192,6 +217,21 @@ housing dimension. Apply them to every future dimension - they will save hours.
   - set `"confidence": "medium"` instead of `"high"`
   - state the caveat explicitly in `source.notes`
   - treat the series as indicative of direction, not a precise measurement
+- **WebFetch truncates/summarizes large CSV API responses instead of returning the raw data**
+  (added October 2026, Food dimension). Fetching a Fingertips `all_data/csv/by_indicator_id`
+  endpoint via WebFetch for an 11,000+ row national dataset returned only the header row's
+  column names, with a note that no data rows were "visible" - the underlying page was fine,
+  WebFetch's summarization step just couldn't surface rows it didn't consider worth including.
+  **Fix: use `curl` to download the raw CSV to a file, then `grep`/parse it directly** (same
+  lesson as the ODS case above, different file format) - don't conclude a dataset has no rows
+  for your area just because WebFetch said so; download and check yourself for anything larger
+  than a small page.
+- **Match comparator/aggregate areas by their exact area type and category columns, not just
+  area code.** A Fingertips CSV frequently has multiple rows sharing the same parent/area code
+  but differing by hidden category columns (deprivation decile, ethnicity, sex breakdown) that
+  a naive column-position `awk` split will silently conflate - filter explicitly on `Sex =
+  Persons`, `Category Type = ''`, `Category = ''` (or equivalent) to get the single overall
+  figure, not a sub-breakdown row that happens to land in the same place.
 
 ---
 
@@ -220,6 +260,36 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   - not one per indicator, but ones that mechanically explain *why* the indicators move
   together - and build the synthesis around those, instead of either the full stat-dump or
   no numbers at all.
+- **Decide the argument first, then keep only the figures that prove it - don't let every
+  clause carry its own statistic.** A paragraph where every sentence has a number doesn't read
+  as more rigorous, it reads as flatter: when everything is emphasised, nothing is. A reader
+  remembers two or three figures from a paragraph at most, so the paragraph should be the one
+  doing the choosing, not leaving the reader to sift every number for which ones mattered. The
+  job of this section is the headline shape of the dimension - precise supporting figures
+  belong in the indicator cards below (2.5), not crammed into the synthesis above them too.
+  Revised October 2026 after a user flagged the food dimension's summary as "data heavy" with
+  "narrative broken" - an earlier draft read *"Dental decay in five-year-olds (18.9%) and
+  diagnosed diabetes (7.2% of adults) both run below the London and England averages...
+  Trussell network parcels distributed in Lewisham reached 22,476 in 2025 - nearly triple
+  2018's total - having eased from a 2023 cost-of-living peak of 25,659... Reception-age
+  obesity (10%) sits close to average, but by Year 6 it has climbed to 24.5%..."* - six
+  separate figures competing for attention, with the actual argument (three indicators are
+  fine, one tells a worsening story) buried under all of them. Fixed by stating the finding and
+  stripping each clause to only the number that proves its specific point: *"Lewisham's
+  diet-related health is mixed. Dental decay in five-year-olds and diagnosed diabetes both run
+  below the London and England averages. Demand on local foodbanks tells a starker story:
+  Trussell network parcels distributed in Lewisham tripled between 2018 and 2025. Child obesity
+  more than doubles between Reception and Year 6 - a jump repeated every year since measurement
+  began in 2006/07, and slightly worse than London's Year 6 average."* Note what was cut: the
+  dental/diabetes exact percentages (the *comparison* - "below average" - is the finding, the
+  precise figures add nothing the headline cards don't already show), and the 2023 peak/eased
+  detail on foodbank parcels (true and sourced, but a second fact about the same indicator
+  competing with the "tripled" headline figure for the reader's attention - that level of detail
+  belongs in that indicator's own "what this measures" text, not here). **This sharpens, rather
+  than replaces, the "pick 1-3 sharply chosen facts" rule above: the test isn't just "is this
+  number accurate and relevant" but "does keeping this number make the argument easier or
+  harder to follow" - a true, sourced, on-topic number can still be noise if the paragraph
+  already has a number doing that clause's job.**
 - **Do not assume or imply a single "the solution."** Describing what the council is doing
   belongs in Section 3 (Local & Broader Context), not here - and even there, don't
   present one lever (e.g. "build more homes") as *the* fix when the underlying reality is more
@@ -243,6 +313,62 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   clearly-marked fact** ("the same stretched, low-income renters are *also* disproportionately
   likely to be living in one of the borough's non-decent homes") rather than folding it into
   the single-cause framing. See Bad example #6 below.
+- **Too many distinct year/date references in one paragraph breaks reading flow even when
+  every individual date is accurate and justified - treat date *count*, not just date
+  *accuracy*, as something to actively manage.** Added October 2026 after a user flagged that
+  a housing top-summary draft with 8 separate year references (2011, 2011-2017, 2010-2018,
+  2020, 2021/22, 2025/26, mid-2024, 2024) made the reader stop to place each number in time
+  instead of following the argument. A date can be individually correct, properly sourced, and
+  still be one date too many for the paragraph it's sitting in. Before finalizing a top summary,
+  count the distinct years/date-ranges in it and ask of each one: is it a trend/comparison
+  anchor the sentence can't work without (keep it exact), a pure provenance/vintage stamp that's
+  already stated in that indicator's own card below (drop or shorten it), or a window that's
+  genuinely close to a neighbouring one (merge them into one openly-approximate reference
+  rather than stating both precisely). The two bullets immediately below are the two concrete
+  techniques this produced - **don't treat them as the only fix available**; the underlying
+  question is always "does this paragraph ask the reader to track more distinct points in time
+  than the argument actually needs," and the answer can also just be cutting a less-important
+  date-bearing clause entirely if neither technique applies cleanly.
+- **When merging two indicators into one sentence to save words, don't let the merge imply
+  they share a trend shape they don't actually share.** Added October 2026 after trimming the
+  housing summary toward the 130-word cap: "That shows up in both temporary accommodation and
+  rough sleeping, up nearly a third since 2021/22 to 345 people in 2025/26" reads as if *both*
+  indicators rose by roughly a third - but the "+31%" figure only applies to rough sleeping;
+  temporary accommodation actually peaked in mid-2024 and has since eased, a different (and
+  more complex) shape entirely. Grammatically attaching one indicator's number to a sentence
+  that opens by naming two indicators silently extends that number to both. **Fix: keep each
+  indicator's own trend description attached to its own clause** ("rough sleeping is up nearly
+  a third... while temporary accommodation has eased from a mid-2024 peak but stayed
+  persistently high") even when merging them into a single sentence for length - merging the
+  *sentence* is fine; merging the *statistic* across indicators that don't share it is not.
+- **When contrasting two indicators' trends in the same sentence, compare them over the same
+  time window - don't let one indicator's long-run figure sit next to the other's recent-only
+  figure and imply a fair race between them.** Caught on the Water dimension's top summary,
+  October 2026: a draft read "per-person water use has stayed stubbornly high, barely narrowing
+  since 2019/20... the supply side is moving faster: Thames Water's leakage has fallen by more
+  than a quarter since the mid-2000s" - true in isolation for each figure, but the two windows
+  aren't comparable: leakage's real fall happened almost entirely *before* 2019/20 (30.9% in
+  2005/06 down to 22.6% by 2019/20); over the same 2019/20-to-now window the consumption figure
+  actually uses, leakage has also been essentially flat (22.6% to 22.5%, dipping to 24.2% and
+  back). Quoting leakage's full 20-year run against consumption's 5-year run made "supply is
+  moving faster" a false contrast - both have stalled equally over the period actually being
+  compared. **Fix: before contrasting two trends, pull both over the identical window and check
+  the comparison still holds** - here, the true finding flipped from "one lever is outpacing the
+  other" to "both levers have stalled at the same time," which changed the sentence's entire
+  argument, not just its wording.
+- **Drop a provenance-only attribution phrase from the top summary once the same attribution
+  already appears in that indicator's own card further down the page - but keep the year if
+  every neighbouring sentence in the paragraph has one.** Added October 2026 alongside the
+  date-density relaxation above, then corrected after a fact-checker pass. "MHCLG puts 16% of
+  private rented homes as non-decent in 2024" has two separable things: the *attribution*
+  ("MHCLG puts...", already stated in that indicator's own source line further down the page -
+  safe to drop) and the *year* (2024, which a fact-checker flagged as a real readability
+  regression to cut once removed, because it made that one sentence read as date-less while
+  every other sentence in the same paragraph carries an explicit year - 2011, 2020, 2025/26,
+  2024 - and an unexplained gap stands out more than it saves). **Fix: trim the attribution
+  phrase, keep the year** - "16% of private rented homes are non-decent **in 2024**, against a
+  12.9% average for all tenures." This is not licence to drop a date that's doing
+  attribution/timestamping, already duplicated elsewhere on the page.
 - Compare to regional (London) or national average where it clarifies the overall picture
 - **Cap comparison points at two in the headline description - don't stack a third.** Once
   you've picked two things worth comparing (e.g. a target and a current value), resist
@@ -271,26 +397,66 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   example #4 below. Note this rule already existed for indicator descriptions (2.2's "lead with
   findings, not methodology") when this happened; it just hadn't been written down for the top
   summary specifically, and got missed here too as a result.
+- **State not just what changed, but why - surface the single most load-bearing local
+  explanatory fact from the "Why This Is Happening" section (2.8) in the top summary too, if
+  one exists.** A summary that only says a gap exists and has moved, without ever saying why,
+  skips the thing the reader most wants to know - "what" and "why" are both part of the key
+  takeaway, not just the former. Don't invent a new causal claim for this - reuse the one
+  already sourced in 2.8, stated briefly (one clause or sentence, not the full paragraph).
+  Added October 2026 after the health dimension's top summary described the Lewisham-vs-London
+  gap and its decline but never said why, even though 2.8 already had a sourced, concrete
+  answer (the deprivation-linked gap in life expectancy between the borough's least and most
+  deprived areas) sitting unused one section below. Also watch currency when reusing a 2.8
+  figure here: the same live-data check applies in both places - the first version of this fix
+  cited a deprivation-gap figure (8.1 years, 2021-23) straight from a council PDF chart, and a
+  follow-up check against OHID Fingertips directly (the primary source the PDF itself draws on)
+  found a newer period already published (2022-24) *and* a revision to the 2021-23 figure
+  itself (8.7 years, not the 8.1 the PDF chart showed, which it had flagged as based on
+  provisional population data) - don't treat a council report's chart as the final word once a
+  more current primary-source pull is available.
 
-**Good example (single-indicator dimension)**: *"Healthy life expectancy measures the average number of years a person can expect to live in good health from birth. At 58.2 years in Lewisham (approximately 72% of total life expectancy), this sits below London's average of 62.9 years. The indicator has declined by 3.8 years from 62.0 years a decade ago, with a particularly sharp drop during the pandemic years."*
+**Good example (single-indicator dimension, current live text for the health dimension)**:
+*"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
+from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The
+gap is deprivation-linked: as of 2022-24, men in Lewisham's least deprived areas lived 8.8
+years longer than men in the most deprived areas. These health inequalities shape how long
+residents can expect to live without serious illness or disability."* Note what changed from
+an earlier draft: the deprivation-gap clause was added specifically to answer *why* the
+Lewisham-vs-London gap and its decline exist, not just restate that they do (see the new bullet
+above) - and its figure was pulled from OHID Fingertips directly rather than the council PDF
+that originally surfaced it, for the currency reasons described there.
 
 **Good example (multi-indicator dimension, synthesized AND borough-specific; this is the
 current live text for the housing dimension, after also passing an adversarial fact-check -
-see 2.9)**: *"The private rented sector now houses 27% of Lewisham residents, nearly double
-its 14% share in 2001. Lewisham's Housing Strategy found rents grew 50% between 2011 and 2017,
-against incomes up just 12% between 2010 and 2018 - and names ending of a private tenancy as
-the single biggest cause of local homelessness, behind roughly half of cases as of its 2020
-assessment, more than any other reason. That shows up in both temporary accommodation and
-rough sleeping, up nearly a third since 2021/22 to 345 people in 2025/26. The same stretched,
-low-income renters are also more likely to live in a non-decent home: MHCLG puts 16% of
-private rented homes as non-decent in 2024, above the 12.9% average for all tenures."* Two
-things worth noting about how this differs from an earlier draft: (1) the rent/income growth
-figures carry explicit year ranges (2011-2017, 2010-2018) rather than an open-ended "since
-2011," because the fact-checker traced them to Lewisham's Housing Strategy and found the
-source data stops well before the present - open-ended phrasing implied they were current
-through today when they aren't (see 2.9); (2) the last sentence uses "also" rather than
-folding non-decent homes into the causal chain - see the correlation-vs-causation bullet above
-and Bad example #6 below for why.
+see 2.9)**: *"The private rented sector now houses 27% of Lewisham residents, up from 24% in
+2011. Lewisham's Housing Strategy found rents grew 50% against incomes up just 12% in the
+years to 2018 - and names ending of a private tenancy as the single biggest cause of local
+homelessness, behind roughly half of cases as of 2020. Rough sleeping is up nearly a third
+over four years, to 345 people in 2025/26, while temporary accommodation has eased from a
+2024 peak but stayed persistently high. The same stretched, low-income renters are also more
+likely to live in a non-decent home: 16% of private rented homes are non-decent in 2024,
+against a 12.9% average for all tenures."* Several things worth noting about how this differs
+from earlier drafts: (1) the rent/income growth figures (Housing Strategy's own ranges: rent
+"2011-2017", income "2010-2018") share one openly-approximate reference, "in the years to
+2018," rather than two near-identical "between X and Y" clauses back to back - allowed under
+the October 2026 relaxation above because the two windows are within a year of each other at
+both ends; a first attempt used a false-precise merged range ("between 2010 and 2018" applied
+to both figures) that a fact-checker caught as overstating the rent figure's actual 6-year
+span - see the relaxation bullet's own worked correction for why the hedged phrasing is the
+fix, not the exact-looking one; (2) the non-decent-homes sentence uses "also" rather than
+folding it into the causal chain - see the correlation-vs-causation bullet above and Bad
+example #6 below; (3) the PRS tenure-share comparison uses the confirmed 2011 Census figure
+(24%) rather than an unverified "14% in 2001" that an earlier draft carried forward without
+re-checking - a fact-checker pass found no primary source for the 2001 figure and flagged a
+real risk it was actually a London-wide 1991 number mistaken for Lewisham 2001, so it was
+dropped in favour of a verified comparator (see 2.2's "every inherited claim needs a source"
+rule); (4) rough sleeping and temporary accommodation keep separate trend clauses even though
+they're merged into one sentence, because the "+31%"/"four years" figure only holds for rough
+sleeping - see the "don't merge the statistic across indicators that don't share it" bullet
+above; (5) the non-decent-homes sentence drops "MHCLG puts..." (already in that indicator's
+own source line further down the page) but keeps "in 2024" - a fact-checker flagged dropping
+the year too as a readability regression, since every other sentence in the paragraph carries
+one - see the "drop a provenance-only attribution phrase... but keep the year" bullet above.
 
 **Bad example #3 (do not write like this - unsourced causal glue between two real facts)**:
 an earlier draft of the good example above read: *"...it's the most common reason a
@@ -373,6 +539,18 @@ section.
   plans, not about anything they can use now. If the takeaway is just "no local figure exists
   yet," say that in a few words and stop - don't explain the mechanism by which a local figure
   might someday exist.
+- ❌ **Coverage/provenance trivia explaining why a borrowed framework technically doesn't apply
+  here, when you're about to apply it anyway.** Caught on the Connectivity dimension's LOTI
+  section, October 2026: a draft opened "LOTI maps digital exclusion risk across London, but
+  that map covers only five pilot boroughs...not Lewisham, so no LOTI-branded Ladywell score
+  exists. Its underlying framework is reusable anywhere, though: built from Westminster
+  research and validated across those boroughs, it names six groups..." - two full clauses of
+  coverage/provenance throat-clearing before the one thing the reader needs (the six groups)
+  arrives. Fixed to open directly with "LOTI names six groups with a higher propensity to be
+  digitally excluded..." and cut the pilot-borough/validation detail entirely - the reader
+  doesn't need to know why a Ladywell-specific LOTI score doesn't exist, only what the
+  framework itself says. Same principle as the rest of this section: inner workings of how or
+  why a source was used belong in the data layer's notes, not reader-facing prose.
 
 **Good examples:**
 
@@ -396,12 +574,64 @@ section.
   race feels), but the fix is to make that point with the one or two values that actually
   support it (the 2022 low and the 2026 rebound), not all four - drop the ones that are pure
   shape-narration.
+  **This rule is easy to re-break even right after reading it, specifically when writing a
+  trend-vs-target comparison sentence** - the instinct to "show your working" by citing the two
+  endpoint values is strong precisely because the sentence is making a quantitative claim
+  ("barely moved"). Caught on the Food dimension's obesity text, October 2026: a sentence
+  reading "Lewisham's Year 6 rate has barely moved since then (23.95% in 2017/18, 24.54% now)"
+  was written *after* this exact rule already existed in this file, in the same editing
+  session - the parenthetical both endpoints were already plotted on the chart two sentences
+  above. Fixed by cutting the parenthetical entirely: "has barely moved since then" carries the
+  claim without re-showing numbers the chart already shows. When a sentence compares two chart
+  values (a start/end, a before/after a target was set), check whether both values are already
+  plotted before citing either one - if they are, state the relationship ("barely moved,"
+  "nearly doubled," "fell by half") and trust the chart for the figures.
+- ❌ Enumerating every category's exact figure in a breakdown (by tenure, by dwelling type, by
+  age group, etc.) instead of stating what the breakdown shows. Added October 2026 after a
+  draft housing-indicator addition read "16.0% for private rented, 12.0% for owner-occupiers,
+  11.4% for social rented" - a parallel list of numbers, not a finding, and no different in
+  kind from restating a chart's datapoints even though no chart for this particular breakdown
+  existed yet. The fix: say which end of the range matters and why ("private rented homes run
+  furthest from the Decent Homes Standard of the three tenures") and let the exact figures live
+  in the headline/chart/source data rather than a second recitation in prose. This generalises
+  the chart-restating rule immediately above to categorical breakdowns, not just time series -
+  the governing principle is the same either way: **the description's job is to call out the
+  trend or pattern, not to be a second place the reader encounters the same numbers already
+  shown (or showable) elsewhere on the page.** A second instance caught October 2026, this
+  time on a split-sub-series indicator rather than a tenure breakdown: the Food dimension's
+  obesity "what this measures" text opened "Obesity is measured separately for Reception-age
+  children (4-5) and Year 6 (10-11)... Lewisham's 2024/25 rates were 10.0% and 24.5%" - both
+  figures already visible as the chart's two legend lines (and the Year 6 one also as the
+  headline big-value, see 2.5's single-headline-filter note), so naming the age brackets and
+  restating both numbers added nothing. Fixed to open with the *pattern* instead ("The
+  near-doubling between the two ages has held in Lewisham every year since measurement began
+  in 2006/07, pointing to the primary-school years as where obesity risk accumulates
+  fastest"), trusting the chart/legend to carry which ages and what the actual figures are.
+  **This sentence predated the Reception/Year 6 split by months** (written when obesity was
+  still one blended indicator, so nothing was redundant yet) and was never revisited when the
+  split happened later - a reminder that **whenever you change an indicator's chart or
+  headline logic (a split, a single-headline filter, a new sub-series), re-read that same
+  indicator's "what this measures"/"why this is happening" prose against this section's
+  governing principle, not just against the literal examples listed here.** The principle
+  ("don't be a second place the reader encounters a number already shown elsewhere") doesn't
+  expire just because the specific wording that violates it was written before the rule had a
+  second example - old prose can drift out of compliance as the chart around it changes, and
+  nothing flags that automatically.
 - ❌ Session/process narration leaking into reader-facing copy - e.g. "could not be confirmed
   this session," "wasn't obtainable this session," "no verified figure was available this
   session." These describe what happened during a research session, not something a resident
   reading the page would find meaningful. If a figure couldn't be sourced, either state the
   gap plainly ("no Lewisham-specific figure is published") or omit the sentence - don't narrate
   the research process itself.
+- ❌ Narrating the page's own editorial/sourcing history to the reader - e.g. a food dimension
+  draft ended "It replaces an OHID Fingertips modelled food-insecurity risk measure that had
+  only two years of data published (2021-22), with no newer round yet in sight." That's true,
+  and useful context for whoever maintains this page next - which is exactly what the source
+  notes in `dimension_data_sources.json` and the pipeline builder's docstring are for (see
+  Section 12/13) - but a resident reading the live page has no reason to care what indicator
+  used to be shown here or why it was swapped out. Caught by a user: "no need to tell the
+  reader the inner workings of the website." Put provenance/swap history in the data layer's
+  notes fields, not in reader-facing prose.
 - ❌ Restating the headline number as arithmetic the reader can do themselves - e.g. "a
   household earning £42,500 spends £18,530 on rent, leaving £23,970" repeats the same 43.6%
   figure three ways without adding insight. One clear statement of the ratio is enough;
@@ -410,15 +640,103 @@ section.
   inevitable, the council..." Cut the throat-clearing half of the sentence and start with
   what the council actually did. Every sentence should earn its place; if deleting a phrase
   loses no information, delete it.
+- ❌ Spelling out a proxy metric's limitation as its own long qualifying clause when a short
+  framing phrase says the same thing. A food dimension draft opened "This counts emergency
+  food parcels given out by Trussell-network foodbanks in Lewisham - a direct measure of need
+  acted on, not a survey of food insecurity itself, and limited to this one network of
+  foodbanks" - three separate caveats (what it counts, what it isn't, its coverage limit)
+  stacked into one sentence before the reader learns anything else. Fixed to "Lewisham's
+  Trussell-network foodbanks distributed 22,476 emergency parcels in 2025 (7 locations), used
+  here as a proxy for the local food insecurity trend" - one framing clause ("used here as a
+  proxy for...") does the same disclosure job the three-caveat sentence was reaching for,
+  leaving room in the word budget for the trend and the "why." Caught by a user as
+  "unnecessarily long," October 2026. A follow-up catch on the same sentence: an intermediate
+  draft added "...trend, rather than a direct survey" - redundant once "proxy" is already the
+  word doing the work, since a proxy is by definition not the direct thing itself. **Once a
+  word already implies a contrast, don't also spell the contrast out.**
+- ❌ Padding a list-type claim with filler like "alongside several other X newly added" once the
+  concrete fact already stands on its own. Caught on the Water dimension's "Areas of water
+  stress" text, October 2026: "...remained so when it repeated the exercise in 2021, alongside
+  several other companies newly added to the list" - the load-bearing fact is that Thames
+  Water's own classification didn't change between 2013 and 2021; whether *other* companies
+  joined the list in the same round adds nothing to that claim and reads as padding reaching for
+  a second fact to justify the sentence's length. Fixed by cutting straight to "...remained so
+  when it repeated the exercise in 2021." **The general rule: when a sentence's claim is about
+  one specific subject (here, Thames Water's own status), don't tack on a clause about what
+  happened to other, unrelated subjects in the same dataset/event just because it's also true**
+  - if the other-subjects fact doesn't change or contextualise the claim being made, it's a
+  tangent dressed as detail, not supporting evidence.
+- ❌ Parenthetical clarifications of something the reader can already work out themselves -
+  e.g. "the 42% England-wide average (which itself includes London)" - a reader who knows what
+  "England-wide" means doesn't need to be told it includes London; the word already carries
+  that. Only add a clarifying aside when the fact genuinely isn't inferrable from the term
+  itself (e.g. a label that's ambiguous or a source's own inconsistent usage), not as a reflex
+  precision-hedge on every geography/scope word.
 - ❌ Making the same comparative point twice in one short paragraph with different wording -
   e.g. a draft said both "premature death rates worse than England's" and, two sentences
   later, "a Lewisham death rate well above England's" about the same underlying comparison.
   Say it once; spend the second mention's word budget on a fact that adds information instead.
+  **This includes restating a superlative within the same sentence, not just across
+  sentences.** Added October 2026 after a housing top-summary draft read "...names ending of a
+  private tenancy as the single biggest cause of local homelessness, behind roughly half of
+  cases as of its 2020 assessment, **more than any other reason**" - the bolded clause just
+  re-asserts "single biggest cause" in different words; it was caught by a user as "feels
+  unnecessary." Keep a quantifying figure that adds real information ("behind roughly half of
+  cases") but cut any trailing clause whose only job is to restate the superlative/ranking word
+  that already opened the claim.
+- ❌ Making the same point twice **across different blocks on the page**, not just within one
+  paragraph - the rule two bullets up extends, with one caveat below, between the top summary
+  and an indicator's own "what this measures"/"why this is happening" text, not just within a
+  single block. Caught on the Water dimension's leakage indicator, October 2026: its "what
+  this measures" text closed with "Cutting leakage is one of three levers, alongside demand
+  reduction and new supply, used to close the projected supply-demand gap; Thames Water's
+  government-approved 2024 resource plan commits to deeper cuts as part of its own response" -
+  but the dimension's top summary, drafted in the same session, already made the identical
+  point ("Both demand reduction and leakage reduction are levers water companies are leaning on
+  to close a growing supply-demand gap"). Fixed by cutting the sentence from the indicator text
+  entirely and trusting the top summary to carry it.
+  **Caveat - this is not a blanket "top summary and indicator text must never overlap" rule.**
+  The top summary's job is to synthesize across indicators, so it will legitimately touch
+  themes an indicator description also covers - that's expected, not a violation. What to
+  avoid is specifically *near-identical phrasing of the same specific claim* repeated in both
+  places (as in the caught example above, where both blocks independently spelled out the same
+  "three levers / resource-plan commitment" sentence), not thematic overlap in general. **When
+  drafting or editing a top summary and an indicator description together (or close in time),
+  check whether the other block already states the same specific claim in similar words** - if
+  so, keep it in whichever block it fits better (usually the top summary, for a cross-indicator
+  point) and cut it from the other - but don't over-apply this to the point of stripping the
+  top summary down to only things no indicator ever mentions, since limited, non-verbatim
+  repetition of a theme is how a synthesis paragraph is supposed to work.
 - ❌ Unexplained acronyms, including inside citation/source names, not just body prose - e.g.
   "85% of COPD" or a source labelled "Lewisham DPH Annual Report" without ever spelling out
   Chronic Obstructive Pulmonary Disease or Director of Public Health. Expand on first use
   everywhere it appears on the page, including small print like source lines - a reader
   encountering the source line first shouldn't hit an acronym before the prose ever defines it.
+- ❌ Naming an internal council scheme, checklist, or protocol by its official title when the
+  title itself carries no meaning to a reader outside the council - e.g. "rolling out the
+  London Damp and Mould checklist" or "embedding the Joint Health and Housing Working
+  Protocol." Describe what the thing actually does instead ("training staff to spot and
+  report damp and mould," "closer coordination between health and housing services at
+  hospital discharge") rather than naming it. This is the same failure as an unexplained
+  acronym - a proper noun standing in for an explanation - just without the capital letters
+  as a tell. Caught on the Health dimension's council-context card, October 2026.
+- ❌ Calling out a single-year exception that doesn't change the broader narrative - e.g.
+  "Lewisham's Year 6 obesity rate has run above the London average in every year on record bar
+  one (2018/19)." The "bar one" caveat is more precise than "throughout," but that extra
+  precision isn't information the reader needs - one anomalous year out of nearly two decades
+  doesn't change the finding (Lewisham runs persistently above London), so naming it just adds
+  a parenthetical the reader has to parse for no payoff. Fixed to "has run above the London
+  average throughout." This is a judgement call, not a ban on ever mentioning exceptions -
+  if the exception year is itself the point (e.g. it coincides with a policy change, or it's
+  the one year a trend actually reversed), name it; if it's statistical noise that happens not
+  to fit a otherwise-clean pattern, drop it and state the pattern plainly. Caught by a user as
+  an "insignificant" anomaly not worth calling out, October 2026. **A follow-up word-choice fix
+  on the same sentence**: "throughout" was itself replaced with "consistently" - "throughout"
+  only names a time span (implicitly "across the whole period"), leaving the reader to infer
+  that this means "above London every single year"; "consistently" states that pattern
+  directly. When a sentence's whole point is "this held steady/stayed true every time," prefer
+  a word that names the pattern itself (consistently, persistently, every year) over a vaguer
+  time-span word (throughout, overall, generally) that merely implies it.
 
 **Every specific factual claim needs a real source - including ones you didn't write.**
 When editing or rewriting *existing* description text (not just adding new indicators),
@@ -438,6 +756,50 @@ descriptions** - a stat feels safer to leave unsourced when it isn't one of the 
 tracked indicator cards, but readers can't tell the difference between a verified number and
 an asserted one unless every number is actually checked. Treat "I recall this is roughly
 right" as equivalent to "unsourced" - verify it fresh or cut it.
+
+**A ranking claim ("Nth lowest/highest of N areas") needs its source to actually compare that
+many areas - check the comparison group's size and membership, not just that the ordinal
+sounds plausible.** This is now a recurring instance of the general "every claim needs a real
+source" rule above, specific to rankings: the housing dimension's "40% of Lewisham residents"
+PRS figure (Bad example #5 in 2.1) was a ward's number mistaken for a borough's; a second,
+distinct instance hit the Food dimension's dental decay copy in October 2026. A draft read
+"Lewisham had the 4th-lowest Reception decay rate of London's 33 boroughs in 2024," sourced to
+"an NHS South East London ICB Dental Services presentation to Lewisham Council." The
+fact-checker agent found the only "4th lowest" ranking it could trace anywhere was among a
+**6-borough South East London ICB comparison group** (Bexley, Bromley, Greenwich, Lambeth,
+Lewisham, Southwark) - not London's 33 boroughs at all. The coordinating session then
+downloaded the actual NDEP 2023/24 results file directly (per 1.6's technique) and ranked every
+London borough itself: only 32 are surveyed (City of London isn't), and Lewisham's 18.9% ranks
+**6th-lowest of 32** (tied with Bromley), not 4th. A borough-level source quietly got reused as
+if it were a London-wide one because both produce a small, specific-sounding ordinal ("4th
+lowest") that reads as equally authoritative regardless of which group it's actually ranking
+within - the ordinal's plausibility gives no signal about whether the comparison group matches
+what the copy claims. **Fix: when a ranking claim is kept, re-derive it yourself from the
+primary data table if at all possible** (filter to the stated comparison group, sort, count)
+rather than trusting a secondary citation's framing of its own ranking - and if the real
+comparison group is smaller or different from what's claimed, either correct the group size in
+the copy (e.g. "of 32 boroughs," not "of 33") or drop the ordinal rather than keep a specific-
+sounding number that doesn't trace to the stated group.
+
+**When the fact-checker reports PENDING/UNVERIFIED because its own toolset couldn't reach a
+primary source, that is not the same as "probably fine" - finish the verification yourself if
+you have the access it lacked.** The fact-checker agent's tools don't include Bash, so it
+routinely can't unzip an ODS, parse a large CSV via `curl`, or open a Cloudflare-gated council
+PDF the way the coordinating session can (see 1.6's WebFetch/ODS/CSV extraction techniques).
+This happened repeatedly across the Housing and Food dimensions: diabetes QOF prevalence,
+Trussell's per-location parcel counts, and both NDEP dental-decay surveys were all logged as
+PENDING by the fact-checker specifically because its fetch tool truncated or blocked the
+primary file - not because the underlying claim was actually in doubt. In one case this also
+**overturned** one of the fact-checker's own findings: it marked "7 locations" (Trussell
+parcels) as a likely FAIL by comparing it to Lewisham Foodbank's own current locations page,
+but a direct download of Trussell's own primary spreadsheet showed "7" is exactly what Trussell
+'s official count states for 2025 - the fact-checker's secondary comparison source simply wasn't
+the one the claim actually cited. Per 2.9's "treat its findings as correct by default" - this
+is the documented exception: re-check independently against the primary source itself and
+explain, in the verified-claims log, why the finding was wrong. The default is still to trust
+the fact-checker; the point is that PENDING/UNVERIFIED specifically (as opposed to FAIL) often
+just means "my tools couldn't get there," which the coordinating session's Bash access usually
+can.
 
 **Structure for indicator descriptions:**
 1. **What it shows** (the finding/current state) - 1-2 sentences
@@ -538,6 +900,70 @@ if (ring === 'social') {
   - Identify inflection points or sharp changes (e.g., "sharp drop during pandemic years")
 - **Regional/national context**: Compare to London/England averages for same time period
 
+**If an indicator is genuinely measured as separate sub-series (by sex, age group, tenure,
+etc.), split it into multiple indicator objects rather than storing one blended/averaged
+value - and reuse the existing multi-series chart mechanism, don't build a new one.** The
+health dimension already does this for "Healthy life expectancy at birth (Male)" / "(Female)":
+two full indicator objects sharing a base name, each with its own `snapshot`/`trend`/`source`.
+`renderTrendChart` and the headline value-readout cards in `app.js` already detect multiple
+indicators sharing a base name (stripped via a suffix regex) and automatically render separate
+coloured lines with a legend, plus one big-value card per sub-series - this is generic
+infrastructure, not HLE-specific, even though it was only built for that one case at first.
+**Added October 2026 (Food dimension)**: the obesity indicator was originally stored as one
+"% of children in reception and year 6 with obesity" value - a simple average of two numbers
+that aren't naturally averaged (10.0% Reception vs 24.5% Year 6), which flattened out the
+exact divergence the page's own prose called out as the dimension's "clearest signal." Splitting
+it into "% of children with obesity (Reception)" and "(Year 6)" - full historical series for
+each, pulled fresh from the primary source rather than just re-deriving two numbers from the
+blended one - made the chart show what was already true in the text. To extend the suffix
+regex for a new split: update **both** occurrences in `app.js` (`indicatorGroups` baseName
+computation, and `renderTrendChart`'s own `chartTitle` stripping) to add the new suffix
+alternatives, e.g. `/\s*\((Male|Female|Reception|Year 6)\)$/`. **Also check the chart's legend
+rendering specifically** - it used to have its own hardcoded, HLE-only string replace
+(`.replace('Healthy life expectancy at birth ', '')`) instead of reusing the generic
+suffix-stripped `chartTitle`, which meant a new split's legend showed the full un-stripped
+indicator name and got clipped by the chart's fixed-width margin. Fixed to derive the legend
+label the same way the headline cards do (strip the shared base name, trim, strip
+parens) - any future split should confirm the legend renders the short suffix, not the full
+name, before considering the split done.
+
+**Not every pair of related numbers should be split this way - only do it when both sides have
+a genuine, comparable historical series.** Dental decay (same Food dimension) was deliberately
+left as a single blended indicator: Reception has a real multi-year series, but Year 6 was
+surveyed nationally exactly once (2022/23) - a single point isn't a trend, so splitting it
+would give Year 6 its own indicator card with no chart line to show (see 2.5's "minimum 3 data
+points" rule above). Blend-vs-split is a per-indicator judgement call based on whether a real
+series exists for each side, not a blanket rule to apply everywhere a number has sub-parts.
+
+**Once split into sub-series, show exactly one headline stat - never one big-value card per
+sub-series.** Pick whichever sub-series carries the more meaningful figure for the page's
+narrative and let the chart below carry the rest. This is a hard rule, not a default that can
+be skipped: equally-weighted headline figures for every sub-series dilutes the one number the
+page's own prose is actually built around, and (per 2.1/2.2) a reader should come away with one
+clear figure per indicator, not a row of three or four competing ones. The health dimension
+does this for Healthy life expectancy (Male shown as the headline, Female plotted in the chart
+only); the Food dimension's obesity indicator (October 2026) - Year 6 (24.5%) is the headline,
+since it's the figure the dimension's own prose and "why this is happening" text build the
+narrative around, while Reception (10.0%) only appears in the chart line/legend, not as its own
+big-value card; the Housing dimension's non-decent-homes-by-tenure split (October 2026) - Private
+rented (16.0%) is the headline, since the dimension's top summary and "what this measures" text
+both center on private renters as the group the indicator's story is about, while Owner-occupied
+and Social rented only appear in the chart. **When you split an indicator into sub-series, adding
+its baseName to `singleHeadlineFilter` is part of finishing the split, not an optional follow-up**
+- a split that leaves every sub-series as its own headline card is incomplete even if the data and
+chart are otherwise correct.
+Implemented in `app.js` as a `singleHeadlineFilter` lookup (`{baseName: 'which sub-series
+substring to match'}`) consulted when building `indicatorsToShow` - keyed by baseName rather
+than by group position, so it isn't fragile to a dimension's indicators being reordered (an
+earlier version of this logic hardcoded "the first group on the page", which broke the moment
+a dimension's indicator order changed). **The trend chart itself is unaffected either way** -
+it's called with the full, unfiltered indicator list, so every sub-series still gets its own
+coloured line and legend entry even when the headline only surfaces one. **The surfaced
+sub-series' label is the full indicator name, not just the suffix** (`indicatorsToShow.length
+> 1` is what triggers stripping the base name down to e.g. "(Private rented)" - with a single
+surfaced indicator the label renders in full, e.g. "% non-decent homes (Private rented)"), so a
+bare suffix like "Private rented" is never shown on its own without the indicator it belongs to.
+
 ### 2.6 No Separate "Target" Line or Marker
 
 **As of July 2026, dimension pages do NOT render a standalone "Target: X" line or a dashed
@@ -612,6 +1038,27 @@ this section; add it only where a reader's obvious next question genuinely isn't
 "What this measures" or the council-context card, and only where you have real evidence to
 answer it with (see the "don't pad with tangents" rule below).
 
+**This section is for a real local causal story - a trend with a "why" worth explaining -
+not a vehicle for every sourced fact you find.** If a council document gives you one good
+supporting fact but there's no actual trend or pattern to build a causal narrative around,
+fold that fact into "What this measures" (2.5) as a short clause instead of standing up a
+full why-section for it. Caught on the Housing dimension's non-decent-homes-by-tenure split,
+October 2026: research turned up a genuinely Ladywell-specific fact (the council placed
+Ladywell under selective licensing specifically because a 2021 stock survey found 22.7% of
+local private-rented homes had serious safety hazards) and it was first written up as a full
+`getWhyThisIsHappening()` entry - a 128-word `localParagraphs` paragraph, its own
+`localSources`, wired into the inline-rendering mechanism described below. The user then
+pointed out the indicator has no significant trend to narrate (its chart shows 4 data points
+moving around, not a clear directional story), so the fact didn't need a dedicated section -
+it needed one clause. Fix: cut it to "...and Ladywell is one of five wards the council placed
+under selective licensing specifically because of poor private-rented conditions, after a
+2021 stock survey found serious safety hazards in 22.7% of local PRS homes" appended to the
+existing "what this measures" text (70 words total, still under the word cap), and the
+`getWhyThisIsHappening`/inline-rendering code added for the first version was reverted.
+**The test**: does this fact explain a *pattern the reader will notice* (a trend, a
+comparison, a gap), or is it one good standalone fact that's interesting on its own? The
+former earns a why-section; the latter is a clause.
+
 **Purpose**: bridge the gap between "what the number is" (2.5) and "what's being done about
 it" (Section 3) by explaining, with real evidence, *why the pattern looks the way it does
 locally*.
@@ -657,6 +1104,22 @@ locally*.
   being accurate once a global research card sat under it too - but the label was later
   renamed everywhere for consistency, including dimensions with only a local council-context
   card.
+- **Every optional field in a context-card object must be guarded in the template literal,
+  not just assumed present.** `app.js` has two separate renderers for council-context cards
+  (the dimension-wide one at the bottom of a dimension, and this section's inline one) and,
+  as of October 2026, they'd drifted: the dimension-wide renderer correctly wrapped `ctx.year`
+  in a ternary (`${ctx.year ? ... : ''}`) so a card without a year renders nothing, but the
+  inline renderer had the bare interpolation `${ctx.year}` - a card missing that field would
+  render the literal text "undefined" on the page. Same gap for `ctx.sources` vs `ctx.url`
+  (two different ways a card can carry its citation): the dimension-wide renderer checked
+  both, the inline one only checked `ctx.url`, so a `sources`-array card rendered inline would
+  silently drop its source line entirely. Both caught only because a user noticed "undefined"
+  rendered on the page - neither crashes, so neither shows up in a console-error check (see
+  2.9/Section 2's testing guidance - this is exactly the kind of defect that only shows up by
+  actually looking at the rendered page, not by checking for thrown errors). **When adding or
+  editing either renderer, re-check both stay in sync**, and treat every field read from a
+  context-card object as optional unless the object literal defining that card is guaranteed
+  to set it.
 
 **Don't pad it with tangential facts just because they're true.** Two things were cut from
 the Health dimension's "why" paragraph after being added: a sentence naming smoking as a
@@ -786,6 +1249,34 @@ iterates the array, rendering one `.council-context` card per entry, each ending
 `site/js/app.js`'s housing implementation for the reference version (3 documents covering
 all 4 indicators).
 
+**Word limit: keep a card's summary to roughly 165 words** (intro paragraph + bullets +
+closing paragraph combined, counted with `len(text.split())` on the stripped text, same
+method as every other word cap on this page). Added October 2026 when the Housing Strategy
+card - the longest on the page, at 206 words - was trimmed to 166 (~80% of its original
+length) after a user flagged it as too long and pointed out one bullet was genuinely hard to
+follow (see the "plain English over jargon" rule immediately below for that specific fix).
+165 words is this project's working ceiling for *this* card, not a universal constant each
+new card must hit exactly - but if a new or edited summary is pushing past it, that's the
+signal to cut, the same way the 130-word cap works for 2.1/2.5/2.8. A 4-5 priority strategy
+can be covered in one tight sentence per bullet; it doesn't need every numeric detail from
+the source document repeated (see 2.2's "don't restate every datapoint" principle - it
+applies to a strategy's own stats just as much as an indicator's trend data).
+
+**Plain English over jargon - don't quote council/ModernGov procedural terms without
+translating them.** A phrase like "the report itself is explicitly 'for noting'" means
+nothing to a reader without local-government process knowledge (ModernGov's "for noting"
+status means a committee was shown something for information only, with no vote or approval
+attached - the opposite of "for decision" or "for approval"). Caught on the Community-Led
+Housing card, October 2026: the original sentence was *"But the report itself is explicitly
+'for noting': no site, funding or land transfer has been approved yet..."* - the jargon
+phrase added nothing the plain-English clause right after it didn't already say. Fixed by
+cutting the jargon entirely and leading with the plain meaning: *"But nothing has been
+approved yet: no site, funding or land transfer has been agreed, and a further report is due
+around March 2027."* If you find yourself quoting a procedural label (for noting, key
+decision, delegated authority, called-in, etc.) because it's the term the source document
+uses, ask whether the reader needs the term itself or just what it means in practice - almost
+always it's the latter.
+
 **Section structure**:
 - **Title**: Official strategy/report name (e.g., "Lewisham Health & Wellbeing Strategy — Going further with prevention")
 - **Year**: Strategy time period (e.g., "2025-2030")
@@ -847,6 +1338,37 @@ borough's health gap:*
 *It commits to shifting resources upstream from treatment toward prevention over its 5-year
 span."*
 
+**Good example (multi-theme, bulleted - Housing, October 2026 fix)**: the Housing Strategy
+2020-26 card originally listed its five priorities as a single run-on prose sentence
+("sets out five priorities: delivering more genuinely affordable homes, preventing
+homelessness, ..."), the exact "disjointed labels crammed into prose" failure this rule exists
+to fix - it had five genuinely distinct themes (confirmed against the source PDF, which numbers
+them "Priority 1" through "Priority 5") but read as a wall of text. Rewritten to match the
+Homelessness Strategy pattern above, pulling one real action/figure per priority from the
+source document rather than re-labelling the headline list:
+
+*"Lewisham's housing strategy identifies the widening gap between private rents and incomes as
+the single biggest driver of local homelessness - private rents grew 50% between 2011 and 2017,
+against incomes up just 12% between 2010 and 2018 - and estimates a quarter of private rented
+homes are non-decent. It organises its response around five priorities:*
+- *__Delivering the homes Lewisham needs__ - building council-owned social rent homes through
+  its Building for Lewisham programme, the only tenure that stays genuinely affordable for most
+  residents, alongside its own private rented homes offering long-term secure tenancies and
+  London Living Rent.*
+- *(three more priorities...)*
+- *__Strengthening communities and embracing diversity__ - introducing a residents' charter,
+  backing a private renters' union, giving residents a say over estate redevelopment, and
+  working toward sanctuary-borough status for refugees and migrants.*
+
+*Its stated vision: "everyone has a safe, stable and genuinely affordable home where they can
+live an independent and prosperous life" - against over 9,800 households on the housing
+register and an estimated nine-year wait to house everyone on it at current rates."*
+
+The lesson generalises: when a strategy's own section headings already number its priorities
+(here, literally "Priority 1" ... "Priority 5" on their own PDF pages), that's the clearest
+possible signal this rule applies - don't let it slip through as a single descriptive sentence
+just because the original draft happened to summarise it that way.
+
 This is also the general rule once a dimension has both 2.8 ("Why this is happening") and a
 council-context card: **stats and causal explanation belong in 2.8; the council-context card
 should describe what's being done, not re-explain why it's needed.** Splitting them this way
@@ -887,6 +1409,17 @@ applied to a new content type. Concretely:
 - Each idea is paired with a **real case study**, verified by you, not written from general
   knowledge of "this sort of thing exists somewhere." Search for it, fetch the source, confirm
   the specifics (numbers, dates, current status) before writing the card.
+- **Never hardcode a specific recurring event's dates - they go stale within months.** The
+  Water dimension's 3 Rivers Clean Up card originally read "...the river that runs straight
+  through Ladywell Fields. 2026 dates: 27 June-17 July." - accurate when written, but wrong
+  for every future year the page is live, with nothing to flag that it's gone stale. Fixed by
+  cutting the specific dates entirely: "...Check the website for this year's dates." **The
+  general rule: for any annual/recurring event (a clean-up campaign, a seasonal scheme, an
+  AGM), name what it is and link to it, but don't state *which* specific dates it falls on -
+  point the reader to the source for current dates instead.** This is different from a one-off
+  historical fact with a fixed date (e.g. "designated in 2013") - the problem is specifically
+  dates that describe a *future recurrence*, which a page with no update mechanism cannot keep
+  current.
 - **If no genuine local example exists, say so rather than implying one does.** The Health
   dimension's Men's Shed card is the worked example: "The UK Men's Sheds movement now has
   hundreds of active sheds nationally, but none listed for Ladywell or central Lewisham yet -
@@ -988,6 +1521,11 @@ capability, styled and positioned as if it already worked. Don't wire it to do a
 that backend exists; don't remove it either, since the positioning next to the real cards is
 itself communicating the intended behaviour.
 
+**Currently hidden (2026-10-31).** The render line in `renderDimensionDetail()` is commented
+out rather than deleted, so the button doesn't appear on any dimension page for now. The CSS
+and markup are untouched - re-enabling it is a one-line uncomment in `app.js`, not a rebuild.
+Don't delete the commented-out line or the `.add-take-btn` CSS while it's hidden.
+
 ---
 
 ## 5. Technical Implementation
@@ -1024,6 +1562,16 @@ whenever you touch a shared class.
 ### 5.3 Cache Busting
 - Increment version numbers in `ward.html` when updating CSS or JS
 - Format: `css/styles.css?v=N` and `js/app.js?v=N`
+- **Both files have their own independent version number - bumping one does not cover the
+  other.** Caught October 2026: a session added new `.loti-*` rules to `styles.css` while also
+  editing `app.js` in the same pass; `app.js?v=N` got bumped (since JS was the file most
+  obviously "being worked on") but `styles.css?v=N` was left unchanged, so the new CSS rules
+  silently didn't apply for anyone with the old stylesheet cached - the new HTML rendered with
+  no styling at all (bars collapsed to plain unstyled text) even after a hard refresh of the
+  page, because the browser was still serving the old `styles.css?v=N` response for that
+  unchanged URL. **Whenever a change touches `styles.css`, bump its version number too, even
+  if the same session's JS version is already being bumped for an unrelated reason** - treat
+  the two version numbers as fully independent, not "one covers both."
 
 ---
 
@@ -1058,7 +1606,7 @@ Before completing a dimension page, verify:
 - [ ] "Get Involved" cards (Section 4) scroll horizontally and snap correctly; every card's
       heading renders in ink colour, not link-blue (check after wrapping cards in `<a>` - see
       4.2's gotcha)
-- [ ] "Share your ideas" button is highly visible
+- [ ] "Share your ideas" button is highly visible - **currently N/A, button is hidden, see 4.5**
 - [ ] No JavaScript syntax errors (apostrophes escaped in strings)
 - [ ] Vertical spacing is adequate (48px+ between chart and cards)
 - [ ] Cache versions bumped in ward.html

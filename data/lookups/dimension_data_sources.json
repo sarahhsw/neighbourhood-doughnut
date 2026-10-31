@@ -94,34 +94,61 @@
     "lens": "local_social",
     "dimension": "housing",
     "category": "Healthy",
-    "indicator": "% non-decent homes (all tenure)",
+    "indicator": "% non-decent homes (Owner-occupied)",
     "source_url": "https://www.gov.uk/government/collections/english-housing-survey-local-authority-stock-condition-modelling",
-    "granularity": "Local authority (modelled)",
-    "notes": "MHCLG modelled estimates of Decent Homes Standard failure by local authority, produced from English Housing Survey stock data (https://www.gov.uk/government/collections/english-housing-survey). Releases: 2019, 2020, 2023, 2024 (no round in 2021/2022). Official guidance cautions against directly comparing LA estimates across releases due to methodology changes between rounds - treat the trend as indicative rather than a precise time series."
+    "granularity": "Local authority (modelled, by tenure)",
+    "notes": "MHCLG modelled estimates of Decent Homes Standard failure by local authority and tenure, produced from English Housing Survey stock data (https://www.gov.uk/government/collections/english-housing-survey). Tenure breakdown sheet per release: 'Decent_Homes_LA_Tenure' (2019, 2020), 'AT1_2' (2023, 2024). Releases: 2019, 2020, 2023, 2024 (no round in 2021/2022). Official guidance cautions against directly comparing LA estimates across releases due to methodology changes between rounds - treat the trend as indicative rather than a precise time series."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "housing",
+    "category": "Healthy",
+    "indicator": "% non-decent homes (Private rented)",
+    "source_url": "https://www.gov.uk/government/collections/english-housing-survey-local-authority-stock-condition-modelling",
+    "granularity": "Local authority (modelled, by tenure)",
+    "notes": "MHCLG modelled estimates of Decent Homes Standard failure by local authority and tenure, produced from English Housing Survey stock data (https://www.gov.uk/government/collections/english-housing-survey). Tenure breakdown sheet per release: 'Decent_Homes_LA_Tenure' (2019, 2020), 'AT1_2' (2023, 2024). Releases: 2019, 2020, 2023, 2024 (no round in 2021/2022). Official guidance cautions against directly comparing LA estimates across releases due to methodology changes between rounds - treat the trend as indicative rather than a precise time series."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "housing",
+    "category": "Healthy",
+    "indicator": "% non-decent homes (Social rented)",
+    "source_url": "https://www.gov.uk/government/collections/english-housing-survey-local-authority-stock-condition-modelling",
+    "granularity": "Local authority (modelled, by tenure)",
+    "notes": "MHCLG modelled estimates of Decent Homes Standard failure by local authority and tenure, produced from English Housing Survey stock data (https://www.gov.uk/government/collections/english-housing-survey). Tenure breakdown sheet per release: 'Decent_Homes_LA_Tenure' (2019, 2020), 'AT1_2' (2023, 2024). Releases: 2019, 2020, 2023, 2024 (no round in 2021/2022). Official guidance cautions against directly comparing LA estimates across releases due to methodology changes between rounds - treat the trend as indicative rather than a precise time series."
   },
   {
     "lens": "local_social",
     "dimension": "food",
     "category": "Healthy",
-    "indicator": "% population with moderate to severe food insecurity",
-    "source_url": "https://fingertips.phe.org.uk/profile/wider-determinants/data#page/6/gid/1938133045/pat/501/par/E92000001/ati/501/are/E09000023/iid/93864/age/1/sex/4/cat/-1/ctp/-1/yrr/1/cid/4/tbm/1",
+    "indicator": "Emergency food parcels distributed (Trussell network)",
+    "source_url": "https://www.trussell.org.uk/news-and-research/latest-stats/end-of-year-stats",
     "granularity": "Local Authority",
-    "notes": "OHID Fingertips indirect food insecurity risk measure (borough level). Underlying source: DWP Family Resources Survey small-area model. Corroborated by Lewisham Council's Food Justice Action Plan Update (Jan 2026). Previously sourced from the Food Foundation's Health and Diet Inequalities Dashboard (constituency-level modelled estimate, foodfoundation.org.uk/initiatives/health-and-diet-inequalities-dashboard) - switched to the primary Fingertips data it is itself modelled from, per DIMENSION_PAGE_SPECIFICATION.md 1.4."
+    "notes": "Trussell's End of Year Stats, 'Local authority' breakdown sheet (eys_2025_parcel_stats.xlsx, published March 2026) - a direct administrative count of emergency parcels given out by Trussell-network foodbanks, updated annually (now on a calendar-year cycle). Lewisham: 22,476 parcels in 2025, down from a 2023 peak of 25,659 but still more than triple 2018's 7,311. Counts Trussell-affiliated foodbanks only - excludes independent food banks and social supermarkets (e.g. Evelyn Community Store), so it understates total local food-aid demand. Replaced the previous indicator here (OHID Fingertips 'moderate to severe food insecurity' modelled risk measure, indicator 93864: https://fingertips.phe.org.uk/profile/wider-determinants/data#page/6/gid/1938133045/pat/501/par/E92000001/ati/501/are/E09000023/iid/93864/age/1/sex/4/cat/-1/ctp/-1/yrr/1/cid/4/tbm/1) on 2026-10-31, after confirming that measure only had 2 years published (2021-22) with no newer round in sight and no better-granularity alternative existed (checked DWP's Family Resources Survey directly - national/regional only - and the Food Foundation's tracker - UK-national only); Trussell's LA-level data is both more current and updates annually, at the cost of measuring foodbank demand rather than food insecurity prevalence directly."
   },
   {
     "lens": "local_social",
     "dimension": "food",
     "category": "Healthy",
-    "indicator": "% of children in reception and year 6 with obesity",
+    "indicator": "% of children with obesity (Reception)",
     "source_url": "https://fingertips.phe.org.uk/profile/national-child-measurement-programme",
     "granularity": "Local Authority",
-    "notes": "NHS Digital National Child Measurement Programme (NCMP) via OHID Fingertips (borough level, indicators 90319 Reception + 90323 Year 6). Previously sourced from the Food Foundation's Health and Diet Inequalities Dashboard (constituency-level modelled estimate) - switched to the primary NCMP data per DIMENSION_PAGE_SPECIFICATION.md 1.4."
+    "notes": "NHS Digital National Child Measurement Programme (NCMP) via OHID Fingertips (borough level, indicator 90319). Split out from a single combined 'reception and year 6' indicator into two separate indicator objects (Reception / Year 6) on 2026-10-31 so the chart shows each age group's own trend explicitly, instead of one blended average line that obscured how far the two diverge. Previously sourced from the Food Foundation's Health and Diet Inequalities Dashboard (constituency-level modelled estimate) - switched to the primary NCMP data per DIMENSION_PAGE_SPECIFICATION.md 1.4."
   },
   {
     "lens": "local_social",
     "dimension": "food",
     "category": "Healthy",
-    "indicator": "% of children in reception and year 6 with dental decay",
+    "indicator": "% of children with obesity (Year 6)",
+    "source_url": "https://fingertips.phe.org.uk/profile/national-child-measurement-programme",
+    "granularity": "Local Authority",
+    "notes": "NHS Digital National Child Measurement Programme (NCMP) via OHID Fingertips (borough level, indicator 90323). Split out from a single combined 'reception and year 6' indicator into two separate indicator objects (Reception / Year 6) on 2026-10-31 - see the Reception entry above for why. Previously sourced from the Food Foundation's Health and Diet Inequalities Dashboard (constituency-level modelled estimate) - switched to the primary NCMP data per DIMENSION_PAGE_SPECIFICATION.md 1.4."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "food",
+    "category": "Healthy",
+    "indicator": "% of children with dental decay (Reception)",
     "source_url": "https://fingertips.phe.org.uk/profile/child-health-profiles",
     "granularity": "Local Authority",
     "notes": "OHID National Dental Epidemiology Programme (NDEP) oral health surveys of 5-year-olds (biennial) and Year 6 children (surveyed once, 2022/23) - borough level. Previously sourced from the Food Foundation's Health and Diet Inequalities Dashboard (constituency-level modelled estimate) - switched to the primary NDEP survey data per DIMENSION_PAGE_SPECIFICATION.md 1.4."
@@ -140,9 +167,9 @@
     "dimension": "water_and_sanitation",
     "category": "Healthy",
     "indicator": "Per capita water consumption (litres/day)",
-    "source_url": "https://www.gov.uk/government/publications/water-resources-2024-2025-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2024-to-2025-analysis-of-the-water-industrys-annual-water-resources-performance",
-    "granularity": "National (England)",
-    "notes": "Renamed from 'Per household water consumption' - the WRMP Annual Review Data (data.gov.uk) this indicator originally pointed to is per capita consumption (PCC) by water company, not per household. Company-level (Thames Water) and Lewisham-specific figures are not separately published; England-wide PCC is used, corroborated by Thames Water's own qualitative performance reporting and by GLA London-wide consumption figures (see source notes in build_local_social_with_real_data.py)."
+    "source_url": "https://www.gov.uk/government/publications/water-resources-2025-2026-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2025-to-2026-analysis-of-the-water-industrys-annual-water-resources-performance",
+    "granularity": "Water company (Thames Water)",
+    "notes": "Renamed from 'Per household water consumption' - the WRMP Annual Review Data (data.gov.uk) this indicator originally pointed to is per capita consumption (PCC) by water company, not per household. Switched from an England-wide figure to Thames Water's own company-level PCC, fetched directly from the EA's annual water resources performance reports/workbook (same approach as the leakage indicator above) - see source notes in build_local_social_with_real_data.py for the full multi-year series and cross-checks."
   },
   {
     "lens": "local_social",
@@ -152,6 +179,15 @@
     "source_url": "https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
     "granularity": "Water company (Thames Water)",
     "notes": "Categorical Environment Agency/Defra classification, not an annual measurement - Thames Water (Lewisham's supplier) has been classified 'seriously water stressed' in both the 2013 and 2021 determination rounds."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "water_and_sanitation",
+    "category": "Healthy",
+    "indicator": "Water leakage (% of total supply)",
+    "source_url": "https://www.data.gov.uk/dataset/87b59684-3da3-45cf-8881-e4727cfd1415/wrmp-annual-review-data",
+    "granularity": "Water company (Thames Water)",
+    "notes": "20-year series (2005/06-2024/25) calculated from the WRMP Annual Review Data workbook's annual tabs: Thames Water's 'Total leakage (Ml/d)' divided by its 'Distribution input (Ml/d)', x100 - the standard industry leakage-as-%-of-distribution-input measure, not a column the source publishes directly as a percentage. Uses the 2024/25 tab's 'OT' (actual outturn) variant, not 'OTDYAA' (dry-year-adjusted forecast), to match how every earlier year is reported."
   },
   {
     "lens": "local_social",
@@ -185,9 +221,9 @@
     "dimension": "community",
     "category": "Connected",
     "indicator": "% adults reported feeling lonely often or always",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-loneliness-and-support-networks",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level only, not borough- or ward-specific. DCMS/MHCLG boosted the survey sample from 2023/24 (to ~175,000 respondents) intending to eventually enable local-authority-level estimates, and the 2024/25 report includes a by-ITL1-region/local-authority chart, but no reliable Lewisham-specific figure could be confirmed. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
+    "granularity": "Borough (Lewisham) - local authority breakdown",
+    "notes": "DCMS replaced the Community Life Survey with the Community and Engagement Survey (CES) in October 2025, partnering with MHCLG to boost the sample specifically to produce local-authority-level estimates for the first time (CES data tables, Note 3). Lewisham's own figure is now used as the snapshot: 8% of adults felt lonely 'often or always' in 2025/26 (95% CI 6-11%, 61 respondents), up from 7% in 2024/25 (95% CI 5-10%, 42 respondents) - the survey's own significance test flags this as 'No Change' given the overlapping, sample-driven confidence intervals. No earlier Lewisham-specific figure exists; every prior Community Life Survey round (2017/18-2024/25) published England-level data only, kept in the Python builder's trend notes for provenance but no longer used as the live trend/snapshot. England's own headline rate was unchanged at 7% across both years. Source data: CES 2025/26 loneliness data tables (ODS), Table C3 (by local authority)."
   },
   {
     "lens": "local_social",
@@ -196,7 +232,16 @@
     "indicator": "% adults felt strongly belonged to their neighbourhood",
     "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
     "granularity": "England (regional/ITL1 breakdown also published, incl. London)",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. The survey does publish a London (ITL1) regional breakdown for this indicator specifically, which consistently runs below the England average (e.g. 59% London vs 62% England, 2024/25) - see source notes in the Python builder for the multi-year comparison. No official GLA or UK Government target exists for this indicator."
+    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. The survey does publish a London (ITL1) regional breakdown for this indicator specifically, which consistently runs below the England average (e.g. 59% London vs 62% England, 2024/25) - see source notes in the Python builder for the multi-year comparison. No official GLA or UK Government target exists for this indicator. Not yet re-checked against the renamed Community and Engagement Survey 2025/26 - out of scope for the loneliness/support-networks update this covers; due a refresh in a future session."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "community",
+    "category": "Connected",
+    "indicator": "% adults agreed that if they needed help, there would be people there for them",
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
+    "granularity": "ITL2 sub-region (Inner London - East, includes Lewisham) - no local-authority breakdown published for this question",
+    "notes": "New indicator, added this session. DCMS's Community and Engagement Survey (CES) 2025/26 - successor to the Community Life Survey - found 96% of adults in England agreed (definitely or tended to agree) that if they needed help there are people who would be there for them, up from 94% in 2024/25 (a statistically significant rise). The CES report states explicitly that this question's data 'are not available at LA level', so Lewisham itself is never named; the most granular published breakdown is the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, Lewisham, Newham, Southwark, Tower Hamlets), used as the snapshot: 95% in 2025/26 (95% CI 94-96%), up from 93% in 2024/25 (95% CI 92-95%) - not a statistically significant change. The wider ITL1 London region runs almost identically (95% in 2025/26, 93% in 2024/25). These support-network questions were asked online-only in both survey years (CES data tables, Note 6), so results reflect the online-responding population specifically. Source data: CES 2025/26 support-networks data tables (ODS), Table F13 (by demographic/regional characteristics). No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",

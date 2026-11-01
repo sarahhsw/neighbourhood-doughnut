@@ -1366,7 +1366,10 @@ def build_energy():
                 "2,800 of Ladywell's 5,130 properties (54.6%) built before 1930, vs 42.8% Lewisham, 35.4% London, 24.8% England "
                 "(https://www.gov.uk/government/statistics/council-tax-stock-of-properties-2025). Next ONS edition was due October 2026 but "
                 "had not been published as of 2026-11-01. Previous value (43%, Lewisham Observatory 2022 ward profile) is a different method "
-                "and is not joined to this series."
+                "and is not joined to this series. Bias caveat (fact-check, November 2026): the MSOA 011+014 weighting includes two "
+                "non-Ladywell LSOAs (011B, 014A; about 1,692 households, 28% of the weight) with very old stock (91% and 76% pre-1930) and "
+                "excludes Ladywell's LSOA 041D (714 households, 23% pre-1930), so 37.9% is probably an underestimate; weighting by Ladywell "
+                "households including MSOA 041 gives about 41.6%. The page text says the true figure may be a few points higher."
             )
         ),
         geography=GeographyLevel.MSOA_AGGREGATED,
@@ -1397,7 +1400,7 @@ def build_energy():
         indicator="% households in fuel poverty",
         threshold=Threshold(value=9.9, unit="%", description="England fuel poverty rate (LILEE metric), 2024 data year (DESNZ sub-regional Table 2: 2,472,012 of 24,845,794 households)"),
         snapshot=Snapshot(value=9.9, unit="%", year=2024),
-        status=Status.SHORTFALL,
+        status=Status.MET,
         source=Source(
             name="DESNZ - Sub-regional fuel poverty statistics, 2026 (2024 data) and earlier LILEE releases (2019-2023 data), LSOA and local authority tables",
             url="https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2026-2024-data",
@@ -1416,7 +1419,9 @@ def build_energy():
                 "2022 https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2024-2022-data ; 2023 https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2025-2023-data ; "
                 "report https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-report-2026-2024-data . Correction: the July 2026 build "
                 "showed Lewisham 13.8% for 2022; DESNZ's own table gives 11.1% (also quoted as '11%' in Lewisham's Housing Retrofit Strategy "
-                "report to Mayor & Cabinet, 12 March 2025)."
+                "report to Mayor & Cabinet, 12 March 2025). Caveat: DESNZ says LSOA estimates 'should not be used to identify trends over "
+                "time within an LSOA' and are constrained to regional totals, so the Ladywell series shows modelled context, not a measured "
+                "local trend; the page text says so. Status is 'met' because Ladywell's unrounded 9.87% is below England's 9.95%."
             )
         ),
         geography=GeographyLevel.LSOA_AGGREGATED,

@@ -550,7 +550,31 @@ section.
   digitally excluded..." and cut the pilot-borough/validation detail entirely - the reader
   doesn't need to know why a Ladywell-specific LOTI score doesn't exist, only what the
   framework itself says. Same principle as the rest of this section: inner workings of how or
-  why a source was used belong in the data layer's notes, not reader-facing prose.
+  why a source was used belong in the data layer's notes, not reader-facing prose. **This
+  applies to the top summary too, and to parenthetical asides as much as to opening clauses.**
+  Caught again November 2026: after the LOTI section itself was fixed, the connectivity top
+  summary still carried "(Lewisham isn't covered by the framework's own pilot boroughs)" in
+  the middle of its key sentence. The user flagged it as too granular, saying it broke the
+  narrative. Cut entirely; the coverage detail stays in the indicator's `source.notes`.
+- ❌ **Geography-provenance explanations where a short phrase will do.** Caught on the Water
+  dimension's per capita consumption text, November 2026: "no ward or borough breakdown is
+  published, but Thames Water's own figure is, used here as the most relevant geography" -
+  flagged by the user as too much detail. Replaced with "across Thames Water's supply area,
+  which includes Lewisham": the reader needs to know *which* geography the number covers,
+  not the reasoning behind choosing it. (The card's geography label already says the rest -
+  see 2.7.)
+- ❌ **Filler characterisations that restate a trend without adding meaning.** Same Water
+  text, November 2026: "Use spiked... then eased back before ticking up again - a bumpier
+  path than a steady decline, leaving little net progress" - the user flagged "a bumpier
+  path than a steady decline" as adding no value. The preceding clause already described
+  the shape. Before keeping a phrase that characterises a trend, ask whether it tells the
+  reader anything the clause before it didn't.
+- ❌ **Dismissive tone words about a positive finding.** Caught on the connectivity top
+  summary, November 2026: "Ladywell's physical connectivity is strong and unremarkable" -
+  the user said "unremarkable" read as negative given the borough's genuinely good
+  connectivity. The intent was "this isn't where the story is", but the word judges the
+  finding instead. State the finding plainly ("is strong") and let the next sentence's
+  pivot ("the more revealing picture is...") do the work of shifting focus.
 
 **Good examples:**
 
@@ -866,6 +890,19 @@ if (ring === 'social') {
   as the headline (`renderDimensionDetail`'s `indicatorsToShow.forEach` block). Don't
   hand-format commas into a snapshot value in the pipeline; let the site do it. This also
   means large snapshot values (counts, £ totals) don't need special-casing when added.
+
+**Figures with different population bases: use labelled stat cards, not a bar chart.** Caught
+on the connectivity dimension's LOTI key-groups breakdown, November 2026: six Ladywell
+figures (children in income-deprived households, disabled residents, residents aged 65+,
+unemployed, and so on) were drawn as horizontal bars on one shared 0-100% track, with a
+footnote explaining that each was a share of a different population. The user asked what
+each % was relative to, and suggested key stat cards instead. Bars on a shared axis invite
+side-by-side comparison, which is wrong when the denominators differ (all residents vs
+children aged 0-15 vs economically active residents vs businesses). Replaced with a grid of
+`.loti-stat` cards, each one a full sentence naming its own base ("33.6% *of Ladywell
+children (aged 0-15)* live in income-deprived households"). **Rule: only put figures on one
+shared axis when they share a denominator. Otherwise, write the base into each figure's own
+label so it can't be misread.**
 
 **For each indicator**:
 - **Indicator name** as heading

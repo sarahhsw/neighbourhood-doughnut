@@ -1294,6 +1294,43 @@ spot-checking things that surprise them - both incidents above were ultimately c
 human noticing something felt off. The fact-checker step exists to catch what slips past both
 of those *before* a user has to be the one who finds it.
 
+**Check a figure's internal arithmetic, its time basis, and which page it's actually on - not
+just whether the number exists somewhere.** Added November 2026 after the culture dimension's
+"£ local authority funding in art & culture" indicator shipped with three separate errors that
+each traced to a real source, so none of them looked fabricated:
+1. **Annual vs multi-year.** The snapshot read "£386,000, 3-year total" and the copy said the
+   Arts & Culture Fund gave "£150,000 a year to The Albany, plus roughly £236,000 across eight
+   others over the 2022-25 cycle." The arithmetic can't work: £150k/year x 3 alone is £450k,
+   more than the claimed 3-year total. The council's Mayor & Cabinet report (2 Feb 2022, paras
+   1.4 and 10.3) states £386,000 as a general-fund budget inside a grants programme costed "per
+   annum" - it was an annual figure mislabelled as a cycle total. **Rule: whenever a page states
+   both a per-year component and a total, multiply it out before publishing; and for any council
+   budget figure, find the sentence that says "per annum"/"a year" or the multi-year framing -
+   don't infer the time basis from the document's title (a "2022-25" programme mostly quotes
+   annual budgets).**
+2. **Wrong count.** "Eight others" was actually ten (the allocation table lists eleven grants,
+   including a £1,000 one easy to skip). Count rows in the primary table; don't carry forward a
+   count from an earlier summary.
+3. **Right number, wrong citation, and a percentage glued to the wrong base.** The copy said
+   English council arts spending fell "61% in real terms (£18.67 to £6.47 per resident)", citing
+   the Equity tracker page - which only gives the Britain-wide figure (55%, £1.19bn to £539m).
+   A fact-check reasonably flagged 61% as unsupported. It turned out to be real, but on a
+   *different* Equity page (the 19 March 2026 news release), where 61% is the fall in England's
+   *total* real spending; the per-person figures in the same paragraph (£18.67 to £6.47) are a
+   ~65% fall. Pairing them as "61% (£18.67 to £6.47)" asserted a per-person percentage no source
+   gives. **Rule: cite the exact page the figure appears on (a campaign's landing page and its
+   press release often carry different headline numbers); and when a source gives a total-spend
+   percentage and per-capita levels side by side, state them as two separate facts, never as
+   "X% (from A to B)" unless A-to-B actually computes to X%.** Also prefer the geography that
+   matches the ward: for a Lewisham page, England's 61% is the relevant comparator, not the
+   Britain-wide 55%, as long as it's cited to the page that says it.
+
+Practical note from the same fix: `lewisham.moderngov.co.uk` returns a bot-check 403 to
+automated fetches. Don't try to get around it (e.g. by spoofing a browser user-agent). The same
+committee documents, same `sNNNNNN` IDs, are served normally by the council's
+`councilmeetings.lewisham.gov.uk/documents/sNNNNNN/...` mirror; a web search for the
+document title usually turns up that URL.
+
 ---
 
 ## 3. Local & Broader Context Section

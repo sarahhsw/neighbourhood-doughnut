@@ -268,7 +268,7 @@
     "indicator": "% of people aged 16+ who engaged with the arts in the last 12 months",
     "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-arts",
     "granularity": "Local authority (2025/26 onward); England for earlier years",
-    "notes": "Renamed from 'Active participation'. Snapshot: Lewisham 88.5% engaged with the arts physically or digitally in 2025/26 (95% CI 85.7-90.8%; CES 2025/26 arts tables, Table I8), above England 84.4% and London 83.2% (Table I7). Chart shows three labelled series: England 2021/22-2024/25 (Participation Survey annual reports: 88%, 90%, 91.4%, 90.6%), England 2025/26 from the new CES (84.4%) kept separate because DCMS says the fall may be partly methodological (CES arts report, footnote 3), and Lewisham 2025/26."
+    "notes": "Renamed from 'Active participation'. Snapshot: Lewisham 88.5% engaged with the arts physically or digitally in 2025/26 (95% CI 85.7-90.8%; CES 2025/26 arts tables, Table I8), above England 84.4% and London 83.2% (Table I7). Chart shows three labelled series: England 2021/22-2024/25 (Participation Survey time series: 87.7%, 89.9%, 91.4%, 90.6%), England 2025/26 from the new CES (84.4%) kept separate because DCMS says the fall may be partly methodological (CES arts report, footnote 3), and Lewisham 2025/26."
   },
   {
     "lens": "local_social",

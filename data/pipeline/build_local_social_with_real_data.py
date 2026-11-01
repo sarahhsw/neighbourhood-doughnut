@@ -1011,7 +1011,7 @@ def build_community():
             notes=(
                 "95.2% of adults in the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, "
                 "Lewisham, Newham, Southwark, Tower Hamlets) agreed that if they needed help there are people who would "
-                "be there for them in 2025/26 (95% CI 93.8-96.3%, 1,661 respondents; CES Table F13), up from 93.4% in "
+                "be there for them in 2025/26 (95% CI 93.8-96.3%, 1,661 of 1,740 respondents agreeing; CES Table F13), up from 93.4% in "
                 "2024/25 (95% CI 91.6-94.8%) - marked 'No Change' by the survey's own test. This question is not "
                 "published at local-authority level in any year, so the sub-region is the most granular figure available. "
                 "London (ITL1) ran 94.7% in 2025/26 and 92.9% in 2024/25. England series (CLS Timeseries sheet, then CES "
@@ -1060,7 +1060,7 @@ def build_culture_dimensions():
             url="https://data.london.gov.uk/dataset/cultural-infrastructure-data-2025-and-2026-2rj5o",
             accessed="2026-11-01",
             notes=(
-                "Counted directly from the GLA's long-list file (GLA_Cultural_Infrastructure_Map_data_2026_all.xlsx, "
+                "Counted directly from the GLA's long-list file (listed as GLA_Cultural_Infrastructure_Map_data_2026_all.xlsx, downloaded as Long_List_CIM_2026_all.xlsx; "
                 "sheet CIM_2026_long_all_v3, 5,202 rows covering both cultural production and consumption spaces), "
                 "filtered on the dataset's own ward column = 'Ladywell' and status = 'Open'. 5 open venues: Ayyappaa "
                 "Jewellery Workshop (jewellery design), Chemist Gallery (commercial gallery), South London Dance Academy "
@@ -1138,12 +1138,13 @@ def build_culture_dimensions():
                 "Snapshot: 88.5% of Lewisham residents aged 16+ engaged with the arts physically or digitally at least "
                 "once in the last 12 months in 2025/26 (95% CI 85.7-90.8%, 817 of 910 respondents) - CES 2025/26 arts "
                 "data tables, Table I8 (by local authority, LAD25 E09000023). That is above both England (84.4%, Table I7) "
-                "and London (83.2%, Table I7 ITL1 row) for the same year. 2025/26 is the first year with a local-authority "
-                "figure: DCMS and MHCLG boosted the sample to produce LA estimates (Note 9), so no earlier Lewisham figure "
-                "exists. England trend: Participation Survey annual reports give 88% (2021/22, first year, survey started "
-                "Oct 2021), 90% (2022/23), 91.4% (2023/24) and 90.6% (2024/25); the CES 2025/26 arts report's own time "
-                "series quotes 85% for 2021/22, which differs from the 88% in the Participation Survey 2022/23 report - the "
-                "originally published Participation Survey figures are used. Series break: the 2025/26 England figure "
+                "and London (83.2%, Table I7 ITL1 row) for the same year. 2025/26 is the first year this combined "
+                "physical-or-digital measure is published by local authority (Note 9). The Participation Survey 2023/24 "
+                "local-authority boost published Lewisham's physical engagement (90.7%, 95% CI 87.5-93.2%) and digital "
+                "engagement (40.8%) separately, but not the combined measure. England trend: the Participation Survey "
+                "2024/25 time series gives 87.7% (2021/22, first year, survey started Oct 2021), 89.9% (2022/23), 91.4% "
+                "(2023/24) and 90.6% (2024/25); the CES 2025/26 arts report's own time series quotes 85% for 2021/22, "
+                "which conflicts with DCMS's Participation Survey time series - the Participation Survey figures are used. Series break: the 2025/26 England figure "
                 "(84.4%) comes from the new CES, and DCMS states it is 'lower than anticipated' and that it is 'unclear "
                 "whether this is a true decrease... or due to methodological differences between the CES and "
                 "Participation Survey, such as differences in question placement' (CES arts report, footnote 3). It is "
@@ -1156,8 +1157,8 @@ def build_culture_dimensions():
         confidence=Confidence.HIGH,
         target_text="No official GLA or UK Government target established for this indicator.",
         trend=[
-            {"period": "2021/22", "value": 88.0, "series": "England", "note": "Participation Survey, first year (started Oct 2021)"},
-            {"period": "2022/23", "value": 90.0, "series": "England", "note": "Participation Survey"},
+            {"period": "2021/22", "value": 87.7, "series": "England", "note": "Participation Survey, first year (started Oct 2021)"},
+            {"period": "2022/23", "value": 89.9, "series": "England", "note": "Participation Survey"},
             {"period": "2023/24", "value": 91.4, "series": "England", "note": "Participation Survey; peak year"},
             {"period": "2024/25", "value": 90.6, "series": "England", "note": "Participation Survey"},
             {"period": "2025/26", "value": 84.4, "series": "England, new survey", "note": "Community and Engagement Survey; DCMS flags the fall may be partly methodological"},

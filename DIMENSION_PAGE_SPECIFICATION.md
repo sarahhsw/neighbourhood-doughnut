@@ -945,6 +945,24 @@ a label behave exactly as before. Rules:
   "c" suffix (or the one titled "by local authority"). Search those before writing "no local
   figure exists". Any dimension still drawing on CLS questions with an "England-only" caveat
   (e.g. social_cohesion as of this note) should be re-checked the same way.
+- **"I couldn't fetch it" must never become "it doesn't exist" in reader-facing copy.** The
+  social_cohesion builder's July 2026 docstring was honest: gov.uk was blocked that session,
+  so a Lewisham value "could not be confirmed". By the time it reached the page, that tool
+  limitation had turned into a factual claim: "None of these figures has a Lewisham-specific
+  equivalent." When the CLS 2024/25 tables were opened in November 2026, all four indicators
+  had Lewisham figures (Tables B4c, B6c, B10c, C1c(F)). Lewisham turned out to have *lower*
+  trust than England (30% vs 38%) but *higher* cross-background cohesion (83% vs 79%), the
+  opposite of what the England-only "drifted down together" summary implied. If a session
+  can't reach a source, record that in `source.notes` and the builder docstring, flag it as
+  a follow-up, and keep the reader copy to what was actually checked. Don't write a reader-
+  facing sentence saying no local figure exists.
+- **Re-pulling a series from the primary table also catches small inherited errors.** The
+  same pass found the trust indicator's 2021/22 England point stored as 41%, not the
+  Timeseries' 42.2%. The volunteering text also claimed formal volunteering drove the
+  national fall while informal help "held up far better". Over 2020/21-2024/25 the table
+  shows the opposite: informal fell 54% to 44%, formal 30% to 28%. Both were fixed. When you
+  rebuild a series, overwrite every point from the source rather than appending to the old
+  ones.
 - **When the geography of an indicator changes, re-check its inherited "why" claims too.**
   The same civic participation text attributed the England 2020/21 peak to "lockdown-era
   mutual aid and local campaigning". Once the full CLS Timeseries was opened, 2019/20 (fieldwork

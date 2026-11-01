@@ -419,36 +419,36 @@
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults agreed that people in neighbourhood can be trusted",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. DCMS/MHCLG boosted the sample from 2023/24 (to ~175,000 respondents, from ~10,000) specifically to enable local-authority-level estimates and maps, and a London (ITL1) regional breakdown is also published (running well below the England average, in the low-to-mid 30s%), but no reliable London-region or Lewisham-specific figure could be confirmed this session because gov.uk data-table hosts were blocked by this environment's network egress policy. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 29.5% in 2025/26 (95% CI 25.8-33.4%; CES 2025/26 Table D12), shown as 30%. Earlier Lewisham estimates: 32.2% (2023/24) and 29.9% (2024/25) from the CLS local-authority boost (CLS 2024/25 Table B4c, Note 20) - an earlier version of this entry said no Lewisham figure could be retrieved. Year-on-year moves 'No Change'. London 29.3%, England 37.6% (a significant fall) in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries, then CES Table D10, CLS methodology) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults agreed people from different backgrounds get along well together",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. A regional/local-authority breakdown is also published but no London-region or Lewisham-specific figure could be confirmed this session (same access restrictions as the trust indicator above). No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 83.4% in 2025/26 (95% CI 79.6-86.7%; CES 2025/26 Table D15), shown as 83%. Earlier Lewisham estimates: 84.5% (2023/24) and 84.5% (2024/25) from CLS 2024/25 Table B6c (Note 20). Year-on-year moves 'No Change'. London 80.9%, England 78.5% (a significant fall) in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries, then CES Table D13) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% proud to live in their local area",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. This question was first introduced in 2023/24, so only two years of trend data exist (59% 2023/24, 60% 2024/25) - no earlier trend is available from this or a predecessor survey. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-pride-in-local-area",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 58.0% in 2025/26 (95% CI 53.5-62.5%; CES 2025/26 Table E3). Earlier Lewisham estimates: 58.0% (2023/24) and 53.9% (2024/25) from CLS 2024/25 Table B10c (Note 20). Year-on-year moves 'No Change'. London 59.4%, England 61.6% (a significant rise) in 2025/26. Question first asked in 2023/24. Chart shows two labelled series: England and Lewisham, 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults that have participated in formal/informal volunteering",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-volunteering-and-charitable-giving",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. Figure used is the combined formal-or-informal measure, 'at least once in the last 12 months' (54% in 2024/25) rather than the stricter 'at least once a month' variant (33%) - see source notes in build_local_social_with_real_data.py for the full formal/informal split. Local-authority-level estimates are also published since the 2023/24 sample boost but no Lewisham-specific figure could be confirmed this session. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-volunteering",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 60.6% did any formal or informal volunteering at least once in the last 12 months in 2025/26 (95% CI 56.3-64.9%; CES 2025/26 Table G13), shown as 61%. Earlier Lewisham estimates: 58.0% (2023/24) and 55.5% (2024/25) from CLS 2024/25 Table C1c(F) (Note 20). Year-on-year moves 'No Change'. London 56.0%, England 55.6% (a significant rise) in 2025/26. Chart shows two labelled series: England 2020/21-2025/26 (CLS releases and Table C1a, then CES Table G1) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",

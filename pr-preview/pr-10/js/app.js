@@ -1493,7 +1493,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: 'Volunteer as a Citizens Advice Lewisham adviser',
-                    text: `Free, confidential advice on debt, benefits, housing and employment, based at the Leemore Community Hub - currently recruiting Telephone Assessors and Advisers, with full training given.`,
+                    text: `Free, confidential advice on debt, benefits, housing and employment from the Leemore Centre in central Lewisham. Volunteer advisers and telephone assessors get full training.`,
                     url: 'https://citizensadvicelewisham.org.uk/volunteer-with-us/'
                 },
                 {
@@ -1508,8 +1508,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: 'Push your employer to become Living Wage accredited',
-                    text: `Lewisham Council funds accreditation fees for three years for newly-accredited local businesses. 95 employers already cover 7,605 employees at the London Living Wage rather than the lower statutory minimum.`,
-                    url: 'https://lewisham.gov.uk/myservices/business/london-living-wage'
+                    text: `Accredited employers pay at least the London Living Wage. Lewisham's count grew from around 40 in 2021 to over 120 in 2025, lifting pay for an estimated 7,600 employees.`,
+                    url: 'https://www.livingwage.org.uk/accreditation'
                 }
             ];
         }

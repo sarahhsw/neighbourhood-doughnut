@@ -392,9 +392,9 @@
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% turnout in local election",
-    "source_url": "https://lginform.local.gov.uk/reports/lgastandard?mod-area=E92000001&mod-group=E09000023&mod-metric=3361&mod-type=area",
-    "granularity": "Borough (Lewisham) - LG Inform standard report, metric 3361; no ward-level aggregate published",
-    "notes": "Borough-wide combined Mayor-and-council turnout (one ballot, one turnout figure). Cross-checked against Lewisham Council's own election results pages, Wikipedia's Lewisham borough election articles, and Electoral Commission-reported figures via web search, since this environment's network egress policy blocked direct fetches to lginform.local.gov.uk, councilmeetings.lewisham.gov.uk, lewisham.moderngov.co.uk and en.wikipedia.org this session (all returned connection failures or HTTP 403, including via curl with a browser User-Agent). A genuine attempt was made to source true ward-level Ladywell turnout instead (Ladywell's current boundaries have been used since the 2022 election) - individual 2022 candidate vote counts were found, but the full candidate list, total ballots cast and ward electorate needed to compute a ward-level turnout percentage could not be extracted from search-engine snippets alone."
+    "source_url": "https://lewisham.gov.uk/mayorandcouncil/elections/elections/election-results-2026",
+    "granularity": "Borough (Lewisham) - borough-wide Mayor of Lewisham election turnout",
+    "notes": "Mayor of Lewisham election turnout from Lewisham Council's own results: 42.14% (7 May 2026, results page), 34.55% (5 May 2022, returning officer's declaration PDF), 37.4% (3 May 2018, computed from the council results system: 74,599 ballots / 199,555 electorate). CORRECTION November 2026: the 2022 point previously read 20.88%, which is actually the Deptford ward by-election of 9 November 2023. 2010 and 2014 points dropped under the 10-year data-age rule. Ladywell ward turnouts exist on councilmeetings.lewisham.gov.uk (mgElectionAreaResults.aspx) but the ward's boundaries changed in 2022."
   },
   {
     "lens": "local_social",

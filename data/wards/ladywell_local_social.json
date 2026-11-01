@@ -1722,32 +1722,28 @@
       "status": "descriptive_only",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Lewisham Council official election results / Wikipedia election summaries, cross-checked against Electoral Commission-reported figures",
-        "url": "https://lginform.local.gov.uk/reports/lgastandard?mod-area=E92000001&mod-group=E09000023&mod-metric=3361&mod-type=area",
-        "accessed": "2026-07-17",
-        "notes": "Borough-wide combined Mayor-and-council turnout (Lewisham elects both on one ballot paper on the same day, so there is a single turnout figure, not separate mayoral/council ones). 42.14% on 7 May 2026 - the election in which the Green Party won a majority on Lewisham Council for the first time, ending decades of Labour control, in a genuinely contested three-way race. 20.88% on 5 May 2022. 37.2% on 22 May 2014. 60.7% on 6 May 2010, but that round was held on the same day as the UK general election, which drove exceptional turnout - not comparable to the other rounds. 3 May 2018 borough-wide turnout could not be reliably sourced this session despite a genuine, repeated search effort (Wikipedia's 2018 election article, the Electoral Commission's 'Results and turnout at the 2018 May England local elections' report, and Lewisham Council's own results pages were all identified but could not be directly fetched or searched to the specific figure - see below). Ward-level Ladywell turnout was also specifically sought, per this indicator's data-source brief, since Ladywell's current boundaries have been used since the 2022 election: individual 2022 candidate vote counts were found (Labour: Cunningham 2,151, Johnston-Franklin 1,950, Brown 1,930; Green: Stein 1,810, Humberstone 1,786, Crossley 1,759), but the full candidate list, total ballots cast, and ward electorate needed to compute a genuine ward-level turnout percentage could not be extracted. This environment's network egress policy blocks direct page fetches to councilmeetings.lewisham.gov.uk, lewisham.moderngov.co.uk, lginform.local.gov.uk and en.wikipedia.org (every direct fetch attempt this session returned a connection failure or 403, including via curl with a browser User-Agent), leaving only web-search-engine snippets, which do not carry electorate/total-ballot detail. The figure shown is therefore the borough-wide (Lewisham) figure the assigned LG Inform source itself measures at metric 3361, not Ladywell specifically."
+        "name": "Lewisham Council - Mayor of Lewisham election results (2018, 2022, 2026)",
+        "url": "https://lewisham.gov.uk/mayorandcouncil/elections/elections/election-results-2026",
+        "accessed": "2026-11-01",
+        "notes": "Turnout in the borough-wide Mayor of Lewisham election, held on the same day as the all-out council (ward) elections. 7 May 2026: 42.14% (Lewisham Council 'Local and mayoral election results 2026'); the Green Party won the mayoralty (Liam Shrivastava, 35,265 first-preference votes vs Labour 30,374) and 40 of 54 council seats, its first majority; Labour had held the mayoralty since it was created in 2002 and majority control of the council since 2010. 5 May 2022: 34.55% (returning officer's declaration, https://lewisham.gov.uk/-/media/mayor-and-council/elections/election-22/result-mayor-of-lewisham-6522.pdf: electorate 201,814, ballot papers issued 69,724). 3 May 2018: 37.4%, computed from the council's results system (https://councilmeetings.lewisham.gov.uk/mgElectionAreaResults.aspx?ID=25: electorate 199,555, ballot papers issued 74,599; the page itself rounds to 37%). CORRECTION (November 2026): this indicator previously showed 20.88% for 2022. That figure is actually the turnout of the Deptford ward by-election of 9 November 2023 (Lewisham Council past election results page), not any borough-wide election. The March 2024 mayoral by-election turnout was 20.74% (same page) - not plotted, as by-elections are not comparable with scheduled all-out elections. Earlier points (2014: 37.2%; 2010: 60.7%, held the same day as the general election) were dropped under the 10-year data-age rule. For comparison, the July 2024 general election turnout in Lewisham's three constituencies was 55.6% (Lewisham East), 59.9% (Lewisham North) and 67.20% (Lewisham West and East Dulwich) (council past election results page). Ladywell ward turnouts are published on the council's results system (e.g. 45% in 2018) but Ladywell's boundaries changed in 2022, so a ward series is not yet used here."
       },
-      "confidence": "medium",
+      "confidence": "high",
       "community_notes": [],
       "trend": [
         {
-          "period": "2010",
-          "value": 60.7,
-          "note": "Held the same day as the UK general election - turnout not comparable to other rounds"
-        },
-        {
-          "period": "2014",
-          "value": 37.2
+          "period": "2018",
+          "value": 37.4,
+          "note": "Computed from council results system: 74,599 ballots / 199,555 electorate"
         },
         {
           "period": "2022",
-          "value": 20.88,
-          "note": "2018 borough turnout could not be reliably sourced this session"
+          "value": 34.55,
+          "note": "Returning officer's declaration"
         },
         {
           "period": "2026",
           "value": 42.14,
-          "note": "Green Party won a council majority for the first time"
+          "note": "Green Party won the mayoralty and a council majority for the first time"
         }
       ]
     },

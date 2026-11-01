@@ -597,7 +597,9 @@ section.
   chart values in a row. It did earn a "why" at the end (turnout tracks how contested the
   race feels), but the fix is to make that point with the one or two values that actually
   support it (the 2022 low and the 2026 rebound), not all four - drop the ones that are pure
-  shape-narration.
+  shape-narration. (Note added November 2026: the 20.88% "2022" figure in this example was
+  itself wrong. It was a 2023 ward by-election's turnout, and the real 2022 figure is 34.55%.
+  See 2.5's turnout bullet. Keep this only as an example of narration, not as data.)
   **This rule is easy to re-break even right after reading it, specifically when writing a
   trend-vs-target comparison sentence** - the instinct to "show your working" by citing the two
   endpoint values is strong precisely because the sentence is making a quantitative claim
@@ -948,6 +950,20 @@ a label behave exactly as before. Rules:
   mutual aid and local campaigning". Once the full CLS Timeseries was opened, 2019/20 (fieldwork
   mostly before the pandemic) was already 40.9%, almost the same as 2020/21's 41.7%, and no
   source for the lockdown explanation could be found. The claim was dropped, not reworded.
+- **An election-turnout figure must be tied to a named election on a named date, from the
+  returning officer's declaration or the council's own results page - not just "the 2022
+  figure".** Caught November 2026 by the fact-checker on the political voice turnout
+  indicator. The page had said for months that "just 20.88% voted in 2022", and that low
+  point carried the top summary's "swung sharply" story. The official 5 May 2022 mayoral
+  declaration says 34.55%. The 20.88% was the turnout of a single-ward by-election (Deptford,
+  9 November 2023), listed on the same council past-results page as the borough-wide results.
+  Once corrected, the series (37.4% in 2018, 34.55% in 2022, 42.14% in 2026) showed a modest
+  rise, not a swing. The "genuinely contested three-way race" framing also failed: the 2026
+  vote was a two-party Green-Labour contest. A wrong number had been propping up a causal
+  story. **Rule:** for each turnout point, record the election type (mayoral, ward, by-election,
+  general), date, electorate and ballots issued in `source.notes`. Check that the percentage is
+  ballots ÷ electorate. Never plot a by-election in the same series as scheduled all-out
+  elections.
 
 **For each indicator**:
 - **Indicator name** as heading

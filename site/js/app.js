@@ -354,7 +354,7 @@ function renderTrendChart(allIndicators, dimension) {
         const y = yScale(value);
         svg += `
             <text x="${margin.left - 10}" y="${y + 4}"
-                  text-anchor="end" font-size="10px" fill="#666">${value.toFixed(1)}</text>
+                  text-anchor="end" font-size="10px" fill="#666">${maxValue >= 10000 ? Math.round(value / 1000).toLocaleString('en-GB') + 'k' : value.toFixed(1)}</text>
             <line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#999" stroke-width="1"/>
         `;
     }

@@ -929,6 +929,25 @@ a label behave exactly as before. Rules:
   were moved to CES in October 2026, but neighbourhood belonging was left on the England-only
   CLS series ("out of scope for this update") even though CES publishes a Lewisham figure for
   it (Table D3: 53.8% in 2025/26). The user caught it.
+- **"Published for England only" is a claim like any other: check the data tables before
+  writing it, not the release's narrative page.** Caught again November 2026, this time on a
+  different dimension: political voice's civic participation and "can personally influence
+  local decisions" indicators both said "England-only... no Lewisham or London breakdown", and
+  that framing was carried into the top summary ("a steadier national trend"). A fact-check
+  then opened the CLS 2024/25 data tables and found Lewisham estimates for both questions in
+  2023/24 and 2024/25 (Tables X1c and B5c, Note 20), and the CES 2025/26 releases added a
+  third year (civic engagement Table A3, influencing local decisions Table B3). Lewisham turned
+  out to be well above England on both (48% vs 38% civic participation; 32% vs 26% can
+  influence), so the England-only framing hadn't just hidden a local number, it had hidden the
+  page's main finding. In CLS/CES tables, the local-authority breakdown is the sheet with the
+  "c" suffix (or the one titled "by local authority"). Search those before writing "no local
+  figure exists". Any dimension still drawing on CLS questions with an "England-only" caveat
+  (e.g. social_cohesion as of this note) should be re-checked the same way.
+- **When the geography of an indicator changes, re-check its inherited "why" claims too.**
+  The same civic participation text attributed the England 2020/21 peak to "lockdown-era
+  mutual aid and local campaigning". Once the full CLS Timeseries was opened, 2019/20 (fieldwork
+  mostly before the pandemic) was already 40.9%, almost the same as 2020/21's 41.7%, and no
+  source for the lockdown explanation could be found. The claim was dropped, not reworded.
 
 **For each indicator**:
 - **Indicator name** as heading

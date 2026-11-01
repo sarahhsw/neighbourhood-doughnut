@@ -1440,8 +1440,16 @@ def build_political_voice():
     Political Voice dimension - 3 indicators: local election turnout (Lewisham borough,
     since Lewisham elects a directly-elected Mayor and councillors on one combined ballot -
     no ward-level turnout figures could be reliably sourced this session, see source notes)
-    and two DCMS Community Life Survey measures of civic participation and perceived local
-    influence (England-wide only - the survey is not run below national level).
+    and two DCMS survey measures, civic participation and perceived local influence. Both have
+    Lewisham estimates from 2023/24: DCMS/MHCLG boosted the Community Life Survey (CLS) sample
+    for local-authority estimates in 2023/24 and 2024/25 (CLS 2024/25 tables, Note 20; Tables
+    X1c and B5c) and the successor Community and Engagement Survey (CES) again in 2025/26
+    (CES civic engagement Table A3, influencing local decisions Table B3). The CES Community-
+    pathway tables (A-G) use the CLS methodology "to allow for robust comparability with the
+    CLS time-series" (both releases' 'Methodological Alignment' note), so the England CES
+    2025/26 points continue the CLS England series. Each chart shows two labelled series:
+    England 2018/19 onward (CLS Timeseries sheet, then CES) and Lewisham 2023/24 onward - the
+    same pattern as build_community().
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     turnout = create_descriptive_dimension(
@@ -1476,33 +1484,53 @@ def build_political_voice():
         ]
     )
 
+    cls_ts_note = "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
     civic_participation = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="political_voice",
         indicator="% adults that have engaged in civic participation",
-        snapshot=Snapshot(value=34, unit="%", year="2024/25"),
+        snapshot=Snapshot(value=48, unit="%", year="2025/26"),
         source=Source(
-            name="DCMS Community Life Survey 2024/25 - Civic engagement and social action",
-            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
-            accessed="2026-07-17",
+            name="Community and Engagement Survey 2025/26 - Civic engagement (Table A3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table X1c)",
+            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-civic-engagement",
+            accessed="2026-11-01",
             notes=(
-                "34% of adults in England had engaged in some form of civic participation - contacting a local councillor or MP, signing a petition, or attending a public rally/meeting, in person or online, excluding voting - at least once in the 12 months to March 2025 (published 10 December 2025). "
-                "No significant change from 33% in 2023/24, and in line with 34% in 2021/22, but down from a 2020/21 peak of 42% (and 41% in 2019/20). "
-                "No 2022/23 survey round was published - the Community Life Survey was redesigned around that time, moving fieldwork from 3-4 quarters to 2. "
-                "England-wide figure only: DCMS does not publish this indicator below national level, so no Lewisham- or London-specific figure exists - the same limitation applies to the 'personally influence local decisions' indicator on this page, from the same survey."
+                "47.8% of Lewisham adults engaged in civic participation at least once in the last 12 months in 2025/26 "
+                "(95% CI 43.7-52.0%, 417 of 822 respondents; CES 2025/26 civic engagement Table A3, LAD25 E09000023), "
+                "shown rounded to 48%. Civic participation = contacting a local official such as a councillor or MP, "
+                "signing a paper or e-petition, or attending a public meeting, rally, demonstration or protest, in person "
+                "or online; voting is excluded. Earlier Lewisham estimates from the CLS local-authority boost (CLS 2024/25 "
+                "Table X1c, Note 20): 44.2% in 2023/24 (95% CI 39.4-49.1%) and 44.0% in 2024/25 (95% CI 39.3-48.9%). The "
+                "survey's own test marks both year-on-year moves as 'No Change'. Lewisham ranks 7th highest of 295 local "
+                "authorities with a 2025/26 estimate (point estimates; Brighton and Hove highest at 54.4%) and 4th of 33 "
+                "London boroughs - confidence intervals overlap with many neighbours, so the exact rank is imprecise. "
+                "London (ITL1): 38.3% (2023/24), 37.4% (2024/25), 41.3% (2025/26) (CLS Table X1b, CES Table A2). England "
+                "series (CLS Timeseries sheet, then CES Table A1 'Total (yes)'): 34.5% (2018/19), 40.9% (2019/20), 41.7% "
+                "(2020/21), 34.0% (2021/22), no survey in 2022/23, 33.4% (2023/24), 33.7% (2024/25), 38.1% (2025/26, a "
+                "statistically significant increase). The 2018/19-2020/21 England values were revised in the CLS 2024/25 "
+                "Timeseries to exclude 'not classified' responses, so differ slightly from those years' original "
+                "publications (CLS Note 18). England's 2025/26 rise was largest for petition-signing (24.6% to 29.6%), "
+                "versus contacting a local official (13.5% to 15.1%) and attending a public meeting/rally/protest (5.2% to "
+                "5.6%) (CES Table A1). CES Community-pathway tables use the CLS methodology for comparability with the CLS "
+                "time series, so the 2025/26 England point continues the same line."
             )
         ),
-        geography=GeographyLevel.ENGLAND,
+        geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH,
         target_text="No official GLA or UK Government target established for this indicator.",
         trend=[
-            {"period": "2019/20", "value": 41},
-            {"period": "2020/21", "value": 42},
-            {"period": "2021/22", "value": 34},
-            {"period": "2023/24", "value": 33, "note": "No 2022/23 survey round was published (methodology redesign gap)"},
-            {"period": "2024/25", "value": 34},
+            {"period": "2018/19", "value": 34.5, "series": "England", "note": cls_ts_note},
+            {"period": "2019/20", "value": 40.9, "series": "England"},
+            {"period": "2020/21", "value": 41.7, "series": "England"},
+            {"period": "2021/22", "value": 34.0, "series": "England"},
+            {"period": "2023/24", "value": 33.4, "series": "England", "note": "No survey in 2022/23"},
+            {"period": "2024/25", "value": 33.7, "series": "England"},
+            {"period": "2025/26", "value": 38.1, "series": "England", "note": "CES 2025/26 civic engagement Table A1 (CLS methodology)"},
+            {"period": "2023/24", "value": 44.2, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.4-49.1%"},
+            {"period": "2024/25", "value": 44.0, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.3-48.9%"},
+            {"period": "2025/26", "value": 47.8, "series": "Lewisham", "note": "CES 2025/26 Table A3; 95% CI 43.7-52.0%"},
         ]
     )
 
@@ -1512,27 +1540,42 @@ def build_political_voice():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="political_voice",
         indicator="% adults agreed they can personally influence decisions affecting local area",
-        snapshot=Snapshot(value=24, unit="%", year="2024/25"),
+        snapshot=Snapshot(value=32, unit="%", year="2025/26"),
         source=Source(
-            name="DCMS Community Life Survey 2024/25 - Civic engagement and social action",
-            url="https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
-            accessed="2026-07-17",
+            name="Community and Engagement Survey 2025/26 - Influencing local decisions (Table B3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table B5c)",
+            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-local-decisions",
+            accessed="2026-11-01",
             notes=(
-                "24% of adults in England agreed (definitely or tended to agree) that they personally can influence decisions affecting their local area in 2024/25 (12 months to March 2025, published 10 December 2025), essentially unchanged from 23% in 2023/24. "
-                "Both of those years sit below every year on record between 2013/14 and 2021/22, when the figure held in a narrow 25-28% band (27% in 2013/14, 2019/20, 2020/21 and 2021/22 specifically). "
-                "No 2022/23 survey round was published, same redesign gap as the civic participation indicator on this page. England-wide figure only - not published below national level."
+                "31.7% of Lewisham adults definitely or tended to agree that they personally can influence decisions "
+                "affecting their local area in 2025/26 (95% CI 28.1-35.6%, 267 of 822 respondents; CES 2025/26 "
+                "influencing local decisions Table B3, LAD25 E09000023), shown rounded to 32%. Earlier Lewisham estimates "
+                "from the CLS local-authority boost (CLS 2024/25 Table B5c, Note 20): 31.0% in 2023/24 (95% CI 26.7-35.7%) "
+                "and 28.7% in 2024/25 (95% CI 24.6-33.3%). The survey's own test marks both year-on-year moves as 'No "
+                "Change'. Lewisham's lower confidence bound sits above England's figure in all three years. London (ITL1): "
+                "27.3% (2023/24), 28.4% (2024/25), 31.8% (2025/26) (CLS Table B5b, CES Table B2) - Lewisham is level with "
+                "London. England series (CLS Timeseries sheet, then CES Table B1 'GROUPED: Agree'): 25.4% (2018/19), 26.8% "
+                "(2019/20), 26.6% (2020/21), 27.0% (2021/22), no survey in 2022/23, 23.4% (2023/24), 23.8% (2024/25), 26.4% "
+                "(2025/26, a statistically significant increase). The CES report puts England at 26%-27% between 2017/18 "
+                "and 2021/22, so 2023/24-2024/25 are the lowest since at least 2017/18. CES Community-pathway tables use the "
+                "CLS methodology for comparability with the CLS time series, so the 2025/26 England point continues the "
+                "same line. The earlier 2013/14 England point (27%) was dropped: it is not in the CLS 2024/25 Timeseries "
+                "and is more than 10 years old."
             )
         ),
-        geography=GeographyLevel.ENGLAND,
+        geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH,
         target_text="No official GLA or UK Government target established for this indicator.",
         trend=[
-            {"period": "2013/14", "value": 27},
-            {"period": "2019/20", "value": 27},
-            {"period": "2020/21", "value": 27},
-            {"period": "2021/22", "value": 27},
-            {"period": "2023/24", "value": 23, "note": "No 2022/23 survey round was published (methodology redesign gap)"},
-            {"period": "2024/25", "value": 24},
+            {"period": "2018/19", "value": 25.4, "series": "England", "note": cls_ts_note},
+            {"period": "2019/20", "value": 26.8, "series": "England"},
+            {"period": "2020/21", "value": 26.6, "series": "England"},
+            {"period": "2021/22", "value": 27.0, "series": "England"},
+            {"period": "2023/24", "value": 23.4, "series": "England", "note": "No survey in 2022/23"},
+            {"period": "2024/25", "value": 23.8, "series": "England"},
+            {"period": "2025/26", "value": 26.4, "series": "England", "note": "CES 2025/26 influencing local decisions Table B1 (CLS methodology)"},
+            {"period": "2023/24", "value": 31.0, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 26.7-35.7%"},
+            {"period": "2024/25", "value": 28.7, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 24.6-33.3%"},
+            {"period": "2025/26", "value": 31.7, "series": "Lewisham", "note": "CES 2025/26 Table B3; 95% CI 28.1-35.6%"},
         ]
     )
 

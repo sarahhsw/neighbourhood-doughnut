@@ -401,18 +401,18 @@
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% adults that have engaged in civic participation",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
-    "granularity": "National (England)",
-    "notes": "DCMS Community Life Survey 2024/25, 'Civic engagement and social action' release (published 10 December 2025, covering the 12 months to March 2025). England-wide Official Statistic only - not published below national level, so no Lewisham- or London-specific figure exists. No 2022/23 survey round was published (methodology redesign, fieldwork moved from 3-4 quarters to 2)."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-civic-engagement",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 47.8% in 2025/26 (95% CI 43.7-52.0%; CES 2025/26 civic engagement Table A3), shown as 48%. Earlier Lewisham estimates: 44.2% (2023/24) and 44.0% (2024/25) from the CLS local-authority boost (CLS 2024/25 annual data tables, Table X1c, Note 20) - an earlier version of this entry wrongly said the survey was England-only. Year-on-year moves are 'No Change' per the survey's own test. London 41.3% and England 38.1% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table A1, which uses CLS methodology for comparability) and Lewisham 2023/24-2025/26. No 2022/23 survey round. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% adults agreed they can personally influence decisions affecting local area",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
-    "granularity": "National (England)",
-    "notes": "Same DCMS Community Life Survey 2024/25 release and same England-only/no-2022/23-round caveats as the civic participation indicator above. This measure has fallen to its lowest recorded level in 2023/24-2024/25 (23-24%), below the 25-28% band held in every year from 2013/14 to 2021/22."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-local-decisions",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 31.7% in 2025/26 (95% CI 28.1-35.6%; CES 2025/26 influencing local decisions Table B3), shown as 32%. Earlier Lewisham estimates: 31.0% (2023/24) and 28.7% (2024/25) from CLS 2024/25 Table B5c (Note 20). Year-on-year moves are 'No Change' per the survey's own test. London 31.8% and England 26.4% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table B1, CLS methodology) and Lewisham 2023/24-2025/26. No 2022/23 survey round. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",

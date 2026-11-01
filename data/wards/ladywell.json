@@ -907,7 +907,7 @@
         "name": "Digital Exclusion Risk Index (DERI) v1.5 - Greater Manchester Combined Authority",
         "url": "https://github.com/GreaterManchesterODA/Digital-Exclusion-Risk-Index",
         "accessed": "2026-07-18",
-        "notes": "The GLA/LOTI 'Mapping Digital Exclusion' dataset previously cited as the intended source for this indicator is genuinely limited to its five pilot boroughs (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) - Lewisham isn't covered, and no Lewisham-specific output has been published from it, confirmed via the London Datastore and LOTI's own project pages. GMCA's Digital Exclusion Risk Index (DERI) does cover every LSOA in England, Scotland and Wales, so Ladywell's 7 constituent LSOAs (E01003273/274/275/276/278/279/291, confirmed via ONS's official LSOA-to-ward best-fit lookup) are all scored. 2.5 is the population-weighted average of those 7 LSOAs' individual DERI scores, using DERI's Great-Britain-normalised variant (England IMD basis) - the only one of DERI's three normalisation options (local authority / nation / Great Britain) that's comparable across different areas, per GMCA's own methodology guide. Scores range from 2.06 to 3.18 across the 7 LSOAs, i.e. genuine within-ward variation rather than a flat borough figure. Ladywell's score sits toward the low end of the 0-10 scale, consistent with Trust for London's own commentary that 'much of London, due to its relatively young demographic and good broadband access, is in the lower range' nationally. Caveat: DERI is a composite built from 11 proxy indicators (deprivation, demography, broadband access) across three domains, not a direct survey of who's actually offline, and several of its components are dated - 'no qualifications', 'social grade' and 'day-to-day activities limited' all come from Census 2011, while IMD is 2019-based and broadband/unemployment/pension-credit data is from 2019-2021. GMCA's in-progress v2.0 rebuild moves to 2021 Census data but has not yet published a scored output, so v1.5 remains the latest version with a usable score. The previous indicator here - GLA's 2022 estimate of ~270,000 Londoners completely offline (London-wide, not Lewisham-specific) - is kept as descriptive context below rather than as the snapshot, since it measures something DERI doesn't (an absolute headcount rather than a relative risk score)."
+        "notes": "The GLA/LOTI 'Mapping Digital Exclusion' dataset previously cited as the intended source for this indicator is genuinely limited to its five pilot boroughs (Barnet, Brent, Kensington & Chelsea, Southwark, Westminster) - Lewisham isn't covered, and no Lewisham-specific output has been published from it, confirmed via the London Datastore and LOTI's own project pages. GMCA's Digital Exclusion Risk Index (DERI) does cover every LSOA in England, Scotland and Wales, so Ladywell's 7 constituent LSOAs (E01003273/274/275/276/278/279/291, confirmed via ONS's official LSOA-to-ward best-fit lookup) are all scored. 2.5 is the population-weighted average of those 7 LSOAs' individual DERI scores, using DERI's Great-Britain-normalised variant (England IMD basis) - the only one of DERI's three normalisation options (local authority / nation / Great Britain) that's comparable across different areas, per GMCA's own methodology guide. Scores range from 2.06 to 3.18 across the 7 LSOAs, i.e. genuine within-ward variation rather than a flat borough figure. Ladywell's score sits toward the low end of the 0-10 scale, consistent with Trust for London's own commentary that 'much of London, due to its relatively young demographic and good broadband access, is in the lower range' nationally. Caveat: DERI is a composite built from 11 proxy indicators (deprivation, demography, broadband access) across three domains, not a direct survey of who's actually offline, and several of its components are dated - 'no qualifications', 'social grade' and 'day-to-day activities limited' all come from Census 2011, while IMD is 2019-based and broadband/unemployment/pension-credit data is from 2019-2021. GMCA's in-progress v2.0 rebuild moves to 2021 Census data but has not yet published a scored output, and the repo's latest release (v1.6, November 2022) publishes no LSOA-level scores file, so v1.5 remains the latest version with usable LSOA scores. The previous indicator here - GLA's 2022 estimate of ~270,000 Londoners completely offline (London-wide, not Lewisham-specific) - is kept as descriptive context below rather than as the snapshot, since it measures something DERI doesn't (an absolute headcount rather than a relative risk score)."
       },
       "confidence": "medium",
       "community_notes": []
@@ -937,23 +937,69 @@
       "status": "descriptive_only",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Community and Engagement Survey 2025/26 - Loneliness, by local authority (DCMS, successor to the Community Life Survey)",
+        "name": "Community and Engagement Survey 2025/26 - Loneliness (Table C3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table A1c)",
         "url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
-        "accessed": "2026-10-31",
-        "notes": "8% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 6-11%, 61 respondents, unweighted base 869), up from 7% in 2024/25 (95% CI 5-10%, 42 respondents, base 651) - the survey's own significance test flags this as 'No Change' given the overlapping, sample-driven confidence intervals. Table C3 of the CES 2025/26 loneliness data tables (ODS) gives this local-authority breakdown directly: row 'Lewisham', LAD25 code E09000023, ITL2 'Inner London - East', ITL1 'London'. This is the first genuinely Lewisham-specific figure for this indicator; every prior Community Life Survey round (2017/18-2024/25, trend points below with their own notes) published England-level data only, since DCMS/MHCLG's local-authority sample boost only took effect for the 2025/26 CES round (Note 3 of the data tables). England's own headline rate held flat at 7% across both 2024/25 and 2025/26 (Table C1; previously reported as 6.6% to one decimal place under the old CLS release before this year's whole-percent-only LA tables), so Lewisham now sits a point above the national rate in both years rather than matching it. Demographic breakdown (Table C2, England-wide, not Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among 16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic groups (10-16% vs 6% White British, with White Gypsy/Irish Traveller highest at 16%)."
+        "accessed": "2026-11-01",
+        "notes": "8.0% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 5.9-10.8%, 61 respondents, unweighted base 869; CES 2025/26 Table C3, LAD25 E09000023). Lewisham figures exist for two earlier years from the CLS local-authority boost (CLS 2024/25 tables, Table A1c and Note 20): 6.3% in 2023/24 (95% CI 4.4-8.8%) and 7.4% in 2024/25 (95% CI 5.3-10.2%). The survey's own significance test marks both year-on-year moves as 'No Change' - the confidence intervals overlap, so the apparent rise is within sampling noise. England series (CLS Timeseries sheet, then CES Table C1): 6.1% (2018/19), 6.4% (2019/20), 6.5% (2020/21), 6.2% (2021/22), no survey in 2022/23, 7.1% (2023/24), 6.6% (2024/25), 6.7% (2025/26). The CLS time series starts in 2018/19. Demographic breakdown (CES Table C2, England-wide, not Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among 16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic groups (10-16% vs 6% White British). Earlier versions of this page said 2025/26 was the first year with a Lewisham figure; that was wrong - the CLS published Lewisham estimates for 2023/24 and 2024/25."
       },
-      "confidence": "medium",
+      "confidence": "high",
       "community_notes": [],
       "trend": [
         {
+          "period": "2018/19",
+          "value": 6.1,
+          "series": "England",
+          "note": "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
+        },
+        {
+          "period": "2019/20",
+          "value": 6.4,
+          "series": "England"
+        },
+        {
+          "period": "2020/21",
+          "value": 6.5,
+          "series": "England"
+        },
+        {
+          "period": "2021/22",
+          "value": 6.2,
+          "series": "England"
+        },
+        {
+          "period": "2023/24",
+          "value": 7.1,
+          "series": "England",
+          "note": "No survey in 2022/23"
+        },
+        {
           "period": "2024/25",
-          "value": 7,
-          "note": "First Lewisham-specific figure ever published (CES 2025/26 data tables, Table C3); 95% CI 5-10%, 42 respondents (unweighted base 651)"
+          "value": 6.6,
+          "series": "England"
         },
         {
           "period": "2025/26",
-          "value": 8,
-          "note": "95% CI 6-11%, 61 respondents (unweighted base 869); not a statistically significant change from 2024/25 per the survey's own test"
+          "value": 6.7,
+          "series": "England",
+          "note": "CES 2025/26 Table C1 (CLS methodology)"
+        },
+        {
+          "period": "2023/24",
+          "value": 6.3,
+          "series": "Lewisham",
+          "note": "CLS 2024/25 Table A1c; 95% CI 4.4-8.8%"
+        },
+        {
+          "period": "2024/25",
+          "value": 7.4,
+          "series": "Lewisham",
+          "note": "CLS 2024/25 Table A1c; 95% CI 5.3-10.2%"
+        },
+        {
+          "period": "2025/26",
+          "value": 8.0,
+          "series": "Lewisham",
+          "note": "CES 2025/26 Table C3; 95% CI 5.9-10.8%"
         }
       ]
     },
@@ -974,47 +1020,78 @@
         "description": null
       },
       "snapshot": {
-        "value": 62.0,
+        "value": 54,
         "unit": "%",
-        "year": "2024/25",
+        "year": "2025/26",
         "date": null
       },
       "status": "descriptive_only",
-      "geography_of_data": "england",
+      "geography_of_data": "borough_inherited",
       "source": {
-        "name": "DCMS Community Life Survey 2024/25 - Neighbourhood and community",
-        "url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-        "accessed": "2026-07-17",
-        "notes": "62% of adults in England felt they belonged 'very strongly' or 'fairly strongly' to their immediate neighbourhood in 2024/25, up 1 point from 61% in 2023/24 but below the pandemic-era high of 65% in 2020/21. No survey was conducted in 2022/23. This is an England-wide figure, not Lewisham-specific, but the survey's own regional (ITL1) breakdown gives useful context: London has reported lower neighbourhood belonging than the England average in every year this has been published - 56% in 2021/22 (vs 63% England), 57% in 2023/24 (vs 61% England), and 59% in 2024/25 (vs 62% England) - so Lewisham's true figure, if a local-authority estimate existed, would plausibly sit below the England-wide number shown here rather than above it. Not merged into the trend below since it's a different geography to the England series."
+        "name": "Community and Engagement Survey 2025/26 - Neighbourhood and community (Tables D1-D3); Community Life Survey 2024/25 annual data tables (Timeseries, Table B1c)",
+        "url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+        "accessed": "2026-11-01",
+        "notes": "53.8% of Lewisham adults felt they belonged 'very strongly' or 'fairly strongly' to their immediate neighbourhood in 2025/26 (95% CI 49.5-58.0%, 458 of 797 respondents; CES 2025/26 Table D3, LAD25 E09000023), shown rounded to 54%. Earlier Lewisham estimates from the CLS local-authority boost (CLS 2024/25 Table B1c): 56.8% in 2023/24 (95% CI 51.7-61.7%) and 56.6% in 2024/25 (95% CI 51.7-61.4%). The survey's own test marks both year-on-year moves as 'No Change'. Lewisham sits below both London (57.9% in 2025/26, 59.0% in 2024/25; CES Table D2, ITL1 row) and England (61.2% in 2025/26; Table D1). England series (CLS Timeseries sheet, then CES Table D1): 62.1% (2018/19), 62.6% (2019/20), 64.6% (2020/21, pandemic-era high), 62.5% (2021/22), no survey in 2022/23, 61.1% (2023/24), 62.1% (2024/25), 61.2% (2025/26). CES Community-pathway tables use the CLS methodology for comparability with the CLS time series, so the 2025/26 points continue the same series."
       },
-      "confidence": "medium",
+      "confidence": "high",
       "community_notes": [],
       "trend": [
         {
           "period": "2018/19",
-          "value": 62
+          "value": 62.1,
+          "series": "England",
+          "note": "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
         },
         {
           "period": "2019/20",
-          "value": 63
+          "value": 62.6,
+          "series": "England"
         },
         {
           "period": "2020/21",
-          "value": 65,
+          "value": 64.6,
+          "series": "England",
           "note": "Pandemic-era high"
         },
         {
           "period": "2021/22",
-          "value": 63
+          "value": 62.5,
+          "series": "England"
         },
         {
           "period": "2023/24",
-          "value": 61,
-          "note": "No Community Life Survey conducted in 2022/23"
+          "value": 61.1,
+          "series": "England",
+          "note": "No survey in 2022/23"
         },
         {
           "period": "2024/25",
-          "value": 62
+          "value": 62.1,
+          "series": "England"
+        },
+        {
+          "period": "2025/26",
+          "value": 61.2,
+          "series": "England",
+          "note": "CES 2025/26 Table D1 (CLS methodology)"
+        },
+        {
+          "period": "2023/24",
+          "value": 56.8,
+          "series": "Lewisham",
+          "note": "CLS 2024/25 Table B1c; 95% CI 51.7-61.7%"
+        },
+        {
+          "period": "2024/25",
+          "value": 56.6,
+          "series": "Lewisham",
+          "note": "CLS 2024/25 Table B1c; 95% CI 51.7-61.4%"
+        },
+        {
+          "period": "2025/26",
+          "value": 53.8,
+          "series": "Lewisham",
+          "note": "CES 2025/26 Table D3; 95% CI 49.5-58.0%"
         }
       ]
     },
@@ -1043,23 +1120,63 @@
       "status": "descriptive_only",
       "geography_of_data": "london_inherited",
       "source": {
-        "name": "Community and Engagement Survey 2025/26 - Support Networks (DCMS, successor to the Community Life Survey)",
+        "name": "Community and Engagement Survey 2025/26 - Support Networks (Tables F12-F13); Community Life Survey 2024/25 annual data tables (Timeseries)",
         "url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
-        "accessed": "2026-10-31",
-        "notes": "England-wide, 96% of adults agreed (definitely or tended to agree) that if they needed help there are people who would be there for them in 2025/26, up from 94% in 2024/25 (Table F12) - a statistically significant rise (non-overlapping 95% CIs: 96% CI 96-96% vs 94% CI 94-95%). This question is NOT published at local-authority level even under CES's 2025/26 sample boost - the report states explicitly that 'data are not available at LA level' for support-network questions, and Lewisham is never named in either table. The most granular breakdown available is Table F13's ITL2 regional split: the 'Inner London - East' sub-region (Hackney, Haringey, Islington, Lambeth, Lewisham, Newham, Southwark, Tower Hamlets) scored 95% in 2025/26 (95% CI 94-96%, 1,661 respondents), up from 93% in 2024/25 (95% CI 92-95%, 1,458 respondents) - not a statistically significant change given the overlapping CIs. Used as the snapshot/trend here in place of the England figure per this project's most-granular-available rule. The wider ITL1 'London' region runs almost identically (95% in 2025/26, 93% in 2024/25), so the ITL2 sub-region figure isn't meaningfully different from simply using all of London - it's just the more granular of the two genuinely published breakdowns. These support-network questions were asked online-only in both survey years (Note 6 of the data tables), so results reflect the online-responding population specifically, not the full mixed online/paper sample. New indicator - no prior trend exists on this page to reconcile against."
+        "accessed": "2026-11-01",
+        "notes": "95.2% of adults in the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, Lewisham, Newham, Southwark, Tower Hamlets) agreed that if they needed help there are people who would be there for them in 2025/26 (95% CI 93.8-96.3%, 1,661 respondents; CES Table F13), up from 93.4% in 2024/25 (95% CI 91.6-94.8%) - marked 'No Change' by the survey's own test. This question is not published at local-authority level in any year, so the sub-region is the most granular figure available. London (ITL1) ran 94.7% in 2025/26 and 92.9% in 2024/25. England series (CLS Timeseries sheet, then CES Table F12): 95.2% (2018/19), 95.2% (2019/20), 95.3% (2020/21), 95.2% (2021/22), no survey in 2022/23, 94.3% (2023/24), 94.3% (2024/25), 95.9% (2025/26) - England's 2025/26 rise is statistically significant. These questions were asked online only (CES Note 6), so results reflect the online-responding population."
       },
       "confidence": "medium",
       "community_notes": [],
       "trend": [
         {
+          "period": "2018/19",
+          "value": 95.2,
+          "series": "England",
+          "note": "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
+        },
+        {
+          "period": "2019/20",
+          "value": 95.2,
+          "series": "England"
+        },
+        {
+          "period": "2020/21",
+          "value": 95.3,
+          "series": "England"
+        },
+        {
+          "period": "2021/22",
+          "value": 95.2,
+          "series": "England"
+        },
+        {
+          "period": "2023/24",
+          "value": 94.3,
+          "series": "England",
+          "note": "No survey in 2022/23"
+        },
+        {
           "period": "2024/25",
-          "value": 93,
-          "note": "ITL2 'Inner London - East' sub-region (includes Lewisham); 95% CI 92-95%, 1,458 respondents"
+          "value": 94.3,
+          "series": "England"
         },
         {
           "period": "2025/26",
-          "value": 95,
-          "note": "95% CI 94-96%, 1,661 respondents; not a statistically significant change from 2024/25"
+          "value": 95.9,
+          "series": "England",
+          "note": "CES 2025/26 Table F12 (CLS methodology)"
+        },
+        {
+          "period": "2024/25",
+          "value": 93.4,
+          "series": "Inner London East",
+          "note": "CES 2025/26 Table F13; 95% CI 91.6-94.8%"
+        },
+        {
+          "period": "2025/26",
+          "value": 95.2,
+          "series": "Inner London East",
+          "note": "CES 2025/26 Table F13; 95% CI 93.8-96.3%"
         }
       ]
     },
@@ -1080,20 +1197,20 @@
         "description": null
       },
       "snapshot": {
-        "value": null,
-        "unit": "venues per 1,000 population",
-        "year": 2025,
+        "value": 0.32,
+        "unit": "venues per 1,000 residents",
+        "year": 2026,
         "date": null
       },
       "status": "descriptive_only",
-      "geography_of_data": "borough_inherited",
+      "geography_of_data": "ward",
       "source": {
-        "name": "GLA Cultural Infrastructure Map 2025",
-        "url": "https://data.london.gov.uk/dataset/cultural-infrastructure-map-2025-2rj5o",
-        "accessed": "2026-07-18",
-        "notes": "No borough-level venue count could be extracted this session, so no rate is given rather than an estimated one. The Cultural Infrastructure Map catalogues ~13 venue types (grassroots music venues, artist workspaces/studios, museums, theatres, LGBT+ venues, pubs with regular music programming, etc.) tagged by borough, and is published as an interactive map (apps.london.gov.uk/cim) plus downloadable CSV/GeoJSON resources on the London Datastore - but both data.london.gov.uk and every other external host tried (including neutral non-government control URLs used to test whether the block was site-specific) returned connection failures under this session's network policy, so the underlying files could not be opened. Confirmed via search instead: Lewisham's ONS mid-2024 population estimate is 301,255 (ons.gov.uk, Population estimates for England and Wales: mid-2024), which would be the denominator once a venue count is obtained. Lewisham's known cultural anchors include the Horniman Museum & Gardens, The Albany (Deptford), Broadway Theatre (Catford), Trinity Laban Conservatoire of Music and Dance, and Goldsmiths, University of London; the borough was London Borough of Culture in 2022 and hosts one of London's original Creative Enterprise Zones (Deptford/New Cross, since 2018). None of this amounts to a verified count, though - a future session with working fetch access should pull the borough-filtered venue count directly from the Datastore CSV and compute the rate against the population figure above."
+        "name": "GLA Cultural Infrastructure Data 2025 and 2026 (London Datastore)",
+        "url": "https://data.london.gov.uk/dataset/cultural-infrastructure-data-2025-and-2026-2rj5o",
+        "accessed": "2026-11-01",
+        "notes": "Counted directly from the GLA's long-list file (GLA_Cultural_Infrastructure_Map_data_2026_all.xlsx, sheet CIM_2026_long_all_v3, 5,202 rows covering both cultural production and consumption spaces), filtered on the dataset's own ward column = 'Ladywell' and status = 'Open'. 5 open venues: Ayyappaa Jewellery Workshop (jewellery design), Chemist Gallery (commercial gallery), South London Dance Academy Studios (dance rehearsal), Marcus Hall Props (prop and costume making) and The Fox and Firkin (music venue). A further 3 Ladywell entries are listed as Closed (PLACE/Ladywell coworking space, Taco Queer music venue, V22 Ladywell Bridge artist workspace) and are excluded. Denominator: Census 2021 usual residents for Ladywell ward (E05013725) = 15,576 (Nomis, NM_2021_1). 5 / 15,576 x 1,000 = 0.32. Comparators computed the same way from the same file: Lewisham 157 open venues / 300,553 residents = 0.52 per 1,000; London 4,629 / 8,799,728 = 0.53 per 1,000 - so Ladywell has around 60% of the borough and London density. Within Lewisham venues cluster in Deptford (42) and Brockley (20). Caveats: a single-ward count this small moves a lot with one opening or closure; the long list includes every typology the GLA audits (archives, libraries, workspaces and commercial galleries as well as theatres and music venues), all counted equally; ward assignment is the GLA's own. The shorter CIM_data_2026_LDS file (1,557 rows) covers only the production typologies refreshed in 2025-26 and lists 3 Ladywell sites, so the long list is used here as the complete inventory."
       },
-      "confidence": "low",
+      "confidence": "high",
       "community_notes": []
     },
     {
@@ -1106,7 +1223,7 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "£ local authority funding in art & culture",
+      "indicator": "\u00a3 local authority funding in art & culture",
       "threshold": {
         "value": null,
         "unit": null,
@@ -1114,7 +1231,7 @@
       },
       "snapshot": {
         "value": 386000,
-        "unit": "£, 3-year total",
+        "unit": "\u00a3, 3-year total",
         "year": "2022-2025",
         "date": null
       },
@@ -1124,7 +1241,7 @@
         "name": "Equity Local Government Arts Funding Tracker (Autonomy Institute analysis for Equity) / Lewisham Council Main Grants Programme papers",
         "url": "https://www.equity.org.uk/campaigns-policy/elections-2026/local-government-arts-funding-tracker",
         "accessed": "2026-07-18",
-        "notes": "equity.org.uk could not be fetched this session (blocked by the environment's network egress policy, like every other external host tried), so the Lewisham figure was sourced directly from the council's own committee papers instead: Lewisham's Arts & Culture Fund allocated £386,000 over the 2022-25 grant cycle - £150,000/year to a single 'cultural anchor' organisation (The Albany) plus roughly £236,000 split across 8 further organisations (including Entelechy Arts, Irie!, LEAN, LYT, Midi Music, Heart n Soul, Second Wave and the Migration Museum) in grants of up to £30,000 each. Source: 'Extension of the Main Grants Programme, Appendix 1 - Main Grants 2022-25' (lewisham.moderngov.co.uk, document ID s113598). Note this is Lewisham's discretionary arts & culture grants stream specifically, not the council's full culture/library service net budget line, which is a different (larger) accounting figure this session could not obtain - so it understates total local authority arts & culture spend. For national context (via press coverage of the Equity/Autonomy Institute tracker itself, which compiles net arts spend for 317 English councils 2010/11-2024/25): average English council arts spending per resident fell from £18.67/year in 2010/11 to £6.47/year in 2024/25, a 61% real-terms fall (£660m/year less across England); at least 8 of the 136 councils with seats up for election in May 2026 (Lewisham's council term is among the cycles due for all-out election in 2026) now report zero net arts spend. No comparable multi-year trend for Lewisham specifically could be confirmed this session, so none is given rather than an inferred one."
+        "notes": "equity.org.uk could not be fetched this session (blocked by the environment's network egress policy, like every other external host tried), so the Lewisham figure was sourced directly from the council's own committee papers instead: Lewisham's Arts & Culture Fund allocated \u00a3386,000 over the 2022-25 grant cycle - \u00a3150,000/year to a single 'cultural anchor' organisation (The Albany) plus roughly \u00a3236,000 split across 8 further organisations (including Entelechy Arts, Irie!, LEAN, LYT, Midi Music, Heart n Soul, Second Wave and the Migration Museum) in grants of up to \u00a330,000 each. Source: 'Extension of the Main Grants Programme, Appendix 1 - Main Grants 2022-25' (lewisham.moderngov.co.uk, document ID s113598). Note this is Lewisham's discretionary arts & culture grants stream specifically, not the council's full culture/library service net budget line, which is a different (larger) accounting figure this session could not obtain - so it understates total local authority arts & culture spend. For national context (via press coverage of the Equity/Autonomy Institute tracker itself, which compiles net arts spend for 317 English councils 2010/11-2024/25): average English council arts spending per resident fell from \u00a318.67/year in 2010/11 to \u00a36.47/year in 2024/25, a 61% real-terms fall (\u00a3660m/year less across England); at least 8 of the 136 councils with seats up for election in May 2026 (Lewisham's council term is among the cycles due for all-out election in 2026) now report zero net arts spend. No comparable multi-year trend for Lewisham specifically could be confirmed this session, so none is given rather than an inferred one."
       },
       "confidence": "medium",
       "community_notes": []
@@ -1139,46 +1256,64 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Active participation",
+      "indicator": "% of people aged 16+ who engaged with the arts in the last 12 months",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 90.6,
+        "value": 88.5,
         "unit": "%",
-        "year": "2024/25",
+        "year": "2025/26",
         "date": null
       },
       "status": "descriptive_only",
-      "geography_of_data": "england",
+      "geography_of_data": "borough_inherited",
       "source": {
-        "name": "DCMS Participation Survey 2024-25 - Main report (April 2024 to March 2025)",
-        "url": "https://www.gov.uk/government/statistics/participation-survey-2024-25-annual-publication/main-report-for-the-participation-survey-april-2024-to-march-2025",
-        "accessed": "2026-07-18",
-        "notes": "This is an England-wide figure, not Lewisham- or London-specific: the Participation Survey publishes results down to ITL1 (region) and ITL2 (sub-region) geography, not local authority level, and only ITL1/ITL2 tables for narrower sub-questions (e.g. digital-only engagement) could be found this session - a robust single 'London engaged with the arts' headline percentage was not, so it is not included here rather than risk an unreliable regional figure. 90.6% of adults in England reported engaging with the arts (attending, watching or taking part, physically or digitally) at least once in the 12 months to March 2025 - a small but statistically significant fall from 91.4% in 2023/24, itself the survey's peak year so far. The Participation Survey began in October 2021, replacing the discontinued Taking Part survey (different methodology, not comparable), so no pre-2021/22 trend exists for this indicator. gov.uk could not be fetched directly this session (same network block affecting every external host), so these figures are drawn from the survey's own headline findings as summarised in search results, not the full data tables."
+        "name": "DCMS Community and Engagement Survey 2025/26 - Arts (data tables I7 and I8); DCMS Participation Survey annual reports 2022/23-2024/25",
+        "url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-arts",
+        "accessed": "2026-11-01",
+        "notes": "Snapshot: 88.5% of Lewisham residents aged 16+ engaged with the arts physically or digitally at least once in the last 12 months in 2025/26 (95% CI 85.7-90.8%, 817 of 910 respondents) - CES 2025/26 arts data tables, Table I8 (by local authority, LAD25 E09000023). That is above both England (84.4%, Table I7) and London (83.2%, Table I7 ITL1 row) for the same year. 2025/26 is the first year with a local-authority figure: DCMS and MHCLG boosted the sample to produce LA estimates (Note 9), so no earlier Lewisham figure exists. England trend: Participation Survey annual reports give 88% (2021/22, first year, survey started Oct 2021), 90% (2022/23), 91.4% (2023/24) and 90.6% (2024/25); the CES 2025/26 arts report's own time series quotes 85% for 2021/22, which differs from the 88% in the Participation Survey 2022/23 report - the originally published Participation Survey figures are used. Series break: the 2025/26 England figure (84.4%) comes from the new CES, and DCMS states it is 'lower than anticipated' and that it is 'unclear whether this is a true decrease... or due to methodological differences between the CES and Participation Survey, such as differences in question placement' (CES arts report, footnote 3). It is therefore plotted as a separate series rather than joined to the Participation Survey line. The 2025/26 estimates combine Participation Survey responses (Apr-Sep 2025) with the much larger CES sample (Oct 2025-Mar 2026), so they are weighted towards the CES half (footnote 1)."
       },
-      "confidence": "medium",
+      "confidence": "high",
       "community_notes": [],
       "trend": [
         {
           "period": "2021/22",
           "value": 88.0,
-          "note": "First year of the Participation Survey (started Oct 2021); no earlier comparable series exists"
+          "series": "England",
+          "note": "Participation Survey, first year (started Oct 2021)"
         },
         {
           "period": "2022/23",
-          "value": 90.0
+          "value": 90.0,
+          "series": "England",
+          "note": "Participation Survey"
         },
         {
           "period": "2023/24",
           "value": 91.4,
-          "note": "Survey's peak year to date"
+          "series": "England",
+          "note": "Participation Survey; peak year"
         },
         {
           "period": "2024/25",
-          "value": 90.6
+          "value": 90.6,
+          "series": "England",
+          "note": "Participation Survey"
+        },
+        {
+          "period": "2025/26",
+          "value": 84.4,
+          "series": "England, new survey",
+          "note": "Community and Engagement Survey; DCMS flags the fall may be partly methodological"
+        },
+        {
+          "period": "2025/26",
+          "value": 88.5,
+          "series": "Lewisham",
+          "note": "CES 2025/26 Table I8; 95% CI 85.7-90.8%; first local-authority figure"
         }
       ]
     },
@@ -1524,7 +1659,7 @@
         "name": "Trust for London - Low pay in London boroughs",
         "url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
         "accessed": "2026-07-18",
-        "notes": "% of working residents paid below the London Living Wage (an hourly rate independently calculated by the Resolution Foundation and set by the Living Wage Foundation, currently £13.85 from April 2025 - higher than the statutory National Living Wage). Lewisham 13.4% vs London average 16.1% (2023). Re-verified 2026-07-18: could not retrieve an updated Lewisham-specific figure this session, but the London-wide comparator context found (16.1% of Londoners low-paid in 2025, down from 17.3% in 2024) is consistent with the existing 16.1% London benchmark, so it was not contradicted and is retained. No Lewisham-specific yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
+        "notes": "% of working residents paid below the London Living Wage (an hourly rate independently calculated by the Resolution Foundation and set by the Living Wage Foundation, currently \u00a313.85 from April 2025 - higher than the statutory National Living Wage). Lewisham 13.4% vs London average 16.1% (2023). Re-verified 2026-07-18: could not retrieve an updated Lewisham-specific figure this session, but the London-wide comparator context found (16.1% of Londoners low-paid in 2025, down from 17.3% in 2024) is consistent with the existing 16.1% London benchmark, so it was not contradicted and is retained. No Lewisham-specific yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
       },
       "confidence": "high",
       "community_notes": []
@@ -2285,7 +2420,7 @@
         "name": "NHS Digital National Child Measurement Programme (NCMP) via OHID Fingertips",
         "url": "https://fingertips.phe.org.uk/profile/national-child-measurement-programme",
         "accessed": "2026-10-31",
-        "notes": "Reception-age (4-5 years) obesity prevalence (including severe obesity, BMI ≥95th centile), Lewisham, via Fingertips indicator 90319. 2024/25: 10.02%, close to the London average of 9.76% for the same year. Lewisham's Reception rate has mostly tracked close to the London average across the series, unlike Year 6 (shown as a separate indicator) which has run persistently above it. 2020/21 not published by NHS Digital for data quality reasons (pandemic disruption to measurement)."
+        "notes": "Reception-age (4-5 years) obesity prevalence (including severe obesity, BMI \u226595th centile), Lewisham, via Fingertips indicator 90319. 2024/25: 10.02%, close to the London average of 9.76% for the same year. Lewisham's Reception rate has mostly tracked close to the London average across the series, unlike Year 6 (shown as a separate indicator) which has run persistently above it. 2020/21 not published by NHS Digital for data quality reasons (pandemic disruption to measurement)."
       },
       "confidence": "high",
       "trend": [
@@ -2393,7 +2528,7 @@
         "name": "NHS Digital National Child Measurement Programme (NCMP) via OHID Fingertips",
         "url": "https://fingertips.phe.org.uk/profile/national-child-measurement-programme",
         "accessed": "2026-10-31",
-        "notes": "Year 6 (10-11 years) obesity prevalence (including severe obesity, BMI ≥95th centile), Lewisham, via Fingertips indicator 90323. 2024/25: 24.54%, above the London average of 23.24% for the same year. Lewisham's Year 6 rate has run above the London average in every year on record except 2018/19 (2006/07-2024/25), unlike Reception (shown as a separate indicator), which has mostly tracked close to it. 2020/21 not published by NHS Digital for data quality reasons (pandemic disruption to measurement)."
+        "notes": "Year 6 (10-11 years) obesity prevalence (including severe obesity, BMI \u226595th centile), Lewisham, via Fingertips indicator 90323. 2024/25: 24.54%, above the London average of 23.24% for the same year. Lewisham's Year 6 rate has run above the London average in every year on record except 2018/19 (2006/07-2024/25), unlike Reception (shown as a separate indicator), which has mostly tracked close to it. 2020/21 not published by NHS Digital for data quality reasons (pandemic disruption to measurement)."
       },
       "confidence": "high",
       "trend": [
@@ -2650,7 +2785,7 @@
       },
       "snapshot": {
         "value": 5.5,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2683,7 +2818,7 @@
       },
       "snapshot": {
         "value": 1.1,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2716,7 +2851,7 @@
       },
       "snapshot": {
         "value": 2.2,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2749,7 +2884,7 @@
       },
       "snapshot": {
         "value": 1.9,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2782,7 +2917,7 @@
       },
       "snapshot": {
         "value": 1.2,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2815,7 +2950,7 @@
       },
       "snapshot": {
         "value": 2.8,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2848,7 +2983,7 @@
       },
       "snapshot": {
         "value": 2.6,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },
@@ -2881,7 +3016,7 @@
       },
       "snapshot": {
         "value": 0.6,
-        "unit": "×",
+        "unit": "\u00d7",
         "year": 2024,
         "date": null
       },

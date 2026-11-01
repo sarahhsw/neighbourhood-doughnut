@@ -222,17 +222,17 @@
     "category": "Connected",
     "indicator": "% adults reported feeling lonely often or always",
     "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
-    "granularity": "Borough (Lewisham) - local authority breakdown",
-    "notes": "DCMS replaced the Community Life Survey with the Community and Engagement Survey (CES) in October 2025, partnering with MHCLG to boost the sample specifically to produce local-authority-level estimates for the first time (CES data tables, Note 3). Lewisham's own figure is now used as the snapshot: 8% of adults felt lonely 'often or always' in 2025/26 (95% CI 6-11%, 61 respondents), up from 7% in 2024/25 (95% CI 5-10%, 42 respondents) - the survey's own significance test flags this as 'No Change' given the overlapping, sample-driven confidence intervals. No earlier Lewisham-specific figure exists; every prior Community Life Survey round (2017/18-2024/25) published England-level data only, kept in the Python builder's trend notes for provenance but no longer used as the live trend/snapshot. England's own headline rate was unchanged at 7% across both years. Source data: CES 2025/26 loneliness data tables (ODS), Table C3 (by local authority)."
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 8.0% in 2025/26 (CES 2025/26 Table C3). Lewisham estimates also exist for 2023/24 (6.3%) and 2024/25 (7.4%) from the Community Life Survey's local-authority boost (CLS 2024/25 tables, Table A1c, Note 20) - an earlier version of this entry wrongly said 2025/26 was the first Lewisham figure. All year-on-year moves are 'No Change' per the survey's own test. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table C1, which uses CLS methodology for comparability) and Lewisham 2023/24-2025/26."
   },
   {
     "lens": "local_social",
     "dimension": "community",
     "category": "Connected",
     "indicator": "% adults felt strongly belonged to their neighbourhood",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England (regional/ITL1 breakdown also published, incl. London)",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. The survey does publish a London (ITL1) regional breakdown for this indicator specifically, which consistently runs below the England average (e.g. 59% London vs 62% England, 2024/25) - see source notes in the Python builder for the multi-year comparison. No official GLA or UK Government target exists for this indicator. Not yet re-checked against the renamed Community and Engagement Survey 2025/26 - out of scope for the loneliness/support-networks update this covers; due a refresh in a future session."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 53.8% in 2025/26 (95% CI 49.5-58.0%; CES 2025/26 Table D3), shown as 54%. Earlier Lewisham estimates: 56.8% (2023/24) and 56.6% (2024/25) from CLS 2024/25 Table B1c. London 57.9% and England 61.2% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table D1) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
@@ -241,16 +241,16 @@
     "indicator": "% adults agreed that if they needed help, there would be people there for them",
     "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
     "granularity": "ITL2 sub-region (Inner London - East, includes Lewisham) - no local-authority breakdown published for this question",
-    "notes": "New indicator, added this session. DCMS's Community and Engagement Survey (CES) 2025/26 - successor to the Community Life Survey - found 96% of adults in England agreed (definitely or tended to agree) that if they needed help there are people who would be there for them, up from 94% in 2024/25 (a statistically significant rise). The CES report states explicitly that this question's data 'are not available at LA level', so Lewisham itself is never named; the most granular published breakdown is the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, Lewisham, Newham, Southwark, Tower Hamlets), used as the snapshot: 95% in 2025/26 (95% CI 94-96%), up from 93% in 2024/25 (95% CI 92-95%) - not a statistically significant change. The wider ITL1 London region runs almost identically (95% in 2025/26, 93% in 2024/25). These support-network questions were asked online-only in both survey years (CES data tables, Note 6), so results reflect the online-responding population specifically. Source data: CES 2025/26 support-networks data tables (ODS), Table F13 (by demographic/regional characteristics). No official GLA or UK Government target exists for this indicator."
+    "notes": "No local-authority breakdown in any year; snapshot is the ITL2 sub-region 'Inner London - East' (includes Lewisham): 95.2% in 2025/26, 93.4% in 2024/25 (CES 2025/26 Table F13), not a statistically significant change. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table F12; 95.9% in 2025/26, a significant rise) and Inner London East 2024/25-2025/26. Asked online only (CES Note 6). No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
     "indicator": "# of cultural venue per 1,000 population",
-    "source_url": "https://data.london.gov.uk/dataset/cultural-infrastructure-map-2025-2rj5o",
-    "granularity": "London boroughs",
-    "notes": "GLA Cultural Infrastructure Map 2025 tags each catalogued venue (grassroots music venues, artist workspaces, museums, theatres, LGBT+ venues, etc.) by borough, so a per-1,000-population rate is computable in principle. No Lewisham venue count could be extracted this session (data.london.gov.uk and the interactive map at apps.london.gov.uk/cim were both unreachable under this environment's network policy) - see source.notes on the Python dimension for what was and was not found. Lewisham ONS mid-2024 population: 301,255."
+    "source_url": "https://data.london.gov.uk/dataset/cultural-infrastructure-data-2025-and-2026-2rj5o",
+    "granularity": "Ward (the dataset carries a ward column for every venue)",
+    "notes": "Ladywell: 5 open venues in the GLA's 2026 long list (GLA_Cultural_Infrastructure_Map_data_2026_all.xlsx, ward = Ladywell, status = Open) / 15,576 Census 2021 residents = 0.32 per 1,000. Comparators from the same file: Lewisham 0.52 (157 / 300,553), London 0.53 (4,629 / 8,799,728). 3 further Ladywell entries are listed as closed. See source.notes in the ward JSON for the venue list and caveats."
   },
   {
     "lens": "local_social",
@@ -265,10 +265,10 @@
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
-    "indicator": "Active participation",
-    "source_url": "https://www.gov.uk/government/statistics/participation-survey-2024-25-annual-publication/main-report-for-the-participation-survey-april-2024-to-march-2025",
-    "granularity": "England",
-    "notes": "DCMS Participation Survey publishes England headline figures plus ITL1/ITL2 regional breakdowns for some sub-questions - no local authority or ward-level breakdown exists. Indicator used: % of adults who engaged with the arts (attending, watching or taking part, physically or digitally) in the last 12 months - 90.6% in 2024/25, down slightly from a 91.4% peak in 2023/24. Survey began October 2021 (replacing the discontinued Taking Part survey, different methodology), so no earlier trend exists."
+    "indicator": "% of people aged 16+ who engaged with the arts in the last 12 months",
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-arts",
+    "granularity": "Local authority (2025/26 onward); England for earlier years",
+    "notes": "Renamed from 'Active participation'. Snapshot: Lewisham 88.5% engaged with the arts physically or digitally in 2025/26 (95% CI 85.7-90.8%; CES 2025/26 arts tables, Table I8), above England 84.4% and London 83.2% (Table I7). Chart shows three labelled series: England 2021/22-2024/25 (Participation Survey annual reports: 88%, 90%, 91.4%, 90.6%), England 2025/26 from the new CES (84.4%) kept separate because DCMS says the fall may be partly methodological (CES arts report, footnote 3), and Lewisham 2025/26."
   },
   {
     "lens": "local_social",

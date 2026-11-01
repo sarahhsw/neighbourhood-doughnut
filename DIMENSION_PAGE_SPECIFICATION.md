@@ -904,6 +904,32 @@ children (aged 0-15)* live in income-deprived households"). **Rule: only put fig
 shared axis when they share a denominator. Otherwise, write the base into each figure's own
 label so it can't be misread.**
 
+**Mixing geographies or survey versions in one trend chart: use labelled series, never one
+joined line.** Added November 2026 after the user asked for the community dimension's charts
+to append the older Community Life Survey (CLS) history to the new Community and Engagement
+Survey (CES) figures, with the more recent Lewisham-only data in "a slightly different
+colour/label". Each trend point can now carry an optional `series` label (`{"period":
+"2025/26", "value": 53.8, "series": "Lewisham"}`); `renderTrendChart` in `app.js` draws each
+label as its own line with its own legend entry, and named series keep fixed colours across
+every chart ("England" orange, "Lewisham" purple, "England, new survey" amber). Points without
+a label behave exactly as before. Rules:
+- **Join points into one line only when they share both geography and method.** England CLS
+  2018/19-2024/25 and CES 2025/26 community figures *are* joined, because the CES data tables
+  state its Community-pathway tables use the CLS methodology "to allow for robust
+  comparability with the CLS time-series". The culture arts-engagement figure is *not*: DCMS
+  says its 2025/26 CES fall (91% to 84%) may be methodological (CES arts report, footnote 3),
+  so the 2025/26 England point is a separate "England, new survey" series.
+- **Before switching a snapshot to a newly local figure, check how far back that local series
+  really goes.** The loneliness card said 2025/26 was "the first year a genuinely local figure
+  exists". In fact the CLS's own local-authority boost had already published Lewisham estimates
+  for 2023/24 and 2024/25 (CLS 2024/25 tables, Note 20 and Table A1c) - found only when the
+  older tables were actually opened.
+- **When a successor survey adds local data, re-check every indicator drawn from the old
+  survey, not just the one being updated.** The loneliness and support-network indicators
+  were moved to CES in October 2026, but neighbourhood belonging was left on the England-only
+  CLS series ("out of scope for this update") even though CES publishes a Lewisham figure for
+  it (Table D3: 53.8% in 2025/26). The user caught it.
+
 **For each indicator**:
 - **Indicator name** as heading
 - **What this measures** section:

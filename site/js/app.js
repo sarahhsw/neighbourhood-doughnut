@@ -225,10 +225,31 @@ function renderTrendChart(allIndicators, dimension) {
         return ''; // No trend data available
     }
 
-    // Chart dimensions
+    // Split each indicator's trend into series. A trend point may carry an optional
+    // `series` label (e.g. "England", "Lewisham") when one indicator's chart mixes
+    // geographies or survey versions - each label gets its own line, colour and legend
+    // entry, so a change of geography or method is never drawn as one continuous line.
+    // Points without a label form a single series per indicator, as before.
+    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
+    const seriesList = [];
+    indicatorsWithTrend.forEach(ind => {
+        const labels = [...new Set(ind.trend.map(t => t.series || ''))];
+        labels.forEach(label => {
+            const fallbackLabel = ind.indicator.replace(chartTitle, '').trim().replace(/^\(|\)$/g, '') || ind.indicator;
+            seriesList.push({
+                ind,
+                label: label || fallbackLabel,
+                points: ind.trend.filter(t => (t.series || '') === label)
+            });
+        });
+    });
+    const showLegend = seriesList.length > 1;
+
+    // Chart dimensions - widen the right margin when legend labels are long
     const width = 600;
     const height = 280;
-    const margin = { top: 20, right: 120, bottom: 35, left: 50 };
+    const longestLabel = showLegend ? Math.max(...seriesList.map(s => s.label.length)) : 0;
+    const margin = { top: 20, right: Math.max(120, Math.ceil(40 + longestLabel * 6.2)), bottom: 35, left: 50 };
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -244,14 +265,11 @@ function renderTrendChart(allIndicators, dimension) {
     const yMax = Math.ceil(maxValue + valueRange * 0.1);
 
     // Create scales
-    const xScale = (index) => margin.left + (index / (allPeriods.length - 1)) * chartWidth;
+    const xScale = (index) => margin.left + (allPeriods.length > 1 ? (index / (allPeriods.length - 1)) * chartWidth : chartWidth / 2);
     const yScale = (value) => margin.top + chartHeight - ((value - yMin) / (yMax - yMin)) * chartHeight;
 
-    // Colors for different indicators
+    // Colors for different series
     const colors = ['#E8542D', '#4B3F8F', '#3F8F5B', '#E8A23A'];
-
-    // Get common indicator name (without gender suffix)
-    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
 
     let svg = `
         <div class="detail-section">
@@ -263,47 +281,52 @@ function renderTrendChart(allIndicators, dimension) {
                 <line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#999" stroke-width="1"/>
     `;
 
-    // Draw lines for each indicator
-    indicatorsWithTrend.forEach((ind, indIndex) => {
-        const color = colors[indIndex % colors.length];
-        const points = ind.trend.map((point, i) => {
+    // Draw a line for each series
+    // Named series keep the same colour on every chart, so "Lewisham" always reads as the
+    // local line and "England" as the national one.
+    const namedColors = { 'England': '#E8542D', 'England, new survey': '#E8A23A', 'Lewisham': '#4B3F8F', 'Inner London East': '#4B3F8F' };
+    seriesList.forEach((series, seriesIndex) => {
+        const color = namedColors[series.label] || colors[seriesIndex % colors.length];
+        const ind = series.ind;
+        const points = series.points.map(point => {
             const x = xScale(allPeriods.indexOf(point.period));
             const y = yScale(point.value);
             return `${x},${y}`;
         }).join(' ');
 
         svg += `
-            <!-- Line for ${ind.indicator} -->
+            <!-- Line for ${ind.indicator} - ${series.label} -->
             <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2"/>
 
             <!-- Data points -->
         `;
 
-        ind.trend.forEach((point, i) => {
+        series.points.forEach((point, i) => {
             const x = xScale(allPeriods.indexOf(point.period));
             const y = yScale(point.value);
             const unit = ind.snapshot.unit || '';
-            const dataPointId = `datapoint-${dimension.dimension}-${indIndex}-${i}`;
+            const periodLabel = point.series ? `${point.period} · ${point.series}` : point.period;
+            const dataPointId = `datapoint-${dimension.dimension}-${seriesIndex}-${i}`;
             svg += `
                 <!-- Larger invisible hit area -->
                 <circle cx="${x}" cy="${y}" r="12" fill="transparent" style="cursor: pointer;"
-                    data-period="${point.period}" data-value="${point.value}" data-unit="${unit}" class="chart-hit-area"></circle>
+                    data-period="${periodLabel}" data-value="${point.value}" data-unit="${unit}" class="chart-hit-area"></circle>
                 <!-- Visible data point -->
                 <circle id="${dataPointId}" cx="${x}" cy="${y}" r="4" fill="${color}" style="pointer-events: none;"></circle>
             `;
         });
 
         // Legend (only needed to distinguish multiple lines - the chart title
-        // already names the indicator when there's just one). Use the same suffix
-        // extraction as the headline value-readout labels, not the full indicator name -
-        // otherwise a long base name (e.g. "% of children with obesity (Reception)") gets
-        // clipped by the chart's fixed-width right margin instead of just reading "Reception".
-        if (indicatorsWithTrend.length > 1) {
-            const legendY = margin.top + indIndex * 20;
-            const legendLabel = ind.indicator.replace(chartTitle, '').trim().replace(/^\(|\)$/g, '') || ind.indicator;
+        // already names the indicator when there's just one). Labels come from the
+        // series label, or the same suffix extraction as the headline value-readout
+        // labels, not the full indicator name - otherwise a long base name (e.g. "% of
+        // children with obesity (Reception)") gets clipped instead of just reading "Reception".
+        if (showLegend) {
+            const legendY = margin.top + seriesIndex * 20;
             svg += `
                 <line x1="${width - margin.right + 10}" y1="${legendY}" x2="${width - margin.right + 30}" y2="${legendY}" stroke="${color}" stroke-width="2"/>
-                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${legendLabel}</text>
+                <circle cx="${width - margin.right + 20}" cy="${legendY}" r="3" fill="${color}"/>
+                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${series.label}</text>
             `;
         }
     });
@@ -434,9 +457,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out.",
         'community': "Lewisham's own loneliness rate is now measured locally for the first time: 8% felt lonely often or always in 2025/26, little changed from 7% the year before. Neighbourhood belonging, still only measured at England level, slipped to 62%, down from a pandemic-era high of 65% in 2020/21, with London consistently below the England average. Support networks look sturdier: 95% of adults across inner-east London, the sub-region that includes Lewisham, agreed people would be there for them if they needed help in 2025/26 - the strongest of these three measures, and little changed over the two years it has been tracked.",
         'political_voice': "Lewisham's own local election turnout swung sharply: just 20.88% voted in 2022, before a genuinely contested three-way race lifted it to 42.14% in May 2026, when the Green Party ended decades of Labour control of the council. That volatility sits alongside a steadier national trend: the share of English adults who feel they can personally influence decisions affecting their local area has fallen to 24% in 2024/25, below every year recorded between 2013/14 and 2021/22 (25-28%). Civic participation - contacting a councillor, signing a petition, attending a public meeting - has settled at 34%, down from a pandemic-era peak near 42% but level with the pre-2023 norm of 2021/22.",
-        'culture': "Lewisham's own arts funding is concentrated on a small number of organisations: its Arts & Culture Fund gave £150,000 a year to a single anchor organisation, The Albany, and split roughly £236,000 across eight others over the 2022-25 cycle. That sits within a wider English picture of squeezed council arts budgets, which have fallen 61% in real terms nationally since 2010 (from £18.67 to £6.47 per person a year). Participation itself has held up better than funding: 90.6% of adults nationally engaged with the arts in 2024/25, just below the survey's 2023/24 peak.",
+        'culture': "Lewisham's own arts funding is concentrated on a small number of organisations: its Arts & Culture Fund gave £150,000 a year to a single anchor organisation, The Albany, and split roughly £236,000 across eight others over the 2022-25 cycle. That sits within a wider English picture of squeezed council arts budgets, which have fallen 61% in real terms nationally since 2010. Cultural spaces are unevenly spread: Ladywell has only five open venues, around 60% of the borough's density, with Lewisham's clustered in Deptford and Brockley. Participation has held up better than funding: 88.5% of Lewisham residents engaged with the arts in 2025/26, above both the London and England averages.",
         'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
-        'connectivity': "Ladywell's physical connectivity is strong: full fibre broadband and 5G coverage both sit close to or above typical levels. The more revealing picture is who's actually at risk of being left behind. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, is low by national standards, reflecting London's younger, well-connected population. But that single score flattens real variation: applying a London-wide framework for who's most likely excluded - older people, low-income families, disabled residents, the unemployed, ethnic-minority communities and small businesses - to Ladywell's own data shows a third of local children live in income-deprived households and 15% of residents are disabled. Usage, not access, is where the borough's digital divide actually sits.",
+        'connectivity': "Ladywell's physical connectivity is strong: full fibre broadband and 5G coverage both sit close to or above typical levels. The more revealing picture is who's actually at risk of being left behind. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, sits below the national median, consistent with London's younger, well-connected population. But that single score flattens real variation: applying a London-wide framework for who's most likely excluded - older people, low-income families, disabled residents, the unemployed, ethnic-minority communities and small businesses - to Ladywell's own data shows a third of local children live in income-deprived households and 15% of residents are disabled.",
         'energy': "Ladywell's homes run well behind London's energy-efficiency average: 43% hold an EPC of C or above, against 56% across the city as a whole, and it isn't Lewisham's most efficient ward - that's Lewisham Central at 78%. Fuel poverty compounds the gap: 13.8% of Lewisham households (17,700) were fuel poor in 2022, above England's 13.1% average that year, and Lewisham was the worst-performing inner-London borough in the count before that. The two aren't unrelated: the fuel poverty metric itself only counts a household as fuel poor if its home also rates D-G for energy efficiency.",
         'social_cohesion': "Trust, cross-background cohesion and volunteering have all drifted down together nationally over the past decade: the share who think most neighbours can be trusted fell from 48% to 40%, and adults giving any unpaid help slipped to 54%, the lowest since records began. That volunteering fall is driven almost entirely by formal, organisation-based volunteering (down to 28%, from 37%), while informal neighbourly help has held up far better - the erosion looks concentrated in structured civic participation rather than in people helping each other directly. Pride in local area, tracked only since 2023/24, has stayed flat around 60%. None of these figures has a Lewisham-specific equivalent; all come from DCMS's England-wide Community Life Survey.",
         'income': "Poverty in Lewisham runs above the London average - 28% of residents after housing costs, against 26% citywide - despite an unemployment rate roughly level with London's. That combination points to low pay rather than joblessness as the sharper driver: 17.7% of working-age residents are on out-of-work benefits, well above London's 15.2%, even though residents in work are less likely than the London average to be paid below the London Living Wage. Deprivation is unevenly spread within the ward itself - one of Ladywell's seven neighbourhoods sits among the most deprived tenth of England, despite the ward scoring comparatively well on education specifically.",
@@ -541,15 +564,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Community-specific explanations
         if (baseName === '% adults reported feeling lonely often or always') {
-            return `Lewisham's own rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26, little changed from 7% the year before (not a statistically significant shift). This is the first year a genuinely local figure exists: the survey - now the Community and Engagement Survey, DCMS's successor to the Community Life Survey - only began publishing local-authority breakdowns in 2025/26. Loneliness is far from evenly spread: it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
+            return `Lewisham's rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26. Local estimates have existed since 2023/24, when DCMS began boosting its survey sample to report by council, and none of the year-on-year changes since are statistically significant: Lewisham runs slightly above England, but within the survey's margin of error. Loneliness is far from evenly spread: nationally it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
         }
 
         if (baseName === '% adults felt strongly belonged to their neighbourhood') {
-            return `This measures the share of adults who say they belong very strongly or fairly strongly to their immediate neighbourhood, one of the Community Life Survey's core measures of social cohesion. The pandemic-era peak, when people spent far more time in their local area, has since eased. The measure is published for England only, but where the survey does break results down by region, London has reported weaker neighbourhood belonging than the England average in every year compared - a gap that predates the pandemic and has persisted since.`;
+            return `This measures the share of adults who say they belong very or fairly strongly to their immediate neighbourhood. Lewisham's 54% in 2025/26 sits below both London (58%) and England (61%). The borough's own estimates, available since 2023/24, have edged down, though not by a statistically significant amount given the survey's sample size. Nationally, belonging peaked during the pandemic, when people spent far more time in their local area, and has since eased back.`;
         }
 
         if (baseName === '% adults agreed that if they needed help, there would be people there for them') {
-            return `This asks adults how strongly they agree that people would be there for them in a crisis - one of the Community and Engagement Survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any local authority; the most local figure available covers inner-east London, the sub-region Lewisham sits within. There, 95% agreed in 2025/26, essentially unchanged from 93% the year before, and a point below England's own 96% - in line with London's wider regional average on this measure.`;
+            return `This asks adults how strongly they agree that people would be there for them if they needed help - one of the survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any council; the most local figure covers inner-east London, the sub-region Lewisham sits within, where 95% agreed in 2025/26, a point below England's 96%. Agreement is near-universal and has barely moved nationally since 2018/19, making it the most stable of the three community measures.`;
         }
 
         // Political voice-specific explanations
@@ -567,15 +590,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Culture-specific explanations
         if (baseName === '# of cultural venue per 1,000 population') {
-            return `This is meant to measure the density of cultural venues - museums, theatres, music venues, artist workspaces and similar - relative to population, drawn from the GLA's Cultural Infrastructure Map, which tags each venue it catalogues by borough. No verified Lewisham venue count is available, so no rate is shown here rather than an estimated one. What's known instead is qualitative: Lewisham anchors include the Horniman Museum and Gardens, The Albany in Deptford, the Broadway Theatre in Catford, Trinity Laban Conservatoire, and Goldsmiths, University of London, and the borough was London Borough of Culture in 2022. Its Deptford/New Cross Creative Enterprise Zone - one of London's original zones, running since 2018 - has also brought hundreds of affordable artist studios into the borough, though these sit outside the Cultural Infrastructure Map's own venue categories.`;
+            return `This counts open cultural spaces in Ladywell - theatres, music venues, galleries, libraries, artist workspaces, rehearsal studios and similar - from the GLA's 2026 Cultural Infrastructure audit, relative to the ward's population. Ladywell has five: a music venue (The Fox and Firkin), a commercial gallery, a dance rehearsal studio, a prop-making workshop and a jewellery workshop. That works out at 0.32 per 1,000 residents, around 60% of both Lewisham's and London's density (0.52 and 0.53), with the borough's venues clustered instead in Deptford and Brockley. Three other Ladywell spaces in the audit are now closed, including the V22 Ladywell Bridge artist studios and the Taco Queer music venue. With numbers this small, a single opening or closure moves the rate noticeably.`;
         }
 
         if (baseName === '£ local authority funding in art & culture') {
             return `This tracks Lewisham Council's own spending on arts and culture, distinct from money the sector raises independently or receives from Arts Council England or the Mayor of London. The figure shown - £386,000 over the 2022-25 grant cycle - is specifically the council's Arts & Culture Fund: £150,000 a year to a single "cultural anchor" organisation, The Albany, plus roughly £236,000 split across eight further organisations including Entelechy Arts, Irie!, LEAN and Heart n Soul. It doesn't capture the council's full culture and library service budget, which is larger and isn't published in comparable form. Nationally, council arts spending has fallen 61% in real terms since 2010 - from £18.67 to £6.47 per resident a year - a squeeze widely attributed to over a decade of reduced central government funding to local authorities generally, arts being a non-statutory service more exposed to cuts than areas like social care.`;
         }
 
-        if (baseName === 'Active participation') {
-            return `This measures the share of adults who engaged with the arts - attending, watching or taking part, in person or online - at least once in the past year, from DCMS's annual Participation Survey. It's an England-wide figure only: the survey publishes results down to broad regions, not by borough, so no Lewisham-specific number exists. At 90.6% in 2024/25, participation sits close to record levels but has eased slightly from a 91.4% peak in 2023/24. The survey began in October 2021, replacing the discontinued Taking Part survey run on different methodology, so no earlier comparable trend exists. It's a distinct measure from council arts funding above: one counts money councils choose to spend, the other counts what people actually do, and the two aren't tracked together by either source.`;
+        if (baseName === '% of people aged 16+ who engaged with the arts in the last 12 months') {
+            return `This measures the share of residents aged 16 and over who engaged with the arts - attending, watching or taking part, in person or online - at least once in the past year. Lewisham's 88.5% in 2025/26 sits above both London (83.2%) and England (84.4%), in the first year DCMS's new Community and Engagement Survey has published borough figures. England's earlier trend comes from the Participation Survey it replaced. The sharp national drop in 2025/26 coincides with that switch, and DCMS says it may reflect methodological differences such as question placement rather than a true fall, so it's shown as a separate line. It's a distinct measure from council arts funding above: one counts money councils spend, the other what people actually do.`;
         }
 
         // Education-specific explanations
@@ -596,12 +619,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return `<p>Ladywell scores 2.5 out of 10 on the Digital Exclusion Risk Index (DERI), a composite of 11 indicators - age, disability, qualifications, social grade, broadband access - normalised for comparison across Great Britain. That score is low, consistent with London's younger, well-connected population, though it masks real variation: scores for Ladywell's 7 neighbourhoods range from 2.1 to 3.2, and several components are dated (some from the 2011 Census). The London Office of Technology and Innovation (LOTI) names the groups most likely to sit on the wrong side of that range - older people, low-income families, ethnic communities (especially Bangladeshi families in low-income households), unemployed people, disabled residents, and small or micro businesses. Applying that framework to Ladywell's own data shows how large each group actually is here.</p>
                 <div class="loti-snapshot">
                     <div class="loti-stat"><span class="loti-value">33.6%</span><span class="loti-label">of Ladywell children (aged 0-15) live in income-deprived households</span></div>
-                    <div class="loti-stat"><span class="loti-value">25.1%</span><span class="loti-label">of Ladywell residents are Black African or Caribbean</span></div>
+                    <div class="loti-stat"><span class="loti-value">25.1%</span><span class="loti-label">of Ladywell residents are Black, Black British, Caribbean or African</span></div>
                     <div class="loti-stat"><span class="loti-value">15.0%</span><span class="loti-label">of Ladywell residents are disabled under the Equality Act</span></div>
                     <div class="loti-stat"><span class="loti-value">10.0%</span><span class="loti-label">of Ladywell residents are aged 65 and over</span></div>
                     <div class="loti-stat"><span class="loti-value">7.4%</span><span class="loti-label">of economically active Ladywell residents are unemployed</span></div>
                     <div class="loti-stat"><span class="loti-value">0.4%</span><span class="loti-label">of Ladywell residents are Bangladeshi</span></div>
-                    <div class="loti-stat"><span class="loti-value">93.9%</span><span class="loti-label">of Lewisham businesses are small or micro (fewer than 10 employees) - no ward figure is published</span></div>
+                    <div class="loti-stat"><span class="loti-value">93.9%</span><span class="loti-label">of Lewisham businesses are micro-businesses (fewer than 10 employees) in 2026 - no ward figure is published</span></div>
                 </div>
                 <div class="loti-note">Each figure is a share of its own population, as labelled (all residents, children, economically active residents or businesses), so they don't add up to a single total.</div>
                 <div class="source-line">Sources: <a href="https://loti.london/wp-content/uploads/2021/07/Mapping-Digital-Exclusion-in-London-LOTI-Toolkit.pdf" target="_blank">Mapping Digital Exclusion in London - LOTI Toolkit (key groups framework)</a> · <a href="https://www.nomisweb.co.uk/sources/census_2021_bulk" target="_blank">ONS Census 2021 - Age, Ethnic group, Disability and Economic activity status by ward</a> · <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025" target="_blank">English Indices of Deprivation 2025, File 7 (IDACI)</a> · <a href="https://www.nomisweb.co.uk/sources/ukbc" target="_blank">UK Business Counts - ONS</a></div>`;
@@ -1018,13 +1041,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     title: 'Lewisham Digital Infrastructure',
                     year: '2026',
                     url: 'https://lewisham.gov.uk/myservices/lewisham-digital-infrastructure',
-                    summary: `<p>Lewisham Council has been removing planning and highways barriers that previously slowed fibre providers from reaching residential streets, scaling up full fibre rollout to homes and businesses across the borough in partnership with network operators. More than 70,000 homes and businesses can already upgrade to full fibre - via a roughly £21m Openreach investment reaching around half of properties - though only around 30% of eligible premises had actually switched over by the council's own reporting, illustrating that availability and take-up are two different gaps. Alongside fixed broadband, the council has agreements with BT, Ontix, Freshwave and BAI Communications to install small-cell mobile equipment to improve 4G/5G signal, with installations completed in New Cross and further sites planned across the borough.</p>`
+                    summary: `<p>Lewisham Council has been removing planning and highways barriers that previously slowed fibre providers from reaching residential streets, scaling up full fibre rollout to homes and businesses across the borough in partnership with network operators. More than 70,000 homes and businesses can already upgrade to Openreach full fibre, though Openreach reports only around 30% of them had actually switched over, illustrating that availability and take-up are two different gaps. Alongside fixed broadband, the council has agreements with BT, Ontix, Freshwave and BAI Communications to install small-cell mobile equipment to improve 4G/5G signal, with installations completed in New Cross and further sites planned across the borough.</p>`
                 },
                 {
                     title: 'Digital Access for All (Mayor of London Digital Inclusion Service)',
                     year: '2022-',
                     url: 'https://www.london.gov.uk/talk-london/topics/communities/digital-access-all',
-                    summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer, aiming to directly support up to 75,000 Londoners over three years.</p>`
+                    summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer.</p>`
                 },
                 {
                     title: 'Perspectives from global connectivity research',

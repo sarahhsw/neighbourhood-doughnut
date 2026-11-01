@@ -226,6 +226,23 @@ housing dimension. Apply them to every future dimension - they will save hours.
   lesson as the ODS case above, different file format) - don't conclude a dataset has no rows
   for your area just because WebFetch said so; download and check yourself for anything larger
   than a small page.
+- **Trust for London keeps every past edition of a chart live as its own dataset CSV - use them
+  for a time series** (added November 2026, Income dimension). The income indicators had shipped
+  for months with empty trends and notes saying no series "could be retrieved". The current page
+  only links the latest chart (e.g. `/data/dataset/1354/csv/`), but older editions of the same
+  chart are still served at lower ids (`638` = poverty 2019/20, `926` = 2021/22, `1171` = 2022/23;
+  `1500` = low pay 2008-2025 in one file). The first line of each CSV is the chart title, so a
+  scan of ids with a ranged request finds them. Two cautions from the same pass: (1) each
+  edition's own title gives the year - the live snapshots were labelled "2023" when the
+  17.7%/15.2% out-of-work pair was November 2025 and the 13.4%/16.1% low-pay pair was 2025, so
+  check the year label against the file, not the old note; (2) for snapshot series whose
+  denominators are revised (out-of-work benefits), take each year from the latest edition that
+  publishes it and leave out years no edition gives as a %, rather than computing your own.
+- **Nomis ward geographies change with boundary reviews.** The claimant count (NM_162_1) for
+  Ladywell's current ward code only exists from January 2026 ("Wards (as of May 2025)"); the
+  dataset's older ward types are pre-2022 boundaries. Don't join a pre-2022 ward series onto a
+  post-2022 one. Plot the ward point(s) as their own `series` next to the borough and London
+  lines (spec 2.5), and say in `source.notes` when the ward series starts.
 - **Match comparator/aggregate areas by their exact area type and category columns, not just
   area code.** A Fingertips CSV frequently has multiple rows sharing the same parent/area code
   but differing by hidden category columns (deprivation decile, ethnicity, sex breakdown) that
@@ -1024,6 +1041,24 @@ a label behave exactly as before. Rules:
   general), date, electorate and ballots issued in `source.notes`. Check that the percentage is
   ballots ÷ electorate. Never plot a by-election in the same series as scheduled all-out
   elections.
+
+**Before removing an indicator, check whether another dimension shares its name.**
+`getWhatThisMeasures` is keyed by base name, not by dimension. When the income dimension's "Index
+of Multiple Deprivation Decile" indicator was removed (November 2026), deleting its text block
+would also have blanked the peace_justice indicator of the same name. Grep the ward JSON for the
+indicator name across all dimensions first, and leave a shared block in place.
+
+**Choosing between overlapping indicators: keep both only if the gap between them is itself a
+finding.** The user asked whether the claimant count duplicated "% on out-of-work benefits".
+The claimant count is JSA plus Universal Credit claimants required to look for work; the
+out-of-work measure adds sickness-related benefits and UC claimants with no job-search
+requirement. In Lewisham in November 2025 claimants were about two in five of the out-of-work
+total (14,545 of 38,193), and the non-claimant part had grown since 2020 while the claimant count
+fell. Both were kept, and the copy uses the gap to separate job-seekers from people out of work
+for other reasons. The survey-based APS unemployment rate was dropped instead: it measures much
+the same group as the claimant count with a borough margin of error of nearly two points. **Rule:
+when two indicators overlap, check whether one is a subset of the other and what the difference
+measures. Keep both only when that difference answers a question the page is asking.**
 
 **The headline value must be the latest figure the chart shows, with the right year.** Caught
 on mobility mode share, November 2026: the headline read "72.8% · 2024" while the chart already

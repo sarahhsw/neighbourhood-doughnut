@@ -24,6 +24,8 @@ neighbourhood-doughnut/
 │   ├── ward.html                # Four-lens doughnut visualization
 │   ├── js/                     # Chart renderer & app logic
 │   └── css/                    # Styles
+├── scripts/                    # Helpers: splice a dimension into the ward JSON, word caps, render check, ODS->CSV
+├── SPEC_RULES.md               # One-line editorial and data rules (full detail in DIMENSION_PAGE_SPECIFICATION.md)
 ├── .github/workflows/          # GitHub Pages: live site (pages.yml) + per-PR previews (pr-preview.yml)
 └── README.md
 ```

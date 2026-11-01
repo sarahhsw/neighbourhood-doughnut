@@ -1559,7 +1559,7 @@
       "dimension": "income",
       "target": {
         "text": "Overall poverty rate (after housing costs) target: London average poverty rate",
-        "source_body": "Trust for London benchmarks (underlying: DWP Family Resources Survey / HBAI)",
+        "source_body": "Trust for London benchmarks (underlying: DWP Households Below Average Income)",
         "has_official_target": true
       },
       "indicator": "Overall poverty rate (after housing costs)",
@@ -1571,85 +1571,56 @@
       "snapshot": {
         "value": 28.0,
         "unit": "%",
-        "year": 2023,
-        "date": null
+        "year": "2023/24",
+        "date": "Five-year pooled estimate, 2018/19-2023/24 (excluding 2020/21)"
       },
       "status": "shortfall",
       "geography_of_data": "borough_inherited",
       "source": {
         "name": "Trust for London - Poverty rates by London borough",
         "url": "https://trustforlondon.org.uk/data/poverty-borough/",
-        "accessed": "2026-07-18",
-        "notes": "Lewisham 28.0% vs London average 26.0%. Poverty is defined as household income below 60% of median, after housing costs (AHC). Figures pool five years of DWP Family Resources Survey / Households Below Average Income (HBAI) data across financial years 2018/19-2023/24 (2020/21 excluded - pandemic disruption to survey quality), which is Trust for London's stated method for getting a stable borough-level estimate from a national sample too small to give reliable single-year local figures. Re-verified 2026-07-18: multiple independently-dated (2025/2026) search results reproduce this same 28%/26% pairing with no evidence of a newer superseding figure. Trust for London's own commentary (10 charts series, borough-level poverty update) separately notes poverty rose across Lewisham both before and after housing costs over 2009/10-2019/20, but no exact yearly series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
-      },
-      "confidence": "high",
-      "community_notes": []
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_social",
-      "dimension": "income",
-      "target": {
-        "text": "Child poverty rate (after housing costs) target: London average child poverty",
-        "source_body": "Trust for London benchmarks (underlying: DWP Family Resources Survey / HBAI)",
-        "has_official_target": true
-      },
-      "indicator": "Child poverty rate (after housing costs)",
-      "threshold": {
-        "value": 31.0,
-        "unit": "%",
-        "description": "London average child poverty"
-      },
-      "snapshot": {
-        "value": 30.0,
-        "unit": "%",
-        "year": 2023,
-        "date": null
-      },
-      "status": "met",
-      "geography_of_data": "borough_inherited",
-      "source": {
-        "name": "Trust for London - Children in poverty by London borough",
-        "url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
-        "accessed": "2026-07-18",
-        "notes": "Lewisham 30.0% vs London average 31.0% (children in households below 60% of median income, after housing costs), same pooled 2018/19-2023/24 (excl. 2020/21) methodology as the overall poverty rate. Re-verified 2026-07-18: repeated exactly (30% Lewisham) across several independently-dated 2025/2026 sources. A different, non-comparable measure - DWP/HMRC 'children in low income families' local statistics (before-housing-costs, administrative rather than survey-based) - puts a higher figure on Lewisham child poverty in some council/PHE reporting; that is a distinct methodology and not used here to avoid conflating two different definitions. No exact yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
-      },
-      "confidence": "high",
-      "community_notes": []
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_social",
-      "dimension": "income",
-      "target": {
-        "text": "Unemployment rate target: London average unemployment",
-        "source_body": "Trust for London benchmarks (underlying: ONS Annual Population Survey)",
-        "has_official_target": true
-      },
-      "indicator": "Unemployment rate",
-      "threshold": {
-        "value": 6.1,
-        "unit": "%",
-        "description": "London average unemployment"
-      },
-      "snapshot": {
-        "value": 6.1,
-        "unit": "%",
-        "year": 2023,
-        "date": null
-      },
-      "status": "met",
-      "geography_of_data": "borough_inherited",
-      "source": {
-        "name": "Trust for London - Unemployment rate by London borough",
-        "url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
-        "accessed": "2026-07-18",
-        "notes": "Lewisham 6.1% equal to London average 6.1% (2023, ONS Annual Population Survey modelled estimate) - the last fully period-matched pairing this session could confirm. Flag for next refresh: search-engine synthesis of Trust for London's current page surfaced a higher, more recent-looking figure (~6.5%, described as '6th highest in London'), and ONS regional labour market bulletins independently show Lewisham's (differently-defined) claimant count rate rising from 5.7% in March 2023 to 6.5% in March 2024 - consistent directional evidence the borough's position has likely worsened since 2023. However, this session's WebFetch tool returned HTTP 403 on every external domain (confirmed via a control fetch to example.com) and the web-search quota was exhausted before a period-matched London-average comparator for the newer figure could be confirmed, so the unverified 6.5% was NOT substituted in to avoid pairing a newer borough figure against a stale benchmark (DIMENSION_PAGE_SPECIFICATION.md 1.1: comparison periods must match exactly). Confidence set to medium to reflect this open flag."
+        "accessed": "2026-11-01",
+        "notes": "Share of people in households below 60% of median income after housing costs (AHC). Each point is a five-year pooled estimate from DWP's Households Below Average Income survey data, labelled by its final year (2020/21 excluded from pooled windows that span it, because of pandemic sample bias). Lewisham 2023/24: 28% (95% CI 22.1%-33.1%), London 26%, England 21%; Trust for London's own test finds Lewisham NOT significantly different from London (p=0.48) but significantly above England. Around two-thirds (66%) of people in poverty in Lewisham live in working families (same file, 'Proportion of people in poverty in working families'). Trend from earlier editions of the same chart, still live as CSVs: dataset 638 (2015/16-2019/20: Lewisham 35%, CI 26.3%-44.4%; no London figure in that file), 926 (2021/22: Lewisham 32%, London 27%), 1171 (2022/23: Lewisham 29%, London 26%), 1354 (2023/24). Windows overlap by four of five years, so the series is a rolling average, not independent annual readings. Trust for London's next borough update (2024/25) was due June 2026 but was not yet published when checked on 2026-11-01. IMD 2025 context used in the page text (IoD2025 File 7, LSOA21 codes from ONS LSOA21-to-ward 2024 best-fit lookup): Ladywell's 7 LSOAs are E01003273/74/75/76/78/79/91; E01003291 (Lewisham 041D) is IMD decile 2 and income and employment decile 1; the other six are IMD deciles 3-6. Lewisham is 46th most deprived of 296 local authorities on IMD 2025 rank of average rank (File 10)."
       },
       "confidence": "medium",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2019/20",
+          "value": 35.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021/22",
+          "value": 32.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022/23",
+          "value": 29.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023/24",
+          "value": 28.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021/22",
+          "value": 27.0,
+          "series": "London"
+        },
+        {
+          "period": "2022/23",
+          "value": 26.0,
+          "series": "London"
+        },
+        {
+          "period": "2023/24",
+          "value": 26.0,
+          "series": "London"
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -1670,7 +1641,7 @@
       "snapshot": {
         "value": 13.4,
         "unit": "%",
-        "year": 2023,
+        "year": 2025,
         "date": null
       },
       "status": "met",
@@ -1678,11 +1649,273 @@
       "source": {
         "name": "Trust for London - Low pay in London boroughs",
         "url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
-        "accessed": "2026-07-18",
-        "notes": "% of working residents paid below the London Living Wage (an hourly rate independently calculated by the Resolution Foundation and set by the Living Wage Foundation, currently \u00a313.85 from April 2025 - higher than the statutory National Living Wage). Lewisham 13.4% vs London average 16.1% (2023). Re-verified 2026-07-18: could not retrieve an updated Lewisham-specific figure this session, but the London-wide comparator context found (16.1% of Londoners low-paid in 2025, down from 17.3% in 2024) is consistent with the existing 16.1% London benchmark, so it was not contradicted and is retained. No Lewisham-specific yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
+        "accessed": "2026-11-01",
+        "notes": "Proportion of Lewisham residents' jobs paid below the London Living Wage (wherever the job is), estimated by Trust for London from the ONS Annual Survey of Hours and Earnings wage-decile distribution, following the Living Wage Foundation method. Full 2008-2025 series in Trust for London dataset 1500 (trustforlondon.org.uk/data/dataset/1500/csv/); 2015-2025 plotted. Lewisham 13.4% vs London 16.1% in 2025; Lewisham was level with London (17.3%) in 2024. The previous snapshot here was labelled '2023' but the 13.4%/16.1% pair is the 2025 figure. ASHE is a sample survey, so single-year borough moves (2024 to 2025: 17.3% to 13.4%) should be read with caution."
+      },
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015",
+          "value": 22.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2016",
+          "value": 20.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2017",
+          "value": 21.3,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018",
+          "value": 21.3,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019",
+          "value": 22.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020",
+          "value": 21.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021",
+          "value": 20.2,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022",
+          "value": 15.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023",
+          "value": 16.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024",
+          "value": 17.3,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2025",
+          "value": 13.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2015",
+          "value": 22.1,
+          "series": "London"
+        },
+        {
+          "period": "2016",
+          "value": 21.1,
+          "series": "London"
+        },
+        {
+          "period": "2017",
+          "value": 20.8,
+          "series": "London"
+        },
+        {
+          "period": "2018",
+          "value": 22.0,
+          "series": "London"
+        },
+        {
+          "period": "2019",
+          "value": 21.6,
+          "series": "London"
+        },
+        {
+          "period": "2020",
+          "value": 21.2,
+          "series": "London"
+        },
+        {
+          "period": "2021",
+          "value": 19.0,
+          "series": "London"
+        },
+        {
+          "period": "2022",
+          "value": 16.2,
+          "series": "London"
+        },
+        {
+          "period": "2023",
+          "value": 15.7,
+          "series": "London"
+        },
+        {
+          "period": "2024",
+          "value": 17.3,
+          "series": "London"
+        },
+        {
+          "period": "2025",
+          "value": 16.1,
+          "series": "London"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_social",
+      "dimension": "income",
+      "target": {
+        "text": "No official GLA or UK Government target for the claimant count; the London average claimant rate is used as a benchmark.",
+        "source_body": "ONS Claimant Count (Nomis) - London average used as benchmark",
+        "has_official_target": false
+      },
+      "indicator": "Claimant count (% of residents aged 16-64)",
+      "threshold": {
+        "value": 5.6,
+        "unit": "%",
+        "description": "London claimant rate, September 2026"
+      },
+      "snapshot": {
+        "value": 6.5,
+        "unit": "%",
+        "year": "Sep 2026",
+        "date": null
+      },
+      "status": "shortfall",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "ONS Claimant Count, via Nomis",
+        "url": "https://www.nomisweb.co.uk/datasets/ucjsa",
+        "accessed": "2026-11-01",
+        "notes": "Claimants as a proportion of residents aged 16-64 (Nomis dataset NM_162_1, 'Claimant count by sex and age', measure 2; API: https://www.nomisweb.co.uk/api/v01/dataset/NM_162_1.data.csv?geography=E05013725,E09000023,E12000007&gender=0&age=0&measure=1,2&measures=20100). The Claimant Count is JSA claimants plus Universal Credit claimants in the 'searching for work' conditionality group (ONS Labour market overview, October 2026); a small number are in work on very low earnings (ONS Guide to labour market statistics). Official statistics in development; the latest month is provisional. Ladywell (E05013725, 'Wards (as of May 2025)') has figures only from January 2026 (6.1%-6.5%, 670-710 claimants); September 2026: 710 claimants, 6.5%. Lewisham September 2026: 14,665 claimants, 6.8%; London 5.6%. September values plotted for Lewisham and London, 2016-2026. Replaces the Annual Population Survey modelled unemployment rate (Lewisham 5.7% +/-1.7, London 6.1%, Jul 2025-Jun 2026, Nomis NM_127_1), which is a survey estimate of people out of work and looking, as a share of the economically active - a different measure with a wide local confidence interval."
       },
       "confidence": "high",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "Sep 2016",
+          "value": 2.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2017",
+          "value": 2.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2018",
+          "value": 2.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2019",
+          "value": 3.7,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2020",
+          "value": 9.3,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2021",
+          "value": 7.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2022",
+          "value": 5.7,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2023",
+          "value": 5.9,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2024",
+          "value": 6.9,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2025",
+          "value": 7.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2026",
+          "value": 6.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Sep 2016",
+          "value": 1.9,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2017",
+          "value": 2.0,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2018",
+          "value": 2.2,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2019",
+          "value": 2.8,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2020",
+          "value": 7.8,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2021",
+          "value": 6.4,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2022",
+          "value": 4.6,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2023",
+          "value": 4.8,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2024",
+          "value": 5.6,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2025",
+          "value": 5.6,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2026",
+          "value": 5.6,
+          "series": "London"
+        },
+        {
+          "period": "Sep 2026",
+          "value": 6.5,
+          "series": "Ladywell"
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -1691,19 +1924,19 @@
       "dimension": "income",
       "target": {
         "text": "% on out-of-work benefits target: London average benefit claimant rate",
-        "source_body": "Trust for London benchmarks (underlying: DWP benefit claimant statistics)",
+        "source_body": "Trust for London benchmarks (underlying: DWP Benefit Combinations, Stat-Xplore)",
         "has_official_target": true
       },
       "indicator": "% on out-of-work benefits",
       "threshold": {
         "value": 15.2,
         "unit": "%",
-        "description": "London average benefit claimant rate"
+        "description": "London average, November 2025"
       },
       "snapshot": {
         "value": 17.7,
         "unit": "%",
-        "year": 2023,
+        "year": "Nov 2025",
         "date": null
       },
       "status": "shortfall",
@@ -1711,44 +1944,63 @@
       "source": {
         "name": "Trust for London - People on out-of-work benefits, by London borough",
         "url": "https://trustforlondon.org.uk/data/out-work-benefits-borough/",
-        "accessed": "2026-07-18",
-        "notes": "% of the working-age population claiming out-of-work benefits (DWP benefit claimant statistics). Lewisham 17.7% vs London average 15.2% (2023). Re-verified 2026-07-18: this session located the correct live source URL for the first time (dimension_data_sources.json previously had no entry at all for this indicator, despite it already being the site's 5th live income indicator - fixed in that file in this pass). Cross-checked against the current London borough range found this session (Enfield highest at 21.4%, Richmond upon Thames lowest at 7.9%, both August 2025) - Lewisham's 17.7% sits well toward the higher end of that range, consistent with Lewisham being 'one of the highest' London boroughs on this measure. No exact updated Lewisham figure or yearly trend series could be retrieved this session (see function docstring) - trend intentionally left empty rather than fabricated."
+        "accessed": "2026-11-01",
+        "notes": "% of residents aged 16-64 on out-of-work benefits: Incapacity Benefit (INCAP), Income Support, Jobseeker's Allowance, Pension Credit, out-of-work Universal Credit, and combinations (Trust for London chart note; underlying DWP Benefit Combinations via Stat-Xplore and ONS mid-year population estimates). November snapshots, each from the latest edition publishing that year: dataset 1357 (Nov 2019: Lewisham 10.5%, London 8.7%; Nov 2023: 15.4%, 13.0%) and dataset 1614 (Nov 2020: 16.8%, 14.5%; Nov 2024: 17.3%, 14.6%; Nov 2025: 17.7%, 15.2%). No Nov 2021/2022 % is published. Lewisham Nov 2025: 38,193 recipients, of which out-of-work UC 16.1% of working-age residents. 8th highest of 33 London areas (incl. City of London) in Nov 2025; Enfield highest 21.4%, Richmond lowest 8.0% (excl. City). The previous snapshot was labelled '2023' but 17.7%/15.2% is the November 2025 pair. For comparison, the Nomis claimant count for Lewisham in November 2025 was 14,545 - about two in five of the out-of-work total."
       },
       "confidence": "high",
-      "community_notes": []
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_social",
-      "dimension": "income",
-      "target": {
-        "text": "No official GLA or UK Government target established for this indicator. The Index of Multiple Deprivation is a relative ranking of neighbourhoods against each other, not a measure with a policy target to hit.",
-        "source_body": "none_found",
-        "has_official_target": false
-      },
-      "indicator": "Index of Multiple Deprivation Decile",
-      "threshold": {
-        "value": null,
-        "unit": null,
-        "description": null
-      },
-      "snapshot": {
-        "value": 14.3,
-        "unit": "% of Ladywell's neighbourhoods (LSOAs) in England's most deprived national quintile (IMD decile 1-2)",
-        "year": 2025,
-        "date": null
-      },
-      "status": "descriptive_only",
-      "geography_of_data": "lsoa_aggregated",
-      "source": {
-        "name": "MHCLG English Indices of Deprivation 2025, aggregated to Ladywell ward",
-        "url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
-        "accessed": "2026-07-18",
-        "notes": "Ward-level aggregation (per DIMENSION_PAGE_SPECIFICATION.md 1.6/11.6): Ladywell ward comprises 7 LSOAs (Lower-layer Super Output Areas, ~1,000-3,000 people each); 1 of the 7 (about 14%) ranks in England's most deprived national quintile (IMD decile 1-2), per Lewisham Observatory's Ladywell ward profile (observatory.lewisham.gov.uk/ladywell/) and corroborated by Ladywell Live's report on the IMD 2025 release (31 Oct 2025), which also states Ladywell's position 'has changed little since 2019' and that the ward scores comparatively well on the education domain specifically but poorly on income and living environment - directly relevant to this dimension. Full LSOA-by-LSOA decile aggregation (rather than this single 'how many of 7 are in the bottom quintile' statistic) was not feasible this session because the underlying LSOA-level dataset could not be downloaded (WebFetch blocked site-wide - see function docstring); this is a genuine, sourced ward aggregation rather than the borough-average fallback. Borough context: Lewisham LA ranks 172nd-least-deprived of 296 English local authorities on IMD 2025's 'Rank of Extent' summary measure (only 2% of Lewisham's LSOAs sit in the nationally most-deprived decile, vs 10% for England as a whole) - but this is a narrower, different summary measure from the LA's overall/average-rank deprivation position, which has historically been far more deprived-looking (48th of 326 local authorities under IMD 2015's average-rank measure; PHE's 2019 health profile classed Lewisham as 'one of the 20% most deprived districts/unitary authorities in England'). These different summary measures are NOT combined into one trend - IMD is not designed for cross-round comparison in any case (MHCLG's own IMD 2025 guidance cautions against directly comparing ranks/deciles across releases, since both the indicator set and LSOA boundaries change between rounds), so a single 2025 data point is used rather than a fabricated series."
-      },
-      "confidence": "medium",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "Nov 2019",
+          "value": 10.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Nov 2020",
+          "value": 16.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Nov 2023",
+          "value": 15.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Nov 2024",
+          "value": 17.3,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Nov 2025",
+          "value": 17.7,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Nov 2019",
+          "value": 8.7,
+          "series": "London"
+        },
+        {
+          "period": "Nov 2020",
+          "value": 14.5,
+          "series": "London"
+        },
+        {
+          "period": "Nov 2023",
+          "value": 13.0,
+          "series": "London"
+        },
+        {
+          "period": "Nov 2024",
+          "value": 14.6,
+          "series": "London"
+        },
+        {
+          "period": "Nov 2025",
+          "value": 15.2,
+          "series": "London"
+        }
+      ]
     },
     {
       "ward": "Ladywell",

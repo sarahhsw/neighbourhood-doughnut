@@ -322,16 +322,7 @@
     "indicator": "Overall poverty rate (after housing costs)",
     "source_url": "https://trustforlondon.org.uk/data/poverty-borough/",
     "granularity": null,
-    "notes": "Underlying source: DWP Family Resources Survey / Households Below Average Income (HBAI), pooled across financial years 2018/19-2023/24 (2020/21 excluded - pandemic disruption). Poverty = household income below 60% of median, after housing costs."
-  },
-  {
-    "lens": "local_social",
-    "dimension": "income_and_work",
-    "category": "Enabled",
-    "indicator": "Child poverty rate (after housing costs)",
-    "source_url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
-    "granularity": null,
-    "notes": "Underlying source: DWP Family Resources Survey / HBAI, same pooled 2018/19-2023/24 (excl. 2020/21) methodology as the overall poverty rate. Distinct from DWP/HMRC \"children in low income families\" local statistics (before-housing-costs, administrative measure) sometimes cited in council/PHE reporting - not used here as it is a different definition."
+    "notes": "Underlying source: DWP Households Below Average Income (HBAI), five-year pooled borough estimates by Trust for London (2020/21 excluded). Trend from earlier editions of the same chart, still live as CSVs at trustforlondon.org.uk/data/dataset/<id>/csv/ (638 = 2019/20, 926 = 2021/22, 1171 = 2022/23, 1354 = 2023/24). Poverty = household income below 60% of median, after housing costs. IMD 2025 findings used in this indicator's text come from MHCLG English Indices of Deprivation 2025 (File 7 LSOA data, File 10 local authority summaries)."
   },
   {
     "lens": "local_social",
@@ -340,25 +331,16 @@
     "indicator": "% paid below London Living Wage",
     "source_url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
     "granularity": null,
-    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE). London Living Wage is independently calculated by the Resolution Foundation and set by the Living Wage Foundation (£13.85/hour from April 2025) - higher than the statutory National Living Wage."
+    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE), residents' jobs paid below the London Living Wage. Full 2008-2025 series in Trust for London dataset 1500 (trustforlondon.org.uk/data/dataset/1500/csv/)."
   },
   {
     "lens": "local_social",
     "dimension": "income_and_work",
     "category": "Enabled",
-    "indicator": "Unemployment rate",
-    "source_url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
-    "granularity": null,
-    "notes": "Underlying source: ONS Annual Population Survey (APS), modelled local unemployment estimate. Distinct from the DWP/ONS claimant count rate (an administrative measure of benefit claimants, not survey-based unemployment) sometimes quoted alongside it."
-  },
-  {
-    "lens": "local_social",
-    "dimension": "income_and_work",
-    "category": "Enabled",
-    "indicator": "Index of Multiple Deprivation Decile",
-    "source_url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
-    "granularity": "LSOA",
-    "notes": "MHCLG English Indices of Deprivation 2025 (published Oct 2025), LSOA-level scores/ranks aggregated to ward. Ward-level aggregation via Lewisham Observatory's Ladywell ward profile (observatory.lewisham.gov.uk/ladywell/); borough-level context via London Datastore's IMD 2025 exploratory analysis. Not designed for cross-round trend comparison (MHCLG guidance) - indicator set and LSOA boundaries change between releases."
+    "indicator": "Claimant count (% of residents aged 16-64)",
+    "source_url": "https://www.nomisweb.co.uk/datasets/ucjsa",
+    "granularity": "Ward",
+    "notes": "ONS Claimant Count via Nomis (dataset NM_162_1, measure 'Claimants as a proportion of residents aged 16-64'), monthly. Jobseeker's Allowance plus Universal Credit claimants required to look for work. Ladywell ward (E05013725) available from January 2026 only (Wards as of May 2025 geography); Lewisham (E09000023) and London (E12000007) used as comparators back to 2016. Replaced the APS modelled 'Unemployment rate' (Trust for London / Nomis NM_127_1) in November 2026."
   },
   {
     "lens": "local_social",
@@ -367,7 +349,7 @@
     "indicator": "% on out-of-work benefits",
     "source_url": "https://trustforlondon.org.uk/data/out-work-benefits-borough/",
     "granularity": null,
-    "notes": "Underlying source: DWP benefit claimant statistics (working-age population claiming out-of-work benefits). Previously live on site as the dimension's 5th indicator with no entry in this registry at all - added here to close that gap."
+    "notes": "Underlying source: DWP Benefit Combinations via Stat-Xplore, with ONS mid-year population estimates (working age 16-64). November snapshots from Trust for London datasets 1357 (2019, 2023) and 1614 (2020, 2024, 2025). Includes Incapacity Benefit, Income Support, JSA, Pension Credit and out-of-work Universal Credit - wider than the claimant count, which covers only those required to look for work."
   },
   {
     "lens": "local_social",

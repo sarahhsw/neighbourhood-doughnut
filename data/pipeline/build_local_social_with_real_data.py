@@ -1300,17 +1300,39 @@ def build_mobility_dimensions():
 def build_energy():
     """
     Energy dimension - 2 indicators matching data/lookups/dimension_data_sources.json
-    ("energy"): EPC Band C-or-above coverage and fuel poverty (LILEE metric). No genuinely
-    ward-level government dataset exists for either indicator on a recurring basis - EPC
-    coverage uses the Lewisham Observatory's 2022 Ward Profile (a real ward-level breakdown
-    of EPC register data, cross-referenced against ONS's own regional figures), and fuel
-    poverty uses DESNZ's borough-level sub-regional statistics. See source notes for the full
-    chain and for what could not be independently re-verified this session: this environment's
-    network egress policy blocked direct access to ons.gov.uk/gov.uk/data.gov.uk to download
-    and parse the underlying spreadsheets (unlike the direct file access used for prior
-    dimensions), so figures below are drawn from cross-checked secondary reporting of the same
-    underlying official releases, not directly parsed downloads.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    ("energy"): EPC Band C-or-above coverage and fuel poverty (LILEE metric). Rebuilt
+    2026-11-01 from directly downloaded and parsed primary files (ONS EPC Band C xlsx, all
+    three editions; DESNZ sub-regional fuel poverty xlsx, all six LILEE releases).
+
+    Ladywell = 7 LSOAs (2021), confirmed against ONS's LSOA21->WD22 and LSOA21->WD24
+    lookups (ONS Open Geography Portal): E01003273 (Lewisham 011A), E01003274 (014B),
+    E01003275 (014C), E01003276 (014D), E01003278 (011C), E01003279 (011D),
+    E01003291 (041D; named 012D under 2011 LSOAs). All 7 are 'U' (unchanged) in ONS's
+    LSOA11->LSOA21 lookup, so the 2019-2020 (2011-geography) and 2021-2024 fuel poverty
+    releases cover the same ground.
+
+    EPC: ONS publishes no LSOA or ward figure - only MSOA. Ladywell's 7 LSOAs sit in three
+    MSOAs: Lewisham 011 'Loampit & Hilly Fields' (E02000663, 3 of its 4 LSOAs), Lewisham 014
+    'Ladywell' (E02000666, 3 of 4), and Lewisham 041 'Central Lewisham South' (E02007009,
+    1 of 5). The 'Ladywell area (est.)' series is the household-weighted mean of MSOAs 011
+    and 014 (which hold 6 of the 7 LSOAs, ~86% of Ladywell's households), weighted by
+    DESNZ's 2024 household estimates for all 8 of their LSOAs (011: 3,088; 014: 2,984).
+    041 is deliberately excluded: 'Central Lewisham South' rates 64.8% Band C+, far above
+    011/014, and only one of its five LSOAs is in Ladywell, so apportioning its rate could
+    overstate the ward. The Lewisham Observatory 2022 ward-profile figure (43%) previously
+    used here comes from a different source and method from ONS's quality-checked
+    latest-per-dwelling 10-year window, so it is not joined to this series.
+
+    Fuel poverty: Ladywell = sum of fuel-poor households / sum of households across its 7
+    LSOAs (DESNZ Table 3/4). LILEE is used for every sub-regional release from 2019 data on
+    (DESNZ 2026 report, section 1); earlier LIHC-based releases are not joined. DESNZ warns
+    LSOA estimates should not be used for trends within an LSOA and that sub-regional
+    estimates suit general trends only; the 7-LSOA aggregate is shown as indicative.
+    Correction vs the July 2026 build: Lewisham's 2022-data rate is 11.1% (DESNZ Table 2,
+    14,544 of 131,597 households), not 13.8% as previously shown - the 13.8% could not be
+    traced to any DESNZ table.
+
+    Kept in sync with site/data/wards/ladywell.json via the splice in spec section 13.3.
     """
     epc_band_c = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
@@ -1318,37 +1340,48 @@ def build_energy():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="energy",
         target=Target(
-            text="% properties with EPC Band C or above target: London average (56%)",
-            source_body="ONS Energy Performance Certificate statistics - London regional benchmark",
+            text="% dwellings with EPC Band C or above: benchmarked against the London average (57.9%, records to March 2025). The statutory fuel poverty target is for as many fuel-poor homes as reasonably practicable to reach Band C by 2030, and private rented homes must reach EPC C by 1 October 2030 (Fuel Poverty Strategy for England, 2026).",
+            source_body="ONS Energy Performance Certificate (EPC) Band C or above, England and Wales - London regional benchmark; DESNZ Fuel Poverty Strategy for England (CP 1497)",
             has_official_target=True
         ),
         indicator="% properties with EPC Band C or above",
-        threshold=Threshold(value=56.0, unit="%", description="London average % of dwellings with a valid EPC rated Band C or above, records up to financial year ending March 2024"),
-        snapshot=Snapshot(value=43.0, unit="%", year=2022),
+        threshold=Threshold(value=57.9, unit="%", description="London average % of dwellings with a valid EPC rated Band C or above, latest EPC per dwelling lodged in the 10 years to March 2025 (ONS Table 1a)"),
+        snapshot=Snapshot(value=37.9, unit="%", year=2025, date="EPCs lodged in the 10 years to March 2025"),
         status=Status.SHORTFALL,
         source=Source(
-            name="Lewisham Observatory - Ladywell Ward Profile (2022), cross-referenced with ONS 'Energy Performance Certificate (EPC) Band C or above, England and Wales'",
+            name="ONS - Energy Performance Certificate (EPC) Band C or above, England and Wales (March 2025 edition, released 28 October 2025), MSOA Table 3a; household weights from DESNZ Sub-regional fuel poverty 2026 (2024 data), Table 4",
             url="https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/energyperformancecertificateepcbandcoraboveenglandandwales",
-            accessed="2026-07-18",
+            accessed="2026-11-01",
             notes=(
-                "43% of assessed homes in Ladywell ward specifically held an EPC of A, B or C in the Lewisham Observatory's 2022 Ward Profile "
-                "(published May 2022: https://www.observatory.lewisham.gov.uk/wp-content/uploads/2022/05/Ladywell-digital.pdf) - genuine ward-level "
-                "data, not a borough figure applied uniformly. The same profile round showed a wide spread across Lewisham's other wards, from 37% "
-                "(Hither Green) and 38% (Lee Green) up to 66% (Deptford) and 78% (Lewisham Central), so Ladywell sits toward the less energy-efficient "
-                "end of the borough, not at its average. ONS's own EPC Band C-or-above dataset (dimension_data_sources.json's designated source for "
-                "this indicator) only publishes at local-authority level, not ward, and this environment's network egress policy blocked downloading "
-                "and parsing that spreadsheet directly this session for a clean Lewisham-borough figure or historical series - the London-region "
-                "comparator used as the threshold here (56% Band C or above, records to FYE March 2024) and its accompanying median-EPC-score context "
-                "(England: 68/band D rising to 69/band C between the FYE2024 and FYE2025 ONS releases; London: 70/band C in both) come from ONS's own "
-                "published 'Energy efficiency of housing in England and Wales' annual articles. A separate live EPC-register aggregator "
-                "(theepcregister.co.uk / greatbritishenergy.com, accessed 2026-07-18) puts Lewisham borough-wide at approximately 52% Band C or above "
-                "currently, consistent with Ladywell sitting below its borough's own average. No multi-year Ladywell-specific series exists - Ward "
-                "Profiles are a point-in-time exercise last run by Lewisham Observatory in 2022 - so this is a single data point, not a trend; "
-                "confidence set to medium given the value's real, dated, genuinely ward-specific origin but the lack of a time series."
+                "Ladywell area (est.) = household-weighted mean of ONS MSOA Table 3a values for Lewisham 011 (E02000663) and Lewisham 014 "
+                "(E02000666), the two MSOAs holding 6 of Ladywell's 7 LSOAs; weights are DESNZ 2024 household estimates for all 8 LSOAs in "
+                "those MSOAs (3,088 and 2,984). Raw MSOA values (011 / 014): FYE2023 28.20 / 34.98; FYE2024 30.80 / 35.99; FYE2025 35.45 / 40.44. "
+                "MSOA 041 (E02007009, 1 of Ladywell's 7 LSOAs, 64.78% in FYE2025) excluded - see build_energy() docstring. In FYE2025, 011 is "
+                "the 4th-lowest and 014 the 10th-lowest of Lewisham's 37 MSOAs. Lewisham (Table 2a): 50.02 / 52.42 / 55.96; London (Table 1a): "
+                "52.35 / 55.19 / 57.90; England 46.60 / 49.83 / 53.28 (FYE2023/2024/2025). ONS method: latest EPC per dwelling from a rolling "
+                "10-year window, quality-checked against VOA property attributes; covers only dwellings with an EPC (71% of English dwellings "
+                "have had one); and (Note 4) does not necessarily reflect improvements, as most alterations don't require a new EPC. Lewisham "
+                "by property age (Table 2c, FYE2025): pre-1929 26.55%, 1930-1982 51.44%, 1983-2011 81.41%, 2012 onwards 98.95%. Housing age "
+                "context from VOA Council Tax: Stock of Properties 2025 (CTSOP4.1, LSOA build period, 31 March 2025, counts rounded to 10): "
+                "2,800 of Ladywell's 5,130 properties (54.6%) built before 1930, vs 42.8% Lewisham, 35.4% London, 24.8% England "
+                "(https://www.gov.uk/government/statistics/council-tax-stock-of-properties-2025). Next ONS edition was due October 2026 but "
+                "had not been published as of 2026-11-01. Previous value (43%, Lewisham Observatory 2022 ward profile) is a different method "
+                "and is not joined to this series."
             )
         ),
-        geography=GeographyLevel.WARD,
-        confidence=Confidence.MEDIUM
+        geography=GeographyLevel.MSOA_AGGREGATED,
+        confidence=Confidence.MEDIUM,
+        trend=[
+            {"period": "2023", "value": 31.5, "series": "Ladywell area (est.)", "note": "EPCs to March 2023; weighted mean of MSOAs Lewisham 011 and 014"},
+            {"period": "2024", "value": 33.4, "series": "Ladywell area (est.)", "note": "EPCs to March 2024; weighted mean of MSOAs Lewisham 011 and 014"},
+            {"period": "2025", "value": 37.9, "series": "Ladywell area (est.)", "note": "EPCs to March 2025; weighted mean of MSOAs Lewisham 011 and 014"},
+            {"period": "2023", "value": 50.0, "series": "Lewisham", "note": "EPCs to March 2023; ONS Table 2a"},
+            {"period": "2024", "value": 52.4, "series": "Lewisham", "note": "EPCs to March 2024; ONS Table 2a"},
+            {"period": "2025", "value": 56.0, "series": "Lewisham", "note": "EPCs to March 2025; ONS Table 2a"},
+            {"period": "2023", "value": 52.4, "series": "London", "note": "EPCs to March 2023; ONS Table 1a"},
+            {"period": "2024", "value": 55.2, "series": "London", "note": "EPCs to March 2024; ONS Table 1a"},
+            {"period": "2025", "value": 57.9, "series": "London", "note": "EPCs to March 2025; ONS Table 1a"},
+        ]
     )
 
     fuel_poverty = create_targeted_dimension(
@@ -1357,39 +1390,56 @@ def build_energy():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="energy",
         target=Target(
-            text="% households in fuel poverty (LILEE) target: England average (13.1% in 2022, the same data year as Lewisham's own most recently confirmed figure)",
-            source_body="DESNZ Annual & Sub-regional Fuel Poverty Statistics - England benchmark",
+            text="Statutory fuel poverty target (2014, retained in the 2026 Fuel Poverty Strategy): as many fuel-poor homes as reasonably practicable to reach energy efficiency Band C by 2030. England's 2024 LILEE rate (9.9%) is shown for comparison.",
+            source_body="DESNZ Fuel Poverty Strategy for England (CP 1497); DESNZ Sub-regional fuel poverty statistics - England benchmark",
             has_official_target=True
         ),
         indicator="% households in fuel poverty",
-        threshold=Threshold(value=13.1, unit="%", description="England average fuel poverty rate (LILEE metric), 2022 data year"),
-        snapshot=Snapshot(value=13.8, unit="%", year=2022),
+        threshold=Threshold(value=9.9, unit="%", description="England fuel poverty rate (LILEE metric), 2024 data year (DESNZ sub-regional Table 2: 2,472,012 of 24,845,794 households)"),
+        snapshot=Snapshot(value=9.9, unit="%", year=2024),
         status=Status.SHORTFALL,
         source=Source(
-            name="DESNZ (formerly BEIS) - Sub-regional Fuel Poverty Statistics",
-            url="https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics",
-            accessed="2026-07-18",
+            name="DESNZ - Sub-regional fuel poverty statistics, 2026 (2024 data) and earlier LILEE releases (2019-2023 data), LSOA and local authority tables",
+            url="https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2026-2024-data",
+            accessed="2026-11-01",
             notes=(
-                "13.8% of Lewisham households (17,700) were in fuel poverty on the Low Income Low Energy Efficiency (LILEE) metric in the 2022 data "
-                "year, published in DESNZ's 'Sub-regional fuel poverty in England, 2024 report (2022 data)' - above England's 2022 average of 13.1% "
-                "for the same year. In the earlier 2020 data year (BEIS 'Sub-regional fuel poverty, 2022 report (2020 data)', reported by "
-                "Eastlondonlines, Nov 2022), Lewisham was 14.1% and the worst-performing inner-London borough (4th worst across all of London). Both "
-                "years use the LILEE metric (adopted 2021), not the older LIHC methodology, so they're directly comparable to each other. England's "
-                "national LILEE average has continued falling since (11.4% in 2023, 9.9% in 2024), and DESNZ published a newer local-authority-level "
-                "release covering 2024 data on 14 May 2026 ('Sub-regional fuel poverty data 2026 (2024 data)'), but this environment's network egress "
-                "policy blocked direct access to gov.uk/data.gov.uk to download that spreadsheet this session, and repeated searches for Lewisham's "
-                "specific 2024-data figure kept returning the same cached 2022-data figure (13.8%/17,700 households, paired with the 13.1% England "
-                "comparator) regardless of which release year was queried - so a 2024-data figure could not be independently confirmed and is "
-                "deliberately not included below rather than guessed. Lewisham's own 2023-24 Annual Public Health Report additionally notes fuel "
-                "poverty exceeding 23% in some neighbourhoods and 20% in seven LSOAs - i.e. meaningful variation within the borough above this "
-                "13.8% average."
+                "Ladywell = sum over its 7 LSOAs of DESNZ's modelled fuel-poor households / modelled households: 2019 913/5,187 (17.6%); "
+                "2020 709/5,244 (13.5%); 2021 628/4,924 (12.8%); 2022 560/5,026 (11.1%); 2023 480/5,069 (9.5%); 2024 503/5,094 (9.9%). "
+                "Lewisham (Table 2): 18.2%, 14.1%, 12.7%, 11.1%, 9.6%, 9.8% (2024: 13,083 of 133,314). England: 13.4%, 13.2%, 13.1%, 13.1%, "
+                "11.4%, 9.9%. London: 15.2%, 11.5%, 11.9%, 10.4%, 9.3%, 9.6%. DESNZ 2026 report: sub-regional figures are Official Statistics "
+                "in Development, modelled from the English Housing Survey and constrained to regional totals; suitable for general trends, "
+                "not detailed trends over time; LSOA estimates should not be used to track a single LSOA over time; small areas are "
+                "influenced by their regional trend; model predictor variables were re-selected for the 2024-data release. Between 2023 and "
+                "2024 fuel poverty fell in every region except London (9.3% to 9.6%). LILEE has been used for sub-regional releases since 2019 "
+                "data; 2010-2018 releases use LIHC and are not joined. Release URLs: 2019 data https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2021 ; "
+                "2020 https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2022 ; 2021 https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2023-2021-data ; "
+                "2022 https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2024-2022-data ; 2023 https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2025-2023-data ; "
+                "report https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-report-2026-2024-data . Correction: the July 2026 build "
+                "showed Lewisham 13.8% for 2022; DESNZ's own table gives 11.1% (also quoted as '11%' in Lewisham's Housing Retrofit Strategy "
+                "report to Mayor & Cabinet, 12 March 2025)."
             )
         ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
+        geography=GeographyLevel.LSOA_AGGREGATED,
         confidence=Confidence.MEDIUM,
         trend=[
-            {"period": "2020", "value": 14.1, "note": "BEIS sub-regional fuel poverty, 2022 report (2020 data); worst inner-London borough that year"},
-            {"period": "2022", "value": 13.8, "note": "DESNZ sub-regional fuel poverty, 2024 report (2022 data); England average 13.1% same year"},
+            {"period": "2019", "value": 17.6, "series": "Ladywell"},
+            {"period": "2020", "value": 13.5, "series": "Ladywell"},
+            {"period": "2021", "value": 12.8, "series": "Ladywell"},
+            {"period": "2022", "value": 11.1, "series": "Ladywell"},
+            {"period": "2023", "value": 9.5, "series": "Ladywell"},
+            {"period": "2024", "value": 9.9, "series": "Ladywell"},
+            {"period": "2019", "value": 18.2, "series": "Lewisham"},
+            {"period": "2020", "value": 14.1, "series": "Lewisham"},
+            {"period": "2021", "value": 12.7, "series": "Lewisham"},
+            {"period": "2022", "value": 11.1, "series": "Lewisham"},
+            {"period": "2023", "value": 9.6, "series": "Lewisham"},
+            {"period": "2024", "value": 9.8, "series": "Lewisham"},
+            {"period": "2019", "value": 13.4, "series": "England"},
+            {"period": "2020", "value": 13.2, "series": "England"},
+            {"period": "2021", "value": 13.1, "series": "England"},
+            {"period": "2022", "value": 13.1, "series": "England"},
+            {"period": "2023", "value": 11.4, "series": "England"},
+            {"period": "2024", "value": 9.9, "series": "England"},
         ]
     )
 

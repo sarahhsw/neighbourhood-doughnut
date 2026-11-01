@@ -989,7 +989,22 @@ a label behave exactly as before. Rules:
   national fall while informal help "held up far better". Over 2020/21-2024/25 the table
   shows the opposite: informal fell 54% to 44%, formal 30% to 28%. Both were fixed. When you
   rebuild a series, overwrite every point from the source rather than appending to the old
-  ones.
+  ones. A larger case, November 2026 (energy): the fuel poverty card had shown Lewisham at
+  13.8% for 2022 since July, taken from "cross-checked secondary reporting" while gov.uk was
+  blocked. DESNZ's own Table 2 gives 11.1% (14,544 of 131,597 households). The 13.8% traced
+  to no DESNZ table at all, and the summary's "above England's 13.1%" story rested on it.
+  **A figure recorded as "could not be downloaded, taken from secondary reporting" is a
+  follow-up, not a verified number: re-pull it from the primary file the first time access
+  allows.**
+- **When the source's smallest geography doesn't nest inside the ward, build an openly
+  labelled estimate from the areas that mostly overlap, and say which ones.** ONS's EPC Band C
+  data stops at MSOA. Ladywell's 7 LSOAs sit in three MSOAs (3 of 4 in Lewisham 011, 3 of 4 in
+  014, 1 of 5 in 041). The energy chart's "Ladywell area (est.)" line is the household-weighted
+  mean of 011 and 014 only: 041 ("Central Lewisham South") rates 65% Band C+, far above the
+  other two, so giving its rate to Ladywell's one LSOA there could badly overstate the ward. Label such a line as
+  an estimate in the series name, keep the method in `source.notes`, set the geography to
+  `msoa_aggregated`, and don't join it to an older ward figure from a different source (the
+  Lewisham Observatory's 2022 ward profile, 43%, is not built on ONS's method).
 - **When the geography of an indicator changes, re-check its inherited "why" claims too.**
   The same civic participation text attributed the England 2020/21 peak to "lockdown-era
   mutual aid and local campaigning". Once the full CLS Timeseries was opened, 2019/20 (fieldwork

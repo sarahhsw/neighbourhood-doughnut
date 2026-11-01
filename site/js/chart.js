@@ -25,6 +25,14 @@ const COLORS = {
     ecologicalRing: '#E8542D'    // ringA - ecological ceiling boundary band
 };
 
+// Display names for dimensions whose ids don't title-case cleanly
+// (e.g. peace_justice would otherwise render as "Peace Justice").
+// Shared with app.js, which loads after this file.
+const DIMENSION_DISPLAY_NAMES = {
+    peace_justice: 'Peace & Justice'
+};
+window.DIMENSION_DISPLAY_NAMES = DIMENSION_DISPLAY_NAMES;
+
 class DoughnutChart {
     constructor(containerId, data, viewMode = 'local') {
         this.container = document.getElementById(containerId);
@@ -374,7 +382,7 @@ class DoughnutChart {
         const y = this.centerY + radius * Math.sin(angle);
 
         // Format name
-        const label = dimensionName
+        const label = DIMENSION_DISPLAY_NAMES[dimensionName] || dimensionName
             .replace(/_/g, ' ')
             .split(' ')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))

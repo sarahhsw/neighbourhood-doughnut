@@ -303,17 +303,17 @@
     "category": "Enabled",
     "indicator": "% properties with EPC Band C or above",
     "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/energyperformancecertificateepcbandcoraboveenglandandwales",
-    "granularity": "LA",
-    "notes": "ONS's dataset publishes at local-authority level only (no ward breakdown), and could not be downloaded/parsed directly this session (network egress to ons.gov.uk blocked). Ward-specific figure used instead comes from Lewisham Observatory's 2022 Ward Profiles (point-in-time EPC register breakdown by ward): https://www.observatory.lewisham.gov.uk/wp-content/uploads/2022/05/Ladywell-digital.pdf. London-region comparator drawn from ONS's 'Energy efficiency of housing in England and Wales' annual articles."
+    "granularity": "MSOA",
+    "notes": "ONS EPC Band C or above dataset, March 2025 edition (released 28 Oct 2025; three editions: records to March 2023, 2024, 2025). Most granular level is MSOA (Table 3a) - no LSOA or ward figure. Ladywell area estimate = household-weighted mean of MSOAs Lewisham 011 (E02000663) and 014 (E02000666), which hold 6 of Ladywell's 7 LSOAs; Lewisham from Table 2a, London from Table 1a. Next edition was due October 2026 but not yet published as of 2026-11-01. See build_energy() for method."
   },
   {
     "lens": "local_social",
     "dimension": "energy",
     "category": "Enabled",
     "indicator": "% households in fuel poverty",
-    "source_url": "https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics",
-    "granularity": "LA",
-    "notes": "DESNZ (formerly BEIS) Sub-regional Fuel Poverty Statistics, LILEE metric, local-authority level. Most recent confirmed Lewisham figure is 2022 data (13.8%, published in the 'Sub-regional fuel poverty in England, 2024 report (2022 data)'); a newer 2024-data release exists (published 14 May 2026) but could not be independently confirmed for Lewisham this session - see source.notes in build_energy() for detail."
+    "source_url": "https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2026-2024-data",
+    "granularity": "LSOA",
+    "notes": "DESNZ Sub-regional fuel poverty statistics (LILEE metric), LSOA-level tables. Latest: 2026 release (2024 data, published 14 May 2026). Ladywell = sum of its 7 LSOAs' modelled fuel-poor households / households; LILEE series 2019-2024 data (earlier releases use LIHC and are not joined). Collection: https://www.gov.uk/government/collections/fuel-poverty-sub-regional-statistics ; data.gov.uk listing: https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics"
   },
   {
     "lens": "local_social",

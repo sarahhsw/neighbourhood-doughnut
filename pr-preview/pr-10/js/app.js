@@ -1743,6 +1743,8 @@ function groupDimensions(dimensions) {
 
 
 function formatDimensionName(name) {
+    const displayNames = window.DIMENSION_DISPLAY_NAMES || {};
+    if (displayNames[name]) return displayNames[name];
     return name
         .replace(/_/g, ' ')
         .split(' ')

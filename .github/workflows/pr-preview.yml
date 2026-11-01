@@ -1,0 +1,39 @@
+name: Deploy PR preview
+
+# Publishes each pull request's site/ folder to
+# gh-pages/pr-preview/pr-<number>/, so it can be viewed at
+# https://<owner>.github.io/<repo>/pr-preview/pr-<number>/ before merging.
+# The action comments the link on the pull request, updates the preview on
+# every push to the PR, and removes it when the PR is closed or merged.
+#
+# Requires Settings -> Pages -> Source: "Deploy from a branch", gh-pages,
+# / (root). The live site at the root is published by pages.yml.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+    paths:
+      - 'site/**'
+      - '.github/workflows/pr-preview.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy or remove preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: site
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview

@@ -24,7 +24,7 @@ neighbourhood-doughnut/
 │   ├── ward.html                # Four-lens doughnut visualization
 │   ├── js/                     # Chart renderer & app logic
 │   └── css/                    # Styles
-├── .github/workflows/          # GitHub Pages deployment
+├── .github/workflows/          # GitHub Pages: live site (pages.yml) + per-PR previews (pr-preview.yml)
 └── README.md
 ```
 
@@ -71,7 +71,7 @@ python3 -m http.server 8000
 ✅ Global Ecological lens (11 dimensions from London City Portrait)
 ✅ Global Social lens (placeholder)
 ✅ Frontend visualization (radial doughnut chart)
-✅ GitHub Pages deployment workflow
+✅ GitHub Pages deployment workflow, with a preview of every pull request at `/pr-preview/pr-<number>/` (served from the `gh-pages` branch)
 
 🚧 Local Social Foundation (0/15 dimensions) - In progress
 🚧 Local Ecological Ceiling (0/4 proxy dimensions) - In progress

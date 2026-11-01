@@ -1,5 +1,16 @@
 name: Deploy GitHub Pages
 
+# Publishes the live site: master's site/ folder goes to the root of the
+# gh-pages branch, which GitHub Pages serves (Settings -> Pages -> Source:
+# "Deploy from a branch", gh-pages, / (root)).
+#
+# pr-preview/ is left untouched so pull request previews (see
+# pr-preview.yml) survive each live deploy.
+#
+# The checkout is pinned to master, so running this by hand from any branch
+# (Actions -> Deploy GitHub Pages -> Run workflow) still publishes master's
+# site, never unmerged work.
+
 on:
   push:
     branches: [master]
@@ -9,32 +20,25 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
+      - name: Checkout master
         uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          ref: master
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy site/ to the root of gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: site
+          branch: gh-pages
+          clean-exclude: pr-preview/
+          force: false

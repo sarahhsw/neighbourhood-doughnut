@@ -865,15 +865,25 @@ def build_connectivity():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="connectivity",
         indicator="5G mobile coverage (% of landmass, at least one operator)",
-        snapshot=Snapshot(value=99.8, unit="% of landmass", year=2026, date="January 2026"),
+        snapshot=Snapshot(value=100.0, unit="% of landmass", year=2026, date="January 2026"),
         source=Source(
-            name="Ofcom Connected Nations (Spring 2026 update), via ONS 'Explore local statistics' - 5G coverage (Lewisham)",
-            url="https://www.ons.gov.uk/explore-local-statistics/areas/E09000023-lewisham/indicators",
-            accessed="2026-08-18",
-            notes="Lewisham's own figure is now available and replaces the England-wide 81% previously shown here: 99.8% of Lewisham's geographic area has outdoor 5G signal from at least one mobile network operator (Ofcom's -110dBm 'high confidence' threshold), per Ofcom Connected Nations data as of January 2026, published via ONS's 'Explore local statistics' local-authority indicator ('5G coverage', E09000023). This is the same metric definition (outdoor, at least one operator, % of geographic area) as the England figure it replaces, so the two remain directly comparable. This session's network policy still blocks a direct fetch of the live ONS/Ofcom pages (as it did previously, when this same borough-level breakdown was flagged as existing but unreachable), so the figure is taken from search-engine result snippets of those pages rather than a direct read of the page itself; it's independently corroborated by a third-party mobile-coverage aggregator (connection-technologies.co.uk) citing the same 99.8% figure and Spring-2026-update vintage, which is why confidence is kept at 'medium' rather than 'high'. The near-total figure fits the pattern already noted elsewhere in this entry: Lewisham is fully urban and built-up, so its whole area sits within dense coverage footprints (97-99% indoor urban 4G vs 77-85% rural, per the same Ofcom report), unlike England's landmass figure (81% in July 2025, up from 76% in 2024), which is dragged down by rural not-spots - England's national trend is kept below as context, not a genuine Lewisham time series, since no historical Lewisham-specific series was found. No ward-level (Ladywell-specific) breakdown exists - Ofcom and ONS publish at local-authority level, not electoral ward - so borough is the most granular figure available, same as the full-fibre indicator above.",
+            name="Ofcom Connected Nations data (January 2026), via ONS 'Explore local statistics' - 5G coverage (Lewisham)",
+            url="https://www.ons.gov.uk/explore-local-statistics/indicators/5g-coverage",
+            accessed="2026-11-01",
+            notes=(
+                "100% of Lewisham's geographic area had outdoor 5G signal from at least one operator (Ofcom's -110dBm "
+                "threshold) as of January 2026, against 99.94% for London and 87.63% for England - read directly from "
+                "ONS's Explore local statistics API (api/v1/data/5g-coverage.csv, geo E09000023/E12000007/E92000001, "
+                "Ofcom data released 13 May 2026). Outdoor 4G coverage (-105dBm, at least one operator) is also 100% in "
+                "Lewisham (England 99.03%). Corrected November 2026: earlier versions gave 99.8% for Lewisham and 81% for "
+                "England, taken from search-result snippets when ONS couldn't be fetched; the primary data gives 100% "
+                "and 87.6%. The page's previous claim about indoor 4G (97-99% urban vs 77-85% rural) was removed because "
+                "Ofcom's own pages couldn't be read to confirm it. No ward-level figure exists - Ofcom and ONS publish "
+                "at local-authority level - so borough is the most granular figure available."
+            )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM,
+        confidence=Confidence.HIGH,
         target_text="No official GLA or UK Government numeric target for 5G/4G coverage percentage was confirmed and verified in this session.",
     )
 
@@ -1089,13 +1099,26 @@ def build_culture_dimensions():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="culture",
         indicator="£ local authority funding in art & culture",
-        snapshot=Snapshot(value=386000, unit="£/year", year="2022-25"),
+        snapshot=Snapshot(value=235000, unit="£/year", year="2026-29"),
         source=Source(
-            name="Lewisham Council: Main Grants and Arts and Culture Grants Programme Allocations 2022-25 (Mayor & Cabinet, 2 Feb 2022)",
-            url="https://councilmeetings.lewisham.gov.uk/documents/s113598/Extension%20of%20the%20Main%20Grants%20Programme%20Appendix%201%20-%20Main%20Grants%202022-25.pdf",
+            name="Lewisham Council: Main Grants Programme Allocations 2026-2029 (Mayor & Cabinet, 21 Jan 2026); Main Grants and Arts and Culture Grants Programme Allocations 2022-25 (Mayor & Cabinet, 2 Feb 2022)",
+            url="https://councilmeetings.lewisham.gov.uk/documents/s123458/Main%20Grants%20Programme%20Allocations%202026-2029%20REPORT.pdf",
             accessed="2026-11-01",
             notes=(
-                "£386,000 is the ANNUAL general-fund budget of Lewisham's Arts and Culture Fund "
+                "2026-29 (current snapshot): there is no separate Arts and Culture Fund in the 2026-29 cycle. "
+                "Following consultation, Mayor & Cabinet approved in July 2025 a model where arts and culture are funded "
+                "within the Main Grants Programme's borough-wide capacity-building grants (report para 5.2.7, 5.2.9, "
+                "6.5), 'now delivered through a capacity-building lens rather than direct arts project funding' (para "
+                "3.3). Arts allocations recommended in the 21 January 2026 report (document s123458), per year: "
+                "borough-wide arts grants £140,000 - The Albany / 2001 Company 'Creative Potential: Anchor Organisation "
+                "Programme' £80,000, Lewisham Education Arts Network £30,000, Irie! dance theatre £20,000, Lewisham "
+                "Music £10,000 - plus arts Transition grants £95,000 - Lewisham Youth Theatre, Second Wave and Midi "
+                "Music £20,000 each, Entelechy Arts and Heart n Soul £15,000 each, Deptford X £5,000. Total £235,000 a "
+                "year (£705,000 over three years), against the 2022-25 Arts and Culture Fund's £386,000 a year: a 39% "
+                "cut, with The Albany's anchor grant down from £150,000 to £80,000. Transition grants exist to help "
+                "previously funded organisations adapt to the new model (para 6.8-6.9). The whole programme totals "
+                "£1,575,746 a year (para 1, recommendation 1). "
+                "2022-25 (previous snapshot): £386,000 is the ANNUAL general-fund budget of Lewisham's Arts and Culture Fund "
                 "for 2022-25, not a 3-year total (corrected November 2026; it was previously "
                 "labelled '£, 3-year total'). The Mayor & Cabinet report of 2 Feb 2022 (reattached "
                 "as Appendix 1 to the March 2024 extension report, document s113598 - the "
@@ -1137,7 +1160,11 @@ def build_culture_dimensions():
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
-        target_text="No official GLA or UK Government target established for this indicator."
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2022-25", "value": 386000, "note": "Arts and Culture Fund annual budget (extended to March 2026)"},
+            {"period": "2026-29", "value": 235000, "note": "Arts grants within the Main Grants Programme: £140,000 borough-wide + £95,000 transition"},
+        ]
     )
 
     active_participation = create_descriptive_dimension(
@@ -1208,8 +1235,8 @@ def build_mobility_dimensions():
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="mobility",
-        indicator="Public Transport Accessibility Levels",
-        snapshot=Snapshot(value="4 to 6 (Good to Excellent)", unit="PTAL band, TfL 0-6b scale", year=2025),
+        indicator="Public Transport Accessibility Level (TfL 0-6b scale)",
+        snapshot=Snapshot(value="4 to 6 (Good to Excellent)", unit=None, year=2025),
         source=Source(
             name="TfL Public Transport Accessibility Levels (PTAL) / WebCAT - GIS Open Data Hub",
             url="https://gis-tfl.opendata.arcgis.com/search?q=PTAL",
@@ -1233,21 +1260,38 @@ def build_mobility_dimensions():
         ),
         indicator="% of trips by sustainable modes",
         threshold=Threshold(value=80.0, unit="%", description="Mayor's Transport Strategy target: 80% of all trips made by sustainable modes (walking, cycling, public transport) by 2041."),
-        snapshot=Snapshot(value=72.8, unit="%", year=2024),
+        snapshot=Snapshot(value=71.6, unit="%", year="2026 Scorecard"),
         status=Status.SHORTFALL,
         source=Source(
-            name="Healthy Streets Scorecard - Results: Outcome Indicators 2024 (Lewisham)",
-            url="https://www.healthystreetsscorecard.london/results_2024/results_outcome_indicators_2024/#ResultsModeshare",
-            accessed="2026-07-18",
-            notes="Underlying source: TfL's London Travel Demand Survey (LTDS), a continuous household survey of ~8,000 households/year. Lewisham's combined sustainable mode share (walking + cycling + public transport) was 72.8% in the Healthy Streets Scorecard's 2024 results, down from 75.6% the prior round but still well above the 66.0% recorded in the Scorecard's first (2019) year. London-wide comparator over the same rounds: 67.6% in 2024, up from 65.6% (used for 2021-2023) and a 63% baseline in 2015 - Lewisham currently runs several points above the London average despite ranking near the bottom of Inner London (only Wandsworth and Newham score lower among Inner London's 14 boroughs). The most recent Healthy Streets Scorecard (2026, reported July 2026 by Salamander News, a Lewisham community news site) put mode share at approximately 72%, a further ~1-point fall, with Lewisham last in Inner London for the third year running. Caution: the Scorecard's methodology changed between rounds - the 2024 figure used a single year of LTDS data, while the 2025 round moved to a two-year rolling average (2022/23-2023/24) - so year-to-year movements should be read with that in mind, per the Scorecard's own published small-sample-size caveat for borough-level LTDS estimates."
+            name="Healthy Streets Scorecard 2026 - Results: outcome indicators (sustainable modeshare)",
+            url="https://www.healthystreetsscorecard.london/results/results-outcome-indicators/#ResultsModeshare",
+            accessed="2026-11-01",
+            notes=(
+                "Lewisham's sustainable mode share (share of residents' trips made by walking, cycling or public "
+                "transport) was 71.6% in the 2026 Healthy Streets Scorecard, down from 72.8% (2025 Scorecard) and "
+                "75.6% (2024 Scorecard). Series by Scorecard edition, from the Scorecard's own chart data "
+                "(Datawrapper OsRbE, 'Sustainable modeshare: 2020, 2021, 2024, 2025 and 2026 Scorecard data'): "
+                "70.0% (2020), 70.7% (2021), 75.6% (2024), 72.8% (2025), 71.6% (2026); the 2019 edition's 66% comes "
+                "from the 2024 results page's chart (Datawrapper 60PXw). No Scorecard was published for 2022 or 2023. "
+                "Corrected November 2026: earlier versions labelled 72.8% as '2024' and 75.6% as '2023', each one "
+                "edition too early. The 2026 figures use a three-year average of TfL's London Travel Demand Survey "
+                "(2022/23 to 2024/25), and the Scorecard cautions that small LTDS borough samples mean year-to-year "
+                "changes should be treated with caution. Comparators (2026 Scorecard): Inner London average 82.1% "
+                "(Lewisham is 13th of 14 Inner London boroughs, above only Newham at 70.4%); all-borough London average "
+                "68.1%. Lewisham is an Inner London borough in the Scorecard's classification, so Inner London is the "
+                "like-for-like peer group. Lewisham's 2026 borough page: 'Sustainable modeshare fell to 71.6%, still "
+                "low for Inner London.'"
+            )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM,
+        confidence=Confidence.HIGH,
         trend=[
-            {"period": "2019", "value": 66.0, "note": "Healthy Streets Scorecard's first published year"},
-            {"period": "2023", "value": 75.6, "note": "Prior round's figure, cited in the 2024 results as the year-on-year comparison point"},
-            {"period": "2024", "value": 72.8},
-            {"period": "2026", "value": 72.0, "note": "Approximate - reported by Salamander News as 'fell by a single percentage point to 72%'; exact decimal not independently confirmed, and methodology shifted to a multi-year rolling LTDS average in the interim"},
+            {"period": "2019", "value": 66.0, "note": "2019 Scorecard (first edition); rounded to whole percent in the source chart"},
+            {"period": "2020", "value": 70.0},
+            {"period": "2021", "value": 70.7, "note": "No Scorecard published for 2022 or 2023"},
+            {"period": "2024", "value": 75.6},
+            {"period": "2025", "value": 72.8},
+            {"period": "2026", "value": 71.6, "note": "Three-year LTDS average, 2022/23 to 2024/25"},
         ]
     )
 

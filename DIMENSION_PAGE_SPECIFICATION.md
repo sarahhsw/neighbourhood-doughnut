@@ -415,6 +415,33 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   provisional population data) - don't treat a council report's chart as the final word once a
   more current primary-source pull is available.
 
+- **Write in plain words; no cryptic labels the reader has to decode.** Caught on the mobility
+  top summary, November 2026: it opened "Ladywell's transport accessibility is hyper-local",
+  and the user said they weren't sure what it meant. The phrase was standing in for a finding
+  ("access is best near the station and drops off a few streets away") instead of stating it.
+  Replaced with "Public transport access in Ladywell is best near the station". The same summary
+  also ended its first sentence with "since TfL scores access point by point rather than for the
+  ward as a whole" - a methodology explanation that broke the narrative (the rule above on
+  leading with findings, not methodology, already covers it). **Test: could a resident who has
+  never seen the data repeat the sentence back in their own words? If a phrase needs a second
+  sentence to explain it, replace it with that explanation.**
+- **Every sentence must land its point - don't end on a list of facts that never says what they
+  show.** Caught on the connectivity summary, November 2026: "But that single score flattens real
+  variation: applying a London-wide framework for who's most likely excluded - [six groups] - to
+  Ladywell's own data shows a third of local children live in income-deprived households and 15%
+  of residents are disabled." The user called it an incomplete sentence: the six-group aside
+  buried the subject, and the sentence stopped at two numbers without saying why they mattered.
+  Fixed to "But that score is an average, and it hides groups that London research identifies as
+  the most likely to be digitally excluded: a third of Ladywell's children live in
+  income-deprived households, and 15% of residents are disabled." The claim comes first; the
+  numbers prove it.
+- **Compare a borough with its real peer group.** Caught on mobility mode share, November 2026:
+  the summary compared Lewisham (71.6%) with the London average (68.1%), which made it look
+  above average. The user asked whether Inner London was the better comparison. It is: the
+  Healthy Streets Scorecard classes Lewisham as Inner London, where the average is 82.1% and
+  Lewisham is 13th of 14. Choosing the all-London average flattered the borough. **Before picking
+  a comparator, check which group the source itself places the borough in, and use that one.**
+
 **Good example (single-indicator dimension, current live text for the health dimension)**:
 *"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
 from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The
@@ -982,6 +1009,36 @@ a label behave exactly as before. Rules:
   general), date, electorate and ballots issued in `source.notes`. Check that the percentage is
   ballots ÷ electorate. Never plot a by-election in the same series as scheduled all-out
   elections.
+
+**The headline value must be the latest figure the chart shows, with the right year.** Caught
+on mobility mode share, November 2026: the headline read "72.8% · 2024" while the chart already
+had a later (approximate) 2026 point, and the user asked why. Checking the Healthy Streets
+Scorecard's own chart data found a second problem: every point was labelled one Scorecard
+edition too early (72.8% is the 2025 edition, 75.6% the 2024 edition, not "2023"). Fixed to
+71.6% (2026 Scorecard) with the full corrected series. **When a newer figure exists, the
+snapshot uses it; when a series is published by edition, label points by the edition the
+source uses and check the label against the source's own chart data, not a news report.**
+
+**Unit qualifiers belong in the indicator name, not the headline.** Caught on PTAL, November
+2026: the headline read "4 to 6 (Good to Excellent) PTAL band, TfL 0-6b scale". The user asked
+for the scale to move out of the big number. The scale now sits in the indicator name
+("Public Transport Accessibility Level (TfL 0-6b scale)"), which renders in the grey line
+under the headline. Same principle as the bracketed-explainer rule above.
+
+**Stat cards: choose groups by the framework's categories, not by picking one subgroup.**
+Caught on the connectivity LOTI cards, November 2026: the cards showed "Black, Black British,
+Caribbean or African" (Ladywell's largest minority group) and "Bangladeshi" (named in LOTI's
+text) as separate cards. The user asked why one ethnic group was singled out out of all of
+them, and said Bangladeshi didn't need its own card. LOTI's category is "ethnic communities",
+so the cards now show one figure for it: 46.2% of residents from Asian, Black, mixed or other
+non-White ethnic groups (Census 2021 TS021). Once each card names its own population base, a
+footnote explaining that the bases differ is redundant, and it was removed.
+
+**Cut source nuances from reader-facing text unless they change what the number means.** Caught
+on PTAL, November 2026: "TfL refreshed its scoring toolkit in 2025 to reflect network changes
+since its 2015 baseline, including the Elizabeth line" was removed at the user's request - true,
+but it neither adds to nor balances the narrative. Same for the DERI text's "several components
+are dated (some from the 2011 Census)". Keep that kind of detail in `source.notes`.
 
 **For each indicator**:
 - **Indicator name** as heading
@@ -1629,6 +1686,12 @@ block container, explicitly set `color: var(--ink)` on it, or child headings wil
 browser's default link-blue rather than the page's ink colour. This exact bug shipped once in
 this session (an unstyled `<h4>` inside the new `<a>` wrapper rendered blue) before being
 caught and fixed.
+
+**Leave out status details that will date quickly.** Caught on the culture Get Involved cards,
+November 2026: the Heart n Soul card ended "currently full, so joining means the waiting list".
+The user removed it: waiting lists, "recruiting now" and "this year's dates" go stale without
+anyone noticing. Describe what the group does and how to join; let the linked page carry the
+current status.
 
 ### 4.3 Visual Treatment: Horizontal Scroll, Not a Vertical List
 

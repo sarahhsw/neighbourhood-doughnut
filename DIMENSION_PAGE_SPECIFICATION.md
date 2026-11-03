@@ -1069,6 +1069,14 @@ edition too early (72.8% is the 2025 edition, 75.6% the 2024 edition, not "2023"
 snapshot uses it; when a series is published by edition, label points by the edition the
 source uses and check the label against the source's own chart data, not a news report.**
 
+**Headline stats must read cleanly at phone width.** Caught November 2026 from a phone
+screenshot: on narrow screens `.value-readout` kept the big number and its grey label side by
+side, so "81 %" wrapped onto two lines with the label squeezed beside it. Fixed in
+`styles.css`: below 768px the label stacks under the number, which gets the full width.
+`app.js` also now attaches units that start with "%" directly to the figure ("81%", "100% of
+landmass") instead of after a space. **Check every layout change at about 390px wide as well
+as desktop** (`node scripts/render_check.js` covers desktop; take a 390px screenshot too).
+
 **Unit qualifiers belong in the indicator name, not the headline.** Caught on PTAL, November
 2026: the headline read "4 to 6 (Good to Excellent) PTAL band, TfL 0-6b scale". The user asked
 for the scale to move out of the big number. The scale now sits in the indicator name

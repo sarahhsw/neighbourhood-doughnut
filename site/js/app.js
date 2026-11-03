@@ -1589,7 +1589,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 ? ind.snapshot.value.toLocaleString('en-GB')
                 : ind.snapshot.value;
             const value = ind.snapshot.value !== null
-                ? `${formattedValue}${ind.snapshot.unit ? ' ' + ind.snapshot.unit : ''}`
+                ? `${formattedValue}${ind.snapshot.unit ? (ind.snapshot.unit.startsWith('%') ? '' : ' ') + ind.snapshot.unit : ''}`
                 : 'No data';
             const label = indicatorsToShow.length > 1
                 ? ind.indicator.replace(baseName, '').trim().replace(/^\(|\)$/g, '')  // Extract gender/type suffix

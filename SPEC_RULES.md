@@ -44,6 +44,7 @@ when you're doing something this file doesn't cover.
 - No filler that restates a trend, and no dismissive words about a positive finding.
 - Every claim needs a real source, including text you inherited and didn't write. [2.2, 2.9]
 - Unit qualifiers belong in the indicator name, not the headline; no bracketed explainers in the big number.
+- Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
 - Figures with different population bases get labelled stat cards, not a shared-axis chart; each card names its base.
 - Choose stat-card groups by the framework's own categories, not by singling out one subgroup.
 - No standalone "Target: X" line or dashed target on charts; weave benchmarks into the text. [2.6]

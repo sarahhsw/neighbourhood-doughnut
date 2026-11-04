@@ -459,6 +459,24 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   Lewisham is 13th of 14. Choosing the all-London average flattered the borough. **Before picking
   a comparator, check which group the source itself places the borough in, and use that one.**
 
+- **One clause per indicator in the summary; the breakdown belongs in the indicator text.**
+  Caught on the culture summary, November 2026. The draft opened with a 40-word sentence of
+  grant detail ("for 2026-29 arts organisations receive £235,000 a year, down from £386,000 a
+  year in 2022-25, with The Albany's anchor grant almost halved"). The user rewrote it as
+  "Lewisham's arts funding has been cut by 40%, in line with the wider picture of squeezed
+  council arts budgets across England." The cut is the finding; the amounts and recipients are
+  already in the funding indicator's own text. Two accuracy tweaks were made to the user's
+  wording and flagged back: "dedicated arts grants" (the council's total arts spending in its
+  Revenue Outturn returns rose slightly over the same period, so "arts funding" overclaims) and
+  "almost 40%" (the cut is 39%). **Rule: state each indicator's finding in one clause; keep
+  amounts, recipients and before-and-after figures for the indicator text.**
+- **State a framework's risk groups as tendencies, not certainties.** Caught on the
+  connectivity summary, November 2026: "groups that London research identifies as the most
+  likely to be digitally excluded" read as stronger than LOTI's framework, which names groups
+  more vulnerable to exclusion. The user asked to soften it; now "both groups that London
+  research identifies as more vulnerable to digital exclusion", after the facts rather than
+  before them.
+
 **Good example (single-indicator dimension, current live text for the health dimension)**:
 *"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
 from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The
@@ -1091,6 +1109,22 @@ them, and said Bangladeshi didn't need its own card. LOTI's category is "ethnic 
 so the cards now show one figure for it: 46.2% of residents from Asian, Black, mixed or other
 non-White ethnic groups (Census 2021 TS021). Once each card names its own population base, a
 footnote explaining that the bases differ is redundant, and it was removed.
+
+**One comparator per point in indicator text, too.** Caught on mobility mode share, November
+2026: "Lewisham sits above London's 68.1% borough average but well below the 82.1% Inner London
+average, 13th of the 14 Inner London boroughs" gave three London reference points in one
+sentence. The user called it unnecessary. Now "Lewisham is 13th of the 14 Inner London
+boroughs, well below their 82.1% average": one peer group, one figure.
+
+**Scope a stat-card group to the framework's actual definition.** Follow-up on the LOTI cards,
+November 2026: after the ethnic-group cards were merged into one "46.2% from non-White ethnic
+groups", the user asked what happens if it's scoped to low-income ethnic groups, which is what
+LOTI names. The Census has no income variable, so the card now uses the closest proxy, labelled
+as such: residents from non-White ethnic groups in a household where someone is out of work
+through unemployment or long-term illness (8.4%; Census 2021 household deprivation, employment
+dimension, via the ONS custom-dataset API). **When a framework's group is narrower than the
+nearest published category, find the closest proxy that matches its definition and say in the
+label what it measures, rather than showing the broader group.**
 
 **Cut source nuances from reader-facing text unless they change what the number means.** Caught
 on PTAL, November 2026: "TfL refreshed its scoring toolkit in 2025 to reflect network changes

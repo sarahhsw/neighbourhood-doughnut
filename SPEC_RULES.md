@@ -34,6 +34,8 @@ when you're doing something this file doesn't cover.
 - Keep the number of distinct years low; drop provenance-only dates already shown in the card.
 - Plain words a resident could repeat back; no labels the reader has to decode.
 - Every sentence must land its point; don't end on a list of facts that never says what they show.
+- One clause per indicator; amounts, recipients and before-and-after figures belong in the indicator text.
+- State a framework's risk groups as tendencies ("more vulnerable to"), not certainties ("the most likely").
 - Don't present one lever as "the solution"; policy belongs in the context cards.
 
 ## Indicator text ("What this measures") [2.2, 2.5]
@@ -47,6 +49,8 @@ when you're doing something this file doesn't cover.
 - Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
 - Figures with different population bases get labelled stat cards, not a shared-axis chart; each card names its base.
 - Choose stat-card groups by the framework's own categories, not by singling out one subgroup.
+- When the framework's group is narrower than any published category, use the closest proxy and say in the label what it measures. [2.5]
+- One comparator per point in indicator text as well as the summary. [2.5]
 - No standalone "Target: X" line or dashed target on charts; weave benchmarks into the text. [2.6]
 - Spell out acronyms. [7]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]

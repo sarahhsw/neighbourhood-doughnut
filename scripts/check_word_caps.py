@@ -24,6 +24,9 @@ only = sys.argv[1] if len(sys.argv) > 1 else None
 
 
 def words(text):
+    # Stat-card grids (.loti-snapshot) and source lines are data, not prose:
+    # the 130-word cap applies to the paragraphs only.
+    text = re.sub(r'<div class="(?:loti-snapshot|source-line)">.*?</div>\s*</div>|<div class="source-line">.*?</div>', " ", text, flags=re.S)
     return len(re.sub(r"<[^>]+>|\$\{[^}]*\}", " ", text).split())
 
 

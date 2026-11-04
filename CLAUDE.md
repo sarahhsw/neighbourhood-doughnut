@@ -2,23 +2,42 @@
 
 Neighbourhood Doughnut: a hyper-local Doughnut Economics data portrait for Ladywell ward, Lewisham. See `README.md` for project structure and the data pipeline. Dimension-page copy and charts live in `site/js/app.js`; indicator source metadata lives in `data/lookups/dimension_data_sources.json`.
 
-## Before touching any dimension-page copy
+## Before touching any dimension-page copy or data
 
-`DIMENSION_PAGE_SPECIFICATION.md` is the mandatory editorial and data-sourcing guide for every dimension page (top summary, indicator "what this measures"/"why this is happening" text, council-context cards, "Get Involved" cards). **Read it before drafting or editing any of this copy** - not from memory of a past read, since it gets revised.
+**Read `SPEC_RULES.md`** (about 100 lines, one line per rule) before drafting or editing any dimension-page copy (top summary, "what this measures", "why this is happening", context cards, Get Involved cards) or indicator data - fresh each time, not from memory, since it gets revised.
 
-The rules most often missed, because they're easy to blow past without noticing:
+`DIMENSION_PAGE_SPECIFICATION.md` is the full spec: the same rules with their worked examples, history and reasoning. Don't read it end to end by default (it's about 43k tokens). Open the section a rule points to (e.g. `[2.5]`) when a rule is unclear, when the user's request touches something `SPEC_RULES.md` doesn't cover, or when you're adding a lesson to it.
 
-- **130-word hard cap** on every description block (top summary, each indicator's "what this measures" and "why this is happening" paragraphs) - count with `len(text.split())`, don't estimate. (Spec 2.1, 2.5, 2.8)
-- **Get Involved cards**: one merged paragraph per card, ~25-30 words - action + example together, not a description plus a separate case-study block. (Spec 4.2)
-- **Council-context section**: max 3 documents per dimension, 2 is often enough - don't add a 3rd just to reach the cap. (Spec 3.2)
-- **Don't narrate a chart's datapoints in prose** - if the trend chart already shows the numbers, explain *why* it moved, don't re-list the series. (Spec 2.1)
-- **Every number or claim must be independently verifiable against a real source you've actually checked** - not "this looks roughly right" and not inherited-as-correct just because it was already on the page. (Spec 2.2, checklist in 2.9)
-- **Run the `fact-checker` agent on new/edited copy before considering it done** - after showing the drafted wording in chat for review, not before (wording that still might change isn't worth fact-checking yet).
+The rules most often missed:
+
+- **130-word hard cap** on every description block; check with `python3 scripts/check_word_caps.py <dimension>`, don't estimate.
+- **Get Involved cards**: one merged paragraph of about 25-30 words, with nothing that will date quickly.
+- **Context cards**: max 3 documents per dimension including the research card; 2 is often enough.
+- **Don't narrate a chart's datapoints in prose**; explain why it moved.
+- **Every number or claim must be verified against a primary source you've actually read**, including text you inherited.
+- **Run the `fact-checker` agent** (`.claude/agents/fact-checker.md`) on new or edited copy before considering it done: after showing the drafted wording for review when the user is present, not before. Brief it with just the dimension and which blocks changed; the agent file holds the standard instructions.
+
+## Scripts (use these instead of rewriting them)
+
+All run from the repo root:
+
+- `python3 scripts/splice_dimension.py <dimension> --check` - confirm the builder in `data/pipeline/build_local_social_with_real_data.py` matches the live data before you edit it.
+- `python3 scripts/splice_dimension.py <dimension>` - after editing the builder, write its output into all three ward JSON files and verify they agree and pass the schema.
+- `python3 scripts/check_word_caps.py [dimension]` - word counts against the caps.
+- `node scripts/render_check.js [dimension ...] [--shots DIR]` - open each dimension page in a headless browser; reports page errors, chart counts, headline values and any "undefined"/"NaN".
+- `python3 scripts/ods2csv.py file.ods outdir` - convert an ODS spreadsheet to one CSV per sheet (pandas can't read ODS here).
+
+## Data sources: what works and what doesn't
+
+- curl goes through a preconfigured proxy. These work: gov.uk, assets.publishing.service.gov.uk, ons.gov.uk (including the Explore local statistics API at `ons.gov.uk/explore-local-statistics/api/v1/data/<indicator>.csv?geo=E09000023,...`), nomisweb.co.uk (API), data.london.gov.uk, trustforlondon.org.uk (chart data at `trustforlondon.org.uk/data/dataset/<id>/csv/`), councilmeetings.lewisham.gov.uk, healthystreetsscorecard.london (chart data via `datawrapper.dwcdn.net/<id>/<n>/dataset.csv`).
+- These return bot-check 403s; don't retry them or try to get around them: lewisham.moderngov.co.uk (use the councilmeetings.lewisham.gov.uk mirror, same document ids), ofcom.org.uk and labs.thinkbroadband.com (Ofcom coverage data is on the ONS Explore local statistics API), london.gov.uk. If a claim can only be checked there, say so and mark it unverified.
+- Never take a figure from a search-result snippet; snippet figures have been wrong several times.
+- Ladywell ward is E05013725 (2022 boundaries). Its 7 best-fit LSOAs (2021): E01003273, E01003274, E01003275, E01003276, E01003278, E01003279, E01003291.
 
 ## Close the loop on corrections
 
-Whenever the user corrects an approach to dimension-page copy or its surrounding code (wording, structure, when to use a section like "why this is happening" vs. folding a fact into "what this measures", a rendering bug, etc.), **update `DIMENSION_PAGE_SPECIFICATION.md` with the learning as part of that same turn** - not just the one page being edited. The spec is what keeps the next session (or the next subagent) from re-making a mistake that's already been corrected once; a fix applied only to the page in front of you is invisible to every future edit. Write the addition the way the spec already does elsewhere: name the concrete example, what was tried first, what the user said, and the general rule that generalizes from it - not just "don't do X."
+Whenever the user corrects an approach to dimension-page copy or its surrounding code, in the same turn: add the lesson to `DIMENSION_PAGE_SPECIFICATION.md` the way the spec already does (the concrete example, what was tried first, what the user said, the general rule), **and** add a one-line rule to `SPEC_RULES.md` pointing to it. A fix applied only to the page in front of you is invisible to every future edit.
 
 ## If you're delegating this work to a subagent
 
-A subagent started via the `Agent` tool (anything other than a `fork`) does not inherit this conversation's context. Loading this file alone is not enough - its task prompt needs to **explicitly say** "comply with `DIMENSION_PAGE_SPECIFICATION.md`'s word caps and run the fact-checker before finishing," or a narrowly-scoped task (e.g. "add a council-context card for strategy X") will produce content that's accurate but un-trimmed, uncapped, or never fact-checked at all.
+A subagent started via the `Agent` tool (anything other than a `fork`) does not inherit this conversation's context. Its prompt must **explicitly say** to read `CLAUDE.md` and `SPEC_RULES.md`, comply with the word caps, use the scripts above, and that its copy will be fact-checked (subagents may not have the Agent tool to run the fact-checker themselves; if not, the delegating session runs it after merging). Group delegated work by dimension, and give each parallel subagent its own worktree so their edits to `app.js` and the ward JSON don't collide.

@@ -222,17 +222,17 @@
     "category": "Connected",
     "indicator": "% adults reported feeling lonely often or always",
     "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
-    "granularity": "Borough (Lewisham) - local authority breakdown",
-    "notes": "DCMS replaced the Community Life Survey with the Community and Engagement Survey (CES) in October 2025, partnering with MHCLG to boost the sample specifically to produce local-authority-level estimates for the first time (CES data tables, Note 3). Lewisham's own figure is now used as the snapshot: 8% of adults felt lonely 'often or always' in 2025/26 (95% CI 6-11%, 61 respondents), up from 7% in 2024/25 (95% CI 5-10%, 42 respondents) - the survey's own significance test flags this as 'No Change' given the overlapping, sample-driven confidence intervals. No earlier Lewisham-specific figure exists; every prior Community Life Survey round (2017/18-2024/25) published England-level data only, kept in the Python builder's trend notes for provenance but no longer used as the live trend/snapshot. England's own headline rate was unchanged at 7% across both years. Source data: CES 2025/26 loneliness data tables (ODS), Table C3 (by local authority)."
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 8.0% in 2025/26 (CES 2025/26 Table C3). Lewisham estimates also exist for 2023/24 (6.3%) and 2024/25 (7.4%) from the Community Life Survey's local-authority boost (CLS 2024/25 tables, Table A1c, Note 20) - an earlier version of this entry wrongly said 2025/26 was the first Lewisham figure. All year-on-year moves are 'No Change' per the survey's own test. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table C1, which uses CLS methodology for comparability) and Lewisham 2023/24-2025/26."
   },
   {
     "lens": "local_social",
     "dimension": "community",
     "category": "Connected",
     "indicator": "% adults felt strongly belonged to their neighbourhood",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England (regional/ITL1 breakdown also published, incl. London)",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. The survey does publish a London (ITL1) regional breakdown for this indicator specifically, which consistently runs below the England average (e.g. 59% London vs 62% England, 2024/25) - see source notes in the Python builder for the multi-year comparison. No official GLA or UK Government target exists for this indicator. Not yet re-checked against the renamed Community and Engagement Survey 2025/26 - out of scope for the loneliness/support-networks update this covers; due a refresh in a future session."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 53.8% in 2025/26 (95% CI 49.5-58.0%; CES 2025/26 Table D3), shown as 54%. Earlier Lewisham estimates: 56.8% (2023/24) and 56.6% (2024/25) from CLS 2024/25 Table B1c. London 57.9% and England 61.2% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table D1) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
@@ -241,40 +241,40 @@
     "indicator": "% adults agreed that if they needed help, there would be people there for them",
     "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
     "granularity": "ITL2 sub-region (Inner London - East, includes Lewisham) - no local-authority breakdown published for this question",
-    "notes": "New indicator, added this session. DCMS's Community and Engagement Survey (CES) 2025/26 - successor to the Community Life Survey - found 96% of adults in England agreed (definitely or tended to agree) that if they needed help there are people who would be there for them, up from 94% in 2024/25 (a statistically significant rise). The CES report states explicitly that this question's data 'are not available at LA level', so Lewisham itself is never named; the most granular published breakdown is the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, Lewisham, Newham, Southwark, Tower Hamlets), used as the snapshot: 95% in 2025/26 (95% CI 94-96%), up from 93% in 2024/25 (95% CI 92-95%) - not a statistically significant change. The wider ITL1 London region runs almost identically (95% in 2025/26, 93% in 2024/25). These support-network questions were asked online-only in both survey years (CES data tables, Note 6), so results reflect the online-responding population specifically. Source data: CES 2025/26 support-networks data tables (ODS), Table F13 (by demographic/regional characteristics). No official GLA or UK Government target exists for this indicator."
+    "notes": "No local-authority breakdown in any year; snapshot is the ITL2 sub-region 'Inner London - East' (includes Lewisham): 95.2% in 2025/26, 93.4% in 2024/25 (CES 2025/26 Table F13), not a statistically significant change. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table F12; 95.9% in 2025/26, a significant rise) and Inner London East 2024/25-2025/26. Asked online only (CES Note 6). No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
     "indicator": "# of cultural venue per 1,000 population",
-    "source_url": "https://data.london.gov.uk/dataset/cultural-infrastructure-map-2025-2rj5o",
-    "granularity": "London boroughs",
-    "notes": "GLA Cultural Infrastructure Map 2025 tags each catalogued venue (grassroots music venues, artist workspaces, museums, theatres, LGBT+ venues, etc.) by borough, so a per-1,000-population rate is computable in principle. No Lewisham venue count could be extracted this session (data.london.gov.uk and the interactive map at apps.london.gov.uk/cim were both unreachable under this environment's network policy) - see source.notes on the Python dimension for what was and was not found. Lewisham ONS mid-2024 population: 301,255."
+    "source_url": "https://data.london.gov.uk/dataset/cultural-infrastructure-data-2025-and-2026-2rj5o",
+    "granularity": "Ward (the dataset carries a ward column for every venue)",
+    "notes": "Ladywell: 5 open venues in the GLA's 2026 long list (GLA_Cultural_Infrastructure_Map_data_2026_all.xlsx, ward = Ladywell, status = Open) / 15,576 Census 2021 residents = 0.32 per 1,000. Comparators from the same file: Lewisham 0.52 (157 / 300,553), London 0.53 (4,629 / 8,799,728). 3 further Ladywell entries are listed as closed. See source.notes in the ward JSON for the venue list and caveats."
   },
   {
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
     "indicator": "£ local authority funding in art & culture",
-    "source_url": "https://www.equity.org.uk/campaigns-policy/elections-2026/local-government-arts-funding-tracker",
+    "source_url": "https://councilmeetings.lewisham.gov.uk/documents/s123458/Main%20Grants%20Programme%20Allocations%202026-2029%20REPORT.pdf",
     "granularity": "Local authority",
-    "notes": "Equity/Autonomy Institute Local Government Arts Funding Tracker (equity.org.uk) covers 317 English local authorities, 2010/11-2024/25 net arts spend; the site could not be fetched this session, so the Lewisham figure used on the ward page was sourced directly from the council's own committee papers instead (Main Grants Programme 2022-25 appendix, lewisham.moderngov.co.uk, doc ID s113598): the Arts & Culture Fund totalled £386,000 over 2022-25. England-wide comparator from press coverage of the tracker: average council arts spend per resident fell from £18.67/year (2010/11) to £6.47/year (2024/25), a 61% real-terms fall."
+    "notes": "Lewisham's dedicated arts grants. 2026-29: no separate Arts and Culture Fund; arts funded within the Main Grants Programme - £140,000/yr borough-wide arts grants (The Albany/2001 Company £80,000, LEAN £30,000, Irie! £20,000, Lewisham Music £10,000) + £95,000/yr arts Transition grants = £235,000/yr (Mayor & Cabinet, 21 Jan 2026, doc s123458). 2022-25: Arts and Culture Fund £386,000/yr (doc s113598), The Albany £150,000. National context: Equity / Autonomy Institute arts spending tracker."
   },
   {
     "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
-    "indicator": "Active participation",
-    "source_url": "https://www.gov.uk/government/statistics/participation-survey-2024-25-annual-publication/main-report-for-the-participation-survey-april-2024-to-march-2025",
-    "granularity": "England",
-    "notes": "DCMS Participation Survey publishes England headline figures plus ITL1/ITL2 regional breakdowns for some sub-questions - no local authority or ward-level breakdown exists. Indicator used: % of adults who engaged with the arts (attending, watching or taking part, physically or digitally) in the last 12 months - 90.6% in 2024/25, down slightly from a 91.4% peak in 2023/24. Survey began October 2021 (replacing the discontinued Taking Part survey, different methodology), so no earlier trend exists."
+    "indicator": "% of people aged 16+ who engaged with the arts in the last 12 months",
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-arts",
+    "granularity": "Local authority (2025/26 onward); England for earlier years",
+    "notes": "Renamed from 'Active participation'. Snapshot: Lewisham 88.5% engaged with the arts physically or digitally in 2025/26 (95% CI 85.7-90.8%; CES 2025/26 arts tables, Table I8), above England 84.4% and London 83.2% (Table I7). Chart shows three labelled series: England 2021/22-2024/25 (Participation Survey time series: 87.7%, 89.9%, 91.4%, 90.6%), England 2025/26 from the new CES (84.4%) kept separate because DCMS says the fall may be partly methodological (CES arts report, footnote 3), and Lewisham 2025/26."
   },
   {
     "lens": "local_social",
     "dimension": "mobility",
     "category": "Connected",
-    "indicator": "Public Transport Accessibility Levels",
+    "indicator": "Public Transport Accessibility Level (TfL 0-6b scale)",
     "source_url": "https://gis-tfl.opendata.arcgis.com/search?q=PTAL",
     "granularity": "Point-level (TfL WebCAT/GIS layer) - no official ward or borough aggregate published",
     "notes": "TfL calculates PTAL point-by-point (walk time + service frequency to nearest stops), not aggregated to ward/borough. Real point-level values for Ladywell sourced from Lewisham Council planning application assessments: 31 Gillian Street (DC/25/139782, PTAL 4, https://lewisham.moderngov.co.uk/mgAi.aspx?ID=37128) and Ladywell Playtower by the station (DC/22/126038, PTAL 6, https://lewisham.moderngov.co.uk/mgAi.aspx?ID=32690). TfL's toolkit was refreshed to 'WebCAT 3.0' in 2025 (updating the 2015 baseline, with an interim 2019 Lewisham borough PDF release: https://content.tfl.gov.uk/public-transport-access-levels-lewisham.pdf)."
@@ -284,9 +284,9 @@
     "dimension": "mobility",
     "category": "Connected",
     "indicator": "% of trips by sustainable modes",
-    "source_url": "https://www.healthystreetsscorecard.london/results_2024/results_outcome_indicators_2024/#ResultsModeshare",
+    "source_url": "https://www.healthystreetsscorecard.london/results/results-outcome-indicators/#ResultsModeshare",
     "granularity": "London boroughs",
-    "notes": "Underlying source: TfL's London Travel Demand Survey (LTDS), a continuous household survey (~8,000 households/year). Target: Mayor's Transport Strategy / Lewisham LIP3 - 80% of trips by sustainable modes by 2041. Methodology changed between Scorecard rounds (2024: single-year LTDS; 2025 onward: two-year rolling average), so treat year-to-year moves with caution."
+    "notes": "Healthy Streets Scorecard (built on TfL's London Travel Demand Survey). Lewisham by Scorecard edition: 66% (2019), 70.0% (2020), 70.7% (2021), 75.6% (2024), 72.8% (2025), 71.6% (2026; three-year LTDS average 2022/23-2024/25). Earlier versions labelled these one edition too early. Comparators 2026: Inner London average 82.1% (Lewisham 13th of 14), all-borough average 68.1%. Target: Mayor's Transport Strategy / Lewisham LIP3 - 80% by 2041."
   },
   {
     "lens": "local_social",
@@ -303,17 +303,17 @@
     "category": "Enabled",
     "indicator": "% properties with EPC Band C or above",
     "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/energyperformancecertificateepcbandcoraboveenglandandwales",
-    "granularity": "LA",
-    "notes": "ONS's dataset publishes at local-authority level only (no ward breakdown), and could not be downloaded/parsed directly this session (network egress to ons.gov.uk blocked). Ward-specific figure used instead comes from Lewisham Observatory's 2022 Ward Profiles (point-in-time EPC register breakdown by ward): https://www.observatory.lewisham.gov.uk/wp-content/uploads/2022/05/Ladywell-digital.pdf. London-region comparator drawn from ONS's 'Energy efficiency of housing in England and Wales' annual articles."
+    "granularity": "MSOA",
+    "notes": "ONS EPC Band C or above dataset, March 2025 edition (released 28 Oct 2025; three editions: records to March 2023, 2024, 2025). Most granular level is MSOA (Table 3a) - no LSOA or ward figure. Ladywell area estimate = household-weighted mean of MSOAs Lewisham 011 (E02000663) and 014 (E02000666), which hold 6 of Ladywell's 7 LSOAs; Lewisham from Table 2a, London from Table 1a. Next edition was due October 2026 but not yet published as of 2026-11-01. See build_energy() for method."
   },
   {
     "lens": "local_social",
     "dimension": "energy",
     "category": "Enabled",
     "indicator": "% households in fuel poverty",
-    "source_url": "https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics",
-    "granularity": "LA",
-    "notes": "DESNZ (formerly BEIS) Sub-regional Fuel Poverty Statistics, LILEE metric, local-authority level. Most recent confirmed Lewisham figure is 2022 data (13.8%, published in the 'Sub-regional fuel poverty in England, 2024 report (2022 data)'); a newer 2024-data release exists (published 14 May 2026) but could not be independently confirmed for Lewisham this session - see source.notes in build_energy() for detail."
+    "source_url": "https://www.gov.uk/government/statistics/sub-regional-fuel-poverty-data-2026-2024-data",
+    "granularity": "LSOA",
+    "notes": "DESNZ Sub-regional fuel poverty statistics (LILEE metric), LSOA-level tables. Latest: 2026 release (2024 data, published 14 May 2026). Ladywell = sum of its 7 LSOAs' modelled fuel-poor households / households; LILEE series 2019-2024 data (earlier releases use LIHC and are not joined). Collection: https://www.gov.uk/government/collections/fuel-poverty-sub-regional-statistics ; data.gov.uk listing: https://www.data.gov.uk/dataset/f3009590-2bc9-40d9-8dc3-571e6fddae45/fuel_poverty_sub-regional_statistics"
   },
   {
     "lens": "local_social",
@@ -322,16 +322,7 @@
     "indicator": "Overall poverty rate (after housing costs)",
     "source_url": "https://trustforlondon.org.uk/data/poverty-borough/",
     "granularity": null,
-    "notes": "Underlying source: DWP Family Resources Survey / Households Below Average Income (HBAI), pooled across financial years 2018/19-2023/24 (2020/21 excluded - pandemic disruption). Poverty = household income below 60% of median, after housing costs."
-  },
-  {
-    "lens": "local_social",
-    "dimension": "income_and_work",
-    "category": "Enabled",
-    "indicator": "Child poverty rate (after housing costs)",
-    "source_url": "https://trustforlondon.org.uk/data/child-poverty-borough/",
-    "granularity": null,
-    "notes": "Underlying source: DWP Family Resources Survey / HBAI, same pooled 2018/19-2023/24 (excl. 2020/21) methodology as the overall poverty rate. Distinct from DWP/HMRC \"children in low income families\" local statistics (before-housing-costs, administrative measure) sometimes cited in council/PHE reporting - not used here as it is a different definition."
+    "notes": "Underlying source: DWP Households Below Average Income (HBAI), five-year pooled borough estimates by Trust for London (2020/21 excluded). Trend from earlier editions of the same chart, still live as CSVs at trustforlondon.org.uk/data/dataset/<id>/csv/ (638 = 2019/20, 926 = 2021/22, 1171 = 2022/23, 1354 = 2023/24). Poverty = household income below 60% of median, after housing costs. IMD 2025 findings used in this indicator's text come from MHCLG English Indices of Deprivation 2025 (File 7 LSOA data, File 10 local authority summaries)."
   },
   {
     "lens": "local_social",
@@ -340,25 +331,16 @@
     "indicator": "% paid below London Living Wage",
     "source_url": "https://trustforlondon.org.uk/data/low-pay-in-london-boroughs/",
     "granularity": null,
-    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE). London Living Wage is independently calculated by the Resolution Foundation and set by the Living Wage Foundation (£13.85/hour from April 2025) - higher than the statutory National Living Wage."
+    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE), residents' jobs paid below the London Living Wage. Full 2008-2025 series in Trust for London dataset 1500 (trustforlondon.org.uk/data/dataset/1500/csv/)."
   },
   {
     "lens": "local_social",
     "dimension": "income_and_work",
     "category": "Enabled",
-    "indicator": "Unemployment rate",
-    "source_url": "https://trustforlondon.org.uk/data/unemployment-rate-borough/",
-    "granularity": null,
-    "notes": "Underlying source: ONS Annual Population Survey (APS), modelled local unemployment estimate. Distinct from the DWP/ONS claimant count rate (an administrative measure of benefit claimants, not survey-based unemployment) sometimes quoted alongside it."
-  },
-  {
-    "lens": "local_social",
-    "dimension": "income_and_work",
-    "category": "Enabled",
-    "indicator": "Index of Multiple Deprivation Decile",
-    "source_url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
-    "granularity": "LSOA",
-    "notes": "MHCLG English Indices of Deprivation 2025 (published Oct 2025), LSOA-level scores/ranks aggregated to ward. Ward-level aggregation via Lewisham Observatory's Ladywell ward profile (observatory.lewisham.gov.uk/ladywell/); borough-level context via London Datastore's IMD 2025 exploratory analysis. Not designed for cross-round trend comparison (MHCLG guidance) - indicator set and LSOA boundaries change between releases."
+    "indicator": "Claimant count (% of residents aged 16-64)",
+    "source_url": "https://www.nomisweb.co.uk/datasets/ucjsa",
+    "granularity": "Ward",
+    "notes": "ONS Claimant Count via Nomis (dataset NM_162_1, measure 'Claimants as a proportion of residents aged 16-64'), monthly. Jobseeker's Allowance plus Universal Credit claimants required to look for work. Ladywell ward (E05013725) available from January 2026 only (Wards as of May 2025 geography); Lewisham (E09000023) and London (E12000007) used as comparators back to 2016. Replaced the APS modelled 'Unemployment rate' (Trust for London / Nomis NM_127_1) in November 2026."
   },
   {
     "lens": "local_social",
@@ -367,7 +349,7 @@
     "indicator": "% on out-of-work benefits",
     "source_url": "https://trustforlondon.org.uk/data/out-work-benefits-borough/",
     "granularity": null,
-    "notes": "Underlying source: DWP benefit claimant statistics (working-age population claiming out-of-work benefits). Previously live on site as the dimension's 5th indicator with no entry in this registry at all - added here to close that gap."
+    "notes": "Underlying source: DWP Benefit Combinations via Stat-Xplore, with ONS mid-year population estimates (working age 16-64). November snapshots from Trust for London datasets 1357 (2019, 2023) and 1614 (2020, 2024, 2025). Includes Incapacity Benefit, Income Support, JSA, Pension Credit and out-of-work Universal Credit - wider than the claimant count, which covers only those required to look for work."
   },
   {
     "lens": "local_social",
@@ -392,63 +374,63 @@
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% turnout in local election",
-    "source_url": "https://lginform.local.gov.uk/reports/lgastandard?mod-area=E92000001&mod-group=E09000023&mod-metric=3361&mod-type=area",
-    "granularity": "Borough (Lewisham) - LG Inform standard report, metric 3361; no ward-level aggregate published",
-    "notes": "Borough-wide combined Mayor-and-council turnout (one ballot, one turnout figure). Cross-checked against Lewisham Council's own election results pages, Wikipedia's Lewisham borough election articles, and Electoral Commission-reported figures via web search, since this environment's network egress policy blocked direct fetches to lginform.local.gov.uk, councilmeetings.lewisham.gov.uk, lewisham.moderngov.co.uk and en.wikipedia.org this session (all returned connection failures or HTTP 403, including via curl with a browser User-Agent). A genuine attempt was made to source true ward-level Ladywell turnout instead (Ladywell's current boundaries have been used since the 2022 election) - individual 2022 candidate vote counts were found, but the full candidate list, total ballots cast and ward electorate needed to compute a ward-level turnout percentage could not be extracted from search-engine snippets alone."
+    "source_url": "https://lewisham.gov.uk/mayorandcouncil/elections/elections/election-results-2026",
+    "granularity": "Borough (Lewisham) - borough-wide Mayor of Lewisham election turnout",
+    "notes": "Mayor of Lewisham election turnout from Lewisham Council's own results: 42.14% (7 May 2026, results page), 34.55% (5 May 2022, returning officer's declaration PDF), 37.4% (3 May 2018, computed from the council results system: 74,599 ballots / 199,555 electorate). CORRECTION November 2026: the 2022 point previously read 20.88%, which is actually the Deptford ward by-election of 9 November 2023. 2010 and 2014 points dropped under the 10-year data-age rule. Ladywell ward turnouts exist on councilmeetings.lewisham.gov.uk (mgElectionAreaResults.aspx) but the ward's boundaries changed in 2022."
   },
   {
     "lens": "local_social",
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% adults that have engaged in civic participation",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
-    "granularity": "National (England)",
-    "notes": "DCMS Community Life Survey 2024/25, 'Civic engagement and social action' release (published 10 December 2025, covering the 12 months to March 2025). England-wide Official Statistic only - not published below national level, so no Lewisham- or London-specific figure exists. No 2022/23 survey round was published (methodology redesign, fieldwork moved from 3-4 quarters to 2)."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-civic-engagement",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 47.8% in 2025/26 (95% CI 43.7-52.0%; CES 2025/26 civic engagement Table A3), shown as 48%. Earlier Lewisham estimates: 44.2% (2023/24) and 44.0% (2024/25) from the CLS local-authority boost (CLS 2024/25 annual data tables, Table X1c, Note 20) - an earlier version of this entry wrongly said the survey was England-only. Year-on-year moves are 'No Change' per the survey's own test. London 41.3% and England 38.1% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table A1, which uses CLS methodology for comparability) and Lewisham 2023/24-2025/26. No 2022/23 survey round. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "political_voice",
     "category": "Empowered",
     "indicator": "% adults agreed they can personally influence decisions affecting local area",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-civic-engagement-and-social-action",
-    "granularity": "National (England)",
-    "notes": "Same DCMS Community Life Survey 2024/25 release and same England-only/no-2022/23-round caveats as the civic participation indicator above. This measure has fallen to its lowest recorded level in 2023/24-2024/25 (23-24%), below the 25-28% band held in every year from 2013/14 to 2021/22."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-local-decisions",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 31.7% in 2025/26 (95% CI 28.1-35.6%; CES 2025/26 influencing local decisions Table B3), shown as 32%. Earlier Lewisham estimates: 31.0% (2023/24) and 28.7% (2024/25) from CLS 2024/25 Table B5c (Note 20). Year-on-year moves are 'No Change' per the survey's own test. London 31.8% and England 26.4% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table B1, CLS methodology) and Lewisham 2023/24-2025/26. No 2022/23 survey round. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults agreed that people in neighbourhood can be trusted",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. DCMS/MHCLG boosted the sample from 2023/24 (to ~175,000 respondents, from ~10,000) specifically to enable local-authority-level estimates and maps, and a London (ITL1) regional breakdown is also published (running well below the England average, in the low-to-mid 30s%), but no reliable London-region or Lewisham-specific figure could be confirmed this session because gov.uk data-table hosts were blocked by this environment's network egress policy. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 29.5% in 2025/26 (95% CI 25.8-33.4%; CES 2025/26 Table D12), shown as 30%. Earlier Lewisham estimates: 32.2% (2023/24) and 29.9% (2024/25) from the CLS local-authority boost (CLS 2024/25 Table B4c, Note 20) - an earlier version of this entry said no Lewisham figure could be retrieved. Year-on-year moves 'No Change'. London 29.3%, England 37.6% (a significant fall) in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries, then CES Table D10, CLS methodology) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults agreed people from different backgrounds get along well together",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. A regional/local-authority breakdown is also published but no London-region or Lewisham-specific figure could be confirmed this session (same access restrictions as the trust indicator above). No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 83.4% in 2025/26 (95% CI 79.6-86.7%; CES 2025/26 Table D15), shown as 83%. Earlier Lewisham estimates: 84.5% (2023/24) and 84.5% (2024/25) from CLS 2024/25 Table B6c (Note 20). Year-on-year moves 'No Change'. London 80.9%, England 78.5% (a significant fall) in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries, then CES Table D13) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% proud to live in their local area",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-neighbourhood-and-community",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. This question was first introduced in 2023/24, so only two years of trend data exist (59% 2023/24, 60% 2024/25) - no earlier trend is available from this or a predecessor survey. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-pride-in-local-area",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 58.0% in 2025/26 (95% CI 53.5-62.5%; CES 2025/26 Table E3). Earlier Lewisham estimates: 58.0% (2023/24) and 53.9% (2024/25) from CLS 2024/25 Table B10c (Note 20). Year-on-year moves 'No Change'. London 59.4%, England 61.6% (a significant rise) in 2025/26. Question first asked in 2023/24. Chart shows two labelled series: England and Lewisham, 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",
     "dimension": "social_cohesion",
     "category": "Empowered",
     "indicator": "% adults that have participated in formal/informal volunteering",
-    "source_url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-volunteering-and-charitable-giving",
-    "granularity": "England",
-    "notes": "DCMS Community Life Survey - designed and published at England level; not Lewisham-specific. Figure used is the combined formal-or-informal measure, 'at least once in the last 12 months' (54% in 2024/25) rather than the stricter 'at least once a month' variant (33%) - see source notes in build_local_social_with_real_data.py for the full formal/informal split. Local-authority-level estimates are also published since the 2023/24 sample boost but no Lewisham-specific figure could be confirmed this session. No official GLA or UK Government target exists for this indicator."
+    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-volunteering",
+    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
+    "notes": "Snapshot: Lewisham 60.6% did any formal or informal volunteering at least once in the last 12 months in 2025/26 (95% CI 56.3-64.9%; CES 2025/26 Table G13), shown as 61%. Earlier Lewisham estimates: 58.0% (2023/24) and 55.5% (2024/25) from CLS 2024/25 Table C1c(F) (Note 20). Year-on-year moves 'No Change'. London 56.0%, England 55.6% (a significant rise) in 2025/26. Chart shows two labelled series: England 2020/21-2025/26 (CLS releases and Table C1a, then CES Table G1) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
   },
   {
     "lens": "local_social",

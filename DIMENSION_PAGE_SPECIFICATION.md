@@ -477,6 +477,15 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   research identifies as more vulnerable to digital exclusion", after the facts rather than
   before them.
 
+- **Cut signpost sentences that announce a point instead of making it.** Caught on the
+  connectivity summary, November 2026: between the coverage finding and the risk-index finding
+  sat "The more revealing picture is who's actually at risk of being left behind." The user's
+  rewrite simply deleted it. The next sentence already turns to who's at risk, so the signpost
+  only delayed it. The same preference showed in the user's culture rewrite, which cut a
+  40-word grant breakdown to one clause. **Test: if a sentence contains no fact and only tells
+  the reader what's coming ("the more revealing picture is...", "the story is different
+  for...", "it's worth looking at..."), delete it and let the next sentence carry the turn.**
+
 **Good example (single-indicator dimension, current live text for the health dimension)**:
 *"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
 from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The

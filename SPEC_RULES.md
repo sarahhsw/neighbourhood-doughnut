@@ -35,6 +35,7 @@ when you're doing something this file doesn't cover.
 - Plain words a resident could repeat back; no labels the reader has to decode.
 - Every sentence must land its point; don't end on a list of facts that never says what they show.
 - One clause per indicator; amounts, recipients and before-and-after figures belong in the indicator text.
+- Cut signpost sentences that only announce what's coming ("the more revealing picture is..."); let the next fact carry the turn.
 - State a framework's risk groups as tendencies ("more vulnerable to"), not certainties ("the most likely").
 - Don't present one lever as "the solution"; policy belongs in the context cards.
 

@@ -490,6 +490,10 @@ def build_income():
     cc_years = [f"Sep {y}" for y in range(2016, 2027)]
     cc_lewisham = [2.5, 2.5, 2.6, 3.7, 9.3, 7.6, 5.7, 5.9, 6.9, 7.0, 6.8]
     cc_london = [1.9, 2.0, 2.2, 2.8, 7.8, 6.4, 4.6, 4.8, 5.6, 5.6, 5.6]
+
+    oow_years = ["Nov 2019", "Nov 2020", "Nov 2023", "Nov 2024", "Nov 2025"]
+    oow_lewisham = [10.5, 16.8, 15.4, 17.3, 17.7]
+    oow_london = [8.7, 14.5, 13.0, 14.6, 15.2]
     out_of_work_benefits = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,

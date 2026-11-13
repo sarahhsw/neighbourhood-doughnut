@@ -491,13 +491,13 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   reminder that 'Ladywell's PTAL' depends heavily on which part of the ward you mean". The
   user said no one would understand it: it assumed the reader knew what PTAL was, how its scale
   runs, and why a ward has no single score. Rewritten to say what the score measures, that it
-  runs from 0 (very poor) to 6b (excellent), and then the finding in plain words: "how well
+  runs from 0 (worst) to 6b (best), and then the finding in plain words: "how well
   connected you are depends on where in the ward you live". **Test: would a resident who has
   never heard of the measure understand the sentence without looking anything up?**
 - **Evaluative transitions must say what they mean.** Caught on the energy summary, November
   2026: "Fuel poverty tells a better story." The user said it didn't make sense in context:
-  better than what, and in what way? Replaced with the finding itself: "Fuel poverty is no higher
-  than average, though: about one in ten Ladywell households were fuel poor in 2024, level with
+  better than what, and in what way? Replaced with the finding itself: "Fuel poverty is about
+  average, though: around one in ten Ladywell households were fuel poor in 2024, similar to
   Lewisham and England." Same family as the signpost rule above: don't announce a contrast,
   state it.
 
@@ -1551,8 +1551,8 @@ that actually cover rent affordability and housing conditions.
 the energy retrofit card, November 2026: "retrofitting 250 council homes with government grant
 funding by September 2025" still read as a future plan two months after the deadline. The user
 asked for a progress update. None could be confirmed (the council's sites blocked automated
-access), so the bullet now reads "a commitment to retrofit 250 council homes ... due by
-September 2025", which stays true whatever happened. **When a context card cites a target with
+access), so the bullet now reads "committed to retrofitting 250 council homes ... by September
+2025", in the past tense, which stays true whatever happened. **When a context card cites a target with
 a date, check whether the date has passed; if it has, report the outcome from a source, or
 reword it as a commitment and flag the outcome as a follow-up.**
 

@@ -33,6 +33,8 @@ when you're doing something this file doesn't cover.
 - Don't narrate a chart's datapoints; explain what moved and why.
 - Keep the number of distinct years low; drop provenance-only dates already shown in the card.
 - Plain words a resident could repeat back; no labels the reader has to decode.
+- Explain any scale or measure as if the reader has never seen it (what it measures, what its range means). [2.1]
+- Don't announce a contrast ("tells a better story"); state it.
 - Every sentence must land its point; don't end on a list of facts that never says what they show.
 - One clause per indicator; amounts, recipients and before-and-after figures belong in the indicator text.
 - Cut signpost sentences that only announce what's coming ("the more revealing picture is..."); let the next fact carry the turn.
@@ -60,6 +62,7 @@ when you're doing something this file doesn't cover.
 
 - At most 3 documents including the global research card; 2 is often enough.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
+- Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 
 ## Get Involved cards [4]

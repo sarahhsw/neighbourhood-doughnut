@@ -486,6 +486,21 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   the reader what's coming ("the more revealing picture is...", "the story is different
   for...", "it's worth looking at..."), delete it and let the next sentence carry the turn.**
 
+- **Explain scales and jargon as if the reader has never seen them.** Caught on the PTAL text,
+  November 2026: "both comfortably above the London-wide low end of the 0-6b scale, but a
+  reminder that 'Ladywell's PTAL' depends heavily on which part of the ward you mean". The
+  user said no one would understand it: it assumed the reader knew what PTAL was, how its scale
+  runs, and why a ward has no single score. Rewritten to say what the score measures, that it
+  runs from 0 (very poor) to 6b (excellent), and then the finding in plain words: "how well
+  connected you are depends on where in the ward you live". **Test: would a resident who has
+  never heard of the measure understand the sentence without looking anything up?**
+- **Evaluative transitions must say what they mean.** Caught on the energy summary, November
+  2026: "Fuel poverty tells a better story." The user said it didn't make sense in context:
+  better than what, and in what way? Replaced with the finding itself: "Fuel poverty is no higher
+  than average, though: about one in ten Ladywell households were fuel poor in 2024, level with
+  Lewisham and England." Same family as the signpost rule above: don't announce a contrast,
+  state it.
+
 **Good example (single-indicator dimension, current live text for the health dimension)**:
 *"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
 from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The
@@ -1531,6 +1546,17 @@ that actually cover rent affordability and housing conditions.
    existing document's summary (see 3.2), prefer the fold-in.
 
 ### 3.2 Content Requirements
+
+**Dated commitments go stale; phrase them as commitments and check what happened.** Caught on
+the energy retrofit card, November 2026: "retrofitting 250 council homes with government grant
+funding by September 2025" still read as a future plan two months after the deadline. The user
+asked for a progress update. None could be confirmed (the council's sites blocked automated
+access), so the bullet now reads "a commitment to retrofit 250 council homes ... due by
+September 2025", which stays true whatever happened. **When a context card cites a target with
+a date, check whether the date has passed; if it has, report the outcome from a source, or
+reword it as a commitment and flag the outcome as a follow-up.**
+
+
 
 **Cover every indicator/consideration in the dimension - across up to 3 documents (2 is
 often enough), not just whichever one document is easiest to find.** The original rule ("one

@@ -1150,6 +1150,19 @@ dimension, via the ONS custom-dataset API). **When a framework's group is narrow
 nearest published category, find the closest proxy that matches its definition and say in the
 label what it measures, rather than showing the broader group.**
 
+**Describe people by their circumstances, in neutral terms, not by what the system doesn't
+require of them.** Caught on the income out-of-work benefits text, November 2026: "so the growth
+has come among people not expected to job-hunt". The user flagged it as potentially controversial
+and asked who these people are. Rewritten to name the official groups Universal Credit doesn't
+require to look for work, from gov.uk's own guidance: people assessed as unable to work because of
+a health condition or disability, and people caring for a disabled person for at least 35 hours a
+week. The same round rephrased a research card line, "over half of those inactive through
+long-term sickness reported depression, bad nerves or anxiety", which reused a dated survey term
+("bad nerves") and read as a judgement. Now: "over half reported mental health conditions such as
+depression or anxiety, often alongside other health conditions". **When writing about benefit
+recipients, health or disability, say who people are and why, using the neutral terms the official
+source uses; don't reuse survey category labels that read as stigmatising.**
+
 **Cut source nuances from reader-facing text unless they change what the number means.** Caught
 on PTAL, November 2026: "TfL refreshed its scoring toolkit in 2025 to reflect network changes
 since its 2015 baseline, including the Elizabeth line" was removed at the user's request - true,

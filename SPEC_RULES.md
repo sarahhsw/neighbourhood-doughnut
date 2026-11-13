@@ -54,6 +54,7 @@ when you're doing something this file doesn't cover.
 - Choose stat-card groups by the framework's own categories, not by singling out one subgroup.
 - When the framework's group is narrower than any published category, use the closest proxy and say in the label what it measures. [2.5]
 - One comparator per point in indicator text as well as the summary. [2.5]
+- Describe benefit recipients, health and disability by circumstance in neutral official terms; no "not expected to..." framing or stigmatising survey labels. [2.5]
 - No standalone "Target: X" line or dashed target on charts; weave benchmarks into the text. [2.6]
 - Spell out acronyms. [7]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]

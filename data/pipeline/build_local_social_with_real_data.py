@@ -393,7 +393,7 @@ def build_education():
 
 def build_income():
     """
-    Income dimension - 4 indicators, each with a multi-year trend pulled from the primary or
+    Income dimension - 3 indicators, each with a multi-year trend pulled from the primary or
     chart-data source (refreshed 2026-11-01). Trend points carry a `series` label
     ("Lewisham" / "London" / "Ladywell") because every chart mixes geographies - see
     DIMENSION_PAGE_SPECIFICATION.md 2.5 (labelled series, never one joined line).
@@ -408,29 +408,21 @@ def build_income():
          the 2019/20 file has no London figure.
       2. % paid below London Living Wage - Trust for London dataset 1500 (residents' jobs paid
          below the LLW, ASHE-based, 2008-2025 in one file); 2015-2025 plotted.
-      3. Claimant count (% of residents aged 16-64) - NEW, replaces the APS "Unemployment
-         rate". ONS Claimant Count via Nomis (dataset NM_162_1, measure 2). Ladywell ward
-         (E05013725, "Wards (as of May 2025)" geography) only has figures from January 2026
-         in Nomis - the earlier ward geographies in the dataset are pre-2022 boundaries, so
-         they are not joined on. The September 2026 Ladywell point is plotted as its own
-         series next to the Lewisham and London September series, 2016-2026.
-      4. % on out-of-work benefits - Trust for London November snapshots (DWP Benefit
+      3. % on out-of-work benefits - Trust for London November snapshots (DWP Benefit
          Combinations). Each year uses the latest edition that publishes it: datasets 1357
          (Nov 2019, Nov 2023) and 1614 (Nov 2020, 2024, 2025). No November 2021/2022 % is
          published in any edition, so those years are left out rather than computed.
 
     Removed in this pass: "Child poverty rate (after housing costs)" (user request),
-    "Unemployment rate" (replaced by the claimant count) and the income-dimension "Index of
+    "Unemployment rate" (survey estimate with a wide local margin of error) and the income-dimension "Index of
     Multiple Deprivation Decile" (user chose poverty rate instead; the key IMD 2025 findings
     are folded into the poverty text/top summary - verified against IoD2025 File 7 and
     File 10). The peace_justice IMD indicator is separate and untouched.
 
-    Why keep both claimant count and out-of-work benefits: the claimant count is JSA plus
-    Universal Credit claimants required to look for work (ONS definition); out-of-work
-    benefits also include sickness-related and other out-of-work benefits whose claimants are
-    not required to look for work. In November 2025 Lewisham had 14,545 claimants
-    (Nomis) against 38,193 out-of-work benefit recipients (Trust for London), so the gap
-    between the two is itself the group the page's health-and-work story is about.
+    The claimant count (NM_162_1) was its own indicator for part of November 2026; at the
+    user's request it was removed and its insight folded into the out-of-work benefits text:
+    in November 2025 Lewisham had 14,545 claimants against 38,193 out-of-work benefit
+    recipients, so most recipients are people Universal Credit doesn't require to look for work.
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     poverty = create_targeted_dimension(
@@ -498,36 +490,6 @@ def build_income():
     cc_years = [f"Sep {y}" for y in range(2016, 2027)]
     cc_lewisham = [2.5, 2.5, 2.6, 3.7, 9.3, 7.6, 5.7, 5.9, 6.9, 7.0, 6.8]
     cc_london = [1.9, 2.0, 2.2, 2.8, 7.8, 6.4, 4.6, 4.8, 5.6, 5.6, 5.6]
-    claimant_count = create_targeted_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="income",
-        target=Target(
-            text="No official GLA or UK Government target for the claimant count; the London average claimant rate is used as a benchmark.",
-            source_body="ONS Claimant Count (Nomis) - London average used as benchmark",
-            has_official_target=False
-        ),
-        indicator="Claimant count (% of residents aged 16-64)",
-        threshold=Threshold(value=5.6, unit="%", description="London claimant rate, September 2026"),
-        snapshot=Snapshot(value=6.5, unit="%", year="Sep 2026"),
-        status=Status.SHORTFALL,
-        source=Source(
-            name="ONS Claimant Count, via Nomis",
-            url="https://www.nomisweb.co.uk/datasets/ucjsa",
-            accessed="2026-11-01",
-            notes="Claimants as a proportion of residents aged 16-64 (Nomis dataset NM_162_1, 'Claimant count by sex and age', measure 2; API: https://www.nomisweb.co.uk/api/v01/dataset/NM_162_1.data.csv?geography=E05013725,E09000023,E12000007&gender=0&age=0&measure=1,2&measures=20100). The Claimant Count is JSA claimants plus Universal Credit claimants in the 'searching for work' conditionality group (ONS Labour market overview, October 2026); a small number are in work on very low earnings (ONS Guide to labour market statistics). Official statistics in development; the latest month is provisional. Ladywell (E05013725, 'Wards (as of May 2025)') has figures only from January 2026 (6.1%-6.5%, 670-710 claimants); September 2026: 710 claimants, 6.5%. Lewisham September 2026: 14,665 claimants, 6.8%; London 5.6%. September values plotted for Lewisham and London, 2016-2026. Replaces the Annual Population Survey modelled unemployment rate (Lewisham 5.7% +/-1.7, London 6.1%, Jul 2025-Jun 2026, Nomis NM_127_1), which is a survey estimate of people out of work and looking, as a share of the economically active - a different measure with a wide local confidence interval."
-        ),
-        geography=GeographyLevel.WARD,
-        confidence=Confidence.HIGH,
-        trend=([{"period": p, "value": v, "series": "Lewisham"} for p, v in zip(cc_years, cc_lewisham)] +
-               [{"period": p, "value": v, "series": "London"} for p, v in zip(cc_years, cc_london)] +
-               [{"period": "Sep 2026", "value": 6.5, "series": "Ladywell"}])
-    )
-
-    oow_years = ["Nov 2019", "Nov 2020", "Nov 2023", "Nov 2024", "Nov 2025"]
-    oow_lewisham = [10.5, 16.8, 15.4, 17.3, 17.7]
-    oow_london = [8.7, 14.5, 13.0, 14.6, 15.2]
     out_of_work_benefits = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
@@ -546,7 +508,7 @@ def build_income():
             name="Trust for London - People on out-of-work benefits, by London borough",
             url="https://trustforlondon.org.uk/data/out-work-benefits-borough/",
             accessed="2026-11-01",
-            notes="% of residents aged 16-64 on out-of-work benefits: Incapacity Benefit (INCAP), Income Support, Jobseeker's Allowance, Pension Credit, out-of-work Universal Credit, and combinations (Trust for London chart note; underlying DWP Benefit Combinations via Stat-Xplore and ONS mid-year population estimates). November snapshots, each from the latest edition publishing that year: dataset 1357 (Nov 2019: Lewisham 10.5%, London 8.7%; Nov 2023: 15.4%, 13.0%) and dataset 1614 (Nov 2020: 16.8%, 14.5%; Nov 2024: 17.3%, 14.6%; Nov 2025: 17.7%, 15.2%). No Nov 2021/2022 % is published. Lewisham Nov 2025: 38,193 recipients, of which out-of-work UC 16.1% of working-age residents. 8th highest of 33 London areas (incl. City of London) in Nov 2025; Enfield highest 21.4%, Richmond lowest 8.0% (excl. City). The previous snapshot was labelled '2023' but 17.7%/15.2% is the November 2025 pair. For comparison, the Nomis claimant count for Lewisham in November 2025 was 14,545 - about two in five of the out-of-work total."
+            notes="% of residents aged 16-64 on out-of-work benefits: Incapacity Benefit (INCAP), Income Support, Jobseeker's Allowance, Pension Credit, out-of-work Universal Credit, and combinations (Trust for London chart note; underlying DWP Benefit Combinations via Stat-Xplore and ONS mid-year population estimates). November snapshots, each from the latest edition publishing that year: dataset 1357 (Nov 2019: Lewisham 10.5%, London 8.7%; Nov 2023: 15.4%, 13.0%) and dataset 1614 (Nov 2020: 16.8%, 14.5%; Nov 2024: 17.3%, 14.6%; Nov 2025: 17.7%, 15.2%). No Nov 2021/2022 % is published. Lewisham Nov 2025: 38,193 recipients, of which out-of-work UC 16.1% of working-age residents. 8th highest of 33 London areas (incl. City of London) in Nov 2025; Enfield highest 21.4%, Richmond lowest 8.0% (excl. City). The previous snapshot was labelled '2023' but 17.7%/15.2% is the November 2025 pair. For comparison, the Nomis claimant count (NM_162_1) for Lewisham in November 2025 was 14,545 - about two in five of the out-of-work total. The claimant count was shown as its own indicator until November 2026, when it was folded into this text at the user's request; Ladywell's ward rate was 6.5% in September 2026 (710 claimants), against Lewisham 6.8% and London 5.6%. Who isn't required to look for work on Universal Credit: Welfare Reform Act 2012 s19(2) (no work-related requirements for claimants with limited capability for work and work-related activity, or with regular and substantial caring responsibilities for a severely disabled person); gov.uk 'Universal Credit and your claimant commitment' (requirements removed if assessed as LCWRA, or caring at least 35 hours a week for someone getting a qualifying disability benefit)."
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH,
@@ -554,7 +516,7 @@ def build_income():
                [{"period": p, "value": v, "series": "London"} for p, v in zip(oow_years, oow_london)])
     )
 
-    return [poverty, low_pay, claimant_count, out_of_work_benefits]
+    return [poverty, low_pay, out_of_work_benefits]
 
 def build_equality():
     """

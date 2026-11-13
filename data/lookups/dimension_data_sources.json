@@ -337,15 +337,6 @@
     "lens": "local_social",
     "dimension": "income_and_work",
     "category": "Enabled",
-    "indicator": "Claimant count (% of residents aged 16-64)",
-    "source_url": "https://www.nomisweb.co.uk/datasets/ucjsa",
-    "granularity": "Ward",
-    "notes": "ONS Claimant Count via Nomis (dataset NM_162_1, measure 'Claimants as a proportion of residents aged 16-64'), monthly. Jobseeker's Allowance plus Universal Credit claimants required to look for work. Ladywell ward (E05013725) available from January 2026 only (Wards as of May 2025 geography); Lewisham (E09000023) and London (E12000007) used as comparators back to 2016. Replaced the APS modelled 'Unemployment rate' (Trust for London / Nomis NM_127_1) in November 2026."
-  },
-  {
-    "lens": "local_social",
-    "dimension": "income_and_work",
-    "category": "Enabled",
     "indicator": "% on out-of-work benefits",
     "source_url": "https://trustforlondon.org.uk/data/out-work-benefits-borough/",
     "granularity": null,

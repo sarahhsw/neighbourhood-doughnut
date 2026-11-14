@@ -501,6 +501,47 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   Lewisham and England." Same family as the signpost rule above: don't announce a contrast,
   state it.
 
+- **Never use decile/"tenth" ranking language in the top summary, and don't explain the method
+  there either - say what the ranking means in plain words, or leave it to the indicator card.**
+  Caught on the income summary, November 2026 (the user had raised the same point before):
+  "one of its seven neighbourhoods is among England's most deprived tenth for income and
+  employment, while the other six fall between the third and sixth tenths." The user said a
+  reader who doesn't know the Index of Multiple Deprivation can't follow "third and sixth
+  tenths", and that the fix is not a methodology aside explaining deciles either. Their rewrite
+  kept only the plain finding: "Deprivation is patchy within Ladywell: one of its seven
+  neighbourhoods is among England's most deprived for income and employment." **Test: if a
+  phrase only makes sense once you know how the measure is built, cut it from the summary; the
+  scale explanation belongs in the indicator text.**
+- **Don't open with a thesis sentence that uses terms the paragraph hasn't explained yet.**
+  Caught on the same income summary: it opened "most people on out-of-work benefits are not
+  job-seekers". The user said it wasn't clear: the reader doesn't yet know what counts as an
+  out-of-work benefit or a job-seeker, so the opening sentence asks them to decode two labels
+  before any fact arrives. The user's rewrite dropped the abstract thesis and let the figures
+  make the point in order (benefit rate, then the claimant-count share of it, then why).
+- **Order the summary so each sentence leads into the next: place, then scale, then why.**
+  Caught on the same summary, November 2026: the user said it "feels disjointed, the narrative
+  does not flow". The draft opened with a borough thesis, listed poverty, benefits and low pay,
+  and only reached Ladywell in its last sentence. The user's rewrite starts with the ward's own
+  finding (patchy deprivation), widens to the borough (poverty, then benefits), and ends on the
+  cause of the benefits gap. Their version also asserted a cause ("driven primarily by a rise in
+  long term sickness and mental health issues within the borough"), which the fact-check could
+  not support: no published Lewisham breakdown of the rise by reason was found, and the ONS
+  long-term-sickness evidence is national and measures economic inactivity, not benefit
+  receipt. That clause was reworded to keep the national evidence national (see the good
+  example below). **Rule: one line of argument from local to borough to cause; a cause must be
+  sourced at the geography the sentence claims.**
+
+**Good example (multi-indicator, local-to-borough flow; live income summary, November 2026,
+user's wording with the last clause corrected after fact-check)**: *"Deprivation is patchy
+within Ladywell: one of its seven neighbourhoods is among England's most deprived for income
+and employment. In Lewisham, more than a quarter of residents live in poverty after housing
+costs, close to the London average, and around two-thirds of them are in a family where someone
+works. Out-of-work benefits reach 17.7% of working-age residents, above London's 15.2%, while
+the claimant count of job-seekers equals only about two in five of that total. Since 2020, the
+rise has mostly come among recipients not required to look for work, a group that includes
+people too ill to work; nationally, the number out of work through long-term sickness rose
+after the pandemic, often alongside depression or anxiety."*
+
 **Good example (single-indicator dimension, current live text for the health dimension)**:
 *"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
 from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The

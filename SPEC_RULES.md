@@ -40,6 +40,9 @@ when you're doing something this file doesn't cover.
 - Cut signpost sentences that only announce what's coming ("the more revealing picture is..."); let the next fact carry the turn.
 - State a framework's risk groups as tendencies ("more vulnerable to"), not certainties ("the most likely").
 - Don't present one lever as "the solution"; policy belongs in the context cards.
+- No decile or "tenth" ranking language in the summary, and no method aside explaining it; state what it means in plain words. [2.1]
+- Don't open with a thesis built on terms not yet explained ("not job-seekers"); let the facts make the point. [2.1]
+- Flow from place to borough to cause; a cause must be sourced at the geography the sentence claims. [2.1]
 
 ## Indicator text ("What this measures") [2.2, 2.5]
 

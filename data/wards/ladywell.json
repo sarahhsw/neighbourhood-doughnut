@@ -2016,7 +2016,7 @@
         "name": "Metropolitan Police Service - MPS Recorded Crime: Geographic Breakdown (London Datastore); ONS small-area population estimates (Nomis)",
         "url": "https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
         "accessed": "2026-11-14",
-        "notes": "Counts: 'MPS Ward Level Crime (most recent 24 months)' (Nov 2024-Oct 2026) and 'MPS Ward Level Crime (Historical)' (Nov 2020-Oct 2024), both from the 6 November 2026 release, summed across all offence groups for WardCode E05013725 over 12-month years ending October. Ladywell totals: 1,528 (Nov 2020-Oct 2021), 1,446, 1,573, 1,720, 1,711, 1,833 (Nov 2025-Oct 2026). Lewisham and London are the sums of every ward in the same files (London = the 32 MPS boroughs; the City of London has its own police force and is not included): Lewisham 26,757 / 28,367 / 30,246 / 28,752 / 28,014 / 30,263; London 777,017 / 864,237 / 919,687 / 881,139 / 870,614 / 879,261. Ward files are used for all three so the comparison is like for like: from March 2024 some offences appear in the MPS borough file without a ward (Lewisham borough file 31,450 vs ward sum 30,263 for Nov 2025-Oct 2026), so ward-based totals from then on run slightly low and the recent rise is, if anything, understated. Ladywell by offence group, Nov 2020-Oct 2021 vs Nov 2025-Oct 2026: violence against the person 526 -> 818 (of which violence without injury 219 -> 433, violence with injury 192 -> 248, stalking and harassment 115 -> 136); theft 203 -> 248; public order 142 -> 153; criminal damage and arson 132 -> 134; vehicle offences 183 -> 117; sexual offences 69 -> 101; burglary 100 -> 80; drugs 92 -> 75; robbery 37 -> 68. Denominators: ONS 'Population estimates - small area (2021 based)' (Nomis NM_2014_1), all persons, mid-year of the year each period ends in: Ladywell 15,631 (2021), 15,505 (2022), 15,476 (2023), 15,363 (2024); Lewisham 300,013 / 299,164 / 300,225 / 301,255; London region minus City of London 8,796,080 / 8,859,753 / 8,986,099 / 9,074,625. Mid-2024 is the latest ward estimate, so it is used for the 2025 and 2026 periods too. Rates are recorded crimes per resident, not per visitor or worker, so areas with town centres, stations or hospitals can score high. Replaces the July 2026 figure (93 per 1,000, Lewisham borough-wide, from crimerate.co.uk / homenicom.co.uk), which was taken from aggregator websites because the London Datastore was unreachable at the time."
+        "notes": "Counts: 'MPS Ward Level Crime (most recent 24 months)' (Nov 2024-Oct 2026) and 'MPS Ward Level Crime (Historical)' (Nov 2020-Oct 2024), both from the 6 November 2026 release, summed across all offence groups for WardCode E05013725 over 12-month years ending October. Ladywell totals: 1,528 (Nov 2020-Oct 2021), 1,446, 1,573, 1,720, 1,711, 1,833 (Nov 2025-Oct 2026). Lewisham and London are the sums of every ward in the same files (London = the 32 MPS boroughs; the City of London has its own police force and is not included): Lewisham 26,757 / 28,367 / 30,246 / 28,752 / 28,014 / 30,263; London 777,017 / 864,237 / 919,687 / 881,139 / 870,614 / 879,261. Ward files are used for all three so the comparison is like for like: from March 2024 some offences appear in the MPS borough file without a ward (Lewisham borough file 31,450 vs ward sum 30,263 for Nov 2025-Oct 2026), so ward-based totals from then on run slightly low and the recent rise is, if anything, understated. Ladywell by offence group, Nov 2020-Oct 2021 vs Nov 2025-Oct 2026: violence against the person 526 -> 818 (of which violence without injury 219 -> 433, violence with injury 192 -> 248, stalking and harassment 115 -> 136); theft 203 -> 248; public order 142 -> 153; criminal damage and arson 132 -> 134; vehicle offences 183 -> 117; sexual offences 69 -> 101; burglary 100 -> 80; drugs 92 -> 75; robbery 37 -> 68. Denominators: ONS 'Population estimates - small area (2021 based)' (Nomis NM_2014_1), all persons, mid-year of the year each period ends in: Ladywell 15,631 (2021), 15,505 (2022), 15,476 (2023), 15,363 (2024); Lewisham 300,013 / 299,164 / 300,225 / 301,255; London region minus City of London 8,796,080 / 8,859,753 / 8,986,099 / 9,074,625. Mid-2024 is the latest ward estimate, so it is used for the 2025 and 2026 periods too. The first period (Nov 2020-Oct 2021) includes lockdown months, so page text measures change from Nov 2021-Oct 2022 (1,446). Rates are recorded crimes per resident, not per visitor or worker, so areas with town centres, stations or hospitals can score high. Replaces the July 2026 figure (93 per 1,000, Lewisham borough-wide, from crimerate.co.uk / homenicom.co.uk), which was taken from aggregator websites because the London Datastore was unreachable at the time."
       },
       "confidence": "high",
       "community_notes": [],
@@ -2141,7 +2141,7 @@
         "name": "MOPAC Public Attitude Survey - Public Voice quarterly results packs (London Datastore, MOPAC Surveys)",
         "url": "https://data.london.gov.uk/dataset/mopac-surveys-236kk",
         "accessed": "2026-11-14",
-        "notes": "Share of respondents agreeing 'The Metropolitan Police Service is an organisation that I can trust' (base excludes don't know / refused), rolling 12 months to March, from the borough performance table in each year's Q4 Public Voice results pack. Lewisham / MPS (London) trust: 2021/22 67% / 73%; 2022/23 61% / 71%; 2023/24 59% / 69%; 2024/25 64% / 74%; 2025/26 60% / 71%. 'Police do a good job in the local area' (confidence), Lewisham / MPS: 2021/22 40% / 49%; 2022/23 42% / 50%; 2023/24 46% / 47%; 2024/25 38% / 45%; 2025/26 45% / 45%. 2025/26 Lewisham also: police treat everyone fairly 53%, stop and search used fairly 41%. The 2025/26 pack lists Lewisham's trust as -4pp and confidence as +7pp against 2024/25. The London figure for 2023/24 is the pack's 'weighted MPS result' (that pack's borough table has no MPS row). The PAS interviews around 600 residents per borough a year (about 19,000 Londoners), so it is not published below borough level and year-to-year moves of a few points may be sampling noise. Feeling safe walking alone in the local area after dark: the packs and the Q1 2026-27 headlines report it for London only (70% in the 12 months to June 2026, 68% a year earlier; women 60%). A borough breakdown may be on MOPAC's dashboards on london.gov.uk, which this environment cannot reach, so it is unverified rather than unavailable. Packs used: Q4 21-22, Q4 22-23, Q4 23-24, Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page."
+        "notes": "Share of respondents agreeing 'The Metropolitan Police Service is an organisation that I can trust' (base excludes don't know / refused), rolling 12 months to March, from the borough performance table in each year's Q4 Public Voice results pack. Lewisham / MPS (London) trust: 2021/22 67% / 73%; 2022/23 61% / 71%; 2023/24 59% / 69%; 2024/25 64% / 74%; 2025/26 60% / 71%. 'Police do a good job in the local area' (confidence), Lewisham / MPS: 2021/22 40% / 49%; 2022/23 42% / 50%; 2023/24 46% / 47%; 2024/25 38% / 45%; 2025/26 45% / 45%. 2025/26 Lewisham also: police treat everyone fairly 53%, stop and search used fairly 41%. The 2025/26 pack lists Lewisham's trust as -4pp and confidence as +7pp against 2024/25. The London figure for 2023/24 is the pack's 'weighted MPS result' (that pack's borough table has no MPS row). The PAS interviews around 600 residents per borough a year (about 19,000 Londoners), so it is not published below borough level and year-to-year moves of a few points may be sampling noise. Feeling safe walking alone in the local area after dark: the packs and the Q1 2026-27 headlines report it for London only (70% in the 12 months to June 2026, 68% a year earlier; women 60%). A borough breakdown may be on MOPAC's dashboards on london.gov.uk, which this environment cannot reach, so it is unverified rather than unavailable. Packs used: Q4 21-22, Q4 22-23, Q4 23-24, Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page. Survey mode: the PAS moved to telephone interviewing in FY 20-21 and FY 21-22, phased back to face-to-face in FY 22-23, and has been entirely face-to-face since FY 23-24; MOPAC says this 'may affect the comparability of trends' (Q4 25-26 pack), so 2021/22 and 2022/23 are drawn as separate '(phone/mixed)' series."
       },
       "confidence": "medium",
       "community_notes": [],
@@ -2149,12 +2149,12 @@
         {
           "period": "2021/22",
           "value": 67,
-          "series": "Lewisham"
+          "series": "Lewisham (phone/mixed)"
         },
         {
           "period": "2022/23",
           "value": 61,
-          "series": "Lewisham"
+          "series": "Lewisham (phone/mixed)"
         },
         {
           "period": "2023/24",
@@ -2174,12 +2174,12 @@
         {
           "period": "2021/22",
           "value": 73,
-          "series": "London"
+          "series": "London (phone/mixed)"
         },
         {
           "period": "2022/23",
           "value": 71,
-          "series": "London"
+          "series": "London (phone/mixed)"
         },
         {
           "period": "2023/24",

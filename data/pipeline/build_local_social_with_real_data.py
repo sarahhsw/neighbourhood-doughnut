@@ -1455,7 +1455,7 @@ def build_peace_justice():
                 "each period ends in: Ladywell 15,631 (2021), 15,505 (2022), 15,476 (2023), 15,363 (2024); Lewisham "
                 "300,013 / 299,164 / 300,225 / 301,255; London region minus City of London 8,796,080 / 8,859,753 / "
                 "8,986,099 / 9,074,625. Mid-2024 is the latest ward estimate, so it is used for the 2025 and 2026 "
-                "periods too. Rates are recorded crimes per resident, not per visitor or worker, so areas with town "
+                "periods too. The first period (Nov 2020-Oct 2021) includes lockdown months, so page text measures change from Nov 2021-Oct 2022 (1,446). Rates are recorded crimes per resident, not per visitor or worker, so areas with town "
                 "centres, stations or hospitals can score high. Replaces the July 2026 figure (93 per 1,000, Lewisham "
                 "borough-wide, from crimerate.co.uk / homenicom.co.uk), which was taken from aggregator websites because "
                 "the London Datastore was unreachable at the time."
@@ -1512,20 +1512,20 @@ def build_peace_justice():
                 "2026-27 headlines report it for London only (70% in the 12 months to June 2026, 68% a year earlier; "
                 "women 60%). A borough breakdown may be on MOPAC's dashboards on london.gov.uk, which this environment "
                 "cannot reach, so it is unverified rather than unavailable. Packs used: Q4 21-22, Q4 22-23, Q4 23-24, "
-                "Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page."
+                "Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page. Survey mode: the PAS moved to telephone interviewing in FY 20-21 and FY 21-22, phased back to face-to-face in FY 22-23, and has been entirely face-to-face since FY 23-24; MOPAC says this 'may affect the comparability of trends' (Q4 25-26 pack), so 2021/22 and 2022/23 are drawn as separate '(phone/mixed)' series."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
         target_text="No official GLA or UK Government target established for this indicator.",
         trend=[
-            {"period": "2021/22", "value": 67, "series": "Lewisham"},
-            {"period": "2022/23", "value": 61, "series": "Lewisham"},
+            {"period": "2021/22", "value": 67, "series": "Lewisham (phone/mixed)"},
+            {"period": "2022/23", "value": 61, "series": "Lewisham (phone/mixed)"},
             {"period": "2023/24", "value": 59, "series": "Lewisham"},
             {"period": "2024/25", "value": 64, "series": "Lewisham"},
             {"period": "2025/26", "value": 60, "series": "Lewisham"},
-            {"period": "2021/22", "value": 73, "series": "London"},
-            {"period": "2022/23", "value": 71, "series": "London"},
+            {"period": "2021/22", "value": 73, "series": "London (phone/mixed)"},
+            {"period": "2022/23", "value": 71, "series": "London (phone/mixed)"},
             {"period": "2023/24", "value": 69, "series": "London"},
             {"period": "2024/25", "value": 74, "series": "London"},
             {"period": "2025/26", "value": 71, "series": "London"},

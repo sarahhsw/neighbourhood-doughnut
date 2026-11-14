@@ -432,6 +432,7 @@ h1 {
     margin-bottom: 24px;
     position: sticky;
     top: 22px;
+    z-index: 10;
     display: inline-block;
 }
 
@@ -850,8 +851,8 @@ h1 {
         padding: 4px 48px 14px;
     }
 
+    /* Stays pinned while scrolling on desktop too, so Back is reachable from the bottom of a long page */
     .back-button {
-        position: static;
         margin-bottom: 32px;
     }
 }

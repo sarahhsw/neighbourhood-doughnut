@@ -226,6 +226,23 @@ housing dimension. Apply them to every future dimension - they will save hours.
   lesson as the ODS case above, different file format) - don't conclude a dataset has no rows
   for your area just because WebFetch said so; download and check yourself for anything larger
   than a small page.
+- **Trust for London keeps every past edition of a chart live as its own dataset CSV - use them
+  for a time series** (added November 2026, Income dimension). The income indicators had shipped
+  for months with empty trends and notes saying no series "could be retrieved". The current page
+  only links the latest chart (e.g. `/data/dataset/1354/csv/`), but older editions of the same
+  chart are still served at lower ids (`638` = poverty 2019/20, `926` = 2021/22, `1171` = 2022/23;
+  `1500` = low pay 2008-2025 in one file). The first line of each CSV is the chart title, so a
+  scan of ids with a ranged request finds them. Two cautions from the same pass: (1) each
+  edition's own title gives the year - the live snapshots were labelled "2023" when the
+  17.7%/15.2% out-of-work pair was November 2025 and the 13.4%/16.1% low-pay pair was 2025, so
+  check the year label against the file, not the old note; (2) for snapshot series whose
+  denominators are revised (out-of-work benefits), take each year from the latest edition that
+  publishes it and leave out years no edition gives as a %, rather than computing your own.
+- **Nomis ward geographies change with boundary reviews.** The claimant count (NM_162_1) for
+  Ladywell's current ward code only exists from January 2026 ("Wards (as of May 2025)"); the
+  dataset's older ward types are pre-2022 boundaries. Don't join a pre-2022 ward series onto a
+  post-2022 one. Plot the ward point(s) as their own `series` next to the borough and London
+  lines (spec 2.5), and say in `source.notes` when the ward series starts.
 - **Match comparator/aggregate areas by their exact area type and category columns, not just
   area code.** A Fingertips CSV frequently has multiple rows sharing the same parent/area code
   but differing by hidden category columns (deprivation decile, ethnicity, sex breakdown) that
@@ -415,6 +432,75 @@ top block's job is to say what the *collection* of indicators illustrates togeth
   provisional population data) - don't treat a council report's chart as the final word once a
   more current primary-source pull is available.
 
+- **Write in plain words; no cryptic labels the reader has to decode.** Caught on the mobility
+  top summary, November 2026: it opened "Ladywell's transport accessibility is hyper-local",
+  and the user said they weren't sure what it meant. The phrase was standing in for a finding
+  ("access is best near the station and drops off a few streets away") instead of stating it.
+  Replaced with "Public transport access in Ladywell is best near the station". The same summary
+  also ended its first sentence with "since TfL scores access point by point rather than for the
+  ward as a whole" - a methodology explanation that broke the narrative (the rule above on
+  leading with findings, not methodology, already covers it). **Test: could a resident who has
+  never seen the data repeat the sentence back in their own words? If a phrase needs a second
+  sentence to explain it, replace it with that explanation.**
+- **Every sentence must land its point - don't end on a list of facts that never says what they
+  show.** Caught on the connectivity summary, November 2026: "But that single score flattens real
+  variation: applying a London-wide framework for who's most likely excluded - [six groups] - to
+  Ladywell's own data shows a third of local children live in income-deprived households and 15%
+  of residents are disabled." The user called it an incomplete sentence: the six-group aside
+  buried the subject, and the sentence stopped at two numbers without saying why they mattered.
+  Fixed to "But that score is an average, and it hides groups that London research identifies as
+  the most likely to be digitally excluded: a third of Ladywell's children live in
+  income-deprived households, and 15% of residents are disabled." The claim comes first; the
+  numbers prove it.
+- **Compare a borough with its real peer group.** Caught on mobility mode share, November 2026:
+  the summary compared Lewisham (71.6%) with the London average (68.1%), which made it look
+  above average. The user asked whether Inner London was the better comparison. It is: the
+  Healthy Streets Scorecard classes Lewisham as Inner London, where the average is 82.1% and
+  Lewisham is 13th of 14. Choosing the all-London average flattered the borough. **Before picking
+  a comparator, check which group the source itself places the borough in, and use that one.**
+
+- **One clause per indicator in the summary; the breakdown belongs in the indicator text.**
+  Caught on the culture summary, November 2026. The draft opened with a 40-word sentence of
+  grant detail ("for 2026-29 arts organisations receive £235,000 a year, down from £386,000 a
+  year in 2022-25, with The Albany's anchor grant almost halved"). The user rewrote it as
+  "Lewisham's arts funding has been cut by 40%, in line with the wider picture of squeezed
+  council arts budgets across England." The cut is the finding; the amounts and recipients are
+  already in the funding indicator's own text. Two accuracy tweaks were made to the user's
+  wording and flagged back: "dedicated arts grants" (the council's total arts spending in its
+  Revenue Outturn returns rose slightly over the same period, so "arts funding" overclaims) and
+  "almost 40%" (the cut is 39%). **Rule: state each indicator's finding in one clause; keep
+  amounts, recipients and before-and-after figures for the indicator text.**
+- **State a framework's risk groups as tendencies, not certainties.** Caught on the
+  connectivity summary, November 2026: "groups that London research identifies as the most
+  likely to be digitally excluded" read as stronger than LOTI's framework, which names groups
+  more vulnerable to exclusion. The user asked to soften it; now "both groups that London
+  research identifies as more vulnerable to digital exclusion", after the facts rather than
+  before them.
+
+- **Cut signpost sentences that announce a point instead of making it.** Caught on the
+  connectivity summary, November 2026: between the coverage finding and the risk-index finding
+  sat "The more revealing picture is who's actually at risk of being left behind." The user's
+  rewrite simply deleted it. The next sentence already turns to who's at risk, so the signpost
+  only delayed it. The same preference showed in the user's culture rewrite, which cut a
+  40-word grant breakdown to one clause. **Test: if a sentence contains no fact and only tells
+  the reader what's coming ("the more revealing picture is...", "the story is different
+  for...", "it's worth looking at..."), delete it and let the next sentence carry the turn.**
+
+- **Explain scales and jargon as if the reader has never seen them.** Caught on the PTAL text,
+  November 2026: "both comfortably above the London-wide low end of the 0-6b scale, but a
+  reminder that 'Ladywell's PTAL' depends heavily on which part of the ward you mean". The
+  user said no one would understand it: it assumed the reader knew what PTAL was, how its scale
+  runs, and why a ward has no single score. Rewritten to say what the score measures, that it
+  runs from 0 (worst) to 6b (best), and then the finding in plain words: "how well
+  connected you are depends on where in the ward you live". **Test: would a resident who has
+  never heard of the measure understand the sentence without looking anything up?**
+- **Evaluative transitions must say what they mean.** Caught on the energy summary, November
+  2026: "Fuel poverty tells a better story." The user said it didn't make sense in context:
+  better than what, and in what way? Replaced with the finding itself: "Fuel poverty is about
+  average, though: around one in ten Ladywell households were fuel poor in 2024, similar to
+  Lewisham and England." Same family as the signpost rule above: don't announce a contrast,
+  state it.
+
 **Good example (single-indicator dimension, current live text for the health dimension)**:
 *"Healthy life expectancy in Lewisham sits below London's average of 62.9 years and has fallen
 from 65 years just over a decade ago, with a particularly sharp drop during the pandemic. The
@@ -550,7 +636,31 @@ section.
   digitally excluded..." and cut the pilot-borough/validation detail entirely - the reader
   doesn't need to know why a Ladywell-specific LOTI score doesn't exist, only what the
   framework itself says. Same principle as the rest of this section: inner workings of how or
-  why a source was used belong in the data layer's notes, not reader-facing prose.
+  why a source was used belong in the data layer's notes, not reader-facing prose. **This
+  applies to the top summary too, and to parenthetical asides as much as to opening clauses.**
+  Caught again November 2026: after the LOTI section itself was fixed, the connectivity top
+  summary still carried "(Lewisham isn't covered by the framework's own pilot boroughs)" in
+  the middle of its key sentence. The user flagged it as too granular, saying it broke the
+  narrative. Cut entirely; the coverage detail stays in the indicator's `source.notes`.
+- ❌ **Geography-provenance explanations where a short phrase will do.** Caught on the Water
+  dimension's per capita consumption text, November 2026: "no ward or borough breakdown is
+  published, but Thames Water's own figure is, used here as the most relevant geography" -
+  flagged by the user as too much detail. Replaced with "across Thames Water's supply area,
+  which includes Lewisham": the reader needs to know *which* geography the number covers,
+  not the reasoning behind choosing it. (The card's geography label already says the rest -
+  see 2.7.)
+- ❌ **Filler characterisations that restate a trend without adding meaning.** Same Water
+  text, November 2026: "Use spiked... then eased back before ticking up again - a bumpier
+  path than a steady decline, leaving little net progress" - the user flagged "a bumpier
+  path than a steady decline" as adding no value. The preceding clause already described
+  the shape. Before keeping a phrase that characterises a trend, ask whether it tells the
+  reader anything the clause before it didn't.
+- ❌ **Dismissive tone words about a positive finding.** Caught on the connectivity top
+  summary, November 2026: "Ladywell's physical connectivity is strong and unremarkable" -
+  the user said "unremarkable" read as negative given the borough's genuinely good
+  connectivity. The intent was "this isn't where the story is", but the word judges the
+  finding instead. State the finding plainly ("is strong") and let the next sentence's
+  pivot ("the more revealing picture is...") do the work of shifting focus.
 
 **Good examples:**
 
@@ -573,7 +683,9 @@ section.
   chart values in a row. It did earn a "why" at the end (turnout tracks how contested the
   race feels), but the fix is to make that point with the one or two values that actually
   support it (the 2022 low and the 2026 rebound), not all four - drop the ones that are pure
-  shape-narration.
+  shape-narration. (Note added November 2026: the 20.88% "2022" figure in this example was
+  itself wrong. It was a 2023 ward by-election's turnout, and the real 2022 figure is 34.55%.
+  See 2.5's turnout bullet. Keep this only as an example of narration, not as data.)
   **This rule is easy to re-break even right after reading it, specifically when writing a
   trend-vs-target comparison sentence** - the instinct to "show your working" by citing the two
   endpoint values is strong precisely because the sentence is making a quantitative claim
@@ -866,6 +978,196 @@ if (ring === 'social') {
   as the headline (`renderDimensionDetail`'s `indicatorsToShow.forEach` block). Don't
   hand-format commas into a snapshot value in the pipeline; let the site do it. This also
   means large snapshot values (counts, £ totals) don't need special-casing when added.
+
+**Figures with different population bases: use labelled stat cards, not a bar chart.** Caught
+on the connectivity dimension's LOTI key-groups breakdown, November 2026: six Ladywell
+figures (children in income-deprived households, disabled residents, residents aged 65+,
+unemployed, and so on) were drawn as horizontal bars on one shared 0-100% track, with a
+footnote explaining that each was a share of a different population. The user asked what
+each % was relative to, and suggested key stat cards instead. Bars on a shared axis invite
+side-by-side comparison, which is wrong when the denominators differ (all residents vs
+children aged 0-15 vs economically active residents vs businesses). Replaced with a grid of
+`.loti-stat` cards, each one a full sentence naming its own base ("33.6% *of Ladywell
+children (aged 0-15)* live in income-deprived households"). **Rule: only put figures on one
+shared axis when they share a denominator. Otherwise, write the base into each figure's own
+label so it can't be misread.**
+
+**Mixing geographies or survey versions in one trend chart: use labelled series, never one
+joined line.** Added November 2026 after the user asked for the community dimension's charts
+to append the older Community Life Survey (CLS) history to the new Community and Engagement
+Survey (CES) figures, with the more recent Lewisham-only data in "a slightly different
+colour/label". Each trend point can now carry an optional `series` label (`{"period":
+"2025/26", "value": 53.8, "series": "Lewisham"}`); `renderTrendChart` in `app.js` draws each
+label as its own line with its own legend entry, and named series keep fixed colours across
+every chart ("England" orange, "Lewisham" purple, "England, new survey" amber). Points without
+a label behave exactly as before. Rules:
+- **Join points into one line only when they share both geography and method.** England CLS
+  2018/19-2024/25 and CES 2025/26 community figures *are* joined, because the CES data tables
+  state its Community-pathway tables use the CLS methodology "to allow for robust
+  comparability with the CLS time-series". The culture arts-engagement figure is *not*: DCMS
+  says its 2025/26 CES fall (91% to 84%) may be methodological (CES arts report, footnote 3),
+  so the 2025/26 England point is a separate "England, new survey" series.
+- **Before switching a snapshot to a newly local figure, check how far back that local series
+  really goes.** The loneliness card said 2025/26 was "the first year a genuinely local figure
+  exists". In fact the CLS's own local-authority boost had already published Lewisham estimates
+  for 2023/24 and 2024/25 (CLS 2024/25 tables, Note 20 and Table A1c) - found only when the
+  older tables were actually opened.
+- **When a successor survey adds local data, re-check every indicator drawn from the old
+  survey, not just the one being updated.** The loneliness and support-network indicators
+  were moved to CES in October 2026, but neighbourhood belonging was left on the England-only
+  CLS series ("out of scope for this update") even though CES publishes a Lewisham figure for
+  it (Table D3: 53.8% in 2025/26). The user caught it.
+- **"Published for England only" is a claim like any other: check the data tables before
+  writing it, not the release's narrative page.** Caught again November 2026, this time on a
+  different dimension: political voice's civic participation and "can personally influence
+  local decisions" indicators both said "England-only... no Lewisham or London breakdown", and
+  that framing was carried into the top summary ("a steadier national trend"). A fact-check
+  then opened the CLS 2024/25 data tables and found Lewisham estimates for both questions in
+  2023/24 and 2024/25 (Tables X1c and B5c, Note 20), and the CES 2025/26 releases added a
+  third year (civic engagement Table A3, influencing local decisions Table B3). Lewisham turned
+  out to be well above England on both (48% vs 38% civic participation; 32% vs 26% can
+  influence), so the England-only framing hadn't just hidden a local number, it had hidden the
+  page's main finding. In CLS/CES tables, the local-authority breakdown is the sheet with the
+  "c" suffix (or the one titled "by local authority"). Search those before writing "no local
+  figure exists". Any dimension still drawing on CLS questions with an "England-only" caveat
+  (e.g. social_cohesion as of this note) should be re-checked the same way.
+- **"I couldn't fetch it" must never become "it doesn't exist" in reader-facing copy.** The
+  social_cohesion builder's July 2026 docstring was honest: gov.uk was blocked that session,
+  so a Lewisham value "could not be confirmed". By the time it reached the page, that tool
+  limitation had turned into a factual claim: "None of these figures has a Lewisham-specific
+  equivalent." When the CLS 2024/25 tables were opened in November 2026, all four indicators
+  had Lewisham figures (Tables B4c, B6c, B10c, C1c(F)). Lewisham turned out to have *lower*
+  trust than England (30% vs 38%) but *higher* cross-background cohesion (83% vs 79%), the
+  opposite of what the England-only "drifted down together" summary implied. If a session
+  can't reach a source, record that in `source.notes` and the builder docstring, flag it as
+  a follow-up, and keep the reader copy to what was actually checked. Don't write a reader-
+  facing sentence saying no local figure exists.
+- **Re-pulling a series from the primary table also catches small inherited errors.** The
+  same pass found the trust indicator's 2021/22 England point stored as 41%, not the
+  Timeseries' 42.2%. The volunteering text also claimed formal volunteering drove the
+  national fall while informal help "held up far better". Over 2020/21-2024/25 the table
+  shows the opposite: informal fell 54% to 44%, formal 30% to 28%. Both were fixed. When you
+  rebuild a series, overwrite every point from the source rather than appending to the old
+  ones. A larger case, November 2026 (energy): the fuel poverty card had shown Lewisham at
+  13.8% for 2022 since July, taken from "cross-checked secondary reporting" while gov.uk was
+  blocked. DESNZ's own Table 2 gives 11.1% (14,544 of 131,597 households). The 13.8% traced
+  to no DESNZ table at all, and the summary's "above England's 13.1%" story rested on it.
+  **A figure recorded as "could not be downloaded, taken from secondary reporting" is a
+  follow-up, not a verified number: re-pull it from the primary file the first time access
+  allows.**
+- **When the source's smallest geography doesn't nest inside the ward, build an openly
+  labelled estimate from the areas that mostly overlap, and say which ones.** ONS's EPC Band C
+  data stops at MSOA. Ladywell's 7 LSOAs sit in three MSOAs (3 of 4 in Lewisham 011, 3 of 4 in
+  014, 1 of 5 in 041). The energy chart's "Ladywell area (est.)" line is the household-weighted
+  mean of 011 and 014 only: 041 ("Central Lewisham South") rates 65% Band C+, far above the
+  other two, so giving its rate to Ladywell's one LSOA there could badly overstate the ward. Label such a line as
+  an estimate in the series name, keep the method in `source.notes`, set the geography to
+  `msoa_aggregated`, and don't join it to an older ward figure from a different source (the
+  Lewisham Observatory's 2022 ward profile, 43%, is not built on ONS's method).
+- **When the geography of an indicator changes, re-check its inherited "why" claims too.**
+  The same civic participation text attributed the England 2020/21 peak to "lockdown-era
+  mutual aid and local campaigning". Once the full CLS Timeseries was opened, 2019/20 (fieldwork
+  mostly before the pandemic) was already 40.9%, almost the same as 2020/21's 41.7%, and no
+  source for the lockdown explanation could be found. The claim was dropped, not reworded.
+- **An election-turnout figure must be tied to a named election on a named date, from the
+  returning officer's declaration or the council's own results page - not just "the 2022
+  figure".** Caught November 2026 by the fact-checker on the political voice turnout
+  indicator. The page had said for months that "just 20.88% voted in 2022", and that low
+  point carried the top summary's "swung sharply" story. The official 5 May 2022 mayoral
+  declaration says 34.55%. The 20.88% was the turnout of a single-ward by-election (Deptford,
+  9 November 2023), listed on the same council past-results page as the borough-wide results.
+  Once corrected, the series (37.4% in 2018, 34.55% in 2022, 42.14% in 2026) showed a modest
+  rise, not a swing. The "genuinely contested three-way race" framing also failed: the 2026
+  vote was a two-party Green-Labour contest. A wrong number had been propping up a causal
+  story. **Rule:** for each turnout point, record the election type (mayoral, ward, by-election,
+  general), date, electorate and ballots issued in `source.notes`. Check that the percentage is
+  ballots ÷ electorate. Never plot a by-election in the same series as scheduled all-out
+  elections.
+
+**Before removing an indicator, check whether another dimension shares its name.**
+`getWhatThisMeasures` is keyed by base name, not by dimension. When the income dimension's "Index
+of Multiple Deprivation Decile" indicator was removed (November 2026), deleting its text block
+would also have blanked the peace_justice indicator of the same name. Grep the ward JSON for the
+indicator name across all dimensions first, and leave a shared block in place.
+
+**Choosing between overlapping indicators: keep both only if the gap between them is itself a
+finding.** The user asked whether the claimant count duplicated "% on out-of-work benefits".
+The claimant count is JSA plus Universal Credit claimants required to look for work; the
+out-of-work measure adds sickness-related benefits and UC claimants with no job-search
+requirement. In Lewisham in November 2025 claimants were about two in five of the out-of-work
+total (14,545 of 38,193), and the non-claimant part had grown since 2020 while the claimant count
+fell. Both were kept, and the copy uses the gap to separate job-seekers from people out of work
+for other reasons. The survey-based APS unemployment rate was dropped instead: it measures much
+the same group as the claimant count with a borough margin of error of nearly two points. **Rule:
+when two indicators overlap, check whether one is a subset of the other and what the difference
+measures. Keep both only when that difference answers a question the page is asking.**
+
+**The headline value must be the latest figure the chart shows, with the right year.** Caught
+on mobility mode share, November 2026: the headline read "72.8% · 2024" while the chart already
+had a later (approximate) 2026 point, and the user asked why. Checking the Healthy Streets
+Scorecard's own chart data found a second problem: every point was labelled one Scorecard
+edition too early (72.8% is the 2025 edition, 75.6% the 2024 edition, not "2023"). Fixed to
+71.6% (2026 Scorecard) with the full corrected series. **When a newer figure exists, the
+snapshot uses it; when a series is published by edition, label points by the edition the
+source uses and check the label against the source's own chart data, not a news report.**
+
+**Headline stats must read cleanly at phone width.** Caught November 2026 from a phone
+screenshot: on narrow screens `.value-readout` kept the big number and its grey label side by
+side, so "81 %" wrapped onto two lines with the label squeezed beside it. Fixed in
+`styles.css`: below 768px the label stacks under the number, which gets the full width.
+`app.js` also now attaches units that start with "%" directly to the figure ("81%", "100% of
+landmass") instead of after a space. **Check every layout change at about 390px wide as well
+as desktop** (`node scripts/render_check.js` covers desktop; take a 390px screenshot too).
+
+**Unit qualifiers belong in the indicator name, not the headline.** Caught on PTAL, November
+2026: the headline read "4 to 6 (Good to Excellent) PTAL band, TfL 0-6b scale". The user asked
+for the scale to move out of the big number. The scale now sits in the indicator name
+("Public Transport Accessibility Level (TfL 0-6b scale)"), which renders in the grey line
+under the headline. Same principle as the bracketed-explainer rule above.
+
+**Stat cards: choose groups by the framework's categories, not by picking one subgroup.**
+Caught on the connectivity LOTI cards, November 2026: the cards showed "Black, Black British,
+Caribbean or African" (Ladywell's largest minority group) and "Bangladeshi" (named in LOTI's
+text) as separate cards. The user asked why one ethnic group was singled out out of all of
+them, and said Bangladeshi didn't need its own card. LOTI's category is "ethnic communities",
+so the cards now show one figure for it: 46.2% of residents from Asian, Black, mixed or other
+non-White ethnic groups (Census 2021 TS021). Once each card names its own population base, a
+footnote explaining that the bases differ is redundant, and it was removed.
+
+**One comparator per point in indicator text, too.** Caught on mobility mode share, November
+2026: "Lewisham sits above London's 68.1% borough average but well below the 82.1% Inner London
+average, 13th of the 14 Inner London boroughs" gave three London reference points in one
+sentence. The user called it unnecessary. Now "Lewisham is 13th of the 14 Inner London
+boroughs, well below their 82.1% average": one peer group, one figure.
+
+**Scope a stat-card group to the framework's actual definition.** Follow-up on the LOTI cards,
+November 2026: after the ethnic-group cards were merged into one "46.2% from non-White ethnic
+groups", the user asked what happens if it's scoped to low-income ethnic groups, which is what
+LOTI names. The Census has no income variable, so the card now uses the closest proxy, labelled
+as such: residents from non-White ethnic groups in a household where someone is out of work
+through unemployment or long-term illness (8.4%; Census 2021 household deprivation, employment
+dimension, via the ONS custom-dataset API). **When a framework's group is narrower than the
+nearest published category, find the closest proxy that matches its definition and say in the
+label what it measures, rather than showing the broader group.**
+
+**Describe people by their circumstances, in neutral terms, not by what the system doesn't
+require of them.** Caught on the income out-of-work benefits text, November 2026: "so the growth
+has come among people not expected to job-hunt". The user flagged it as potentially controversial
+and asked who these people are. Rewritten to name the official groups Universal Credit doesn't
+require to look for work, from gov.uk's own guidance: people assessed as unable to work because of
+a health condition or disability, and people caring for a disabled person for at least 35 hours a
+week. The same round rephrased a research card line, "over half of those inactive through
+long-term sickness reported depression, bad nerves or anxiety", which reused a dated survey term
+("bad nerves") and read as a judgement. Now: "over half reported mental health conditions such as
+depression or anxiety, often alongside other health conditions". **When writing about benefit
+recipients, health or disability, say who people are and why, using the neutral terms the official
+source uses; don't reuse survey category labels that read as stigmatising.**
+
+**Cut source nuances from reader-facing text unless they change what the number means.** Caught
+on PTAL, November 2026: "TfL refreshed its scoring toolkit in 2025 to reflect network changes
+since its 2015 baseline, including the Elizabeth line" was removed at the user's request - true,
+but it neither adds to nor balances the narrative. Same for the DERI text's "several components
+are dated (some from the 2011 Census)". Keep that kind of detail in `source.notes`.
 
 **For each indicator**:
 - **Indicator name** as heading
@@ -1178,6 +1480,43 @@ spot-checking things that surprise them - both incidents above were ultimately c
 human noticing something felt off. The fact-checker step exists to catch what slips past both
 of those *before* a user has to be the one who finds it.
 
+**Check a figure's internal arithmetic, its time basis, and which page it's actually on - not
+just whether the number exists somewhere.** Added November 2026 after the culture dimension's
+"£ local authority funding in art & culture" indicator shipped with three separate errors that
+each traced to a real source, so none of them looked fabricated:
+1. **Annual vs multi-year.** The snapshot read "£386,000, 3-year total" and the copy said the
+   Arts & Culture Fund gave "£150,000 a year to The Albany, plus roughly £236,000 across eight
+   others over the 2022-25 cycle." The arithmetic can't work: £150k/year x 3 alone is £450k,
+   more than the claimed 3-year total. The council's Mayor & Cabinet report (2 Feb 2022, paras
+   1.4 and 10.3) states £386,000 as a general-fund budget inside a grants programme costed "per
+   annum" - it was an annual figure mislabelled as a cycle total. **Rule: whenever a page states
+   both a per-year component and a total, multiply it out before publishing; and for any council
+   budget figure, find the sentence that says "per annum"/"a year" or the multi-year framing -
+   don't infer the time basis from the document's title (a "2022-25" programme mostly quotes
+   annual budgets).**
+2. **Wrong count.** "Eight others" was actually ten (the allocation table lists eleven grants,
+   including a £1,000 one easy to skip). Count rows in the primary table; don't carry forward a
+   count from an earlier summary.
+3. **Right number, wrong citation, and a percentage glued to the wrong base.** The copy said
+   English council arts spending fell "61% in real terms (£18.67 to £6.47 per resident)", citing
+   the Equity tracker page - which only gives the Britain-wide figure (55%, £1.19bn to £539m).
+   A fact-check reasonably flagged 61% as unsupported. It turned out to be real, but on a
+   *different* Equity page (the 19 March 2026 news release), where 61% is the fall in England's
+   *total* real spending; the per-person figures in the same paragraph (£18.67 to £6.47) are a
+   ~65% fall. Pairing them as "61% (£18.67 to £6.47)" asserted a per-person percentage no source
+   gives. **Rule: cite the exact page the figure appears on (a campaign's landing page and its
+   press release often carry different headline numbers); and when a source gives a total-spend
+   percentage and per-capita levels side by side, state them as two separate facts, never as
+   "X% (from A to B)" unless A-to-B actually computes to X%.** Also prefer the geography that
+   matches the ward: for a Lewisham page, England's 61% is the relevant comparator, not the
+   Britain-wide 55%, as long as it's cited to the page that says it.
+
+Practical note from the same fix: `lewisham.moderngov.co.uk` returns a bot-check 403 to
+automated fetches. Don't try to get around it (e.g. by spoofing a browser user-agent). The same
+committee documents, same `sNNNNNN` IDs, are served normally by the council's
+`councilmeetings.lewisham.gov.uk/documents/sNNNNNN/...` mirror; a web search for the
+document title usually turns up that URL.
+
 ---
 
 ## 3. Local & Broader Context Section
@@ -1220,6 +1559,17 @@ that actually cover rent affordability and housing conditions.
    existing document's summary (see 3.2), prefer the fold-in.
 
 ### 3.2 Content Requirements
+
+**Dated commitments go stale; phrase them as commitments and check what happened.** Caught on
+the energy retrofit card, November 2026: "retrofitting 250 council homes with government grant
+funding by September 2025" still read as a future plan two months after the deadline. The user
+asked for a progress update. None could be confirmed (the council's sites blocked automated
+access), so the bullet now reads "committed to retrofitting 250 council homes ... by September
+2025", in the past tense, which stays true whatever happened. **When a context card cites a target with
+a date, check whether the date has passed; if it has, report the outcome from a source, or
+reword it as a commitment and flag the outcome as a follow-up.**
+
+
 
 **Cover every indicator/consideration in the dimension - across up to 3 documents (2 is
 often enough), not just whichever one document is easiest to find.** The original rule ("one
@@ -1476,6 +1826,12 @@ block container, explicitly set `color: var(--ink)` on it, or child headings wil
 browser's default link-blue rather than the page's ink colour. This exact bug shipped once in
 this session (an unstyled `<h4>` inside the new `<a>` wrapper rendered blue) before being
 caught and fixed.
+
+**Leave out status details that will date quickly.** Caught on the culture Get Involved cards,
+November 2026: the Heart n Soul card ended "currently full, so joining means the waiting list".
+The user removed it: waiting lists, "recruiting now" and "this year's dates" go stale without
+anyone noticing. Describe what the group does and how to join; let the linked page carry the
+current status.
 
 ### 4.3 Visual Treatment: Horizontal Scroll, Not a Vertical List
 

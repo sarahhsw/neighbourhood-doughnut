@@ -225,10 +225,31 @@ function renderTrendChart(allIndicators, dimension) {
         return ''; // No trend data available
     }
 
-    // Chart dimensions
+    // Split each indicator's trend into series. A trend point may carry an optional
+    // `series` label (e.g. "England", "Lewisham") when one indicator's chart mixes
+    // geographies or survey versions - each label gets its own line, colour and legend
+    // entry, so a change of geography or method is never drawn as one continuous line.
+    // Points without a label form a single series per indicator, as before.
+    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
+    const seriesList = [];
+    indicatorsWithTrend.forEach(ind => {
+        const labels = [...new Set(ind.trend.map(t => t.series || ''))];
+        labels.forEach(label => {
+            const fallbackLabel = ind.indicator.replace(chartTitle, '').trim().replace(/^\(|\)$/g, '') || ind.indicator;
+            seriesList.push({
+                ind,
+                label: label || fallbackLabel,
+                points: ind.trend.filter(t => (t.series || '') === label)
+            });
+        });
+    });
+    const showLegend = seriesList.length > 1;
+
+    // Chart dimensions - widen the right margin when legend labels are long
     const width = 600;
     const height = 280;
-    const margin = { top: 20, right: 120, bottom: 35, left: 50 };
+    const longestLabel = showLegend ? Math.max(...seriesList.map(s => s.label.length)) : 0;
+    const margin = { top: 20, right: Math.max(120, Math.ceil(40 + longestLabel * 6.2)), bottom: 35, left: 50 };
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -244,14 +265,11 @@ function renderTrendChart(allIndicators, dimension) {
     const yMax = Math.ceil(maxValue + valueRange * 0.1);
 
     // Create scales
-    const xScale = (index) => margin.left + (index / (allPeriods.length - 1)) * chartWidth;
+    const xScale = (index) => margin.left + (allPeriods.length > 1 ? (index / (allPeriods.length - 1)) * chartWidth : chartWidth / 2);
     const yScale = (value) => margin.top + chartHeight - ((value - yMin) / (yMax - yMin)) * chartHeight;
 
-    // Colors for different indicators
+    // Colors for different series
     const colors = ['#E8542D', '#4B3F8F', '#3F8F5B', '#E8A23A'];
-
-    // Get common indicator name (without gender suffix)
-    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
 
     let svg = `
         <div class="detail-section">
@@ -263,47 +281,52 @@ function renderTrendChart(allIndicators, dimension) {
                 <line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#999" stroke-width="1"/>
     `;
 
-    // Draw lines for each indicator
-    indicatorsWithTrend.forEach((ind, indIndex) => {
-        const color = colors[indIndex % colors.length];
-        const points = ind.trend.map((point, i) => {
+    // Draw a line for each series
+    // Named series keep the same colour on every chart, so "Lewisham" always reads as the
+    // local line and "England" as the national one.
+    const namedColors = { 'England': '#E8542D', 'England, new survey': '#E8A23A', 'Lewisham': '#4B3F8F', 'Inner London East': '#4B3F8F', 'London': '#7A7A7A', 'Ladywell': '#3F8F5B', 'Ladywell area (est.)': '#3F8F5B' };
+    seriesList.forEach((series, seriesIndex) => {
+        const color = namedColors[series.label] || colors[seriesIndex % colors.length];
+        const ind = series.ind;
+        const points = series.points.map(point => {
             const x = xScale(allPeriods.indexOf(point.period));
             const y = yScale(point.value);
             return `${x},${y}`;
         }).join(' ');
 
         svg += `
-            <!-- Line for ${ind.indicator} -->
+            <!-- Line for ${ind.indicator} - ${series.label} -->
             <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2"/>
 
             <!-- Data points -->
         `;
 
-        ind.trend.forEach((point, i) => {
+        series.points.forEach((point, i) => {
             const x = xScale(allPeriods.indexOf(point.period));
             const y = yScale(point.value);
             const unit = ind.snapshot.unit || '';
-            const dataPointId = `datapoint-${dimension.dimension}-${indIndex}-${i}`;
+            const periodLabel = point.series ? `${point.period} · ${point.series}` : point.period;
+            const dataPointId = `datapoint-${dimension.dimension}-${seriesIndex}-${i}`;
             svg += `
                 <!-- Larger invisible hit area -->
                 <circle cx="${x}" cy="${y}" r="12" fill="transparent" style="cursor: pointer;"
-                    data-period="${point.period}" data-value="${point.value}" data-unit="${unit}" class="chart-hit-area"></circle>
+                    data-period="${periodLabel}" data-value="${point.value}" data-unit="${unit}" class="chart-hit-area"></circle>
                 <!-- Visible data point -->
                 <circle id="${dataPointId}" cx="${x}" cy="${y}" r="4" fill="${color}" style="pointer-events: none;"></circle>
             `;
         });
 
         // Legend (only needed to distinguish multiple lines - the chart title
-        // already names the indicator when there's just one). Use the same suffix
-        // extraction as the headline value-readout labels, not the full indicator name -
-        // otherwise a long base name (e.g. "% of children with obesity (Reception)") gets
-        // clipped by the chart's fixed-width right margin instead of just reading "Reception".
-        if (indicatorsWithTrend.length > 1) {
-            const legendY = margin.top + indIndex * 20;
-            const legendLabel = ind.indicator.replace(chartTitle, '').trim().replace(/^\(|\)$/g, '') || ind.indicator;
+        // already names the indicator when there's just one). Labels come from the
+        // series label, or the same suffix extraction as the headline value-readout
+        // labels, not the full indicator name - otherwise a long base name (e.g. "% of
+        // children with obesity (Reception)") gets clipped instead of just reading "Reception".
+        if (showLegend) {
+            const legendY = margin.top + seriesIndex * 20;
             svg += `
                 <line x1="${width - margin.right + 10}" y1="${legendY}" x2="${width - margin.right + 30}" y2="${legendY}" stroke="${color}" stroke-width="2"/>
-                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${legendLabel}</text>
+                <circle cx="${width - margin.right + 20}" cy="${legendY}" r="3" fill="${color}"/>
+                <text x="${width - margin.right + 35}" y="${legendY + 4}" font-size="11px" fill="#333">${series.label}</text>
             `;
         }
     });
@@ -331,7 +354,7 @@ function renderTrendChart(allIndicators, dimension) {
         const y = yScale(value);
         svg += `
             <text x="${margin.left - 10}" y="${y + 4}"
-                  text-anchor="end" font-size="10px" fill="#666">${value.toFixed(1)}</text>
+                  text-anchor="end" font-size="10px" fill="#666">${maxValue >= 10000 ? Math.round(value / 1000).toLocaleString('en-GB') + 'k' : value.toFixed(1)}</text>
             <line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#999" stroke-width="1"/>
         `;
     }
@@ -430,16 +453,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'housing': "The private rented sector now houses 27% of Lewisham residents, up from 24% in 2011. Lewisham's Housing Strategy found rents grew 50% against incomes up just 12% in the years to 2018 - and names ending of a private tenancy as the single biggest cause of local homelessness, behind roughly half of cases as of 2020. Rough sleeping is up nearly a third over four years, to 345 people in 2025/26, while temporary accommodation has eased from a 2024 peak but stayed persistently high. The same stretched, low-income renters are also more likely to live in a non-decent home: 16% of private rented homes are non-decent in 2024, against a 12.9% average for all tenures.",
         'food': "Lewisham's diet-related health is mixed. Dental decay in five-year-olds runs below both the London and England averages, and diagnosed diabetes stays well below England's rate too (though now almost identical to London's). Demand on local foodbanks tells a starker story: Trussell network parcels distributed in Lewisham tripled between 2018 and 2025. Child obesity near-doubles between Reception and Year 6 - a pattern repeated every year since measurement began in 2006/07, and slightly worse than London's Year 6 average.",
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Two of the company's three levers for closing that gap are moving at different speeds: per-person water use has fallen modestly since 2019/20, though unevenly, with a pandemic-era spike and a recent uptick; leakage - after falling from close to a third of supply in the mid-2000s to around a fifth by 2019/20 - has barely moved since. Both remain well short of what's needed: the Environment Act's 2038 demand-reduction target and the water industry's 2018 commitment to halve leakage by 2050 both require considerably faster progress than either metric is currently making.",
-        'mobility': "Ladywell's transport accessibility is hyper-local: real planning assessments show excellent PTAL 6 immediately around Ladywell station, falling to good PTAL 4 just a few streets away, since TfL scores access point by point rather than for the ward as a whole. Lewisham's sustainable mode share - trips made on foot, by bike, or by public transport - stood at 72.8% in 2024, short of the Mayor's Transport Strategy target of 80% by 2041 that Lewisham's own transport plan also adopts, and still above London's 67.6% average despite a recent decline from a high of 75.6%.",
+        'mobility': "Public transport access in Ladywell is best near the station: planning assessments rate it excellent (PTAL 6) right by Ladywell station and good (PTAL 4) a few streets away. Across Lewisham, 71.6% of residents' trips are made on foot, by bike or by public transport, well below the 82.1% Inner London average and short of the Mayor's target of 80% by 2041.",
         'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out.",
-        'community': "Lewisham's own loneliness rate is now measured locally for the first time: 8% felt lonely often or always in 2025/26, little changed from 7% the year before. Neighbourhood belonging, still only measured at England level, slipped to 62%, down from a pandemic-era high of 65% in 2020/21, with London consistently below the England average. Support networks look sturdier: 95% of adults across inner-east London, the sub-region that includes Lewisham, agreed people would be there for them if they needed help in 2025/26 - the strongest of these three measures, and little changed over the two years it has been tracked.",
-        'political_voice': "Lewisham's own local election turnout swung sharply: just 20.88% voted in 2022, before a genuinely contested three-way race lifted it to 42.14% in May 2026, when the Green Party ended decades of Labour control of the council. That volatility sits alongside a steadier national trend: the share of English adults who feel they can personally influence decisions affecting their local area has fallen to 24% in 2024/25, below every year recorded between 2013/14 and 2021/22 (25-28%). Civic participation - contacting a councillor, signing a petition, attending a public meeting - has settled at 34%, down from a pandemic-era peak near 42% but level with the pre-2023 norm of 2021/22.",
-        'culture': "Lewisham's own arts funding is concentrated on a small number of organisations: its Arts & Culture Fund gave £150,000 a year to a single anchor organisation, The Albany, and split roughly £236,000 across eight others over the 2022-25 cycle. That sits within a wider English picture of squeezed council arts budgets, which have fallen 61% in real terms nationally since 2010 (from £18.67 to £6.47 per person a year). Participation itself has held up better than funding: 90.6% of adults nationally engaged with the arts in 2024/25, just below the survey's 2023/24 peak.",
+        'community': "Most adults around Lewisham have someone to turn to, but fewer feel they belong where they live. Across inner-east London, the sub-region that includes Lewisham, 95% agreed people would be there for them if they needed help in 2025/26. Neighbourhood belonging is the lowest-scoring of the three: 54% of Lewisham adults feel they belong to their immediate neighbourhood, below England's 61% and not significantly different from London's 58%. Severe loneliness affects 8% of the borough's adults, within the survey's margin of error of England's rate, and nationally runs four times higher among disabled than non-disabled adults, and three times higher in the most deprived areas than the least.",
+        'political_voice': "Turnout in Lewisham's mayoral election rose in May 2026, the year the Green Party won control of the council and the mayoralty, but it remains well below general-election turnout. Between elections, residents are unusually active: Lewisham has one of the highest civic participation rates of any council in England - contacting a councillor or MP, signing a petition, attending a public meeting - running about ten points above the national average. Feeling heard is less distinctive: the share who believe they can personally influence local decisions sits above England's but level with London's.",
+        'culture': "Lewisham's dedicated arts grants have been cut by almost 40%, part of a wider squeeze on council arts budgets across England. Cultural spaces are unevenly spread: Ladywell has only five open venues, around 60% of the borough's density, with Lewisham's clustered in Deptford and Brockley. Participation is high locally: 88.5% of Lewisham residents engaged with the arts in 2025/26, above both the London and England averages.",
         'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
-        'connectivity': "Ladywell's physical connectivity is strong and unremarkable: full fibre broadband and 5G coverage both sit close to or above typical levels. The more revealing picture is who's actually at risk of being left behind. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, is low by national standards, reflecting London's younger, well-connected population. But that single score flattens real variation: applying a London-wide framework for who's most likely excluded - older people, low-income families, disabled residents, the unemployed, ethnic-minority communities and small businesses - to Ladywell's own data (Lewisham isn't covered by the framework's own pilot boroughs) shows a third of local children live in income-deprived households and 15% of residents are disabled. Usage, not access, is where the borough's digital divide actually sits.",
-        'energy': "Ladywell's homes run well behind London's energy-efficiency average: 43% hold an EPC of C or above, against 56% across the city as a whole, and it isn't Lewisham's most efficient ward - that's Lewisham Central at 78%. Fuel poverty compounds the gap: 13.8% of Lewisham households (17,700) were fuel poor in 2022, above England's 13.1% average that year, and Lewisham was the worst-performing inner-London borough in the count before that. The two aren't unrelated: the fuel poverty metric itself only counts a household as fuel poor if its home also rates D-G for energy efficiency.",
-        'social_cohesion': "Trust, cross-background cohesion and volunteering have all drifted down together nationally over the past decade: the share who think most neighbours can be trusted fell from 48% to 40%, and adults giving any unpaid help slipped to 54%, the lowest since records began. That volunteering fall is driven almost entirely by formal, organisation-based volunteering (down to 28%, from 37%), while informal neighbourly help has held up far better - the erosion looks concentrated in structured civic participation rather than in people helping each other directly. Pride in local area, tracked only since 2023/24, has stayed flat around 60%. None of these figures has a Lewisham-specific equivalent; all come from DCMS's England-wide Community Life Survey.",
-        'income': "Poverty in Lewisham runs above the London average - 28% of residents after housing costs, against 26% citywide - despite an unemployment rate roughly level with London's. That combination points to low pay rather than joblessness as the sharper driver: 17.7% of working-age residents are on out-of-work benefits, well above London's 15.2%, even though residents in work are less likely than the London average to be paid below the London Living Wage. Deprivation is unevenly spread within the ward itself - one of Ladywell's seven neighbourhoods sits among the most deprived tenth of England, despite the ward scoring comparatively well on education specifically.",
+        'connectivity': "Ladywell's physical connectivity is strong: full fibre broadband and 5G coverage both sit close to or above typical levels. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, sits below the national median, consistent with London's younger, well-connected population. But that score is an average, and it can hide pockets of risk: a third of Ladywell's children live in income-deprived households and 15% of residents are disabled, both groups that London research identifies as more vulnerable to digital exclusion.",
+        'energy': "Ladywell's homes are among the least energy-efficient in Lewisham. Around 38% of local homes with a recent Energy Performance Certificate (EPC) reach Band C or above, against 56% across the borough. Its housing is older: more than half of Ladywell's homes were built before 1930, and only about a quarter of Lewisham's pre-1929 homes reach Band C. Fuel poverty is about average, though: around one in ten Ladywell households were fuel poor in 2024, similar to Lewisham and England. The two are linked: the official measure only counts low-income households living in homes rated Band D or below, and the national 2030 target is framed around lifting fuel-poor homes to Band C.",
+        'social_cohesion': "Lewisham pairs low trust with strong cohesion. Fewer than a third of residents think many of their neighbours can be trusted - well below England, though level with London - yet more than four in five say people from different backgrounds get on well locally, above the national figure. In 2025/26 residents were also slightly more likely than average to volunteer, while pride in the local area sits in line with England and London. Nationally, trust and cross-background cohesion both fell in 2025/26, as volunteering and pride edged up.",
+        'income': "In Lewisham, most people in poverty are in working families, and most people on out-of-work benefits are not job-seekers. More than a quarter of residents live in poverty after housing costs, close to the London average, and around two-thirds of them are in a family where someone works. Out-of-work benefits reach 17.7% of working-age residents, above London's 15.2%, while the claimant count of job-seekers equals only about two in five of that total. Low pay fell in 2025 to below London's rate. Deprivation is patchy within Ladywell: one of its seven neighbourhoods is among England's most deprived tenth for income and employment, while the other six fall between the third and sixth tenths.",
         'peace_justice': "Lewisham's recorded crime rate has run at roughly 93 to 94 incidents per 1,000 residents through the year to early 2026, according to Metropolitan Police figures - modestly above London's borough-wide average. Violence and sexual offences are the largest single category the police record here, including in Ladywell specifically. Nationally, Lewisham sits close to the middle of England's 296 local authorities for overall deprivation (172nd, Index of Multiple Deprivation 2025), a position little changed since 2019; crime contributes under a tenth of that composite score, alongside income, employment, education, health, housing and living environment. Locally, one of Ladywell's seven neighbourhoods falls within England's most-deprived fifth on that same overall measure."
     };
 
@@ -502,7 +525,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Water-specific explanations
         if (baseName === 'Per capita water consumption (litres/day)') {
-            return `Per capita consumption measures the average litres of water each person uses per day - no ward or borough breakdown is published, but Thames Water's own figure is, used here as the most relevant geography. Use spiked during the pandemic, then eased back before ticking up again in the latest year - a bumpier path than a steady decline, leaving little net progress since the 2019/20 baseline. The Environment Act 2021 target - 122 litres by 2038, 110 by 2050 - responds to a growing supply-demand gap from climate change, population growth, and unsustainable abstraction from rivers and aquifers. Demand reduction is the fastest, cheapest of the three levers used, alongside leakage and new supply, and Thames Water's approved resource plan commits to meeting the same 110-litre target.`;
+            return `Per capita consumption measures the average litres of water each person uses per day across Thames Water's supply area, which includes Lewisham. Use spiked during the pandemic, then eased back before ticking up again in the latest year, leaving little net progress since the 2019/20 baseline. The Environment Act 2021 target - 122 litres by 2038, 110 by 2050 - responds to a growing supply-demand gap from climate change, population growth, and unsustainable abstraction from rivers and aquifers. Demand reduction is the fastest, cheapest of the three levers used, alongside leakage and new supply, and Thames Water's approved resource plan commits to meeting the same 110-litre target.`;
         }
 
         if (baseName === 'Areas of water stress') {
@@ -514,12 +537,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         }
 
         // Mobility-specific explanations
-        if (baseName === 'Public Transport Accessibility Levels') {
-            return `PTAL scores how easy it is to reach public transport from a given point, combining walk time to the nearest stops with how frequently services run there - it's calculated location by location, not as a single ward or borough figure. Real Lewisham Council planning assessments within Ladywell show that variation directly: sites right by Ladywell station score PTAL 6 ("excellent"), while sites a few streets away score PTAL 4 ("good") - both comfortably above the London-wide low end of the 0-6b scale, but a reminder that "Ladywell's PTAL" depends heavily on which part of the ward you mean. TfL refreshed its scoring toolkit in 2025 to reflect network changes since its 2015 baseline, including the Elizabeth line.`;
+        if (baseName === 'Public Transport Accessibility Level (TfL 0-6b scale)') {
+            return `PTAL (Public Transport Accessibility Level) is Transport for London's score for how easy it is to reach public transport from a particular spot, based on the walk to the nearest stops and how often services run. It runs from 0 (worst) to 6b (best), and is worked out spot by spot rather than for a whole ward. Lewisham Council planning assessments show the range within Ladywell: sites right by Ladywell station score 6 ("excellent"), while sites a few streets away score 4 ("good"). So how well connected you are depends on where in the ward you live.`;
         }
 
         if (baseName === '% of trips by sustainable modes') {
-            return `This tracks the share of all trips in Lewisham made by walking, cycling, or public transport, drawn from TfL's London Travel Demand Survey - a continuous household survey rather than a full census of journeys, so borough-level figures can move around with sample size. At 72.8% in 2024, Lewisham sits above London's 67.6% average, but the figure has fallen from a recent high of 75.6% and the borough still ranks near the bottom of Inner London. The Mayor's Transport Strategy - and Lewisham's own transport plan - set a shared goal of 80% by 2041, up from a 63% London-wide baseline in 2015; closing that gap is the explicit aim behind the council's low-traffic-neighbourhood and school streets schemes.`;
+            return `This tracks the share of Lewisham residents' trips made by walking, cycling or public transport, drawn from TfL's London Travel Demand Survey - a household survey rather than a full count of journeys, so borough figures can move around with sample size. At 71.6% in the 2026 Healthy Streets Scorecard, Lewisham is the second-lowest in Inner London, well below the 82.1% Inner London average. The Mayor's Transport Strategy sets a London-wide goal of 80% by 2041, up from a 63% baseline in 2015.`;
         }
 
         // Equality-specific explanations
@@ -541,41 +564,41 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Community-specific explanations
         if (baseName === '% adults reported feeling lonely often or always') {
-            return `Lewisham's own rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26, little changed from 7% the year before (not a statistically significant shift). This is the first year a genuinely local figure exists: the survey - now the Community and Engagement Survey, DCMS's successor to the Community Life Survey - only began publishing local-authority breakdowns in 2025/26. Loneliness is far from evenly spread: it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
+            return `Lewisham's rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26. Local estimates have existed since 2023/24, when DCMS began boosting its survey sample to report by council, and none of the year-on-year changes since are statistically significant: Lewisham has moved from just below England's rate to just above it, all within the survey's margin of error. Loneliness is far from evenly spread: nationally it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
         }
 
         if (baseName === '% adults felt strongly belonged to their neighbourhood') {
-            return `This measures the share of adults who say they belong very strongly or fairly strongly to their immediate neighbourhood, one of the Community Life Survey's core measures of social cohesion. The pandemic-era peak, when people spent far more time in their local area, has since eased. The measure is published for England only, but where the survey does break results down by region, London has reported weaker neighbourhood belonging than the England average in every year compared - a gap that predates the pandemic and has persisted since.`;
+            return `This measures the share of adults who say they belong very or fairly strongly to their immediate neighbourhood. Lewisham's 54% in 2025/26 sits below England's 61%, and close to London's 58%. The borough's own estimates, available since 2023/24, have edged down, though not by a statistically significant amount given the survey's sample size. Nationally, belonging peaked in 2020/21 and has since eased back.`;
         }
 
         if (baseName === '% adults agreed that if they needed help, there would be people there for them') {
-            return `This asks adults how strongly they agree that people would be there for them in a crisis - one of the Community and Engagement Survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any local authority; the most local figure available covers inner-east London, the sub-region Lewisham sits within. There, 95% agreed in 2025/26, essentially unchanged from 93% the year before, and a point below England's own 96% - in line with London's wider regional average on this measure.`;
+            return `This asks adults how strongly they agree that people would be there for them if they needed help - one of the survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any council; the most local figure covers inner-east London, the sub-region Lewisham sits within, where 95% agreed in 2025/26, in line with England's 96%. Agreement is near-universal and has barely moved nationally since 2018/19, making it the most stable of the three community measures.`;
         }
 
         // Political voice-specific explanations
         if (baseName === '% turnout in local election') {
-            return `Lewisham elects its Mayor and 54 councillors together on one ballot paper, so there's a single borough-wide turnout figure rather than separate mayoral and council numbers. The 2010 spike is a poor comparison point - it coincided with a UK general election held the same day, which inflates turnout well beyond what a normal local round produces. More tellingly, turnout swung from a 20.88% low in 2022 to 42.14% in May 2026 - the election where the Green Party won a council majority for the first time, ending decades of Labour control - suggesting turnout here tracks how genuinely contested the race feels at least as much as any steady long-term trend. No ward-level Ladywell figure is published or reliably reconstructable from public sources, so the borough-wide figure is shown.`;
+            return `This is turnout in the borough-wide election for Mayor of Lewisham, held alongside the council elections. It rose in May 2026, the election in which the Green Party won both the mayoralty and a council majority for the first time, ending Labour's long hold on both. Even so, local turnout stays well below general-election levels: at the July 2024 general election, Lewisham's three constituencies recorded between 56% and 67%.`;
         }
 
         if (baseName === '% adults that have engaged in civic participation') {
-            return `Civic participation covers contacting a local councillor or MP, signing a petition, or attending a public meeting or rally, in person or online, but excludes voting itself - a DCMS Community Life Survey measure published for England only, with no Lewisham or London breakdown. Current levels sit well down from a 2020/21 peak, when lockdown-era mutual aid and local campaigning likely pushed participation unusually high. No survey was run in 2022/23, leaving a gap in the series between the pandemic peak and its settling-down since.`;
+            return `This counts adults who, in the past year, contacted a councillor or MP, signed a petition, or attended a public meeting, rally or protest, in person or online - voting is excluded. Lewisham's rate is one of the highest of any council in England and well above London's, though its own small year-on-year changes since local estimates began in 2023/24 are within the survey's margin of error. Nationally, participation rose in 2025/26, with petition-signing showing the biggest increase, from 25% to 30% of adults.`;
         }
 
         if (baseName === '% adults agreed they can personally influence decisions affecting local area') {
-            return `This tracks the share of adults who agree - definitely or tending to - that they personally can influence decisions affecting their local area, from the same Community Life Survey and with the same England-only, no-2022/23-round limitations as civic participation above. At 24% in 2024/25, it has settled at its lowest recorded level: every year from 2013/14 to 2021/22 held in a narrow 25-28% band, before dropping to 23% in 2023/24. Unlike civic participation, which has recovered somewhat since its pandemic peak, this measure of felt influence has not - a gap between doing more (contacting officials, signing petitions) and feeling it changes anything.`;
+            return `This asks adults whether they agree, definitely or tending to, that they personally can influence decisions affecting their local area. Lewisham sits clearly above England on this measure but level with London as a whole, and its estimates since 2023/24 show no statistically significant change. Nationally, agreement dipped in 2023/24 and 2024/25 to its lowest level since at least 2017/18, before recovering in 2025/26. Even in Lewisham, fewer than a third of adults feel they can influence local decisions - below the share who take part in civic activity.`;
         }
 
         // Culture-specific explanations
         if (baseName === '# of cultural venue per 1,000 population') {
-            return `This is meant to measure the density of cultural venues - museums, theatres, music venues, artist workspaces and similar - relative to population, drawn from the GLA's Cultural Infrastructure Map, which tags each venue it catalogues by borough. No verified Lewisham venue count is available, so no rate is shown here rather than an estimated one. What's known instead is qualitative: Lewisham anchors include the Horniman Museum and Gardens, The Albany in Deptford, the Broadway Theatre in Catford, Trinity Laban Conservatoire, and Goldsmiths, University of London, and the borough was London Borough of Culture in 2022. Its Deptford/New Cross Creative Enterprise Zone - one of London's original zones, running since 2018 - has also brought hundreds of affordable artist studios into the borough, though these sit outside the Cultural Infrastructure Map's own venue categories.`;
+            return `This counts open cultural spaces in Ladywell - theatres, music venues, galleries, libraries, artist workspaces, rehearsal studios and similar - from the GLA's 2026 Cultural Infrastructure audit, relative to the ward's population. Ladywell has five: a music venue (The Fox and Firkin), a commercial gallery, a dance rehearsal studio, a prop-making workshop and a jewellery workshop. That works out at 0.32 per 1,000 residents, around 60% of both Lewisham's and London's density (0.52 and 0.53), with the borough's venues clustered instead in Deptford and Brockley. Three other Ladywell spaces in the audit are now closed, including the V22 Ladywell Bridge artist studios and the Taco Queer music venue. With numbers this small, a single opening or closure moves the rate noticeably.`;
         }
 
         if (baseName === '£ local authority funding in art & culture') {
-            return `This tracks Lewisham Council's own spending on arts and culture, distinct from money the sector raises independently or receives from Arts Council England or the Mayor of London. The figure shown - £386,000 over the 2022-25 grant cycle - is specifically the council's Arts & Culture Fund: £150,000 a year to a single "cultural anchor" organisation, The Albany, plus roughly £236,000 split across eight further organisations including Entelechy Arts, Irie!, LEAN and Heart n Soul. It doesn't capture the council's full culture and library service budget, which is larger and isn't published in comparable form. Nationally, council arts spending has fallen 61% in real terms since 2010 - from £18.67 to £6.47 per resident a year - a squeeze widely attributed to over a decade of reduced central government funding to local authorities generally, arts being a non-statutory service more exposed to cuts than areas like social care.`;
+            return `This tracks Lewisham Council's dedicated grants to arts organisations, separate from money they raise themselves or receive from Arts Council England. For 2026-29 the council ended its separate Arts & Culture Fund and moved arts grants into its general voluntary-sector programme: arts organisations receive £235,000 a year, down from £386,000 a year in 2022-25. The Albany remains the anchor organisation, but its grant falls from £150,000 to £80,000, with smaller grants to groups including Lewisham Youth Theatre, Irie! and Heart n Soul. It excludes the council's wider culture spending. Across England, councils now spend £6.47 per person a year on the arts, down from £18.67 in 2010-11 in real terms.`;
         }
 
-        if (baseName === 'Active participation') {
-            return `This measures the share of adults who engaged with the arts - attending, watching or taking part, in person or online - at least once in the past year, from DCMS's annual Participation Survey. It's an England-wide figure only: the survey publishes results down to broad regions, not by borough, so no Lewisham-specific number exists. At 90.6% in 2024/25, participation sits close to record levels but has eased slightly from a 91.4% peak in 2023/24. The survey began in October 2021, replacing the discontinued Taking Part survey run on different methodology, so no earlier comparable trend exists. It's a distinct measure from council arts funding above: one counts money councils choose to spend, the other counts what people actually do, and the two aren't tracked together by either source.`;
+        if (baseName === '% of people aged 16+ who engaged with the arts in the last 12 months') {
+            return `This measures the share of residents aged 16 and over who engaged with the arts - attending, watching or taking part, in person or online - at least once in the past year. Lewisham's 88.5% in 2025/26 sits above both London (83.2%) and England (84.4%), the first year this combined in-person-or-online measure has been published by borough. England's earlier trend comes from the Participation Survey it replaced. The sharp national drop in 2025/26 coincides with that switch, and DCMS says it may reflect methodological differences such as question placement rather than a true fall, so it's shown as a separate line. It's a distinct measure from council arts funding above: one counts money councils spend, the other what people actually do.`;
         }
 
         // Education-specific explanations
@@ -585,74 +608,67 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Connectivity-specific explanations
         if (baseName === 'Full fibre broadband coverage (% of premises)') {
-            return `Full fibre broadband means the fibre-optic cable runs all the way to the building rather than switching to old copper wiring for the last stretch, giving faster and more reliable speeds than earlier "superfast" broadband. UK coverage has grown from just 10% of premises in 2019 to 82% by January 2026 - one of the fastest infrastructure build-outs in the country's history, driven by competing commercial rollouts (Openreach, Virgin Media O2, and dozens of smaller "altnet" builders) rather than a single programme. Lewisham's own figure sits close to that national trajectory: 81% of premises have full fibre access, per an independent aggregator built on Ofcom's own postcode-level coverage data - gigabit-capable coverage (a broader measure that also includes cable) runs higher still, at 92%.`;
+            return `Full fibre broadband means the fibre-optic cable runs all the way to the building rather than switching to old copper wiring for the last stretch, giving faster and more reliable speeds than earlier "superfast" broadband. UK coverage has grown from just 10% of premises in 2019 to 82% by January 2026 - one of the fastest infrastructure build-outs in the country's history, driven by competing commercial rollouts (Openreach, Virgin Media O2, and dozens of smaller "altnet" builders) rather than a single programme. Lewisham's own figure sits close to that national trajectory: 81% of premises have full fibre access, per an independent aggregator built on Ofcom's own postcode-level coverage data - gigabit-capable coverage (a broader measure that also includes cable) runs higher still, at 90% in Ofcom's January 2026 data.`;
         }
 
         if (baseName === '5G mobile coverage (% of landmass, at least one operator)') {
-            return `This measures how much of Lewisham's geographic area - not premises or population - has outdoor 5G signal from at least one of the four mobile network operators, at Ofcom's "high confidence" reporting threshold. Lewisham reaches 99.8%, per Ofcom's Connected Nations data (January 2026) as published through ONS's local-authority "Explore local statistics" service - well above England's 81% landmass average (2025, up from 76% the year before), because that national figure is dragged down by rural not-spots that a small, fully built-up borough like Lewisham doesn't have. It's consistent with indoor 4G coverage, which already reaches 97-99% of premises in English urban areas versus 77-85% in rural ones. No ward-level figure exists; borough is the most granular level available, as with the full-fibre broadband indicator above.`;
+            return `This measures how much of Lewisham's geographic area - not premises or population - has outdoor 5G signal from at least one mobile operator, at Ofcom's "high confidence" reporting threshold. Lewisham reaches 100%, per Ofcom data for January 2026 published through ONS's local-authority "Explore local statistics" service, against 87.6% for England as a whole, because the national figure is dragged down by rural not-spots that a small, fully built-up borough like Lewisham doesn't have. Outdoor 4G coverage is also 100% here. No ward-level figure exists; borough is the most granular level available, as with the full-fibre broadband indicator above.`;
         }
 
         if (baseName === 'Digital exclusion risk score (0-10 scale)') {
-            return `<p>Ladywell scores 2.5 out of 10 on the Digital Exclusion Risk Index (DERI), a composite of 11 indicators - age, disability, qualifications, social grade, broadband access - normalised for comparison across Great Britain. That score is low, consistent with London's younger, well-connected population, though it masks real variation: scores for Ladywell's 7 neighbourhoods range from 2.1 to 3.2, and several components are dated (some from the 2011 Census). The London Office of Technology and Innovation (LOTI) names the groups most likely to sit on the wrong side of that range - older people, low-income families, ethnic communities (especially Bangladeshi families in low-income households), unemployed people, disabled residents, and small or micro businesses. Applying that framework to Ladywell's own data shows how large each group actually is here.</p>
+            return `<p>Ladywell scores 2.5 out of 10 on the Digital Exclusion Risk Index (DERI), a composite of 11 indicators - age, disability, qualifications, social grade, broadband access - normalised for comparison across Great Britain. That score is low, consistent with London's younger, well-connected population, though it masks real variation: scores for Ladywell's 7 neighbourhoods range from 2.1 to 3.2. The London Office of Technology and Innovation (LOTI) names the groups most likely to sit on the wrong side of that range - older people, low-income families, ethnic communities (especially Bangladeshi families in low-income households), unemployed people, disabled residents, and small or micro businesses. Applying that framework to Ladywell's own data shows how large each group actually is here.</p>
                 <div class="loti-snapshot">
-                    <div class="loti-row"><span class="loti-label">Children in income-deprived households</span><span class="loti-track"><span class="loti-fill" style="width:33.6%"></span></span><span class="loti-value">33.6%</span></div>
-                    <div class="loti-row"><span class="loti-label">Black African/Caribbean residents</span><span class="loti-track"><span class="loti-fill" style="width:25.1%"></span></span><span class="loti-value">25.1%</span></div>
-                    <div class="loti-row"><span class="loti-label">Disabled under the Equality Act</span><span class="loti-track"><span class="loti-fill" style="width:15.0%"></span></span><span class="loti-value">15.0%</span></div>
-                    <div class="loti-row"><span class="loti-label">Residents aged 65 and over</span><span class="loti-track"><span class="loti-fill" style="width:10.0%"></span></span><span class="loti-value">10.0%</span></div>
-                    <div class="loti-row"><span class="loti-label">Unemployed residents</span><span class="loti-track"><span class="loti-fill" style="width:7.4%"></span></span><span class="loti-value">7.4%</span></div>
-                    <div class="loti-row"><span class="loti-label">Bangladeshi residents</span><span class="loti-track"><span class="loti-fill" style="width:0.4%"></span></span><span class="loti-value">0.4%</span></div>
-                    <div class="loti-note">Each bar is that group's share of its own relevant Ladywell population (all residents, children, or economically active residents, as appropriate) - not shares of one shared total, so they aren't additive. Separately, Lewisham-wide (no ward figure is published): 93.9% of enterprises are small or micro businesses (fewer than 10 employees) - LOTI's sixth group, most likely to struggle getting online or hiring digitally skilled staff.</div>
+                    <div class="loti-stat"><span class="loti-value">33.6%</span><span class="loti-label">of Ladywell children (aged 0-15) live in income-deprived households</span></div>
+                    <div class="loti-stat"><span class="loti-value">10.4%</span><span class="loti-label">of Ladywell's household residents are from ethnic communities and live where someone is out of work: unemployed / long-term sick / disabled</span></div>
+                    <div class="loti-stat"><span class="loti-value">15.0%</span><span class="loti-label">of Ladywell residents are disabled under the Equality Act</span></div>
+                    <div class="loti-stat"><span class="loti-value">10.0%</span><span class="loti-label">of Ladywell residents are aged 65 and over</span></div>
+                    <div class="loti-stat"><span class="loti-value">7.4%</span><span class="loti-label">of economically active Ladywell residents are unemployed</span></div>
+                    <div class="loti-stat"><span class="loti-value">93.9%</span><span class="loti-label">of Lewisham businesses are micro-businesses (fewer than 10 employees) in 2026 - no ward figure is published</span></div>
                 </div>
-                <div class="source-line">Sources: <a href="https://loti.london/wp-content/uploads/2021/07/Mapping-Digital-Exclusion-in-London-LOTI-Toolkit.pdf" target="_blank">Mapping Digital Exclusion in London - LOTI Toolkit (key groups framework)</a> · <a href="https://www.nomisweb.co.uk/sources/census_2021_bulk" target="_blank">ONS Census 2021 - Age, Ethnic group, Disability and Economic activity status by ward</a> · <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025" target="_blank">English Indices of Deprivation 2025, File 7 (IDACI)</a> · <a href="https://www.nomisweb.co.uk/sources/ukbc" target="_blank">UK Business Counts - ONS</a></div>`;
+                <div class="source-line">Sources: <a href="https://loti.london/wp-content/uploads/2021/07/Mapping-Digital-Exclusion-in-London-LOTI-Toolkit.pdf" target="_blank">Mapping Digital Exclusion in London - LOTI Toolkit (key groups framework)</a> · <a href="https://www.nomisweb.co.uk/sources/census_2021_bulk" target="_blank">ONS Census 2021 - Age, Ethnic group, Disability, Economic activity and Household deprivation by ward</a> · <a href="https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025" target="_blank">English Indices of Deprivation 2025, File 7 (IDACI)</a> · <a href="https://www.nomisweb.co.uk/sources/ukbc" target="_blank">UK Business Counts - ONS</a></div>`;
         }
 
         // Energy-specific explanations
         if (baseName === '% properties with EPC Band C or above') {
-            return `EPC (Energy Performance Certificate) ratings run A, the most efficient, to G, the least, based on estimated running costs, insulation, heating type and fabric quality rather than an actual bill - Band C or above is the level national policy repeatedly uses as its improvement marker for both landlords and fuel-poor households. In Ladywell specifically, 43% of assessed homes reach Band C or above, well below London's 56% average and near the less efficient end of Lewisham's own wards, which ranged from 37% (Hither Green) to 78% (Lewisham Central) in the same 2022 count. No ward-level time series exists to chart a trend - Lewisham Observatory's Ward Profiles are a point-in-time exercise, last run in 2022 - but the borough's older, often converted housing stock is the likeliest driver of a lower starting point for retrofit than newer parts of London.`;
+            return `EPC ratings run from A (most efficient) to G (least), based on a home's insulation, heating and construction, not its actual bills. Band C is the national benchmark: the 2030 fuel poverty target uses it, and private rented homes must reach it by October 2030. Ladywell's figure is estimated from the two ONS neighbourhood areas covering most of the ward, both in the least efficient third of Lewisham's 37; they include some older streets outside the ward, so the true figure may be a few points higher. The ward's housing is old: 55% of its homes were built before 1930, against 43% across Lewisham, and only 27% of the borough's pre-1929 homes reach Band C. The figures may miss upgrades, since most don't need a new certificate.`;
         }
 
         if (baseName === '% households in fuel poverty') {
-            return `Fuel poverty (the Low Income Low Energy Efficiency, or LILEE, metric DESNZ adopted in 2021) counts a household as fuel poor only if it is both low income and living in a home rated Band D or below for energy efficiency - not simply a measure of who struggles to pay a bill. Lewisham's 13.8% (17,700 households) in the 2022 data year sat above England's 13.1% average for the same year, and in the 2020 data year Lewisham was reported as the worst-performing inner-London borough at 14.1%. Because the metric bundles income with home efficiency, it moves with both energy prices and how much of the housing stock has been retrofitted. Some Lewisham neighbourhoods run far higher than the borough figure - the council's own public health reporting cites rates above 23% in parts of the borough and above 20% in seven small areas.`;
+            return `A household counts as fuel poor if its income, after housing costs and energy needs, is below the poverty line and its home is rated Band D or below. Ladywell's figure adds up government estimates for the ward's seven small areas: about 500 of its 5,100 households were fuel poor in 2024, level with Lewisham and England. These are modelled estimates, so the government advises against reading year-to-year changes for an area this small.`;
         }
 
         // Social cohesion-specific explanations
         if (baseName === '% adults agreed that people in neighbourhood can be trusted') {
-            return `This asks whether people agree that "many of the people in this neighbourhood can be trusted" - a standard measure of generalised social trust, one of the building blocks researchers use to explain why some communities find it easier than others to organise informally, look out for each other, or resolve local disputes without escalation. Nationally it has fallen from 48% when the survey moved to its current push-to-web method in 2013/14 to 40% now, though it's held in a narrow 40-42% band since 2016/17 rather than continuing to slide. No Lewisham figure is published, but the survey's own regional breakdown shows London running well below the England average - trust tends to read lower in dense, high-turnover urban areas than in smaller or more settled communities, a pattern this borough likely shares.`;
+            return `This asks whether many of the people in your neighbourhood can be trusted - a widely used measure of neighbourhood trust. Lewisham sits well below England but level with London, and its estimates since 2023/24 show no statistically significant change. Nationally, trust fell in 2025/26 after several steady years. It is very unevenly spread: across England, 26% of 16-34-year-olds say many neighbours can be trusted, against 56% of people aged 75 and over - and 17% in the most deprived tenth of areas, against 58% in the least deprived tenth.`;
         }
 
         if (baseName === '% adults agreed people from different backgrounds get along well together') {
-            return `This tracks agreement that the local area is "a place where people from different backgrounds get along well together" - a direct measure of perceived cohesion in ethnically and culturally mixed areas like Lewisham, one of London's more diverse boroughs. The England figure rose through the pandemic years before easing back since. Younger adults are consistently the least likely age group to agree (78-79% among 16-34s versus up to 88% among older residents), a gap that has held across multiple survey years rather than being a one-off finding. No Lewisham-specific figure exists, so this shows the national backdrop the borough sits within rather than a local reading.`;
+            return `This asks whether your local area is a place where people from different backgrounds get on well together. Lewisham sits above England and in line with London, with no statistically significant change since local estimates began in 2023/24. Nationally, agreement has eased since 2021/22, with a further significant fall in 2025/26. Younger adults are the least likely to agree: across England, 75-77% of under-50s do, against 87% of people aged 75 and over.`;
         }
 
         if (baseName === '% proud to live in their local area') {
-            return `This is one of the newer questions DCMS added to the Community Life Survey, first asked in 2023/24, so it doesn't yet have the decade-long trend some of the other indicators on this page do. 60% of adults in England agreed they were proud to live in their local area in 2024/25, barely moved from 59% the year before. Where people explained their pride, feeling safe was the most common reason (69%), ahead of green and natural spaces (63%) and friendly, respectful neighbours (58%) - a reminder that "pride" here is downstream of concrete, everyday conditions rather than an abstract attachment. No Lewisham-specific breakdown of this measure has been published yet.`;
+            return `This asks whether you are proud to live in your local area, a question first asked in this survey in 2023/24. Lewisham's figure is in line with both London and England, and its year-to-year movement is within the survey's margin of error. Among people across England who are proud of their area, the most common reasons are that it feels safe (70%), has green and natural spaces (64%), and has respectful, friendly people (59%).`;
         }
 
         if (baseName === '% adults that have participated in formal/informal volunteering') {
-            return `This combines two kinds of unpaid help: "formal" volunteering through a group, club or organisation, and "informal" volunteering - helping someone who isn't a relative, unprompted by any organisation, like checking on an elderly neighbour or picking up shopping for someone unwell. 54% of adults in England did at least one of the two in the 12 months to 2024/25, the lowest this combined measure has been since the survey adopted its current method in 2013/14, and down from 62% just before the pandemic. The two halves moved differently: formal volunteering has fallen further and shows no sign of recovering (28%/year, down from 37% pre-pandemic), while informal help - which spiked to 54% in 2020/21 as mutual-aid groups formed during lockdowns - has cooled but held up comparatively better (44%). No Lewisham-specific figure exists; this is the England-wide picture only.`;
+            return `This combines formal volunteering through a group, club or organisation with informal unpaid help for people who aren't relatives, such as checking on a neighbour. Around three in five Lewisham adults did at least one in the past year, above the England average, with no statistically significant change since local estimates began in 2023/24. Nationally, volunteering fell after 2020/21 and has stayed lower, with a small rise in 2025/26.`;
         }
 
         // Income-specific explanations
         if (baseName === 'Overall poverty rate (after housing costs)') {
-            return `Poverty here means household income below 60% of the local median, after housing costs are deducted - the standard relative-poverty threshold. At 28% in Lewisham, above London's 26% average, this figure pools five years of national survey data (2018/19-2023/24, excluding the pandemic-disrupted 2020/21) because a single year's sample is too small to give a reliable borough-level estimate on its own - which also means it moves slowly and won't reflect a single year's cost-of-living shock immediately. Trust for London's wider commentary notes poverty rose in Lewisham across the decade to 2019/20, both before and after housing costs, though a precise year-by-year figure for that rise isn't available here.`;
-        }
-
-        if (baseName === 'Child poverty rate (after housing costs)') {
-            return `This is the same after-housing-costs, 60%-of-median poverty measure as the overall rate, restricted to households with children, using the same pooled 2018/19-2023/24 survey data. At 30%, Lewisham sits fractionally below London's 31% average - a rare indicator on this page where the borough isn't worse than the city as a whole - though both figures mean roughly three in ten local children are growing up below the poverty line. A different, more commonly quoted figure in council and public health reporting - DWP/HMRC's "children in low income families" statistic - uses a before-housing-costs, administrative definition and typically shows a higher number for Lewisham; it isn't used here because mixing the two definitions would overstate the change between them.`;
-        }
-
-        if (baseName === 'Unemployment rate') {
-            return `This is the Annual Population Survey's modelled unemployment rate - the share of economically active residents who are out of work and looking for it - not the narrower claimant count of people actually receiving unemployment-related benefits. At 6.1%, Lewisham matched the London average in 2023, the most recent period with a matching benchmark available. Other, differently-defined figures suggest the picture may have worsened since: Lewisham's claimant count rate (a distinct, administrative measure) rose from 5.7% to 6.5% between March 2023 and March 2024. Unemployment being level with London while out-of-work benefit claims and poverty both run higher points toward low pay and economic inactivity, not joblessness itself, as the sharper local pressure.`;
+            return `Poverty here means household income below 60% of the median, after housing costs. Each figure pools five years of survey data, because a single year's sample is too small for one borough, and carries a wide margin of error. On that basis Lewisham is close to London but well above England's 21%. Around two-thirds of Lewisham residents in poverty live in a family where someone works. The Index of Multiple Deprivation 2025, which ranks every small neighbourhood in England on income, jobs, health, education, crime, housing and environment, shows the pressure is uneven: one of Ladywell's seven neighbourhoods is in England's most deprived tenth for income and employment, while Lewisham ranks 46th most deprived of 296 council areas on average neighbourhood rank.`;
         }
 
         if (baseName === '% paid below London Living Wage') {
-            return `The London Living Wage is an hourly rate calculated independently by the Resolution Foundation to reflect London's actual cost of living (£13.85 from April 2025), set by the Living Wage Foundation and higher than the government's statutory National Living Wage - employers who pay it do so voluntarily, through accreditation rather than legal requirement. At 13.4%, the share of Lewisham's working residents paid below it runs well under London's 16.1% average, one of the few indicators on this page where the borough compares favourably. That doesn't mean pay is generous locally - it means a smaller share sits below this specific, London-cost-of-living-adjusted floor than in the city overall, even as poverty and benefit claims here remain above average.`;
+            return `The London Living Wage is a voluntary hourly rate, independently calculated from what it costs to live in London and higher than the legal minimum. This measure counts the share of Lewisham residents' jobs, wherever they are based, paid below it. For most of the past decade Lewisham tracked close to the London average; in 2025 it fell clearly below. The figure is estimated from a sample survey, so a one-year drop needs the next release to confirm it.`;
         }
 
         if (baseName === '% on out-of-work benefits') {
-            return `This tracks the share of working-age residents claiming out-of-work benefits (Universal Credit or legacy equivalents, where claimants are not in paid work) - a DWP administrative count, not a survey estimate. At 17.7%, Lewisham runs well above London's 15.2% average, and sits toward the higher end of the London range (Enfield highest at 21.4%, Richmond upon Thames lowest at 7.9%, August 2025). Combined with an unemployment rate level with London's, this gap suggests the gulf isn't primarily people actively looking for work and not finding it, but a wider group - including those with health conditions, caring responsibilities, or otherwise outside the active labour force - relying on out-of-work support.`;
+            return `This counts working-age residents on any main out-of-work benefit. As well as job-seekers, it includes people Universal Credit doesn't require to look for work: for example, those assessed as too ill or disabled to work or prepare for work, or who care for a disabled person for at least 35 hours a week. Lewisham had the eighth-highest rate of London's 33 local authorities in November 2025. Job-seekers on the claimant count equal only about two in five of the total: 14,545 against 38,193 recipients. The claimant count has fallen well below its pandemic peak, but the wider total is now higher than in November 2020, so the rise has come among recipients who aren't job-seekers. Ladywell's own job-seeker rate, 6.5% in September 2026, sits just below Lewisham's.`;
         }
 
+        // Shared with the peace_justice dimension's IMD indicator (the income-dimension IMD
+        // indicator was removed in November 2026) - left unchanged.
         if (baseName === 'Index of Multiple Deprivation Decile') {
             return `The Index of Multiple Deprivation ranks every neighbourhood in England (LSOAs, small areas of 1,000-3,000 people) against every other on a composite of income, employment, education, health, crime, housing and living-environment deprivation, then groups them into ten equal-sized deciles from 1 (most deprived nationally) to 10 (least). Ladywell ward is made up of 7 such neighbourhoods; one of them - about 14% - falls within the most deprived national fifth (decile 1-2) under the October 2025 release, a position local reporting describes as little changed since the index was last published in 2019. That single deprived neighbourhood sits alongside six others that are not, illustrating how deprivation in Ladywell is localised rather than ward-wide - consistent with the ward's own domain breakdown, which scores comparatively well on education but poorly on income and living environment specifically. Lewisham as a whole ranks 172nd-least-deprived of England's 296 local authorities on the IMD's "extent" measure (only 2% of its neighbourhoods are in the nationally most-deprived decile, against 10% for England), though the borough has historically scored as more deprived on other summary measures - a reminder that "how deprived is Lewisham" depends on which of several official measures is used, and the IMD does not have an official comparative target the way a rate-based indicator would.`;
         }
@@ -957,15 +973,18 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     title: "Lewisham Democracy Review — \"A democratic and open Lewisham\"",
-                    year: '2018-2020',
-                    url: 'https://lewisham.gov.uk/mayorandcouncil/local-democracy-review',
-                    summary: `<p>Lewisham set up a cross-party Local Democracy Review in July 2018 to make the council more democratic, open and transparent, consulting residents and businesses before agreeing 57 recommendations with the Mayor and all councillors in spring 2019. An eight-councillor working group then oversaw delivery through 2019/20, covering ground directly relevant to how much influence residents feel they have locally:</p>
+                    year: '2018-2021',
+                    sources: [
+                        { name: 'Lewisham Democracy Review - consultation page', url: 'https://consultation.lewisham.gov.uk/corporate-policy-and-governance/local-democracy-review' },
+                        { name: 'Local Democracy Review - Report of the Working Group (Spring 2021)', url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=80809' }
+                    ],
+                    summary: `<p>Lewisham set up a cross-party Local Democracy Review in July 2018 to make the council more democratic, open and transparent, consulting residents and businesses before agreeing 57 recommendations with the Mayor and all councillors in spring 2019. An eight-councillor working group then oversaw delivery through to 2021, covering ground directly relevant to how much influence residents feel they have locally:</p>
                     <ul>
                         <li><strong>Opening up decision-making</strong> - publishing council data in open formats and exploring a residents' "people's panel" to give the public a more direct route into decisions, rather than relying solely on the ballot box and formal consultations.</li>
                         <li><strong>More accessible scrutiny</strong> - a more flexible committee and policy-development system intended to let residents follow and influence council business more easily than the previous structure allowed.</li>
                         <li><strong>Better digital access</strong> - an accessibility-focused website rebuild and new communications approach, on the basis that residents who can't easily find or follow council information can't meaningfully engage with it.</li>
                     </ul>
-                    <p>The review's own framing was that formal democratic structures - not just election turnout - shape whether residents feel they have a voice, which is the same gap the "personally influence local decisions" indicator on this page is measuring nationally.</p>`
+                    <p>The review set out to widen public involvement in council decisions, and heard that some residents saw formal consultation as tokenistic - the sense of not being heard that the "personally influence local decisions" indicator on this page measures.</p>`
                 },
                 {
                     title: 'Strategic Review of Engagement',
@@ -1017,13 +1036,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     title: 'Lewisham Digital Infrastructure',
                     year: '2026',
                     url: 'https://lewisham.gov.uk/myservices/lewisham-digital-infrastructure',
-                    summary: `<p>Lewisham Council has been removing planning and highways barriers that previously slowed fibre providers from reaching residential streets, scaling up full fibre rollout to homes and businesses across the borough in partnership with network operators. More than 70,000 homes and businesses can already upgrade to full fibre - via a roughly £21m Openreach investment reaching around half of properties - though only around 30% of eligible premises had actually switched over by the council's own reporting, illustrating that availability and take-up are two different gaps. Alongside fixed broadband, the council has agreements with BT, Ontix, Freshwave and BAI Communications to install small-cell mobile equipment to improve 4G/5G signal, with installations completed in New Cross and further sites planned across the borough.</p>`
+                    summary: `<p>Lewisham Council has been removing planning and highways barriers that previously slowed fibre providers from reaching residential streets, scaling up full fibre rollout to homes and businesses across the borough in partnership with network operators. More than 70,000 homes and businesses can already upgrade to Openreach full fibre, though Openreach reports only around 30% of them had actually switched over, illustrating that availability and take-up are two different gaps. Alongside fixed broadband, the council has agreements with BT, Ontix, Freshwave and BAI Communications to install small-cell mobile equipment to improve 4G/5G signal, with installations completed in New Cross and further sites planned across the borough.</p>`
                 },
                 {
                     title: 'Digital Access for All (Mayor of London Digital Inclusion Service)',
                     year: '2022-',
                     url: 'https://www.london.gov.uk/talk-london/topics/communities/digital-access-all',
-                    summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer, aiming to directly support up to 75,000 Londoners over three years.</p>`
+                    summary: `<p>The Mayor of London launched the Digital Inclusion Service in June 2022, with the London Office of Technology and Innovation (LOTI) and Good Things Foundation, after estimating around 270,000 Londoners were completely offline and a further 2 million had very low digital engagement. Rather than funding devices, connectivity and skills training as separate schemes - the pattern LOTI found across more than 100 existing London initiatives, each typically covering only part of what someone needs - the service combines a loaned device, low-cost or free mobile connectivity, and basic skills support into one coordinated offer.</p>`
                 },
                 {
                     title: 'Perspectives from global connectivity research',
@@ -1036,30 +1055,36 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Energy dimension council context - 2 documents: Lewisham's own public health
-        // reporting covers the cost-of-living/health angle and the within-borough variation
-        // fuel poverty hides; the national Fuel Poverty Strategy covers the statutory
-        // efficiency-band target both indicators sit against.
+        // Energy dimension council context - 2 documents plus the research card: Lewisham's
+        // Housing Retrofit Strategy (March 2025) covers what the council is doing about the
+        // borough's EPC gap; the national Fuel Poverty Strategy (January 2026) covers the
+        // statutory Band C target behind both indicators. The Annual Public Health Report
+        // 2023-24 card was retired in November 2026: the 2024-25 report (commercial determinants
+        // of health) doesn't cover fuel poverty, and the 2023-24 card's figures were stale.
         if (dimensionName === 'energy') {
             return [
                 {
-                    title: 'Lewisham Annual Public Health Report 2023-24 — The cost-of-living crisis and health: impact and action in Lewisham',
-                    year: '2023-24',
-                    url: 'https://lewisham.moderngov.co.uk/documents/s115875/Appendix%20Lewisham%20Annual%20Public%20Health%20Report%202023-24.pdf',
-                    summary: `<p>The council's public health report treats fuel poverty as a direct driver of ill health, not just a household budgeting problem, given the well-established links between cold homes and respiratory illness, cardiovascular strain, and poor mental health. It identifies stark variation within Lewisham itself: some neighbourhoods have fuel poverty rates above 23%, and seven Lower-layer Super Output Areas exceed 20%, both well above the borough's own 13.8% average. Its response sits within the council's wider cost-of-living programme - welfare and debt advice, the Household Support Fund, and referral routes into energy-efficiency and warm-home schemes - rather than a standalone fuel poverty strategy of its own.</p>`
+                    title: 'Lewisham Housing Retrofit Strategy',
+                    year: '2025',
+                    url: 'https://councilmeetings.lewisham.gov.uk/documents/s119552/Housing%20Retrofit%20Strategy%20Report.pdf',
+                    summary: `<p>Approved in March 2025, the strategy puts the cost of fully decarbonising every Lewisham home at £3.2bn, £470m of it for council homes. Most homes have solid brick walls, which need costly internal or external insulation. The council makes no commitment to fund full decarbonisation: of 38 projects, only 10 core ones are firm, including:</p><ul><li><strong>Council homes</strong> - a first 250 homes were due by September 2025; the council and government are now jointly funding over £16m of upgrades to up to 800 council homes between 2025 and 2028, aiming for at least EPC band C.</li><li><strong>Private owners</strong> - helping low-income and vulnerable residents in privately owned homes reach retrofit grants.</li><li><strong>Private renters</strong> - rolling out landlord licensing across the private rented sector.</li></ul><p>The rest, such as enforcing minimum energy standards for private lets, depend on new funding. Alongside it, the council's energy advice service has helped over 3,500 vulnerable households cut their bills over four years.</p>`,
+                    sources: [
+                        { name: 'Housing Retrofit Strategy - report to Mayor and Cabinet, 12 March 2025', url: 'https://councilmeetings.lewisham.gov.uk/documents/s119552/Housing%20Retrofit%20Strategy%20Report.pdf' },
+                        { name: 'Retrofitting homes - Lewisham Council (Warm Homes: Social Housing Fund Wave 3)', url: 'https://lewisham.gov.uk/myservices/housing/council-tenants/retrofitting-homes' },
+                        { name: 'Housing Retrofit Strategy - summary (wall types)', url: 'https://councilmeetings.lewisham.gov.uk/documents/s119553/Housing%20Retrofit%20Strategy%20Summary%20FINAL.pdf' }
+                    ]
                 },
                 {
                     title: 'Fuel Poverty Strategy for England (CP 1497)',
                     year: '2026',
                     url: 'https://assets.publishing.service.gov.uk/media/6977461bd345446f8ce71ef1/fuel-poverty-strategy-for-england-2026-print-ready-version.pdf',
-                    summary: `<p>England's fuel poverty strategy carries forward a target first set out in 2021: getting as many fuel-poor homes as reasonably practicable to an EPC Band C by 2030, on the reasoning that a more efficient home needs less energy to heat properly whatever happens to energy prices. That target sits behind schemes like ECO4 and the Warm Homes: Local Grant, both of which fund insulation and heating upgrades for low-income households, including in Lewisham. It reflects a shift in emphasis from earlier fuel poverty policy, which leaned more heavily on income support and short-term energy price interventions, towards home retrofit as the more durable fix - directly relevant to a borough where EPC coverage lags the London average.</p>`
+                    summary: `<p>The strategy keeps the statutory target set in 2014: as many fuel-poor homes as reasonably practicable should reach EPC Band C by 2030. It aims to lift a million more households out of fuel poverty by then, while admitting around 1.8 million could still be fuel poor. It works on two fronts:</p><ul><li><strong>Better homes</strong> - private landlords must bring rented homes up to Band C by October 2030, spending up to £10,000 per property, and £5 billion of the £15 billion Warm Homes Plan is set aside for low-income households.</li><li><strong>Lower bills</strong> - the £150 Warm Home Discount is now open to nearly 6 million households and is planned to continue to at least winter 2030/31.</li></ul><p>It puts more weight on bill support than the 2021 strategy did, after the 2022 energy price spike made energy less affordable for millions regardless of how efficient their home is.</p>`
                 },
                 {
                     title: 'Perspectives from global energy research',
-                    summary: `<p>Fuel poverty research since Brenda Boardman's foundational 1991 work frames it as three factors interacting, not one: low income, high energy prices, and poor home energy efficiency - any two together can push a household into fuel poverty even without the third being severe, which is why efficiency upgrades alone don't always lift a household out of it. Energy-efficiency research adds an important complication to the "just insulate everything" response: studies of home retrofits consistently find a "rebound effect" - households often use some of the efficiency gain to heat their home more rather than banking the full bill saving, particularly in previously under-heated homes. That's not a reason to abandon retrofit, but it does mean efficiency upgrades and income support work best as complements, not substitutes.</p>`,
+                    summary: `<p>Research on home retrofits finds that efficiency upgrades rarely save as much energy as predicted. One reason is the rebound effect: when a home becomes cheaper to heat, people use some of the gain to keep warmer rather than banking the full saving. Ray Galvin's guide for policymakers argues the effect is largest among households with the greatest need for heat. So for fuel-poor households, an upgrade may show up more as warmth than as a lower bill. The national strategy also pairs home upgrades with direct bill support rather than relying on either alone.</p>`,
                     sources: [
-                        { name: 'Brenda Boardman - Fuel Poverty: From Cold Homes to Affordable Warmth (1991)', url: 'https://en.wikipedia.org/wiki/Brenda_Boardman' },
-                        { name: 'The Rebound Effect in Home Heating - a guide for policymakers and practitioners', url: 'https://www.researchgate.net/publication/347492593_The_Rebound_Effect_in_Home_Heating_A_guide_for_policymakers_and_practitioners' }
+                        { name: 'Hamilton (2016), review of Galvin, The Rebound Effect in Home Heating - Building Research & Information', url: 'https://discovery.ucl.ac.uk/1530717/1/Hamilton%20-%20BRI%20Book%20Review%20-%20v06%20Final.pdf' }
                     ]
                 }
             ];
@@ -1094,32 +1119,45 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Income dimension council context - 1 document. A genuine search effort this
-        // session (30+ web-search queries before the session's search quota was exhausted,
-        // plus a fully-blocked direct-fetch tool - see build_income()'s docstring) turned up
-        // real titles for a Lewisham JSNA and a Local Economic Assessment, but this session
-        // could not actually retrieve their content (only their titles/URLs from search result
-        // listings), so no summary is written for them here rather than inventing one -
-        // DIMENSION_PAGE_SPECIFICATION.md 2.2/3.2 require every claim to trace to content
-        // actually checked, not just a plausible-sounding title. The London Living Wage page
-        // below is the one document this session could verify real content for (accredited
-        // employer/employee counts), and it covers the low-pay indicator specifically; the
-        // other 5 indicators on this page have no verified council-context document this
-        // session - flagged as a follow-up rather than papered over.
+        // Income dimension council context - 2 local documents plus the global research card
+        // (spec 3.1/3.2 cap of 3). Chosen November 2026 to cover the three questions the user
+        // asked: decent pay (Inclusive Economy Lewisham targets), support into work (same
+        // strategy's employment/inactivity targets; Lewisham Works), and health-related
+        // worklessness (WorkWell Mayor and Cabinet report, approved 9 September 2026, which also
+        // describes Connect to Work). Both read in full from the councilmeetings.lewisham.gov.uk
+        // mirror. Inclusive Economy Lewisham is the council's current economic development
+        // strategy (adopted December 2024, five-year targets); its first progress report (Overview and Scrutiny, 16 Dec 2025)
+        // was read for currency but is not cited, to stay within the document cap.
         if (dimensionName === 'income') {
             return [{
-                title: 'Lewisham Council — London Living Wage accreditation scheme',
-                year: '2026',
-                url: 'https://lewisham.gov.uk/myservices/business/london-living-wage',
-                summary: `<p>Lewisham Council is itself accredited as a London Living Wage employer and runs a local scheme encouraging other borough employers to accredit too, on top of the Living Wage Foundation's national accreditation programme. 95 employers in the borough are accredited, covering 7,605 employees paid at or above the London Living Wage rather than the lower statutory minimum. Accreditation is the main lever a council has some direct control over on this indicator - it can set pay for its own staff and contracts and lobby local employers, but it cannot set the statutory minimum wage or compel private employers to pay above it, which is why the borough's 13.4% low-pay rate reflects the wider London labour market as much as any single local policy.</p>`
+                title: 'Inclusive Economy Lewisham - our Economic Development Strategy',
+                year: '2024',
+                url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=123110',
+                summary: `<p>Lewisham's economic development strategy, adopted in December 2024, is delivered with partners such as health and education bodies through the Lewisham Strategic Partnership. It sets ten five-year measures of success, several aimed squarely at this page:</p>
+                <ul>
+                    <li><strong>Decent pay</strong> - raise the share of residents earning at least the London Living Wage from 85% by five percentage points, and narrow the 9.7% gap in full-time median earnings between Lewisham residents and Inner London by five points.</li>
+                    <li><strong>More people in work</strong> - lift the employment rate from 75.5% by three points and cut economic inactivity from 20.8% by five points.</li>
+                    <li><strong>Better jobs</strong> - its action plan proposes that partners buy from suppliers offering secure jobs paid at least the London Living Wage, pay apprentices the same, and strengthen in-work progression and local hiring.</li>
+                </ul>
+                <p>Its evidence base notes that the borough's growing hospitality and recreation sectors tend to offer low-paid, insecure work.</p>`
             },
             {
-                title: 'Perspectives from global income research',
-                summary: `<p>Two distinct strands of labour economics explain persistent low pay in modern economies. One, most associated with David Autor's work on job polarisation, finds technology and globalisation have hollowed out the middle of the job market - mid-skill roles have shrunk fastest, while both high-skill and low-paid service jobs have grown. A separate, more recent strand looks at power rather than job type: when only a handful of employers are hiring for a given role in a local area, workers have fewer places to go, and economists find this lets employers pay less than they otherwise could - not because the work itself is low-value, but because switching employers is hard. This helps explain something that surprised economists: real-world studies keep finding that raising the minimum or living wage doesn't cost jobs the way basic supply-and-demand theory predicts, because wages in many workplaces were being held down by a lack of options for workers, not by what employers could actually afford to pay.</p><p>Separately, unemployment and economic inactivity are increasingly different problems in rich-country labour markets: unemployment counts people actively looking for work, while inactivity counts everyone else outside the labour force, including a fast-growing group out of work due to long-term sickness - a group that has grown sharply since the pandemic, faster than unemployment itself, which is why an area's unemployment rate can look unremarkable even as claims for out-of-work support rise.</p>`,
+                title: 'WorkWell - Expanding the health and employment integrated system in Lewisham (Mayor and Cabinet)',
+                year: 'September 2026',
+                url: 'https://councilmeetings.lewisham.gov.uk/documents/s152636/WorkWell%20Expanding%20the%20health%20and%20employment%20integrated%20system%20in%20Lewisham%20-%20Report.pdf',
+                summary: `<p>Support for residents whose health stands between them and work runs through Lewisham Works, the council's own employment service, as part of the government's Get Britain Working programme:</p>
+                <ul>
+                    <li><strong>Connect to Work</strong> - since September 2025, intensive, voluntary support mostly for out-of-work residents with disabilities or health conditions. Mental ill health is the condition participants report most.</li>
+                    <li><strong>WorkWell</strong> - approved in September 2026, lighter early help for 1,431 residents over three years, mainly people in work or off sick, before they fall out of work. Coaches will work alongside local health services, take referrals from GPs (including when a fit note is issued), fund occupational health and counselling, and advise employers on workplace adjustments.</li>
+                </ul>
+                <p>Only the first year's funding, £193,173 of up to £1.23 million, is confirmed. The service starts at Waldron Health Centre and Downham Leisure Centre, and reaches all four of the borough's health neighbourhoods only if later funding arrives.</p>`
+            },
+            {
+                title: 'Perspectives from research on low pay and health-related worklessness',
+                summary: `<p>On pay, the Low Pay Commission's review of UK evidence up to 2020 found little sign that the National Living Wage reduced employment overall, though some groups, such as women working part-time, may have lost out. It is now funding research into whether employers' power over local wages changes how minimum-wage rises play out.</p><p>On worklessness, ONS found that economic inactivity because of long-term sickness kept rising after 2022 even as overall inactivity fell, passing 2.5 million people in 2023 - over 400,000 more than before the pandemic. The share of working-age people reporting a long-term health condition rose from 31% in 2019 to 36% in 2023, and among those out of work through long-term sickness, over half reported depression or anxiety, mostly alongside another main health condition.</p>`,
                 sources: [
-                    { name: 'The Growth of Low-Skill Service Jobs and the Polarization of the US Labor Market - Autor & Dorn', url: 'https://www.ddorn.net/papers/Autor-Dorn-LowSkillServices-Polarization.pdf' },
-                    { name: 'Monopsony in Local Labour Markets - Alan Manning, IFS Deaton Review', url: 'https://ifs.org.uk/inequality/wp-content/uploads/2022/03/Monopsony-in-local-labour-markets-IFS-Deaton-Review-of-Inequalities.pdf' },
-                    { name: 'Rising Ill-Health and Economic Inactivity Because of Long-Term Sickness, UK - ONS', url: 'https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/economicinactivity/articles/risingillhealthandeconomicinactivitybecauseoflongtermsicknessuk/2019to2023' }
+                    { name: 'National Minimum Wage: Low Pay Commission Report 2025', url: 'https://www.gov.uk/government/publications/low-pay-commission-report-2025/low-pay-commission-report-2025-html' },
+                    { name: 'Rising ill-health and economic inactivity because of long-term sickness, UK: 2019 to 2023 - Office for National Statistics', url: 'https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/economicinactivity/articles/risingillhealthandeconomicinactivitybecauseoflongtermsicknessuk/2019to2023' }
                 ]
             }];
         }
@@ -1442,7 +1480,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: "Join Heart n Soul's Taking Part sessions",
-                    text: `Creative sessions - Tai Chi, arts, "Speaking Up" chats - run by and for people with learning disabilities and autistic people at The Albany, £5 a day; currently full, so joining means the waiting list.`,
+                    text: `Creative sessions - Tai Chi, arts, "Speaking Up" chats - run by and for people with learning disabilities and autistic people at The Albany, £5 a day.`,
                     url: 'https://www.heartnsoul.co.uk/taking-part-events'
                 }
             ];
@@ -1452,7 +1490,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: 'Volunteer as a Citizens Advice Lewisham adviser',
-                    text: `Free, confidential advice on debt, benefits, housing and employment, based at the Leemore Community Hub - currently recruiting Telephone Assessors and Advisers, with full training given.`,
+                    text: `Free, confidential advice on debt, benefits, housing and employment from the Leemore Centre in central Lewisham. Volunteer advisers and telephone assessors get full training.`,
                     url: 'https://citizensadvicelewisham.org.uk/volunteer-with-us/'
                 },
                 {
@@ -1467,8 +1505,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: 'Push your employer to become Living Wage accredited',
-                    text: `Lewisham Council funds accreditation fees for three years for newly-accredited local businesses. 95 employers already cover 7,605 employees at the London Living Wage rather than the lower statutory minimum.`,
-                    url: 'https://lewisham.gov.uk/myservices/business/london-living-wage'
+                    text: `Accredited employers pay at least the London Living Wage. Lewisham's count grew from around 40 in 2021 to over 120 in 2025, lifting pay for an estimated 7,600 employees.`,
+                    url: 'https://www.livingwage.org.uk/accreditation'
                 }
             ];
         }
@@ -1548,7 +1586,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 ? ind.snapshot.value.toLocaleString('en-GB')
                 : ind.snapshot.value;
             const value = ind.snapshot.value !== null
-                ? `${formattedValue}${ind.snapshot.unit ? ' ' + ind.snapshot.unit : ''}`
+                ? `${formattedValue}${ind.snapshot.unit ? (ind.snapshot.unit.startsWith('%') ? '' : ' ') + ind.snapshot.unit : ''}`
                 : 'No data';
             const label = indicatorsToShow.length > 1
                 ? ind.indicator.replace(baseName, '').trim().replace(/^\(|\)$/g, '')  // Extract gender/type suffix
@@ -1718,6 +1756,8 @@ function groupDimensions(dimensions) {
 
 
 function formatDimensionName(name) {
+    const displayNames = window.DIMENSION_DISPLAY_NAMES || {};
+    if (displayNames[name]) return displayNames[name];
     return name
         .replace(/_/g, ' ')
         .split(' ')

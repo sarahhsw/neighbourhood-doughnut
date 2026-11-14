@@ -1545,9 +1545,9 @@ def build_political_voice():
     (CES civic engagement Table A3, influencing local decisions Table B3). The CES Community-
     pathway tables (A-G) use the CLS methodology "to allow for robust comparability with the
     CLS time-series" (both releases' 'Methodological Alignment' note), so the England CES
-    2025/26 points continue the CLS England series. Each chart shows two labelled series:
-    England 2018/19 onward (CLS Timeseries sheet, then CES) and Lewisham 2023/24 onward - the
-    same pattern as build_community().
+    2025/26 points continue the CLS England series. Each chart shows three labelled series:
+    England 2018/19 onward (CLS Timeseries sheet, then CES), and Lewisham and London 2023/24
+    onward (London added November 2026: compare borough with London before England).
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     turnout = create_descriptive_dimension(
@@ -1639,6 +1639,9 @@ def build_political_voice():
             {"period": "2023/24", "value": 44.2, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.4-49.1%"},
             {"period": "2024/25", "value": 44.0, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.3-48.9%"},
             {"period": "2025/26", "value": 47.8, "series": "Lewisham", "note": "CES 2025/26 Table A3; 95% CI 43.7-52.0%"},
+            {"period": "2023/24", "value": 38.3, "series": "London", "note": "CLS 2024/25 Table X1b (ITL1)"},
+            {"period": "2024/25", "value": 37.4, "series": "London", "note": "CLS 2024/25 Table X1b (ITL1)"},
+            {"period": "2025/26", "value": 41.3, "series": "London", "note": "CES 2025/26 civic engagement Table A2 (ITL1)"},
         ]
     )
 
@@ -1684,6 +1687,9 @@ def build_political_voice():
             {"period": "2023/24", "value": 31.0, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 26.7-35.7%"},
             {"period": "2024/25", "value": 28.7, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 24.6-33.3%"},
             {"period": "2025/26", "value": 31.7, "series": "Lewisham", "note": "CES 2025/26 Table B3; 95% CI 28.1-35.6%"},
+            {"period": "2023/24", "value": 27.3, "series": "London", "note": "CLS 2024/25 Table B5b (ITL1)"},
+            {"period": "2024/25", "value": 28.4, "series": "London", "note": "CLS 2024/25 Table B5b (ITL1)"},
+            {"period": "2025/26", "value": 31.8, "series": "London", "note": "CES 2025/26 influencing local decisions Table B2 (ITL1)"},
         ]
     )
 

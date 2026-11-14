@@ -2336,6 +2336,24 @@
           "value": 47.8,
           "series": "Lewisham",
           "note": "CES 2025/26 Table A3; 95% CI 43.7-52.0%"
+        },
+        {
+          "period": "2023/24",
+          "value": 38.3,
+          "series": "London",
+          "note": "CLS 2024/25 Table X1b (ITL1)"
+        },
+        {
+          "period": "2024/25",
+          "value": 37.4,
+          "series": "London",
+          "note": "CLS 2024/25 Table X1b (ITL1)"
+        },
+        {
+          "period": "2025/26",
+          "value": 41.3,
+          "series": "London",
+          "note": "CES 2025/26 civic engagement Table A2 (ITL1)"
         }
       ]
     },
@@ -2427,6 +2445,24 @@
           "value": 31.7,
           "series": "Lewisham",
           "note": "CES 2025/26 Table B3; 95% CI 28.1-35.6%"
+        },
+        {
+          "period": "2023/24",
+          "value": 27.3,
+          "series": "London",
+          "note": "CLS 2024/25 Table B5b (ITL1)"
+        },
+        {
+          "period": "2024/25",
+          "value": 28.4,
+          "series": "London",
+          "note": "CLS 2024/25 Table B5b (ITL1)"
+        },
+        {
+          "period": "2025/26",
+          "value": 31.8,
+          "series": "London",
+          "note": "CES 2025/26 influencing local decisions Table B2 (ITL1)"
         }
       ]
     },

@@ -662,6 +662,24 @@ disproportionately likely to be living in one of the borough's non-decent homes"
 folding it into the single-cause frame. See the correlation-vs-causation bullet earlier in this
 section.
 
+**Compare in the order ward, borough, London, then England (Political Voice, November 2026).**
+The summary said Lewisham's civic participation ran "about ten points above the national
+average", and both survey charts showed only Lewisham and England, although London figures
+were in the source notes. The user asked "I thought Lewisham is at London level?" (it isn't:
+48% vs London's 41%; it is level with London only on feeling able to influence decisions) and
+said: always compare ward to borough to London before comparing with England, but don't put
+every comparison in the summary. Fix: London added as a third chart series on both survey
+indicators, and the summary compares with London. General rule: the comparison ladder is ward,
+borough, London, England; plot each level that exists, compare with the nearest level above
+first, and keep the summary to the one or two that make the point.
+
+**Give each indicator's key figure in the summary (Political Voice, November 2026).** The
+summary said feeling able to influence decisions "sits above England's but level with London's"
+without the number. The user asked for key stats in the summary: "only about a third of adults
+agree they can personally influence decisions". General rule: when the summary describes an
+indicator, give its figure in plain words ("about a third, 32%") rather than only a relative
+position.
+
 ### 2.2 Description Writing Style
 
 **CRITICAL: Descriptions must be narrative, concise, and findings-focused**
@@ -988,6 +1006,31 @@ where it matters, the one way it can mislead (it moves with reporting and record
 and it divides by residents, not the visitors who pass through). General rule: describe a
 measure by what it counts; mention an alternative measure only when the page actually shows it
 or when its absence changes how the number should be read.
+
+**Don't use the survey's answer-scale wording (Political Voice, November 2026).** The influence
+text asked "whether they agree, definitely or tending to, that they personally can influence..."
+The user found it hard to understand. "Definitely or tend to agree" is how the survey groups its
+answer options; for a reader "agree" carries the meaning. General rule: report survey results in
+plain verbs; leave answer-scale groupings ("definitely or tending to", "strongly or tend to") to
+`source.notes`.
+
+**Say a category's meaning once, in plain words (Peace & Justice, November 2026).** The summary
+read "violence against the person, in particular offences recorded as violence without injury,
+which are mostly assaults where nobody is hurt". The user asked for it to be more concise. It
+became "violence in which nobody was injured". General rule: don't stack an official category
+name, a sub-category name and a definition in one clause; use the plain description and keep the
+official names for the indicator text or notes.
+
+**Every figure needs its own subject and verb (Peace & Justice, November 2026).** "70% of
+Londoners said they felt safe ..., 60% of women." The user couldn't tell what the trailing "60%
+of women" meant. It became "and 60% of women did". General rule: no tacked-on fragments; a
+second figure gets its own subject and verb so it reads as a complete statement.
+
+**Put a fact under the indicator it describes (Peace & Justice, November 2026).** London's
+"feel safe walking alone after dark" figure sat in the trust-in-police text. The user said it
+belonged under the crime indicator, since it is about safety, not about the police. General
+rule: place context with the indicator whose subject it shares, not wherever the source that
+reported it was discussed.
 
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`
@@ -1802,6 +1845,17 @@ removed the duplication that existed when one card tried to do both jobs.
 
 ---
 
+**Context cards describe the policy, not its process, and don't point back at the page (Political
+Voice, November 2026).** The Local Democracy Review card opened with when the review was set up,
+that it consulted residents and businesses, that 57 recommendations were agreed with the Mayor
+and all councillors in spring 2019, and that an eight-councillor working group oversaw delivery
+to 2021; it ended by saying a finding was "the sense of not being heard that the 'personally
+influence local decisions' indicator on this page measures". The user said the process detail
+was unnecessary and that context cards shouldn't link back to indicators on the page. General
+rule: a card says what the policy sets out to do and what it found; leave dates of meetings,
+counts of recommendations and governance arrangements out, and let the reader connect it to the
+indicators themselves.
+
 ## 4. "Get Involved" Section
 
 **Replaced August 2026.** This section used to be "Neighbour Voices" - a fictional-but-realistic
@@ -1858,6 +1912,13 @@ dimension's headline indicator.
 
 **Aim for 5 ideas per dimension** once fully built out (fewer is fine while still researching -
 don't pad to hit 5).
+
+**Don't quote promotional lines at residents (Political Voice, November 2026).** The "Stand to
+become a local councillor" card quoted the council's guide: "whatever needs changing in your
+neighbourhood, you could be the person to change it." The user said this sounds condescending.
+It was replaced with who can stand (Local Government Act 1972, s.79). General rule: a Get
+Involved card states the practical facts of taking part (who can, what it involves, how to start),
+never an organisation's slogan or pep talk.
 
 ### 4.2 Format and Length
 

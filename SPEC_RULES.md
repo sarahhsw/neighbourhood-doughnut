@@ -29,6 +29,8 @@ when you're doing something this file doesn't cover.
 - Lead with the finding, never with a methodology or data-availability caveat.
 - Pick 1-3 sharply chosen, borough-specific facts that explain the argument; don't restate every headline number, and don't strip them all out either.
 - At most two comparison points; compare with the borough's real peer group (Lewisham is Inner London).
+- Compare ward, then borough, then London, then England; plot every level that exists, but keep the summary to one or two. [2.1]
+- When the summary describes an indicator, give its figure in plain words, not only a relative position. [2.1]
 - Say why, using a sourced cause where one exists; never glue two facts together with unsourced causal language.
 - A sourced cause for some indicators isn't licence to claim it explains all of them.
 - Don't narrate a chart's datapoints; explain what moved and why.
@@ -62,6 +64,10 @@ when you're doing something this file doesn't cover.
 - Describe benefit recipients, health and disability by circumstance in neutral official terms; no "not expected to..." framing or stigmatising survey labels. [2.5]
 - No standalone "Target: X" line or dashed target on charts; weave benchmarks into the text. [2.6]
 - Spell out acronyms. [7]
+- Report survey results with plain verbs, not answer-scale wording ("definitely or tending to"). [2.2]
+- Say a category's meaning once in plain words; don't stack official category names and definitions. [2.2]
+- No tacked-on figures (", 60% of women"); each figure gets its own subject and verb. [2.2]
+- Put a fact under the indicator whose subject it shares. [2.2]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]
 
 ## Context cards [3]
@@ -70,12 +76,14 @@ when you're doing something this file doesn't cover.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
+- Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]
 
 ## Get Involved cards [4]
 
 - Real, verified local actions only; return `null` rather than inventing one.
 - One merged paragraph of about 25-30 words; the whole card is the link.
 - No recurring-event dates, waiting lists, "recruiting now" or other status that will date quickly.
+- State the practical facts of taking part; never quote an organisation's slogan or pep talk. [4]
 
 ## Fact-checking [2.9]
 

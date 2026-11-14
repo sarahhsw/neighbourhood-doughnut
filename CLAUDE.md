@@ -41,3 +41,7 @@ Whenever the user corrects an approach to dimension-page copy or its surrounding
 ## If you're delegating this work to a subagent
 
 A subagent started via the `Agent` tool (anything other than a `fork`) does not inherit this conversation's context. Its prompt must **explicitly say** to read `CLAUDE.md` and `SPEC_RULES.md`, comply with the word caps, use the scripts above, and that its copy will be fact-checked (subagents may not have the Agent tool to run the fact-checker themselves; if not, the delegating session runs it after merging). Group delegated work by dimension, and give each parallel subagent its own worktree so their edits to `app.js` and the ward JSON don't collide.
+
+## Working through Todoist tasks
+
+The user's preference: after finishing a block of tasks from Todoist (e.g. the "Claude 🦀" project), give them one preview link for the whole block, not one per task. Previews are built only for pull requests: `.github/workflows/pr-preview.yml` publishes `site/` to `https://sarahhsw.github.io/neighbourhood-doughnut/pr-preview/pr-<number>/`. So the preview link needs an open PR from the working branch against `master`. Link to `.../pr-preview/pr-<number>/ward.html` and name the dimension card to click, since dimension pages have no URL of their own. The preview deploys a minute or two after each push; check the PR's preview comment before sharing the link.

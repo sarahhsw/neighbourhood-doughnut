@@ -1610,6 +1610,19 @@ access), so the bullet now reads "committed to retrofitting 250 council homes ..
 a date, check whether the date has passed; if it has, report the outcome from a source, or
 reword it as a commitment and flag the outcome as a follow-up.**
 
+**A reported finding must say why it matters; don't leave it hanging.** Caught on the
+Lewisham Democracy Review card (political voice), November 2026. The closing paragraph read
+"The review set out to widen public involvement in council decisions, and heard that some
+residents saw formal consultation as tokenistic - the sense of not being heard that the
+'personally influence local decisions' indicator on this page measures." Gesturing at an
+indicator ("the sense ... that X measures") doesn't land the point. The user's note: "so
+what? don't leave this sentence hanging". The rewrite says why it matters (people who doubt
+the council will act on what they say have less reason to get involved) and connects it to
+what the page's own data shows (around two in three Lewisham adults don't agree they can
+influence local decisions). **When a card reports what a document found or heard, follow it
+with the consequence for residents or the link to the page's data, in plain words; naming
+which indicator "measures" it is not enough.**
+
 
 
 **Cover every indicator/consideration in the dimension - across up to 3 documents (2 is

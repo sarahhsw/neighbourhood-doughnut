@@ -978,13 +978,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                         { name: 'Lewisham Democracy Review - consultation page', url: 'https://consultation.lewisham.gov.uk/corporate-policy-and-governance/local-democracy-review' },
                         { name: 'Local Democracy Review - Report of the Working Group (Spring 2021)', url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=80809' }
                     ],
-                    summary: `<p>Lewisham set up a cross-party Local Democracy Review in July 2018 to make the council more democratic, open and transparent, consulting residents and businesses before agreeing 57 recommendations with the Mayor and all councillors in spring 2019. An eight-councillor working group then oversaw delivery through to 2021, covering ground directly relevant to how much influence residents feel they have locally:</p>
+                    summary: `<p>Lewisham set up a cross-party Local Democracy Review in July 2018 to make the council more democratic, open and transparent, consulting residents and businesses before agreeing 57 recommendations with the Mayor and all councillors in spring 2019. An eight-councillor working group then oversaw delivery through to 2021, including:</p>
                     <ul>
-                        <li><strong>Opening up decision-making</strong> - publishing council data in open formats and exploring a residents' "people's panel" to give the public a more direct route into decisions, rather than relying solely on the ballot box and formal consultations.</li>
-                        <li><strong>More accessible scrutiny</strong> - a more flexible committee and policy-development system intended to let residents follow and influence council business more easily than the previous structure allowed.</li>
-                        <li><strong>Better digital access</strong> - an accessibility-focused website rebuild and new communications approach, on the basis that residents who can't easily find or follow council information can't meaningfully engage with it.</li>
+                        <li><strong>Opening up decision-making</strong> - publishing council data in open formats and exploring a residents' "people's panel" as a more direct route into decisions than the ballot box and formal consultation.</li>
+                        <li><strong>More accessible scrutiny</strong> - a more flexible committee and policy-development system intended to let residents follow and influence council business more easily.</li>
+                        <li><strong>Better digital access</strong> - an accessibility-focused website rebuild and new communications approach, so residents can find and follow council information.</li>
                     </ul>
-                    <p>The review set out to widen public involvement in council decisions, and heard that some residents saw formal consultation as tokenistic - the sense of not being heard that the "personally influence local decisions" indicator on this page measures.</p>`
+                    <p>The review set out to widen public involvement in council decisions, and heard that some residents saw formal consultation as tokenistic. That matters: people who doubt the council will act on what they say have less reason to get involved, and around two in three Lewisham adults do not agree that they can personally influence decisions affecting their area.</p>`
                 },
                 {
                     title: 'Strategic Review of Engagement',

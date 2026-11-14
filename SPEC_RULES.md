@@ -67,6 +67,7 @@ when you're doing something this file doesn't cover.
 - At most 3 documents including the global research card; 2 is often enough.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
+- When a card reports what a document found or heard, say why it matters or what the page's data shows; don't leave it hanging. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 
 ## Get Involved cards [4]

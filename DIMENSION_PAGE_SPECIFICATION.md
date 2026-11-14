@@ -1617,9 +1617,10 @@ residents saw formal consultation as tokenistic - the sense of not being heard t
 'personally influence local decisions' indicator on this page measures." Gesturing at an
 indicator ("the sense ... that X measures") doesn't land the point. The user's note: "so
 what? don't leave this sentence hanging". The rewrite says why it matters (people who doubt
-the council will act on what they say have less reason to get involved) and connects it to
-what the page's own data shows (around two in three Lewisham adults don't agree they can
-influence local decisions). **When a card reports what a document found or heard, follow it
+the residents who feel unheard may see little point in taking part, hedged because no source
+was cited for a firmer causal claim) and connects it to what the page's own data shows (around
+two in three Lewisham residents aged 16+ don't agree they can influence local decisions),
+without implying the survey figure is caused by the finding. **When a card reports what a document found or heard, follow it
 with the consequence for residents or the link to the page's data, in plain words; naming
 which indicator "measures" it is not enough.**
 

@@ -172,6 +172,21 @@ Trust for London page says "Rent affordability"
 → Extract Lewisham historical values 2015-2025
 ```
 
+**When the primary source is unreachable, the indicator is unfinished - not finished with an
+aggregator figure (Peace & Justice, November 2026).** The July 2026 build couldn't reach the
+London Datastore, so it filled "Crime rate per 1,000 population" with a Lewisham borough-wide
+93 per 1,000 taken from crime-rate aggregator websites (crimerate.co.uk, homenicom.co.uk),
+documented the gap in `source.notes`, and had no trend. The user asked why official sources
+(ONS, police, MPS Recorded Crime: Geographic Breakdown) weren't used, and said they expected
+trend data. The fix: the MPS ward files give Ladywell's own monthly counts back to November
+2020, so the indicator became a true ward rate (119 per 1,000 in the 12 months to October 2026)
+with a six-year Ladywell / Lewisham / London series, all three built from the same ward file so
+the comparison is like for like. General rule: an aggregator figure is never an acceptable
+stand-in for a dataset the official publisher puts out at a finer geography; if the official
+source can't be fetched, leave the old indicator alone and flag it to the user rather than
+shipping a weaker number, and when you revisit any inherited indicator whose notes say "primary
+source not yet queried", fetch it first.
+
 ### 1.5 Data Interpretation
 - **Gender-specific data handling**:
   - If male and female data are similar, use an average figure without explicitly mentioning gender
@@ -963,6 +978,16 @@ can.
 All of the above, combined, must fit the 130-word limit from 2.1 (composite-metric
 methodology explanations are the one place a little more room is reasonable - use
 judgment, but still aim tight).
+
+**Don't define a measure by what it isn't (Peace & Justice, November 2026).** The crime-rate
+text opened "crimes reported to and recorded by the Metropolitan Police, divided by population,
+not a survey of residents' experience of crime". The user asked why that last clause was there
+at all. Nobody reading a crime count expects it to be a survey; naming the thing it isn't plants
+a doubt the reader didn't have and spends words on it. The rewrite says what the count is and,
+where it matters, the one way it can mislead (it moves with reporting and recording practice,
+and it divides by residents, not the visitors who pass through). General rule: describe a
+measure by what it counts; mention an alternative measure only when the page actually shows it
+or when its absence changes how the number should be read.
 
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`

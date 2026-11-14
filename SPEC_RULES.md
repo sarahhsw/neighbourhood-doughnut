@@ -20,6 +20,7 @@ when you're doing something this file doesn't cover.
 - Match spreadsheet rows by ONS/GSS code, never by name; check for suppressed cells. [1.6]
 - "I couldn't fetch it" must never become "it doesn't exist" in reader-facing copy. [2.5]
 - Before removing an indicator, check whether another dimension shares its name. [2.5]
+- Never fill an indicator from an aggregator website when the official publisher has the data; if it can't be fetched, flag it rather than ship a weaker number. [1.4]
 
 ## Top summary [2.1]
 
@@ -51,6 +52,7 @@ when you're doing something this file doesn't cover.
 - Cut source nuances, toolkit refreshes, dated components and geography-provenance reasoning; they go in `source.notes`.
 - No filler that restates a trend, and no dismissive words about a positive finding.
 - Every claim needs a real source, including text you inherited and didn't write. [2.2, 2.9]
+- Describe a measure by what it counts, not by what it isn't ("not a survey of..."). [2.2]
 - Unit qualifiers belong in the indicator name, not the headline; no bracketed explainers in the big number.
 - Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
 - Figures with different population bases get labelled stat cards, not a shared-axis chart; each card names its base.

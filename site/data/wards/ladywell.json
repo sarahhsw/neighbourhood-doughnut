@@ -1935,28 +1935,120 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Crime rate per 1,000 population",
+      "indicator": "Crime rate per 1,000 residents",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 93.0,
-        "unit": "per 1,000 population",
-        "year": "2025/26",
-        "date": "12 months to ~Feb 2026"
+        "value": 119.3,
+        "unit": "per 1,000 residents",
+        "year": "12 months to Oct 2026",
+        "date": "November 2025 - October 2026"
       },
       "status": "descriptive_only",
-      "geography_of_data": "borough_inherited",
+      "geography_of_data": "ward",
       "source": {
-        "name": "MPS recorded crime data (Lewisham borough-wide), via CrimeRate.co.uk and homenicom.co.uk aggregation of Metropolitan Police statistics",
-        "url": "https://homenicom.co.uk/area/lewisham/crime-rate",
-        "accessed": "2026-07-18",
-        "notes": "Lewisham borough-wide recorded crime rate. crimerate.co.uk reports ~93 per 1,000 population for the 12 months to ~Feb 2026 (vs London's 82 per 1,000 on a daytime-population basis - not a like-for-like comparison, included here for directional context only); homenicom.co.uk separately reports 94.4 per 1,000 to September 2025, explicitly attributed to 'official Metropolitan Police statistics'. A third aggregator (scos.co.uk) reports a notably higher 119.4 per 1,000 for 2025, likely reflecting a different scope/population base and treated as an outlier, not used. PRIMARY SOURCE NOT YET DIRECTLY QUERIED: the MPS Recorded Crime: Geographic Breakdown dataset (data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m) publishes genuine ward-level monthly crime counts for Ladywell specifically (by Home Office offence category, back to 2008 for historic categories / 2019 for current ones) - a future update should download it directly and divide Ladywell's 12-month total by Ladywell's ONS/Census population to get a true ward-level rate, rather than this borough-wide figure. This session could not download/parse it due to a sustained network access failure. Partial ward-level context found via search: Ladywell recorded 192 violence-and-sexual-offence incidents in the 12 months to March 2026 (unchanged from 2025), the single largest crime category, plus 29 robbery, 21 theft-from-person, 8 weapons-possession and 5 shoplifting offences over the same period (crimerate.co.uk, itself built on police.uk/MPS data) - this is a partial category list, not an exhaustive cross-category total, so was not used as the headline figure."
+        "name": "Metropolitan Police Service - MPS Recorded Crime: Geographic Breakdown (London Datastore); ONS small-area population estimates (Nomis)",
+        "url": "https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
+        "accessed": "2026-11-14",
+        "notes": "Counts: 'MPS Ward Level Crime (most recent 24 months)' (Nov 2024-Oct 2026) and 'MPS Ward Level Crime (Historical)' (Nov 2020-Oct 2024), both from the 6 November 2026 release, summed across all offence groups for WardCode E05013725 over 12-month years ending October. Ladywell totals: 1,528 (Nov 2020-Oct 2021), 1,446, 1,573, 1,720, 1,711, 1,833 (Nov 2025-Oct 2026). Lewisham and London are the sums of every ward in the same files (London = the 32 MPS boroughs; the City of London has its own police force and is not included): Lewisham 26,757 / 28,367 / 30,246 / 28,752 / 28,014 / 30,263; London 777,017 / 864,237 / 919,687 / 881,139 / 870,614 / 879,261. Ward files are used for all three so the comparison is like for like: from March 2024 some offences appear in the MPS borough file without a ward (Lewisham borough file 31,450 vs ward sum 30,263 for Nov 2025-Oct 2026), so ward-based totals from then on run slightly low and the recent rise is, if anything, understated. Ladywell by offence group, Nov 2020-Oct 2021 vs Nov 2025-Oct 2026: violence against the person 526 -> 818 (of which violence without injury 219 -> 433, violence with injury 192 -> 248, stalking and harassment 115 -> 136); theft 203 -> 248; public order 142 -> 153; criminal damage and arson 132 -> 134; vehicle offences 183 -> 117; sexual offences 69 -> 101; burglary 100 -> 80; drugs 92 -> 75; robbery 37 -> 68. Denominators: ONS 'Population estimates - small area (2021 based)' (Nomis NM_2014_1), all persons, mid-year of the year each period ends in: Ladywell 15,631 (2021), 15,505 (2022), 15,476 (2023), 15,363 (2024); Lewisham 300,013 / 299,164 / 300,225 / 301,255; London region minus City of London 8,796,080 / 8,859,753 / 8,986,099 / 9,074,625. Mid-2024 is the latest ward estimate, so it is used for the 2025 and 2026 periods too. Rates are recorded crimes per resident, not per visitor or worker, so areas with town centres, stations or hospitals can score high. Replaces the July 2026 figure (93 per 1,000, Lewisham borough-wide, from crimerate.co.uk / homenicom.co.uk), which was taken from aggregator websites because the London Datastore was unreachable at the time."
       },
-      "confidence": "medium",
-      "community_notes": []
+      "confidence": "high",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "Oct 2021",
+          "value": 97.8,
+          "series": "Ladywell"
+        },
+        {
+          "period": "Oct 2022",
+          "value": 93.3,
+          "series": "Ladywell"
+        },
+        {
+          "period": "Oct 2023",
+          "value": 101.6,
+          "series": "Ladywell"
+        },
+        {
+          "period": "Oct 2024",
+          "value": 112.0,
+          "series": "Ladywell"
+        },
+        {
+          "period": "Oct 2025",
+          "value": 111.4,
+          "series": "Ladywell"
+        },
+        {
+          "period": "Oct 2026",
+          "value": 119.3,
+          "series": "Ladywell"
+        },
+        {
+          "period": "Oct 2021",
+          "value": 89.2,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Oct 2022",
+          "value": 94.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Oct 2023",
+          "value": 100.7,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Oct 2024",
+          "value": 95.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Oct 2025",
+          "value": 93.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Oct 2026",
+          "value": 100.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "Oct 2021",
+          "value": 88.3,
+          "series": "London"
+        },
+        {
+          "period": "Oct 2022",
+          "value": 97.5,
+          "series": "London"
+        },
+        {
+          "period": "Oct 2023",
+          "value": 102.3,
+          "series": "London"
+        },
+        {
+          "period": "Oct 2024",
+          "value": 97.1,
+          "series": "London"
+        },
+        {
+          "period": "Oct 2025",
+          "value": 95.9,
+          "series": "London"
+        },
+        {
+          "period": "Oct 2026",
+          "value": 96.9,
+          "series": "London"
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -1968,28 +2060,80 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Index of Multiple Deprivation Decile",
+      "indicator": "% of residents who trust the Metropolitan Police",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 172,
-        "unit": "rank out of 296 English local authorities (IMD 2025, overall/all-domain; 1 = most deprived)",
-        "year": 2025,
-        "date": null
+        "value": 60,
+        "unit": "%",
+        "year": "2025/26",
+        "date": "12 months to March 2026"
       },
       "status": "descriptive_only",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "MHCLG English Indices of Deprivation 2025 (overall/all-domain local authority summary), via Ladywell Live reporting on the government release",
-        "url": "https://ladywell-live.org/2025/10/31/2-of-neighbourhoods-in-lewisham-highly-deprived-with-borough-ranked-172-out-of-296-government-deprivation-data-shows/",
-        "accessed": "2026-07-18",
-        "notes": "dimension_data_sources.json specifies Trust for London's Crime-domain-specific IMD page (trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/) as the intended source for THIS indicator - itself built on the MHCLG English Indices of Deprivation 2025 (published 30 Oct 2025, LSOA-level; gov.uk/government/statistics/english-indices-of-deprivation-2025). That page, and the government's own LSOA-level Local Deprivation Explorer (deprivation.communities.gov.uk) which would let a future update pinpoint the actual Crime domain decile for each of Ladywell's 7 constituent LSOAs individually, could not be accessed this session due to a sustained outbound-network access failure; web search located only partial, non-crime-domain-specific figures. What IS confirmed via search this session: Lewisham ranks 172nd of 296 English local authorities on the OVERALL (all 7 domains combined) IMD 2025 - close to the middle, moderately deprived, little changed in relative position since IMD 2019 - and locally, 1 of Ladywell's 7 LSOAs falls within the most-deprived 20% of neighbourhoods in England on that same overall index (Ladywell Live, 31 Oct 2025, reporting on the same government release). Crime contributes only 9.3% of the weighting toward that overall IMD score (one of seven domains, alongside Income and Employment at 22.5% each, Education and Health at 13.5% each, and Barriers to Housing/Services and Living Environment at 9.3% each) - so neither figure above is a substitute for the crime-specific decile this indicator is meant to track, and the value/unit above is reported as an overall-IMD local authority rank, not a neighbourhood-level crime decile, to avoid overstating precision. Revisit once direct access to Trust for London or the government's LSOA explorer is restored."
+        "name": "MOPAC Public Attitude Survey - Public Voice quarterly results packs (London Datastore, MOPAC Surveys)",
+        "url": "https://data.london.gov.uk/dataset/mopac-surveys-236kk",
+        "accessed": "2026-11-14",
+        "notes": "Share of respondents agreeing 'The Metropolitan Police Service is an organisation that I can trust' (base excludes don't know / refused), rolling 12 months to March, from the borough performance table in each year's Q4 Public Voice results pack. Lewisham / MPS (London) trust: 2021/22 67% / 73%; 2022/23 61% / 71%; 2023/24 59% / 69%; 2024/25 64% / 74%; 2025/26 60% / 71%. 'Police do a good job in the local area' (confidence), Lewisham / MPS: 2021/22 40% / 49%; 2022/23 42% / 50%; 2023/24 46% / 47%; 2024/25 38% / 45%; 2025/26 45% / 45%. 2025/26 Lewisham also: police treat everyone fairly 53%, stop and search used fairly 41%. The 2025/26 pack lists Lewisham's trust as -4pp and confidence as +7pp against 2024/25. The London figure for 2023/24 is the pack's 'weighted MPS result' (that pack's borough table has no MPS row). The PAS interviews around 600 residents per borough a year (about 19,000 Londoners), so it is not published below borough level and year-to-year moves of a few points may be sampling noise. Feeling safe walking alone in the local area after dark: the packs and the Q1 2026-27 headlines report it for London only (70% in the 12 months to June 2026, 68% a year earlier; women 60%). A borough breakdown may be on MOPAC's dashboards on london.gov.uk, which this environment cannot reach, so it is unverified rather than unavailable. Packs used: Q4 21-22, Q4 22-23, Q4 23-24, Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page."
       },
-      "confidence": "low",
-      "community_notes": []
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2021/22",
+          "value": 67,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022/23",
+          "value": 61,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023/24",
+          "value": 59,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024/25",
+          "value": 64,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2025/26",
+          "value": 60,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021/22",
+          "value": 73,
+          "series": "London"
+        },
+        {
+          "period": "2022/23",
+          "value": 71,
+          "series": "London"
+        },
+        {
+          "period": "2023/24",
+          "value": 69,
+          "series": "London"
+        },
+        {
+          "period": "2024/25",
+          "value": 74,
+          "series": "London"
+        },
+        {
+          "period": "2025/26",
+          "value": 71,
+          "series": "London"
+        }
+      ]
     },
     {
       "ward": "Ladywell",

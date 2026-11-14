@@ -463,7 +463,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'energy': "Ladywell's homes are among the least energy-efficient in Lewisham. Around 38% of local homes with a recent Energy Performance Certificate (EPC) reach Band C or above, against 56% across the borough. Its housing is older: more than half of Ladywell's homes were built before 1930, and only about a quarter of Lewisham's pre-1929 homes reach Band C. Fuel poverty is about average, though: around one in ten Ladywell households were fuel poor in 2024, similar to Lewisham and England. The two are linked: the official measure only counts low-income households living in homes rated Band D or below, and the national 2030 target is framed around lifting fuel-poor homes to Band C.",
         'social_cohesion': "Lewisham pairs low trust with strong cohesion. Fewer than a third of residents think many of their neighbours can be trusted - well below England, though level with London - yet more than four in five say people from different backgrounds get on well locally, above the national figure. In 2025/26 residents were also slightly more likely than average to volunteer, while pride in the local area sits in line with England and London. Nationally, trust and cross-background cohesion both fell in 2025/26, as volunteering and pride edged up.",
         'income': "Deprivation is patchy within Ladywell: one of its seven neighbourhoods is among England's most deprived for income and employment. In Lewisham, more than a quarter of residents live in poverty after housing costs, close to the London average, and around two-thirds of them are in a family where someone works. Out-of-work benefits reach 17.7% of working-age residents, above London's 15.2%, while the claimant count of job-seekers equals only about two in five of that total. Since 2020, the rise has mostly come among recipients not required to look for work, a group that includes people too ill to work; nationally, the number out of work through long-term sickness rose after the pandemic, often alongside depression or anxiety.",
-        'peace_justice': "Ladywell records more crime per resident than Lewisham as a whole: 119 crimes for every 1,000 residents in the year to October 2026, against 100 across the borough. Most of the rise since 2022 is violence in which nobody was injured. Trust in the police is also weaker in Lewisham than across the capital: in the year to March 2026, 60% of the borough's residents said they trust the Metropolitan Police, against 71% of Londoners.",
+        'peace_justice': "Ladywell records more crime per resident than Lewisham as a whole: 119 crimes for every 1,000 residents in the year to October 2026, against 100 across the borough. About half the rise since 2022 is violence in which nobody was injured. Trust in the police is also weaker in Lewisham than across the capital: in the year to March 2026, 60% of the borough's residents said they trust the Metropolitan Police, against 71% of Londoners.",
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -585,7 +585,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         }
 
         if (baseName === '% adults agreed they can personally influence decisions affecting local area') {
-            return `This asks adults whether they agree that they can personally influence decisions affecting their local area. In 2025/26, 32% of Lewisham adults agreed, the same as across London and above England's 26%. Lewisham's figure has not changed significantly since local estimates began in 2023/24. Nationally, agreement dipped in 2023/24 and 2024/25 to its lowest level since at least 2017/18, before recovering in 2025/26. Far fewer Lewisham adults feel they can influence local decisions than take part in civic activity (48%).`;
+            return `This asks adults whether they agree that they can personally influence decisions affecting their local area. In 2025/26, 32% of Lewisham adults agreed, the same as across London and above England's 26%. Lewisham's figure has not changed significantly since local estimates began in 2023/24. Nationally, agreement dipped in 2023/24 and 2024/25 to its lowest level since at least 2017/18, before recovering in 2025/26. That is well below the 48% who take part in civic activity.`;
         }
 
         // Culture-specific explanations
@@ -669,7 +669,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Peace & justice-specific explanations
         if (baseName === 'Crime rate per 1,000 residents') {
-            return `Ladywell had 1,833 crimes recorded by the Metropolitan Police in the 12 months to October 2026: 119 per 1,000 residents, against 100 across Lewisham and 97 across London. Most of the rise since 2022 is violence in which nobody was injured, up from 231 to 433 offences a year. These are crimes reported to and recorded by the police, so the figures also move with how willing people are to report them. The rate divides by residents only, although crimes against visitors, patients and commuters are counted too. How safe people feel is reported for London only: in the year to June 2026, 70% of Londoners felt safe walking alone in their area after dark, and 60% of women did.`;
+            return `Ladywell had 1,833 crimes recorded by the Metropolitan Police in the 12 months to October 2026: 119 per 1,000 residents, against 100 across Lewisham and 97 across London. About half the rise since 2022 is violence in which nobody was injured, up from 231 to 433 offences a year. These are crimes reported to and recorded by the police, so the figures also move with how willing people are to report them. The rate divides by residents only, although crimes against visitors, patients and commuters are counted too. MOPAC's published results give how safe people feel for London only: in the year to June 2026, 70% of Londoners felt safe walking alone in their area after dark, and 60% of women did.`;
         }
 
         if (baseName === '% of residents who trust the Metropolitan Police') {
@@ -1400,7 +1400,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: 'Stand to become a local councillor',
-                    text: `Open to anyone 18 or over who is a British, Irish, or eligible Commonwealth or EU citizen, and registered to vote in Lewisham or living or working there for a year.`,
+                    text: `Most British, Irish and eligible Commonwealth or EU citizens aged 18 or over can stand if registered to vote in Lewisham or living or working there for a year; council staff can't.`,
                     url: 'https://www.lewisham.gov.uk/mayorandcouncil/wards/how-to-become-a-councillor'
                 }
             ];

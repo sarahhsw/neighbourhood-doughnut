@@ -599,7 +599,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Education-specific explanations
         if (baseName === 'GCSE attainment (grades 9-4 in English & Maths)') {
-            return `This is the share of pupils at state-funded schools who get at least a grade 4, a standard pass, in both English and Maths GCSE: the level most further study, apprenticeships and jobs ask for. In Lewisham, 65.5% did in 2025/26, below London's 70.9%. That leaves about one in three pupils without it; after 16, they get extra English and Maths teaching as a condition of their course funding. Results from 2019/20 to 2021/22 are left out of the chart, because grades in the pandemic years were assessed differently and can't be compared. The figures come from the Department for Education, and those for 2025/26 are provisional.`;
+            return `This is the share of pupils at state-funded schools who get at least a grade 4, a standard pass, in both English and Maths GCSE. In Lewisham, 65.5% did in 2025/26, below London's 70.9%. That leaves about one in three pupils without it; colleges and sixth forms must keep teaching those students English and Maths to receive their funding. Results from 2019/20 to 2021/22 are left out of the chart, because grades in the pandemic years were assessed differently and can't be compared. The figures come from the Department for Education, and those for 2025/26 are provisional.`;
         }
 
         if (baseName === '% of 16-17 year olds not in education, employment or training (NEET)') {
@@ -1009,17 +1009,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Education dimension council context - 1 document: the council's own Standards
-        // Report covers the dimension's single indicator (GCSE English & Maths attainment)
-        // directly, including the year-on-year comparison and the council's own framing of
-        // where progress still lags. No second document was found substantively covering
-        // ground this one doesn't already address, so a 2nd/3rd citation wasn't forced.
+        // Education dimension council context - the council's Standards Report (school
+        // results and its Progress 8 framing). Figures were removed from the card in Nov 2026
+        // because the page's GCSE data now comes straight from DfE; the report link is on the
+        // bot-blocked lewisham.moderngov.co.uk host. NEET and childcare have no card yet.
         if (dimensionName === 'education') {
             return [{
                 title: 'Validated Outcomes 2024 Standards Report — Primary and Secondary Schools',
                 year: '2024',
                 url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=119735',
-                summary: `<p>Lewisham Council's own school standards reporting shows 2023/24 as the borough's best GCSE year on record for the basics measure: 66% of pupils achieved grade 4 or above in both English and Maths, up from 59% in 2019 and continuing a recovery from the pandemic-disrupted exam years. Attainment 8 - a broader points score covering 8 subjects - moved the same direction, up 2.5 points on 2019 to 46.9. The report is more cautious about Progress 8, which measures how much progress pupils make relative to pupils with similar starting points nationally: it has historically run below the national average in Lewisham, and the council frames closing that gap - not just raising the raw attainment percentage - as the harder, ongoing task for its school improvement work.</p>`
+                summary: `<p>Lewisham Council's annual standards report sets out validated results for every stage of schooling, from the early years to sixth form, for all the borough's schools, including academies. Its main concern at GCSE is progress rather than raw results: Progress 8, which compares how far pupils move on from their starting points with similar pupils nationally, has historically run below the national average in Lewisham, and the council frames closing that gap as the harder, ongoing task for its school improvement work.</p>`
             },
             {
                 title: 'Perspectives from global education research',
@@ -1433,12 +1432,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: 'Become a school governor',
-                    text: `Lewisham Council partners with the charity Governors for Schools to match residents with local governing boards - no special qualifications needed, just enthusiasm, to help close the borough's attainment gap.`,
+                    text: `Lewisham Council works with the charity Governors for Schools to match residents with local school governing boards, which set each school's direction and hold its leaders to account.`,
                     url: 'https://governorsforschools.org.uk/'
                 },
                 {
                     action: 'Tutor with Action Tutoring',
-                    text: `A national charity giving free one-to-one English and maths tutoring to disadvantaged pupils across South East London school programmes; Ladywell's own community news site has promoted it directly to local residents.`,
+                    text: `A national charity giving free one-to-one English and maths tutoring to disadvantaged pupils, with volunteer tutors working in schools across South East London.`,
                     url: 'https://actiontutoring.org.uk/get-involved/volunteer/'
                 }
             ];

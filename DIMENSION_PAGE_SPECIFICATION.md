@@ -1032,6 +1032,21 @@ belonged under the crime indicator, since it is about safety, not about the poli
 rule: place context with the indicator whose subject it shares, not wherever the source that
 reported it was discussed.
 
+**Explain a distribution measure with a picture, and replace figurative verbs (Equality,
+November 2026).** The pay-inequality text first described the 80:20 ratio as "the rate that only a
+fifth earn more than (£38.28 an hour in 2026) against the rate that only a fifth earn less than
+(£15.44)", and said National Living Wage rises "squeeze the lower half of the pay scale". The user
+found the first sentence very hard to understand and asked what "squeezing" means. It became "Line
+up every job held by Lewisham residents from lowest to highest hourly pay. In 2026, a job a fifth of
+the way down from the top paid £38.28 an hour: 2.48 times the £15.44 paid by a job a fifth of the
+way up from the bottom", and "each rise in the National Living Wage lifts the lowest pay closer to
+middle pay". General rule: readability is a hard requirement, not polish. Describe percentiles,
+ratios and other distribution measures with a concrete image a resident could picture (line people
+or jobs up; say where on the line each figure sits), never with inverted constructions like "the
+rate only a fifth earn more than". Replace a source's metaphor (squeeze, compress, bite, spillover)
+with what literally happens to whom. Test each sentence by reading it aloud once: if it needs a
+second read, rewrite it.
+
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`
 - **Spacing**: Ensure adequate vertical spacing between chart and dimension cards (minimum 48px padding-top)
@@ -1375,6 +1390,31 @@ sub-series' label is the full indicator name, not just the suffix** (`indicators
 surfaced indicator the label renders in full, e.g. "% non-decent homes (Private rented)"), so a
 bare suffix like "Private rented" is never shown on its own without the indicator it belongs to.
 
+**Equality employment gaps (November 2026): the rule above, missed again.** Three sub-series
+(women vs men, ethnic minority vs White, disabled vs non-disabled) went live with three big-value
+cards. The user pointed back to this rule and chose disability as the most insightful gap; it is now
+the only headline (`singleHeadlineFilter: {'Employment rate gap': 'Disabled'}`). The miss happened
+because the rule lived only here and not in `SPEC_RULES.md`, which now carries it.
+
+**Keep headline units short; a gap between two percentages is "points" (Equality, November 2026).**
+The employment-gap headline read "23.7 percentage points". The user asked why not "%" and to keep
+it concise. "%" would be wrong: a 23.7% gap reads as a relative difference (23.7% of 79.5%, about 19
+points), not the 23.7-point difference between 79.5% and 55.8%. The headline unit is now "points",
+and prose says "percentage points" once, then "points". General rule: use the shortest unit that
+is still correct, and never put a long unit phrase in a headline.
+
+**Keep the framework's own indicator; don't swap the measure to get fresher data (Equality,
+November 2026).** The framework indicator is "% of wealth held by the poorest 50%", whose only
+London series (GLA analysis of the ONS Wealth and Assets Survey) ends in 2016-18. To get a series
+running to 2020-22 and satisfy the 10-year rule, it was replaced with ONS's 75th:25th percentile
+wealth ratio. The user asked for the poorest-50% share back. General rule: the framework indicator
+wins. If its only data is old, show it with its real year as the headline, say in the text that it
+is the latest published, and keep older trend points when they are the only series for that
+indicator (note the exception in `source.notes`). Offer a substitute measure to the user as a
+question, not as a silent swap. Also check what a published figure actually measures: the GLA's
+"poorest 50%" uses national (GB) deciles, so the London figure covers the 46% of London households
+in Britain's poorest half, not London's own poorest half.
+
 ### 2.6 No Separate "Target" Line or Marker
 
 **As of July 2026, dimension pages do NOT render a standalone "Target: X" line or a dashed
@@ -1666,6 +1706,16 @@ that actually cover rent affordability and housing conditions.
    indicator the other two don't cover - not because "we're allowed up to 3." If the 3rd
    candidate is thinner or less substantively interesting than folding its ground into an
    existing document's summary (see 3.2), prefer the fold-in.
+
+**Look for what superseded an old programme, not just the newest edition of the same document
+(Equality, November 2026).** Both council-context cards were from 2017-18 (the Lewisham Poverty
+Commission and the GLA's Workforce Integration Network). The user asked why the context was so
+dated. Each was the latest edition of its own document, but both programmes had been absorbed into
+newer ones: the Poverty Commission's work runs through the Lewisham Strategic Partnership (traced in
+a February 2025 Poverty Reduction Approach report), and WIN sits within the GLA and London Councils'
+Inclusive Talent Strategy (October 2025). General rule: if a card's document is more than about
+five years old, search for what replaced or absorbed the programme before keeping it, and prefer
+the current framework.
 
 ### 3.2 Content Requirements
 

@@ -57,6 +57,9 @@ when you're doing something this file doesn't cover.
 - Describe a measure by what it counts, not by what it isn't ("not a survey of..."). [2.2]
 - Unit qualifiers belong in the indicator name, not the headline; no bracketed explainers in the big number.
 - Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
+- One headline stat per indicator: when an indicator has sub-series, add it to `singleHeadlineFilter` and headline the most insightful one. [2.5]
+- Keep headline units short; a gap between two percentages is "points", never "%" and never "percentage points" in the headline. [2.5]
+- Keep the framework's own indicator even if its data is old; don't swap in a different measure for fresher data without asking. Check what a published figure actually measures. [2.5]
 - Figures with different population bases get labelled stat cards, not a shared-axis chart; each card names its base.
 - Choose stat-card groups by the framework's own categories, not by singling out one subgroup.
 - When the framework's group is narrower than any published category, use the closest proxy and say in the label what it measures. [2.5]
@@ -68,12 +71,14 @@ when you're doing something this file doesn't cover.
 - Say a category's meaning once in plain words; don't stack official category names and definitions. [2.2]
 - No tacked-on figures (", 60% of women"); each figure gets its own subject and verb. [2.2]
 - Put a fact under the indicator whose subject it shares. [2.2]
+- Explain percentiles and ratios with a picture a resident can follow ("line up every job..."), and replace a source's metaphors ("squeeze") with what literally happens. [2.2]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]
 
 ## Context cards [3]
 
 - At most 3 documents including the global research card; 2 is often enough.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
+- If a card's document is more than about five years old, look for the programme or strategy that superseded it. [3.1]
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 - Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]

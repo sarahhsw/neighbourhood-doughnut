@@ -2937,64 +2937,68 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Wealth gap between richer and poorer households (75th:25th percentile ratio)",
+      "indicator": "% of wealth held by the poorest 50%",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 25.9,
-        "unit": "ratio",
-        "year": "2020-22",
+        "value": 3.8,
+        "unit": "%",
+        "year": "2016-18",
         "date": null
       },
       "status": "descriptive_only",
       "geography_of_data": "london_inherited",
       "source": {
-        "name": "ONS Household total wealth in Great Britain - Total wealth tables (Wealth and Assets Survey), Table 2.8",
-        "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/datasets/totalwealthwealthingreatbritain",
+        "name": "GLA London Datastore - Economic Fairness: Wealth inequality (ONS Wealth and Assets Survey microdata)",
+        "url": "https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
         "accessed": "2026-11-17",
-        "notes": "Ratio of the 75th to the 25th percentile of household total wealth (property, financial, physical and private pension wealth, net of debts), Table 2.8 'Distribution of household total wealth, by region', July 2006 to June 2016 and April 2014 to March 2022 edition (released 24 January 2025; the latest WAS release). London April 2020 to March 2022: P25 GBP 30,500, P75 GBP 791,400 -> 25.9; Great Britain P25 70,500, P75 662,100 -> 9.4. Earlier points: London 2016-18 39,600/882,100 (22.3), 2018-20 32,200/902,400 (28.0); GB 2016-18 69,100/709,000 (10.3), 2018-20 71,000/733,800 (10.3). London's unweighted sample is 1,214 households in 2020-22, so the London percentiles (especially P25) are imprecise and the 2018-20 to 2020-22 dip should not be read as a real change. No borough, ward or LSOA wealth-distribution estimate exists. Property share (Table 2.7): net property wealth was 51% of London household wealth in 2020-22 against 40% across GB. The GLA's Economic Fairness dataset 'Wealth inequality' (data.london.gov.uk/download/2y5m7/..., WAS microdata) puts the bottom half of London households' share of total wealth at 4% (rounded) in April 2016 to March 2018 (GB: 8%); its earlier rounds (5.8% in 2010-12, 4.9% in 2012-14, 4.5% in 2014-16) are more than ten years old and the series was not updated beyond 2016-18, so it is cited in text but not charted. The Office for Statistics Regulation suspended WAS's accredited official statistics status on 13 June 2025 over falling response rates and quality concerns - treat these as indicative. Home ownership in text: ONS Subnational estimates of households by tenure, England, 2022 to 2024 (released 11 February 2026), Lewisham 2024 owned outright 15.33% + owned with mortgage or loan 27.88% = 43.2%; England 62.4% (sum of regional household counts)."
+        "notes": "Share of total household wealth (property, financial, physical and private pension wealth, net of debts) held by households in deciles 1-5 of the Great Britain wealth distribution. GLA dataset wealth-inequality.xls (data.london.gov.uk download 2y5m7; National Data Library record updated 25 September 2026, data still ending April 2016-March 2018). London 2016-18: those households were 45.6% of London households (household counts derived as total / mean wealth per decile) and held 3.79% of London's wealth; London households in GB's top decile held 61.9%. GB 2016-18: 8.48%. Recomputed values match the Summary sheet for 2010-12 (London 5.75, GB 9.58), 2012-14 (4.89, 8.60) and 2014-16 (4.54, 8.74); the Summary rounds 2016-18 to 4 and 8. London's share of households in the national bottom half fell from 50.4% (2010-12) to 45.6% (2016-18), so the London line is not a fixed-population measure. Periods: July-June two-year rounds to 2014-16, April 2016-March 2018 for the last. No newer London decile breakdown exists: ONS's latest WAS tables (released 24 January 2025, to April 2020-March 2022) give regional percentiles but not decile shares. The Office for Statistics Regulation suspended WAS's accredited official statistics status on 13 June 2025 over falling response rates and quality concerns - treat as indicative. Context in text: net property wealth was 51% of London household wealth in April 2020-March 2022 (ONS Total wealth tables, Table 2.7); Lewisham home ownership 43.2% in 2024 (owned outright 15.33% + mortgage 27.88%) vs England 62.4% (ONS Subnational estimates of households by tenure, England, 2022 to 2024, released 11 February 2026)."
       },
       "confidence": "low",
       "community_notes": [],
       "trend": [
         {
-          "period": "2016-18",
-          "value": 22.3,
-          "series": "London",
-          "note": "ONS Wealth and Assets Survey, April 2016 to March 2018"
+          "period": "2010-12",
+          "value": 5.8,
+          "series": "London"
         },
         {
-          "period": "2018-20",
-          "value": 28.0,
-          "series": "London",
-          "note": "ONS Wealth and Assets Survey, April 2018 to March 2020"
+          "period": "2012-14",
+          "value": 4.9,
+          "series": "London"
         },
         {
-          "period": "2020-22",
-          "value": 25.9,
-          "series": "London",
-          "note": "ONS Wealth and Assets Survey, April 2020 to March 2022"
+          "period": "2014-16",
+          "value": 4.5,
+          "series": "London"
         },
         {
           "period": "2016-18",
-          "value": 10.3,
-          "series": "Great Britain",
-          "note": "ONS Wealth and Assets Survey, April 2016 to March 2018"
+          "value": 3.8,
+          "series": "London"
         },
         {
-          "period": "2018-20",
-          "value": 10.3,
-          "series": "Great Britain",
-          "note": "ONS Wealth and Assets Survey, April 2018 to March 2020"
+          "period": "2010-12",
+          "value": 9.6,
+          "series": "Great Britain"
         },
         {
-          "period": "2020-22",
-          "value": 9.4,
-          "series": "Great Britain",
-          "note": "ONS Wealth and Assets Survey, April 2020 to March 2022"
+          "period": "2012-14",
+          "value": 8.6,
+          "series": "Great Britain"
+        },
+        {
+          "period": "2014-16",
+          "value": 8.7,
+          "series": "Great Britain"
+        },
+        {
+          "period": "2016-18",
+          "value": 8.5,
+          "series": "Great Britain"
         }
       ]
     },
@@ -3016,7 +3020,7 @@
       },
       "snapshot": {
         "value": 8.7,
-        "unit": "percentage points",
+        "unit": "points",
         "year": "Jul 2025-Jun 2026",
         "date": null
       },
@@ -3106,7 +3110,7 @@
       },
       "snapshot": {
         "value": 10.1,
-        "unit": "percentage points",
+        "unit": "points",
         "year": "Jul 2025-Jun 2026",
         "date": null
       },
@@ -3196,7 +3200,7 @@
       },
       "snapshot": {
         "value": 23.7,
-        "unit": "percentage points",
+        "unit": "points",
         "year": "Jul 2025-Jun 2026",
         "date": null
       },

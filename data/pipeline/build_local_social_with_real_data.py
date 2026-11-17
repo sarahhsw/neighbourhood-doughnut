@@ -528,7 +528,7 @@ def build_equality():
     Equality dimension - 5 indicators matching data/lookups/dimension_data_sources.json
     ("equality"). Pay inequality is a genuine Lewisham (residence-based) series from ONS ASHE
     Table 8, charted against London and England. Wealth inequality has no borough-level
-    source at all, so it uses ONS's London vs Great Britain wealth percentiles. The three
+    source at all, so it uses the GLA's London vs Great Britain share held by the poorest half. The three
     employment rate gaps (gender, ethnicity, disability) are London-wide and share one
     chart (they replaced the gender and ethnicity pay gap indicators in Nov 2026).
     Written into the ward JSON files by scripts/splice_dimension.py.
@@ -604,68 +604,64 @@ def build_equality():
         trend=pay_ratio_trend
     )
 
-    # Wealth inequality: no borough, ward or LSOA wealth-distribution data exists. The
-    # only source, ONS's Wealth and Assets Survey (WAS), publishes regional figures at
-    # best (London: ~1,200 households sampled in 2020-22). The GLA's poorest-50% share
-    # (data.london.gov.uk dataset 2y5m7) stops at 2016-18 and its earlier rounds are more
-    # than 10 years old, so the trend uses ONS's own regional percentile points instead
-    # (Total wealth tables, Table 2.8, released 24 Jan 2025), which run to 2020-22.
-    wealth_pcts = {
-        # period: {area: (P25, P75)} household total wealth, GBP
-        "2016-18": {"London": (39600, 882100), "Great Britain": (69100, 709000)},
-        "2018-20": {"London": (32200, 902400), "Great Britain": (71000, 733800)},
-        "2020-22": {"London": (30500, 791400), "Great Britain": (70500, 662100)},
+    # Wealth inequality: % of wealth held by the poorest 50% (the framework's own indicator;
+    # the user asked for it back in Nov 2026 after a short-lived swap to ONS's 75th:25th
+    # percentile ratio). No borough, ward or LSOA wealth-distribution data exists; ONS's
+    # Wealth and Assets Survey (WAS) reports regions at best. GLA Economic Fairness dataset
+    # "Wealth inequality" (data.london.gov.uk/download/2y5m7/.../wealth-inequality.xls) is the
+    # only London series. Its deciles are NATIONAL (GB) wealth deciles: the London figure is
+    # the share of London's household wealth held by London households in the bottom half of
+    # GB's distribution (45.6% of London households in 2016-18). Values are recomputed from
+    # the London / Great Britain sheets (sum of decile 1-5 total wealth / sum of all deciles),
+    # which reproduces the Summary sheet exactly for 2010-12 to 2014-16; the Summary rounds
+    # 2016-18 to whole numbers (4, 8), the recomputed values are 3.79 and 8.48.
+    # Points before 2016-18 are more than 10 years old (SPEC_RULES 1.2); kept because this is
+    # the only series for the framework indicator and the user asked for the trend.
+    poorest_half_share = {
+        "London":        {"2010-12": 5.8, "2012-14": 4.9, "2014-16": 4.5, "2016-18": 3.8},
+        "Great Britain": {"2010-12": 9.6, "2012-14": 8.6, "2014-16": 8.7, "2016-18": 8.5},
     }
-    wealth_period_labels = {
-        "2016-18": "April 2016 to March 2018", "2018-20": "April 2018 to March 2020",
-        "2020-22": "April 2020 to March 2022",
-    }
-    wealth_ratio_trend = [
-        {"period": per, "value": round(p75 / p25, 1), "series": area,
-         "note": f"ONS Wealth and Assets Survey, {wealth_period_labels[per]}"}
-        for area in ("London", "Great Britain")
-        for per, areas in wealth_pcts.items()
-        for (p25, p75) in [areas[area]]
+    wealth_share_trend = [
+        {"period": per, "value": val, "series": area}
+        for area, pts in poorest_half_share.items() for per, val in pts.items()
     ]
 
-    wealth_gap = create_descriptive_dimension(
+    wealth_share_poorest_half = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
-        indicator="Wealth gap between richer and poorer households (75th:25th percentile ratio)",
-        snapshot=Snapshot(value=25.9, unit="ratio", year="2020-22"),
+        indicator="% of wealth held by the poorest 50%",
+        snapshot=Snapshot(value=3.8, unit="%", year="2016-18"),
         source=Source(
-            name="ONS Household total wealth in Great Britain - Total wealth tables (Wealth and Assets Survey), Table 2.8",
-            url="https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/datasets/totalwealthwealthingreatbritain",
+            name="GLA London Datastore - Economic Fairness: Wealth inequality (ONS Wealth and Assets Survey microdata)",
+            url="https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
             accessed="2026-11-17",
             notes=(
-                "Ratio of the 75th to the 25th percentile of household total wealth (property, financial, "
-                "physical and private pension wealth, net of debts), Table 2.8 'Distribution of household total "
-                "wealth, by region', July 2006 to June 2016 and April 2014 to March 2022 edition (released 24 "
-                "January 2025; the latest WAS release). London April 2020 to March 2022: P25 GBP 30,500, P75 "
-                "GBP 791,400 -> 25.9; Great Britain P25 70,500, P75 662,100 -> 9.4. Earlier points: London 2016-18 "
-                "39,600/882,100 (22.3), 2018-20 32,200/902,400 (28.0); GB 2016-18 69,100/709,000 (10.3), "
-                "2018-20 71,000/733,800 (10.3). London's unweighted sample is 1,214 households in 2020-22, so "
-                "the London percentiles (especially P25) are imprecise and the 2018-20 to 2020-22 dip should not "
-                "be read as a real change. No borough, ward or LSOA wealth-distribution estimate exists. Property "
-                "share (Table 2.7): net property wealth was 51% of London household wealth in 2020-22 against "
-                "40% across GB. The GLA's Economic Fairness dataset 'Wealth inequality' "
-                "(data.london.gov.uk/download/2y5m7/..., WAS microdata) puts the bottom half of London "
-                "households' share of total wealth at 4% (rounded) in April 2016 to March 2018 (GB: 8%); its "
-                "earlier rounds (5.8% in 2010-12, 4.9% in 2012-14, 4.5% in 2014-16) are more than ten years old "
-                "and the series was not updated beyond 2016-18, so it is cited in text but not charted. The "
-                "Office for Statistics Regulation suspended WAS's accredited official statistics status on 13 June "
-                "2025 over falling response rates and quality concerns - treat these as indicative. Home "
-                "ownership in text: ONS Subnational estimates of households by tenure, England, 2022 to 2024 "
-                "(released 11 February 2026), Lewisham 2024 owned outright 15.33% + owned with mortgage or loan "
-                "27.88% = 43.2%; England 62.4% (sum of regional household counts)."
+                "Share of total household wealth (property, financial, physical and private pension wealth, net of "
+                "debts) held by households in deciles 1-5 of the Great Britain wealth distribution. GLA dataset "
+                "wealth-inequality.xls (data.london.gov.uk download 2y5m7; National Data Library record updated 25 "
+                "September 2026, data still ending April 2016-March 2018). London 2016-18: those households were "
+                "45.6% of London households (household counts derived as total / mean wealth per decile) and held "
+                "3.79% of London's wealth; London households in GB's top decile held 61.9%. GB 2016-18: 8.48%. "
+                "Recomputed values match the Summary sheet for 2010-12 (London 5.75, GB 9.58), 2012-14 (4.89, 8.60) "
+                "and 2014-16 (4.54, 8.74); the Summary rounds 2016-18 to 4 and 8. London's share of households in "
+                "the national bottom half fell from 50.4% (2010-12) to 45.6% (2016-18), so the London line is not a "
+                "fixed-population measure. Periods: July-June two-year rounds to 2014-16, April 2016-March 2018 for "
+                "the last. No newer London decile breakdown exists: ONS's latest WAS tables (released 24 January "
+                "2025, to April 2020-March 2022) give regional percentiles but not decile shares. The Office for "
+                "Statistics Regulation suspended WAS's accredited official statistics status on 13 June 2025 over "
+                "falling response rates and quality concerns - treat as indicative. Context in text: net property "
+                "wealth was 51% of London household wealth in April 2020-March 2022 (ONS Total wealth tables, Table "
+                "2.7); Lewisham home ownership 43.2% in 2024 (owned outright 15.33% + mortgage 27.88%) vs England "
+                "62.4% (ONS Subnational estimates of households by tenure, England, 2022 to 2024, released 11 "
+                "February 2026)."
             )
         ),
         geography=GeographyLevel.LONDON_INHERITED,
         confidence=Confidence.LOW,
         target_text="No official GLA or UK Government target established for this indicator.",
-        trend=wealth_ratio_trend
+        trend=wealth_share_trend
     )
 
     # Employment rate gaps (replaced the gender and ethnicity pay gap indicators,
@@ -716,7 +712,7 @@ def build_equality():
             lens=Lens.LOCAL_SOCIAL,
             dimension_name="equality",
             indicator=f"Employment rate gap ({label})",
-            snapshot=Snapshot(value=round(hi - lo, 1), unit="percentage points", year="Jul 2025-Jun 2026"),
+            snapshot=Snapshot(value=round(hi - lo, 1), unit="points", year="Jul 2025-Jun 2026"),
             source=Source(
                 name="ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
                 url="https://www.nomisweb.co.uk/datasets/apsnew",
@@ -729,7 +725,7 @@ def build_equality():
             trend=trend
         ))
 
-    return [pay_inequality, wealth_gap, *emp_gap_dims]
+    return [pay_inequality, wealth_share_poorest_half, *emp_gap_dims]
 
 # Keep existing dimensions from build_local_social_full.py for dimensions without new data
 def build_water_dimensions():

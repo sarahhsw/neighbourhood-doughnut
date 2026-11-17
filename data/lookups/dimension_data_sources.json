@@ -436,10 +436,10 @@
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
-    "indicator": "Wealth gap between richer and poorer households (75th:25th percentile ratio)",
-    "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/datasets/totalwealthwealthingreatbritain",
+    "indicator": "% wealth hold by poorest 50%",
+    "source_url": "https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
     "granularity": "London-wide (region)",
-    "notes": "Framework indicator was '% wealth held by poorest 50%'. No borough, ward or LSOA wealth-distribution data exists; ONS's Wealth and Assets Survey reports regions at best. The GLA's poorest-half share (data.london.gov.uk dataset 2y5m7, WAS microdata) stops at April 2016-March 2018 (London 4%, GB 8%) and earlier rounds are over ten years old, so it is cited in text only. Charted instead: ONS Total wealth tables Table 2.8 (released 24 Jan 2025), 75th/25th percentile of household total wealth, London vs Great Britain, 2016-18 to 2020-22 (London 25.9, GB 9.4 in 2020-22). OSR suspended WAS accreditation on 13 June 2025 - treat as indicative. Home ownership context from ONS Subnational estimates of households by tenure, England, 2022 to 2024. Checked 2026-11-17."
+    "notes": "Share of household wealth held by households in the bottom half of the Great Britain wealth distribution. GLA Economic Fairness dataset (wealth-inequality.xls, ONS Wealth and Assets Survey microdata), London vs GB, 2010-12 to 2016-18. Latest (April 2016-March 2018): London 3.8% (45.6% of London households are in GB's bottom half), GB 8.5%, recomputed from decile totals (the Summary sheet rounds to 4 and 8). No borough/ward/LSOA data exists and no newer London decile breakdown has been published. Points before 2016-18 are over ten years old, kept at the user's request as the only series for this framework indicator. OSR suspended WAS accreditation 13 June 2025 - treat as indicative. Checked 2026-11-17."
   },
   {
     "lens": "local_social",

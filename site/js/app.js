@@ -454,7 +454,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'food': "Lewisham's diet-related health is mixed. Dental decay in five-year-olds runs below both the London and England averages, and diagnosed diabetes stays well below England's rate too (though now almost identical to London's). Demand on local foodbanks tells a starker story: Trussell network parcels distributed in Lewisham tripled between 2018 and 2025. Child obesity near-doubles between Reception and Year 6 - a pattern repeated every year since measurement began in 2006/07, and slightly worse than London's Year 6 average.",
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Two of the company's three levers for closing that gap are moving at different speeds: per-person water use has fallen modestly since 2019/20, though unevenly, with a pandemic-era spike and a recent uptick; leakage - after falling from close to a third of supply in the mid-2000s to around a fifth by 2019/20 - has barely moved since. Both remain well short of what's needed: the Environment Act's 2038 demand-reduction target and the water industry's 2018 commitment to halve leakage by 2050 both require considerably faster progress than either metric is currently making.",
         'mobility': "Public transport access in Ladywell is best near the station: planning assessments rate it excellent (PTAL 6) right by Ladywell station and good (PTAL 4) a few streets away. Across Lewisham, 71.6% of residents' trips are made on foot, by bike or by public transport, well below the 82.1% Inner London average and short of the Mayor's target of 80% by 2041.",
-        'equality': "Pay in Lewisham is more unequal than across England, and the gap has narrowed more slowly. In 2026, hourly pay 80% of the way up the scale for Lewisham residents' jobs was about two and a half times pay 20% of the way up. National Living Wage rises squeeze the lower half of pay, says the Low Pay Commission, and fewer Lewisham residents' jobs are paid at that floor than across the UK. Wealth is more lopsided: a London household three-quarters of the way up the wealth scale held about 26 times as much as one a quarter of the way up. Across London, disabled working-age residents are 24 percentage points less likely to be in work than non-disabled residents; for women and ethnic minority residents, 9 and 10 points.",
+        'equality': "Pay in Lewisham is more unequal than across England, and the gap has narrowed more slowly. Among jobs held by Lewisham residents, one a fifth of the way down from the top of the pay scale paid about two and a half times as much per hour as one a fifth of the way up from the bottom. Rises in the National Living Wage lift the lowest pay closer to middle pay, says the Low Pay Commission, but fewer Lewisham residents' jobs are paid at that minimum than across the UK. Wealth is more lopsided still: London households in the poorest half of Britain's households held just 3.8% of the city's wealth. Across London, disabled working-age residents are 24 points less likely to be in work than non-disabled residents.",
         'community': "Most adults around Lewisham have someone to turn to, but fewer feel they belong where they live. Across inner-east London, the sub-region that includes Lewisham, 95% agreed people would be there for them if they needed help in 2025/26. Neighbourhood belonging is the lowest-scoring of the three: 54% of Lewisham adults feel they belong to their immediate neighbourhood, below England's 61% and not significantly different from London's 58%. Severe loneliness affects 8% of the borough's adults, within the survey's margin of error of England's rate, and nationally runs four times higher among disabled than non-disabled adults, and three times higher in the most deprived areas than the least.",
         'political_voice': "Turnout in Lewisham's mayoral election rose to 42% in May 2026, when the Green Party won control of the council and the mayoralty for the first time. Between elections, residents are unusually active: 48% contacted a councillor or MP, signed a petition or went to a public meeting or protest in the past year, against 41% across London. Yet only about a third, 32%, feel they can personally influence decisions affecting their area, the same as across London.",
         'culture': "Lewisham's dedicated arts grants have been cut by almost 40%, part of a wider squeeze on council arts budgets across England. Cultural spaces are unevenly spread: Ladywell has only five open venues, around 60% of the borough's density, with Lewisham's clustered in Deptford and Brockley. Participation is high locally: 88.5% of Lewisham residents engaged with the arts in 2025/26, above both the London and England averages.",
@@ -547,11 +547,11 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Equality-specific explanations
         if (baseName === 'Pay inequality (80th:20th percentile ratio)') {
-            return `This compares hourly pay near the top and bottom of the scale for jobs held by Lewisham residents: the rate that only a fifth earn more than (£38.28 an hour in 2026) against the rate that only a fifth earn less than (£15.44). That ratio of 2.48 is close to London's 2.61. Across England the gap has narrowed faster over the past decade, to 2.21. The Low Pay Commission says rises in the National Living Wage squeeze the lower half of the pay scale. In 2025, 2.7% of Lewisham residents' jobs were paid at or near the minimum wage, against 6.6% across the UK. The figures come from the Office for National Statistics' Annual Survey of Hours and Earnings.`;
+            return `Line up every job held by Lewisham residents from lowest to highest hourly pay. In 2026, a job a fifth of the way down from the top paid £38.28 an hour: 2.48 times the £15.44 paid by a job a fifth of the way up from the bottom. That is close to London's 2.61. Across England the gap has narrowed faster over the past decade, to 2.21. The Low Pay Commission says each rise in the National Living Wage lifts the lowest pay closer to middle pay. In 2025, 2.7% of Lewisham residents' jobs were paid at or near the minimum wage, against 6.6% across the UK. The figures come from the Office for National Statistics' Annual Survey of Hours and Earnings.`;
         }
 
-        if (baseName === 'Wealth gap between richer and poorer households (75th:25th percentile ratio)') {
-            return `Wealth is everything a household owns - its home, pensions, savings and possessions - minus its debts. Between April 2020 and March 2022, a London household three-quarters of the way up the wealth scale held £791,400, about 26 times the £30,500 held by one a quarter of the way up. Across Great Britain the gap was about 9 times. Property makes up half of London households' wealth, and fewer Lewisham households own their home: 43% in 2024, against 62% across England. An earlier Greater London Authority analysis of the same survey found the poorest half of London households held just 4% of the city's wealth in 2016-18. The figures come from the Office for National Statistics' Wealth and Assets Survey, which publishes figures by region, not borough.`;
+        if (baseName === '% of wealth held by the poorest 50%') {
+            return `This shows how much of London's household wealth - homes, pensions, savings and possessions, minus debts - belongs to households in the poorest half of all British households. In 2016-18 they made up 46% of London households but held just 3.8% of the city's wealth; across Great Britain, the poorest half held 8.5%. London households in Britain's richest tenth held 62%. Property made up half of London households' wealth in 2020-22, and fewer Lewisham households own their home: 43% in 2024, against 62% across England. The figures come from the Greater London Authority's analysis of the Office for National Statistics' Wealth and Assets Survey, which runs only to 2016-18 and does not report boroughs.`;
         }
 
         if (baseName === 'Employment rate gap') {
@@ -919,34 +919,39 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Equality dimension council context - 2 documents: the Lewisham Poverty
-        // Commission's report covers low pay and pay inequality locally (its own remit
-        // and recommendations); the Mayor of London's Workforce Integration Network
-        // covers the structural drivers behind the gender and ethnicity employment gaps
-        // citywide, since no Lewisham-specific strategy exists for either. Wealth
-        // concentration has no dedicated strategy document at either level - noted as a
-        // gap rather than forcing a weak third citation.
+        // Equality dimension council context - 2 documents plus the research card (cap 3).
+        // Replaced Nov 2026 (user asked for newer context than the 2017 Poverty Commission and
+        // 2018 WIN cards): Lewisham's Poverty Reduction Approach report (Overview and Scrutiny,
+        // 25 Feb 2025, read in full via the councilmeetings mirror) traces where the Poverty
+        // Commission's work went; the GLA/London Councils Inclusive Talent Strategy (Oct 2025)
+        // is London's current plan on employment gaps and low pay (WIN now sits within it).
+        // The ITS document itself is on london.gov.uk (bot-blocked); facts here come from the
+        // GLA's own summary of its evidence base on the London Datastore (27 Nov 2025) and the
+        // ITS consultation summary (London Datastore, Oct 2025).
         if (dimensionName === 'equality') {
             return [
                 {
-                    title: 'Working together to tackle poverty in Lewisham (Lewisham Poverty Commission)',
-                    year: '2017',
-                    url: 'https://lewisham.gov.uk/-/media/archive/files/imported/lewishampovertycommissionreportfinal.pdf?sc_lang=en',
-                    summary: `<p>Lewisham's cross-sector Poverty Commission, launched in 2017, made 52 recommendations after finding that low pay - not just worklessness - was trapping working households in poverty, with the borough's pay inequality one symptom of a labour market split between well-paid professional jobs and a large, insecure, low-paid service sector. Its central response was accreditation as a Living Wage borough: the council became one of the first UK local authorities to gain Living Wage Employer status, used business-rate incentives to grow the number of accredited local employers, and proposed the "Lewisham Deal" - a partnership between the council, health, and education employers to expand local apprenticeships and Living Wage jobs. The Commission also pushed for improved in-work progression support, on the basis that raising the pay floor alone does not close a gap driven mainly by who reaches the top of it.</p>`
+                    title: "Lewisham Council's Poverty Reduction Approach (report to Overview and Scrutiny)",
+                    year: 'February 2025',
+                    url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=119344',
+                    summary: `<p>Lewisham's anti-poverty work has moved from a one-off commission to a standing partnership. The 2017 Poverty Commission's focus areas - helping residents into well-paid, secure jobs, supporting parents into decent work, improving the local housing market and strengthening community support - led to the Lewisham Deal, whose pillars included the Living Wage, apprenticeships, local procurement and progression for Black, Asian and minority ethnic staff. Since 2022 these have run through the Lewisham Strategic Partnership's workstreams on opportunity and investment, race and equality, and the cost of living. From September 2022, the council's Cost-of-Living Programme gave crisis support, mostly as cash, alongside longer-term help through voluntary and community groups. With one in three residents in poverty after housing costs in 2021/22, the report sets out plans for a longer-term, council-wide approach led by a new Poverty Reduction Programme Lead.</p>`
                 },
                 {
-                    title: "Workforce Integration Network (WIN) — Bridging the Gap",
-                    year: '2018-present',
-                    url: 'https://www.london.gov.uk/programmes-strategies/communities-and-social-justice/workforce-integration-network-win/bridging-gap',
-                    summary: `<p>WIN is the Mayor of London's response to London having the widest ethnicity pay gap of any English region - GLA Economics estimates closing ethnic minority employment and progression gaps could unlock £17.4 billion in economic benefit for London. It targets the groups facing the largest combined barriers, including Black men and Pakistani, Bangladeshi, and Black women specifically, on the basis that gender and ethnicity disadvantage compound rather than operate separately. Rather than setting a citywide pay-gap target, WIN works employer-by-employer through "Design Labs" that analyse where a given organisation's recruitment, retention, and promotion practices are excluding underrepresented groups, then build a tailored action plan. No dedicated strategy document exists addressing wealth concentration specifically, at either Lewisham or London level.</p>`
+                    title: 'Inclusive Talent Strategy (Mayor of London and London Councils)',
+                    year: '2025',
+                    url: 'https://data.london.gov.uk/blog/the-inclusive-talent-strategy',
+                    summary: `<p>London's plan for skills and jobs, launched in October 2025 by the Mayor and London Councils as part of the London Growth Plan, sets two headline targets: lift London's employment rate to 80%, and raise the real weekly income, after housing costs, of the lowest-earning fifth of Londoners by 20% by 2035. It aims to join up jobs, skills, health and careers services, help Londoners facing barriers to work into quality jobs, and make London a centre of excellence for fair pay and good work, tracking how many Londoners earn below the London Living Wage. Its evidence base names caring responsibilities, insecure or expensive housing, a lack of flexible work and limited transport as barriers that keep people out of work or stop them taking on more hours. GLA Economics estimates that equalising employment rates across ethnic groups would add 290,000 Londoners to the workforce, worth £17.4 billion in salaries.</p>`,
+                    sources: [
+                        { name: 'The Inclusive Talent Strategy - GLA summary of the evidence base (London Datastore, November 2025)', url: 'https://data.london.gov.uk/blog/the-inclusive-talent-strategy' },
+                        { name: 'Inclusive Talent Strategy - consultation summary (GLA, 2025)', url: 'https://data.london.gov.uk/download/e70mq/qdx/Inclusive%20Talent%20Strategy%20-%20Consultation%20summary.pdf' }
+                    ]
                 },
                 {
                     title: 'Perspectives from global equality research',
-                    summary: `<p>Wealth is far more unequally shared than income almost everywhere researchers have looked, and one of the clearest findings on why is about housing specifically, not investments or business ownership: economist Matthew Rognlie found that nearly all of the long-term growth in wealth compared to earnings in Britain and similar countries comes down to how much homes are worth, not other kinds of wealth. In practice, that means who owns property, and how fast house prices rise compared to wages, is doing most of the work in pulling wealth away from people who don't own a home and towards those who do.</p><p>That housing-driven wealth gap connects to a much larger one across ethnic groups, though the drivers turn out to be broader than housing alone: UK research finds under a third of Black African adults own their own home, against around 70% of White British and Indian adults, but Resolution Foundation research points to inheritance and savings as the bigger factors overall - White British households inherit roughly 50% more on average than Indian households, and at least half of Black African, Bangladeshi and Black Caribbean households have under £1,000 in savings. Homeownership alone doesn't tell the whole story either: Pakistani households have high homeownership rates but still end up with less wealth than Indian households. However it breaks down, the result is stark - Black African and Bangladeshi households hold roughly a tenth of the wealth of the average White British household.</p><p>On gender gaps, the Child Penalty Atlas, covering 134 countries, finds that women's and men's employment track each other until a first child, then diverge sharply and persistently, by very different amounts from place to place.</p>`,
+                    summary: `<p>Wealth is far more unequally shared than income, and housing explains much of why: economist Matthew Rognlie found that nearly all of the long-term rise in wealth compared with earnings in Britain and similar countries comes from the rising value of homes. Who owns property, and how fast house prices outpace wages, does most of the work of pulling wealth towards owners.</p><p>Housing is only part of the ethnic wealth gap. Resolution Foundation research points to inheritance and savings as bigger factors: at least half of Black African, Bangladeshi and Black Caribbean households have under £1,000 in savings, and Black African and Bangladeshi households hold roughly a tenth of the wealth of the average White British household.</p><p>On gender, the Child Penalty Atlas, covering 134 countries, finds that women's and men's employment track each other until a first child, then diverge sharply and persistently, by very different amounts from place to place.</p>`,
                     sources: [
                         { name: "Das House Kapital: The Evolution of Housing Wealth - Rognlie's finding, summarised by CEPR", url: 'https://cepr.org/voxeu/columns/das-house-kapital-evolution-housing-wealth' },
                         { name: "A gap that won't close - Resolution Foundation", url: 'https://www.resolutionfoundation.org/app/uploads/2020/12/A-gap-that-wont-close.pdf' },
-                        { name: 'The Colour of Money - Runnymede Trust', url: 'https://www.runnymedetrust.org/publications/the-colour-of-money' },
                         { name: 'The Child Penalty Atlas - Kleven et al., NBER', url: 'https://www.nber.org/papers/w31649' }
                     ]
                 }
@@ -1370,8 +1375,18 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         if (dimensionName === 'equality') {
             return [
                 {
-                    action: 'Sign up to Lewisham Works',
-                    text: `The council's free employment service for unemployed residents aged 18+, helping people into the better-paid work that narrows the borough's pay gap - it helped over 330 residents into jobs or training in its first year.`,
+                    action: 'Find a Living Wage employer',
+                    text: `Search the Living Wage Foundation's map of accredited employers by region and industry to find local employers committed to paying at least the real Living Wage.`,
+                    url: 'https://www.livingwage.org.uk/accredited-living-wage-employers'
+                },
+                {
+                    action: 'Join Lewisham and Greenwich Citizens',
+                    text: `An alliance of local schools, faith groups and charities that won Lewisham's place among the first Living Wage accredited councils. Members choose its campaigns; organisations can join.`,
+                    url: 'https://www.citizensuk.org/chapters/south-london/lewisham/'
+                },
+                {
+                    action: 'Get support from Lewisham Works',
+                    text: `The council's own employment service offers free support to residents looking for work, including Connect to Work for people with disabilities or health conditions.`,
                     url: 'https://lewisham.gov.uk/myservices/employment-support-and-careers-advice/lewisham-works'
                 }
             ];
@@ -1566,7 +1581,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         const singleHeadlineFilter = {
             'Healthy life expectancy at birth': 'Male',
             '% of children with obesity': 'Year 6',
-            '% non-decent homes': 'Private rented'
+            '% non-decent homes': 'Private rented',
+            'Employment rate gap': 'Disabled'
         };
         const indicatorsToShow = (indicators.length > 1 && singleHeadlineFilter[baseName])
             ? indicators.filter(ind => ind.indicator.includes(singleHeadlineFilter[baseName]))

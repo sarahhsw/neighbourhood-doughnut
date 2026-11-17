@@ -688,6 +688,17 @@ minimum-wage sentence had no clear point and should go, and that the two job-rel
 by theme, so indicators about the same thing are adjacent; a cause belongs in the summary only when it
 changes how the reader understands the finding, otherwise leave it in the indicator text.
 
+**In the summary, give a comparison as a ratio or as two plain percentages, not as raw cut-offs or a
+"points" gap (Equality, November 2026).** The summary said the best-paid fifth of jobs "pay £38 an
+hour or more, while the lowest-paid fifth pay around £15 or less", and that disabled residents were
+"24 points less likely to be in work". The user asked for the ratio instead, to help people make
+sense of the pay figures, and asked whether "24 points" meant a percentage. They became "jobs near
+the top of residents' pay scale pay nearly two and a half times as much per hour as jobs near the
+bottom" and "56% of disabled working-age residents are in work, against 80% of non-disabled
+residents". General rule: the summary should hand the reader the comparison already made (a ratio,
+or two percentages side by side); leave raw cut-offs and percentage-point gaps to the indicator
+text, where they can be explained.
+
 ### 2.2 Description Writing Style
 
 **CRITICAL: Descriptions must be narrative, concise, and findings-focused**
@@ -1439,6 +1450,13 @@ question, not as a silent swap. Also check what a published figure actually meas
 "poorest 50%" uses national (GB) deciles, so the London figure covers the 46% of London households
 in Britain's poorest half, not London's own poorest half.
 
+**Say "percentage points" where the reader first meets a points figure (Equality, November 2026).**
+After the unit was shortened to "points", the user asked whether "24 points" was the same as a
+percentage. The indicator is now named "Employment rate gap, percentage points (...)", so the label
+under the "23.7 points" headline defines the unit. General rule: a short unit is fine in the
+headline only if the label beside it says what the unit is; in summary prose, prefer the two
+underlying percentages to a points gap.
+
 ### 2.6 No Separate "Target" Line or Marker
 
 **As of July 2026, dimension pages do NOT render a standalone "Target: X" line or a dashed
@@ -1940,6 +1958,14 @@ where the longer-term levers sit (the Strategic Partnership's workstreams); and 
 (a plan to reduce poverty rather than respond to crises was still being built in 2025, with three
 stated priorities). General rule: lead with the problem, say what the plan does about it, and end
 with one sentence the reader should remember; history only where it explains the present.
+
+**Model a council-plan card on a card that already works (Equality, November 2026).** The
+problem-response-takeaway version of the Poverty Reduction Approach card was still hard to follow;
+the user pointed to the Inclusive Talent Strategy card on the same page as the model. That card is
+one paragraph: what the plan is and who made it, its headline aims, what it does, and the evidence
+behind it. The poverty card now follows the same order: the plan's status in one sentence, the
+problem and aim, its main tool so far, where the older commitments now sit, and its priorities.
+General rule: one paragraph, in that order, with every sentence a plain statement about the plan.
 
 ## 4. "Get Involved" Section
 

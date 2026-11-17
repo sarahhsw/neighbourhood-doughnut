@@ -47,6 +47,7 @@ when you're doing something this file doesn't cover.
 - Don't open with a thesis built on terms not yet explained ("not job-seekers"); let the facts make the point. [2.1]
 - Flow from place to borough to cause; a cause must be sourced at the geography the sentence claims. [2.1]
 - Keep indicators on the same theme adjacent in the summary; include a cause only if it changes how the reader understands the finding. [2.1]
+- In the summary, give comparisons as a ratio ("nearly two and a half times") or as two percentages side by side, not raw cut-offs or a points gap. [2.1]
 
 ## Indicator text ("What this measures") [2.2, 2.5]
 
@@ -59,7 +60,7 @@ when you're doing something this file doesn't cover.
 - Unit qualifiers belong in the indicator name, not the headline; no bracketed explainers in the big number.
 - Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
 - One headline stat per indicator: when an indicator has sub-series, add it to `singleHeadlineFilter` and headline the most insightful one. [2.5]
-- Keep headline units short; a gap between two percentages is "points", never "%" and never "percentage points" in the headline. [2.5]
+- Keep headline units short; a gap between two percentages is "points", never "%", and the label beside it must say "percentage points". [2.5]
 - Keep the framework's own indicator even if its data is old; don't swap in a different measure for fresher data without asking. Check what a published figure actually measures. [2.5]
 - Figures with different population bases get labelled stat cards, not a shared-axis chart; each card names its base.
 - Choose stat-card groups by the framework's own categories, not by singling out one subgroup.
@@ -82,6 +83,7 @@ when you're doing something this file doesn't cover.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
 - If a card's document is more than about five years old, look for the programme or strategy that superseded it. [3.1]
 - Structure a council-plan card as problem, response, takeaway; end with the one thing the reader should remember. [3.2]
+- Write a council-plan card as one paragraph: what the plan is and its status, its aims, what it does, its priorities (model: the equality Inclusive Talent Strategy card). [3.2]
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 - Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]

@@ -818,7 +818,7 @@ def build_equality():
             ward_code=LADYWELL_WARD_CODE,
             lens=Lens.LOCAL_SOCIAL,
             dimension_name="equality",
-            indicator=f"Employment rate gap ({label})",
+            indicator=f"Employment rate gap, percentage points ({label})",
             snapshot=Snapshot(value=round(hi - lo, 1), unit="points", year="Jul 2025-Jun 2026"),
             source=Source(
                 name="ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",

@@ -3337,7 +3337,7 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Employment rate gap (Women vs men)",
+      "indicator": "Employment rate gap, percentage points (Women vs men)",
       "threshold": {
         "value": null,
         "unit": null,
@@ -3427,7 +3427,7 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Employment rate gap (Ethnic minority vs White)",
+      "indicator": "Employment rate gap, percentage points (Ethnic minority vs White)",
       "threshold": {
         "value": null,
         "unit": null,
@@ -3517,7 +3517,7 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Employment rate gap (Disabled vs non-disabled)",
+      "indicator": "Employment rate gap, percentage points (Disabled vs non-disabled)",
       "threshold": {
         "value": null,
         "unit": null,

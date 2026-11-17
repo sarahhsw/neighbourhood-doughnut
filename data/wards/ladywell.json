@@ -3078,9 +3078,9 @@
         "description": null
       },
       "snapshot": {
-        "value": 9.0,
+        "value": 8.7,
         "unit": "percentage points",
-        "year": 2025,
+        "year": "Jul 2025-Jun 2026",
         "date": null
       },
       "status": "descriptive_only",
@@ -3089,7 +3089,7 @@
         "name": "ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
         "url": "https://www.nomisweb.co.uk/datasets/apsnew",
         "accessed": "2026-11-17",
-        "notes": "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v 58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses (data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all three series are taken from NOMIS directly for one consistent method. A later rolling period (Jul 2025-Jun 2026) exists but is not mixed into the calendar-year series. Lewisham figures exist but are too imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 (women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text (data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be attributed to differences in employment levels between parents and those without dependent children.'"
+        "notes": "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v 58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses (data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all three series are taken from NOMIS directly for one consistent method. The final point is the latest rolling 12-month period, Jul 2025-Jun 2026 (London: men 78.8 v women 70.1; White 79.2 v ethnic minority 69.1; non-disabled 79.5 v disabled 55.8; England gaps 6.2, 7.7, 25.8), so the headline uses the latest vintage. Lewisham figures exist but are too imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 (women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text (data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be attributed to differences in employment levels between parents and those without dependent children.'"
       },
       "confidence": "medium",
       "community_notes": [],
@@ -3143,6 +3143,11 @@
           "period": "2025",
           "value": 9.0,
           "series": "Women vs men"
+        },
+        {
+          "period": "Jul 2025-Jun 2026",
+          "value": 8.7,
+          "series": "Women vs men"
         }
       ]
     },
@@ -3163,9 +3168,9 @@
         "description": null
       },
       "snapshot": {
-        "value": 8.6,
+        "value": 10.1,
         "unit": "percentage points",
-        "year": 2025,
+        "year": "Jul 2025-Jun 2026",
         "date": null
       },
       "status": "descriptive_only",
@@ -3174,7 +3179,7 @@
         "name": "ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
         "url": "https://www.nomisweb.co.uk/datasets/apsnew",
         "accessed": "2026-11-17",
-        "notes": "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v 58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses (data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all three series are taken from NOMIS directly for one consistent method. A later rolling period (Jul 2025-Jun 2026) exists but is not mixed into the calendar-year series. Lewisham figures exist but are too imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 (women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text (data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be attributed to differences in employment levels between parents and those without dependent children.'"
+        "notes": "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v 58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses (data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all three series are taken from NOMIS directly for one consistent method. The final point is the latest rolling 12-month period, Jul 2025-Jun 2026 (London: men 78.8 v women 70.1; White 79.2 v ethnic minority 69.1; non-disabled 79.5 v disabled 55.8; England gaps 6.2, 7.7, 25.8), so the headline uses the latest vintage. Lewisham figures exist but are too imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 (women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text (data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be attributed to differences in employment levels between parents and those without dependent children.'"
       },
       "confidence": "medium",
       "community_notes": [],
@@ -3228,6 +3233,11 @@
           "period": "2025",
           "value": 8.6,
           "series": "Ethnic minority vs White"
+        },
+        {
+          "period": "Jul 2025-Jun 2026",
+          "value": 10.1,
+          "series": "Ethnic minority vs White"
         }
       ]
     },
@@ -3248,9 +3258,9 @@
         "description": null
       },
       "snapshot": {
-        "value": 20.7,
+        "value": 23.7,
         "unit": "percentage points",
-        "year": 2025,
+        "year": "Jul 2025-Jun 2026",
         "date": null
       },
       "status": "descriptive_only",
@@ -3259,7 +3269,7 @@
         "name": "ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
         "url": "https://www.nomisweb.co.uk/datasets/apsnew",
         "accessed": "2026-11-17",
-        "notes": "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v 58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses (data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all three series are taken from NOMIS directly for one consistent method. A later rolling period (Jul 2025-Jun 2026) exists but is not mixed into the calendar-year series. Lewisham figures exist but are too imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 (women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text (data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be attributed to differences in employment levels between parents and those without dependent children.'"
+        "notes": "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v 58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses (data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all three series are taken from NOMIS directly for one consistent method. The final point is the latest rolling 12-month period, Jul 2025-Jun 2026 (London: men 78.8 v women 70.1; White 79.2 v ethnic minority 69.1; non-disabled 79.5 v disabled 55.8; England gaps 6.2, 7.7, 25.8), so the headline uses the latest vintage. Lewisham figures exist but are too imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 (women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text (data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be attributed to differences in employment levels between parents and those without dependent children.'"
       },
       "confidence": "medium",
       "community_notes": [],
@@ -3312,6 +3322,11 @@
         {
           "period": "2025",
           "value": 20.7,
+          "series": "Disabled vs non-disabled"
+        },
+        {
+          "period": "Jul 2025-Jun 2026",
+          "value": 23.7,
           "series": "Disabled vs non-disabled"
         }
       ]

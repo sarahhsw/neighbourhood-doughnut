@@ -679,13 +679,13 @@ def build_equality():
     emp_rates = {
         "Women vs men": {
             2016: (80.4, 66.9), 2017: (80.2, 67.6), 2018: (80.5, 68.0), 2019: (79.9, 69.0), 2020: (78.8, 71.5),
-            2021: (78.7, 71.0), 2022: (80.8, 71.5), 2023: (78.6, 70.5), 2024: (80.4, 70.9), 2025: (79.3, 70.3)},
+            2021: (78.7, 71.0), 2022: (80.8, 71.5), 2023: (78.6, 70.5), 2024: (80.4, 70.9), 2025: (79.3, 70.3), "Jul 2025-Jun 2026": (78.8, 70.1)},
         "Ethnic minority vs White": {
             2016: (78.6, 66.3), 2017: (78.8, 66.4), 2018: (79.6, 66.4), 2019: (79.3, 67.1), 2020: (79.3, 68.8),
-            2021: (78.9, 68.8), 2022: (80.1, 70.7), 2023: (79.3, 68.2), 2024: (80.2, 70.1), 2025: (78.9, 70.3)},
+            2021: (78.9, 68.8), 2022: (80.1, 70.7), 2023: (79.3, 68.2), 2024: (80.2, 70.1), 2025: (78.9, 70.3), "Jul 2025-Jun 2026": (79.2, 69.1)},
         "Disabled vs non-disabled": {
             2016: (78.2, 51.6), 2017: (78.4, 51.2), 2018: (78.9, 51.8), 2019: (78.8, 54.3), 2020: (79.6, 54.6),
-            2021: (79.3, 56.3), 2022: (80.7, 57.8), 2023: (78.9, 57.6), 2024: (80.2, 59.3), 2025: (79.2, 58.5)},
+            2021: (79.3, 56.3), 2022: (80.7, 57.8), 2023: (78.9, 57.6), 2024: (80.2, 59.3), 2025: (79.2, 58.5), "Jul 2025-Jun 2026": (79.5, 55.8)},
     }
     emp_gap_notes = (
         "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population "
@@ -697,8 +697,9 @@ def build_equality():
         "These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses "
         "(data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match "
         "NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all "
-        "three series are taken from NOMIS directly for one consistent method. A later rolling period (Jul 2025-"
-        "Jun 2026) exists but is not mixed into the calendar-year series. Lewisham figures exist but are too "
+        "three series are taken from NOMIS directly for one consistent method. The final point is the latest "
+        "rolling 12-month period, Jul 2025-Jun 2026 (London: men 78.8 v women 70.1; White 79.2 v ethnic minority 69.1; "
+        "non-disabled 79.5 v disabled 55.8; England gaps 6.2, 7.7, 25.8), so the headline uses the latest vintage. Lewisham figures exist but are too "
         "imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 "
         "(women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the "
         "Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text "
@@ -708,14 +709,14 @@ def build_equality():
     emp_gap_dims = []
     for label, series in emp_rates.items():
         trend = [{"period": str(yr), "value": round(hi - lo, 1), "series": label} for yr, (hi, lo) in series.items()]
-        hi, lo = series[2025]
+        hi, lo = series["Jul 2025-Jun 2026"]
         emp_gap_dims.append(create_descriptive_dimension(
             ward=LADYWELL_WARD_NAME,
             ward_code=LADYWELL_WARD_CODE,
             lens=Lens.LOCAL_SOCIAL,
             dimension_name="equality",
             indicator=f"Employment rate gap ({label})",
-            snapshot=Snapshot(value=round(hi - lo, 1), unit="percentage points", year=2025),
+            snapshot=Snapshot(value=round(hi - lo, 1), unit="percentage points", year="Jul 2025-Jun 2026"),
             source=Source(
                 name="ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
                 url="https://www.nomisweb.co.uk/datasets/apsnew",

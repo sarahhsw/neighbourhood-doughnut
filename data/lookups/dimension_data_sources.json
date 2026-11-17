@@ -293,9 +293,27 @@
     "dimension": "education",
     "category": "Enabled",
     "indicator": "GCSE attainment",
-    "source_url": "https://trustforlondon.org.uk/data/gcse-attainment-borough/",
+    "source_url": "https://explore-education-statistics.service.gov.uk/find-statistics/key-stage-4-performance",
     "granularity": "LA",
-    "notes": "Underlying source: DfE Key Stage 4 performance statistics (published via Explore Education Statistics), which Trust for London's borough chart itself draws on. trustforlondon.org.uk and explore-education-statistics.service.gov.uk were both blocked by this session's network egress policy, so the July 2026 refresh corroborated figures instead via Lewisham Council's own Validated Outcomes 2024 Standards Report (lewisham.moderngov.co.uk) and GOV.UK's Ethnicity Facts and Figures local-authority breakdown of the same DfE dataset - both trace back to the same underlying source."
+    "notes": "DfE Key stage 4 performance (EES API data set 'Geography by school types data'), % achieving grade 4+ in English and maths, all state-funded schools. Lewisham 65.5% 2025/26 provisional, London 70.9%, England 64.8%; trend 2018/19 and 2022/23-2025/26 (pandemic years excluded). Trust for London's chart draws on the same DfE data. Checked 2026-11-17."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "education",
+    "category": "Enabled",
+    "indicator": "% NEET",
+    "source_url": "https://explore-education-statistics.service.gov.uk/find-statistics/participation-in-education-training-and-neet-age-16-to-17-by-local-authority/2025-26",
+    "granularity": "LA",
+    "notes": "DfE NCCIS management information, 16-17 year olds, Dec-Feb average. Lewisham 1.9% NEET 2025/26 (plus 2.9% activity not known); London 2.0%; England 3.4%. Trend 2018/19-2025/26. Checked 2026-11-17."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "education",
+    "category": "Enabled",
+    "indicator": "Childcare place density per child aged 0-4",
+    "source_url": "https://www.gov.uk/government/statistical-data-sets/childcare-providers-and-inspections-management-information",
+    "granularity": "LA",
+    "notes": "Ofsted Early Years Register places (including estimates) at 30 June, Table 2a of the childcare providers and inspections MI, divided by ONS mid-year population aged 0-4 (NOMIS NM_2002_1). Lewisham 61.6 per 100 (June 2026, mid-2025 population), London 46.5, England 43.8; trend June 2022-June 2026. Ward level not possible: childminder postcodes are redacted. Checked 2026-11-17."
   },
   {
     "lens": "local_social",

@@ -1430,47 +1430,372 @@
       "lens": "local_social",
       "dimension": "education",
       "target": {
-        "text": "GCSE attainment (grades 9-4 in English & Maths) target: London average for state-funded schools, same academic year",
-        "source_body": "Trust for London benchmarks",
-        "has_official_target": true
+        "text": "GCSE attainment (grade 4+ in English and maths) benchmark: London average, state-funded schools, same year",
+        "source_body": "DfE Key stage 4 performance",
+        "has_official_target": false
       },
       "indicator": "GCSE attainment (grades 9-4 in English & Maths)",
       "threshold": {
-        "value": 71.0,
+        "value": 70.9,
         "unit": "%",
-        "description": "London average (state-funded schools), 2023/24 - the same academic year as Lewisham's latest confirmed figure"
+        "description": "London, state-funded schools, 2025/26 (provisional)"
       },
       "snapshot": {
-        "value": 66.0,
+        "value": 65.5,
         "unit": "%",
-        "year": "2023/24",
+        "year": "2025/26",
         "date": null
       },
       "status": "shortfall",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - GCSE attainment in English and Maths by London borough",
-        "url": "https://trustforlondon.org.uk/data/gcse-attainment-borough/",
-        "accessed": "2026-07-18",
-        "notes": "66% of Lewisham pupils achieved grade 4 or above in both English and Maths GCSE in 2023/24 (summer 2024 exams), up from 61% in 2022/23 and 59% in 2018/19 (pre-pandemic baseline) - Lewisham Council's own Validated Outcomes 2024 Standards Report (lewisham.moderngov.co.uk) cites the 66%/59% comparison directly; the 61% figure for 2022/23 (58.8% boys, 63.2% girls) comes from GOV.UK's Ethnicity Facts and Figures local-authority breakdown of the same underlying DfE dataset. London (state-funded schools) averaged 71% for 2023/24 and 70.5% for 2024/25, against an England average of 64.8% (2024/25) and 65.1% (2022/23) - Lewisham has run below London throughout. Underlying primary source is DfE's Key Stage 4 performance statistics (published via Explore Education Statistics and reflected in GOV.UK Ethnicity Facts and Figures' local authority tables), which Trust for London's borough chart (the source originally listed in dimension_data_sources.json) also draws on. Trust for London's own interactive chart, and DfE's Explore Education Statistics portal, could not be queried directly in this session - both trustforlondon.org.uk and explore-education-statistics.service.gov.uk were blocked by this session's network egress policy - so the figures above were independently corroborated via Lewisham Council's own published Standards Report and GOV.UK's Ethnicity Facts and Figures instead, both of which trace back to the same DfE KS4 dataset. A confirmed Lewisham figure for 2024/25 (summer 2025 exams) was not found. 2019/20-2021/22 are excluded from the trend: GCSEs were not sat as standard exams in 2020 or 2021 (COVID-19 centre/teacher-assessed grading), DfE did not publish comparable local authority performance tables for those years, and a comparable grade-4 figure for 2021/22 could not be confirmed."
+        "name": "Department for Education - Key stage 4 performance, 2025/26 (Explore Education Statistics)",
+        "url": "https://explore-education-statistics.service.gov.uk/find-statistics/key-stage-4-performance",
+        "accessed": "2026-11-17",
+        "notes": "Percentage of pupils at the end of key stage 4 in state-funded schools achieving grade 4 or above in both English and maths (engmath_94_percent, establishment type 'All state-funded'), from the EES API data set 'Geography by school types data' (id 18e39901-b47f-4a75-9c4b-d529e590d916). Lewisham 2025/26 (provisional): 1,557 of 2,378 pupils, 65.5%; London 70.9%; Inner London 69.7%; England 64.8%. Lewisham 2018/19 58.1, 2022/23 61.0, 2023/24 65.0, 2024/25 63.1 (final). Earlier page figures of 59% (2019) and 66% (2023/24) were the council's rounded Standards Report figures; DfE's are used now. 2019/20 (66.6) and 2020/21 (67.5) used centre- and teacher-assessed grades and 2021/22 (66.6) was a transition year, so they are excluded from the chart. Grade-5 'strong pass' 2025/26: Lewisham 47.9%. Text claim on post-16 English and maths: DfE '16 to 19 funding: maths and English condition of funding' (students without grade 4 in maths and English get support to improve and progress)."
+      },
+      "confidence": "high",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2018/19",
+          "value": 58.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022/23",
+          "value": 61.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023/24",
+          "value": 65.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024/25",
+          "value": 63.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2025/26",
+          "value": 65.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018/19",
+          "value": 68.7,
+          "series": "London"
+        },
+        {
+          "period": "2022/23",
+          "value": 71.2,
+          "series": "London"
+        },
+        {
+          "period": "2023/24",
+          "value": 72.0,
+          "series": "London"
+        },
+        {
+          "period": "2024/25",
+          "value": 70.7,
+          "series": "London"
+        },
+        {
+          "period": "2025/26",
+          "value": 70.9,
+          "series": "London"
+        },
+        {
+          "period": "2018/19",
+          "value": 64.6,
+          "series": "England"
+        },
+        {
+          "period": "2022/23",
+          "value": 65.1,
+          "series": "England"
+        },
+        {
+          "period": "2023/24",
+          "value": 65.0,
+          "series": "England"
+        },
+        {
+          "period": "2024/25",
+          "value": 64.8,
+          "series": "England"
+        },
+        {
+          "period": "2025/26",
+          "value": 64.8,
+          "series": "England"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_social",
+      "dimension": "education",
+      "target": {
+        "text": "No official target; local authorities have a duty to encourage young people's participation to age 18.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "% of 16-17 year olds not in education, employment or training (NEET)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 1.9,
+        "unit": "%",
+        "year": "2025/26",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "Department for Education - Participation in education, training and NEET age 16 to 17 by local authority, 2025-26",
+        "url": "https://explore-education-statistics.service.gov.uk/find-statistics/participation-in-education-training-and-neet-age-16-to-17-by-local-authority/2025-26",
+        "accessed": "2026-11-17",
+        "notes": "ud_neet_characteristics.csv, age '16 to 17', characteristic 'Total'; average of December 2025, January and February 2026 (time_period 2026). Lewisham: cohort 6,973, NEET 134 (1.92%), activity not known 2.86%, NEET or not known 4.79%. London NEET 2.0%, not known 1.2%, NEET or not known 3.2%; England 3.4%, 2.4%, 5.8%. Lewisham by SEN: EHC plan 6.2% NEET, SEN support 3.9%, no SEN 1.4%. Lewisham's not-known share was 4.1-6.3% in 2023-2025. DfE warns the figures are management-information estimates that may be affected by local processing issues. Legal duty to participate to 18: Raising the Participation Age (Education and Skills Act 2008), as described in the release's Legislation section."
       },
       "confidence": "medium",
       "community_notes": [],
       "trend": [
         {
           "period": "2018/19",
-          "value": 59.0,
-          "note": "Pre-pandemic baseline, as cited in Lewisham Council's 2024 Standards Report"
+          "value": 1.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019/20",
+          "value": 1.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020/21",
+          "value": 1.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021/22",
+          "value": 1.1,
+          "series": "Lewisham"
         },
         {
           "period": "2022/23",
-          "value": 61.0,
-          "note": "58.8% boys / 63.2% girls - GOV.UK Ethnicity Facts and Figures local authority data"
+          "value": 1.5,
+          "series": "Lewisham"
         },
         {
           "period": "2023/24",
-          "value": 66.0,
-          "note": "Latest confirmed borough figure - Lewisham Council's Validated Outcomes 2024 Standards Report"
+          "value": 1.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024/25",
+          "value": 1.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2025/26",
+          "value": 1.9,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018/19",
+          "value": 1.7,
+          "series": "London"
+        },
+        {
+          "period": "2019/20",
+          "value": 1.8,
+          "series": "London"
+        },
+        {
+          "period": "2020/21",
+          "value": 1.8,
+          "series": "London"
+        },
+        {
+          "period": "2021/22",
+          "value": 1.5,
+          "series": "London"
+        },
+        {
+          "period": "2022/23",
+          "value": 1.6,
+          "series": "London"
+        },
+        {
+          "period": "2023/24",
+          "value": 1.8,
+          "series": "London"
+        },
+        {
+          "period": "2024/25",
+          "value": 1.9,
+          "series": "London"
+        },
+        {
+          "period": "2025/26",
+          "value": 2.0,
+          "series": "London"
+        },
+        {
+          "period": "2018/19",
+          "value": 2.6,
+          "series": "England"
+        },
+        {
+          "period": "2019/20",
+          "value": 2.7,
+          "series": "England"
+        },
+        {
+          "period": "2020/21",
+          "value": 2.8,
+          "series": "England"
+        },
+        {
+          "period": "2021/22",
+          "value": 2.6,
+          "series": "England"
+        },
+        {
+          "period": "2022/23",
+          "value": 2.8,
+          "series": "England"
+        },
+        {
+          "period": "2023/24",
+          "value": 3.2,
+          "series": "England"
+        },
+        {
+          "period": "2024/25",
+          "value": 3.4,
+          "series": "England"
+        },
+        {
+          "period": "2025/26",
+          "value": 3.4,
+          "series": "England"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_social",
+      "dimension": "education",
+      "target": {
+        "text": "No official target; councils have a statutory duty to secure sufficient childcare.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Registered childcare places per 100 children aged 0-4",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 61.6,
+        "unit": "places",
+        "year": "June 2026",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "Ofsted - Childcare providers and inspections: management information (as at 30 June 2026); ONS mid-year population estimates",
+        "url": "https://www.gov.uk/government/statistical-data-sets/childcare-providers-and-inspections-management-information",
+        "accessed": "2026-11-17",
+        "notes": "Numerator: Early Years Register places at end of quarter, all provision (Table 2a 'EYR places at end', which uses 'places including estimates'), as at 30 June 2022-2026: Lewisham 9,103.6 / 9,508.9 / 9,610.6 / 9,806.5 / 10,577.0. Lewisham June 2026 by type: childcare on non-domestic premises 177 providers, 9,223 places; childminders 208, 1,261; childcare on domestic premises 4, 93. Ofsted defines places as 'the maximum number of children aged under 8 that may attend the provision at any one time' - capacity, not vacancies, and not limited to under-5s. Denominator: ONS mid-year estimates, age 0-4 (NOMIS NM_2002_1), mid-2022 to mid-2025: Lewisham 18,513 / 17,958 / 17,580 / 17,184 (down 7.2% 2022-2025); June 2026 uses mid-2025 because mid-2026 is not yet published. Lewisham 61.6, London 46.5, England 43.8 places per 100 children (June 2026). Childminders' postcodes are redacted in the provider-level file, so a ward-level count is not possible."
+      },
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "June 2022",
+          "value": 49.2,
+          "series": "Lewisham"
+        },
+        {
+          "period": "June 2023",
+          "value": 53.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "June 2024",
+          "value": 54.7,
+          "series": "Lewisham"
+        },
+        {
+          "period": "June 2025",
+          "value": 57.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "June 2026",
+          "value": 61.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "June 2022",
+          "value": 42.8,
+          "series": "London"
+        },
+        {
+          "period": "June 2023",
+          "value": 43.3,
+          "series": "London"
+        },
+        {
+          "period": "June 2024",
+          "value": 44.0,
+          "series": "London"
+        },
+        {
+          "period": "June 2025",
+          "value": 45.1,
+          "series": "London"
+        },
+        {
+          "period": "June 2026",
+          "value": 46.5,
+          "series": "London"
+        },
+        {
+          "period": "June 2022",
+          "value": 42.1,
+          "series": "England"
+        },
+        {
+          "period": "June 2023",
+          "value": 41.3,
+          "series": "England"
+        },
+        {
+          "period": "June 2024",
+          "value": 41.7,
+          "series": "England"
+        },
+        {
+          "period": "June 2025",
+          "value": 42.9,
+          "series": "England"
+        },
+        {
+          "period": "June 2026",
+          "value": 43.8,
+          "series": "England"
         }
       ]
     },

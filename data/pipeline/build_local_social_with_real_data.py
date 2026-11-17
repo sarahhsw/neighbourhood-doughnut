@@ -354,42 +354,149 @@ def build_food_dimensions():
 
 def build_education():
     """
-    Education dimension - 1 indicator (GCSE attainment), matching
-    data/lookups/dimension_data_sources.json ("education"). Re-verified July 2026: the
-    site's previous 63.1%/"2023" figure paired a stale Lewisham value with what is actually
-    London's 2024/25 average, not a same-year comparison - see source notes for the
-    corrected, matched-year figures and the sourcing chain used to get them.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    Education dimension - 3 indicators matching data/lookups/dimension_data_sources.json
+    ("education"), rebuilt Nov 2026 from the primary DfE / Ofsted / ONS data:
+    GCSE attainment (DfE KS4 performance), % NEET aged 16-17 (DfE NCCIS by LA), and
+    registered childcare places per 100 children aged 0-4 (Ofsted childcare MI / ONS
+    mid-year estimates). All borough level: KS4 and NEET publish down to LA only, and
+    Ofsted redacts childminders' postcodes, so a Ladywell-only childcare count isn't possible.
+    Written into the ward JSON files by scripts/splice_dimension.py.
     """
+    # GCSE: % of pupils at state-funded schools achieving grade 4+ in both English and
+    # maths (engmath_94_percent), establishment_type_group 'All state-funded'. EES API data
+    # set "Geography by school types data" (18e39901-b47f-4a75-9c4b-d529e590d916), Key stage
+    # 4 performance 2025/26 (provisional; 2018/19 to 2024/25 final/revised). 2019/20 and
+    # 2020/21 (centre/teacher-assessed grades) and 2021/22 (exams back, DfE advises against
+    # comparison with other years) are left out of the chart.
+    gcse_pct = {
+        "Lewisham": {"2018/19": 58.1, "2022/23": 61.0, "2023/24": 65.0, "2024/25": 63.1, "2025/26": 65.5},
+        "London":   {"2018/19": 68.7, "2022/23": 71.2, "2023/24": 72.0, "2024/25": 70.7, "2025/26": 70.9},
+        "England":  {"2018/19": 64.6, "2022/23": 65.1, "2023/24": 65.0, "2024/25": 64.8, "2025/26": 64.8},
+    }
+    gcse_trend = [{"period": per, "value": v, "series": area}
+                  for area, pts in gcse_pct.items() for per, v in pts.items()]
     gcse = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="education",
         target=Target(
-            text="GCSE attainment (grades 9-4 in English & Maths) target: London average for state-funded schools, same academic year",
-            source_body="Trust for London benchmarks",
-            has_official_target=True
+            text="GCSE attainment (grade 4+ in English and maths) benchmark: London average, state-funded schools, same year",
+            source_body="DfE Key stage 4 performance",
+            has_official_target=False
         ),
         indicator="GCSE attainment (grades 9-4 in English & Maths)",
-        threshold=Threshold(value=71.0, unit="%", description="London average (state-funded schools), 2023/24 - the same academic year as Lewisham's latest confirmed figure"),
-        snapshot=Snapshot(value=66.0, unit="%", year="2023/24"),
+        threshold=Threshold(value=70.9, unit="%", description="London, state-funded schools, 2025/26 (provisional)"),
+        snapshot=Snapshot(value=65.5, unit="%", year="2025/26"),
         status=Status.SHORTFALL,
         source=Source(
-            name="Trust for London - GCSE attainment in English and Maths by London borough",
-            url="https://trustforlondon.org.uk/data/gcse-attainment-borough/",
-            accessed="2026-07-18",
-            notes="66% of Lewisham pupils achieved grade 4 or above in both English and Maths GCSE in 2023/24 (summer 2024 exams), up from 61% in 2022/23 and 59% in 2018/19 (pre-pandemic baseline) - Lewisham Council's own Validated Outcomes 2024 Standards Report (lewisham.moderngov.co.uk) cites the 66%/59% comparison directly; the 61% figure for 2022/23 (58.8% boys, 63.2% girls) comes from GOV.UK's Ethnicity Facts and Figures local-authority breakdown of the same underlying DfE dataset. London (state-funded schools) averaged 71% for 2023/24 and 70.5% for 2024/25, against an England average of 64.8% (2024/25) and 65.1% (2022/23) - Lewisham has run below London throughout. Underlying primary source is DfE's Key Stage 4 performance statistics (published via Explore Education Statistics and reflected in GOV.UK Ethnicity Facts and Figures' local authority tables), which Trust for London's borough chart (the source originally listed in dimension_data_sources.json) also draws on. Trust for London's own interactive chart, and DfE's Explore Education Statistics portal, could not be queried directly in this session - both trustforlondon.org.uk and explore-education-statistics.service.gov.uk were blocked by this session's network egress policy - so the figures above were independently corroborated via Lewisham Council's own published Standards Report and GOV.UK's Ethnicity Facts and Figures instead, both of which trace back to the same DfE KS4 dataset. A confirmed Lewisham figure for 2024/25 (summer 2025 exams) was not found. 2019/20-2021/22 are excluded from the trend: GCSEs were not sat as standard exams in 2020 or 2021 (COVID-19 centre/teacher-assessed grading), DfE did not publish comparable local authority performance tables for those years, and a comparable grade-4 figure for 2021/22 could not be confirmed."
+            name="Department for Education - Key stage 4 performance, 2025/26 (Explore Education Statistics)",
+            url="https://explore-education-statistics.service.gov.uk/find-statistics/key-stage-4-performance",
+            accessed="2026-11-17",
+            notes=(
+                "Percentage of pupils at the end of key stage 4 in state-funded schools achieving grade 4 or above in "
+                "both English and maths (engmath_94_percent, establishment type 'All state-funded'), from the EES API "
+                "data set 'Geography by school types data' (id 18e39901-b47f-4a75-9c4b-d529e590d916). Lewisham "
+                "2025/26 (provisional): 1,557 of 2,378 pupils, 65.5%; London 70.9%; Inner London 69.7%; England 64.8%. "
+                "Lewisham 2018/19 58.1, 2022/23 61.0, 2023/24 65.0, 2024/25 63.1 (final). Earlier page figures of "
+                "59% (2019) and 66% (2023/24) were the council's rounded Standards Report figures; DfE's are used now. "
+                "2019/20 (66.6) and 2020/21 (67.5) used centre- and teacher-assessed grades and 2021/22 (66.6) was a "
+                "transition year, so they are excluded from the chart. Grade-5 'strong pass' 2025/26: Lewisham 47.9%. "
+                "Text claim on post-16 English and maths: DfE '16 to 19 funding: maths and English condition of "
+                "funding' (students without grade 4 in maths and English get support to improve and progress)."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        trend=gcse_trend
+    )
+
+    # NEET: % of 16-17 year olds (academic age) not in education, employment or training,
+    # average of December/January/February. DfE "Participation in education, training and
+    # NEET age 16 to 17 by local authority" 2025-26, ud_neet_characteristics.csv, age
+    # '16 to 17', characteristic 'Total'. time_period 2026 = Dec 2025-Feb 2026 (shown as
+    # 2025/26). Not-known share reported separately in notes and text.
+    neet_pct = {
+        "Lewisham": {2019: 1.84, 2020: 1.76, 2021: 1.38, 2022: 1.15, 2023: 1.51, 2024: 1.58, 2025: 1.56, 2026: 1.92},
+        "London":   {2019: 1.7, 2020: 1.8, 2021: 1.8, 2022: 1.5, 2023: 1.6, 2024: 1.8, 2025: 1.9, 2026: 2.0},
+        "England":  {2019: 2.6, 2020: 2.7, 2021: 2.8, 2022: 2.6, 2023: 2.8, 2024: 3.2, 2025: 3.4, 2026: 3.4},
+    }
+    neet_trend = [{"period": f"{yr-1}/{str(yr)[2:]}", "value": round(v, 1), "series": area}
+                  for area, pts in neet_pct.items() for yr, v in pts.items()]
+    neet = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="education",
+        indicator="% of 16-17 year olds not in education, employment or training (NEET)",
+        snapshot=Snapshot(value=1.9, unit="%", year="2025/26"),
+        source=Source(
+            name="Department for Education - Participation in education, training and NEET age 16 to 17 by local authority, 2025-26",
+            url="https://explore-education-statistics.service.gov.uk/find-statistics/participation-in-education-training-and-neet-age-16-to-17-by-local-authority/2025-26",
+            accessed="2026-11-17",
+            notes=(
+                "ud_neet_characteristics.csv, age '16 to 17', characteristic 'Total'; average of December 2025, January "
+                "and February 2026 (time_period 2026). Lewisham: cohort 6,973, NEET 134 (1.92%), activity not known "
+                "2.86%, NEET or not known 4.79%. London NEET 2.0%, not known 1.2%, NEET or not known 3.2%; England 3.4%, "
+                "2.4%, 5.8%. Lewisham by SEN: EHC plan 6.2% NEET, SEN support 3.9%, no SEN 1.4%. Lewisham's not-known "
+                "share was 4.1-6.3% in 2023-2025. DfE warns the figures are management-information estimates that may "
+                "be affected by local processing issues. Legal duty to participate to 18: Raising the Participation Age "
+                "(Education and Skills Act 2008), as described in the release's Legislation section."
+            )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
-        trend=[
-            {"period": "2018/19", "value": 59.0, "note": "Pre-pandemic baseline, as cited in Lewisham Council's 2024 Standards Report"},
-            {"period": "2022/23", "value": 61.0, "note": "58.8% boys / 63.2% girls - GOV.UK Ethnicity Facts and Figures local authority data"},
-            {"period": "2023/24", "value": 66.0, "note": "Latest confirmed borough figure - Lewisham Council's Validated Outcomes 2024 Standards Report"},
-        ]
+        target_text="No official target; local authorities have a duty to encourage young people's participation to age 18.",
+        trend=neet_trend
     )
-    return [gcse]
+
+    # Childcare places per 100 children aged 0-4: Ofsted "EYR places at end" (Early Years
+    # Register places including estimates, all provision; Table 2a of the childcare
+    # providers and inspections management information, as at 30 June each year) divided
+    # by ONS mid-year population aged 0-4 (NOMIS NM_2002_1) for the same 30 June. Mid-2026
+    # estimates aren't published yet, so June 2026 uses mid-2025.
+    cc_places = {
+        "Lewisham": {2022: 9103.59, 2023: 9508.9, 2024: 9610.6, 2025: 9806.45, 2026: 10576.96},
+        "London":   {2022: 224548.53, 2023: 226804.5, 2024: 229669.9, 2025: 231718.66, 2026: 238652.66},
+        "England":  {2022: 1290036.7, 2023: 1266488.9, 2024: 1274210.8, 2025: 1288696.2, 2026: 1317004.04},
+    }
+    pop_0_4 = {
+        "Lewisham": {2022: 18513, 2023: 17958, 2024: 17580, 2025: 17184},
+        "London":   {2022: 524356, 2023: 523675, 2024: 522446, 2025: 513549},
+        "England":  {2022: 3061181, 2023: 3065740, 2024: 3053783, 2025: 3003917},
+    }
+    cc_trend = [{"period": f"June {yr}", "value": round(pl / pop_0_4[area][min(yr, 2025)] * 100, 1), "series": area}
+                for area, pts in cc_places.items() for yr, pl in pts.items()]
+    childcare = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="education",
+        indicator="Registered childcare places per 100 children aged 0-4",
+        snapshot=Snapshot(value=61.6, unit="places", year="June 2026"),
+        source=Source(
+            name="Ofsted - Childcare providers and inspections: management information (as at 30 June 2026); ONS mid-year population estimates",
+            url="https://www.gov.uk/government/statistical-data-sets/childcare-providers-and-inspections-management-information",
+            accessed="2026-11-17",
+            notes=(
+                "Numerator: Early Years Register places at end of quarter, all provision (Table 2a 'EYR places at end', "
+                "which uses 'places including estimates'), as at 30 June 2022-2026: Lewisham 9,103.6 / 9,508.9 / "
+                "9,610.6 / 9,806.5 / 10,577.0. Lewisham June 2026 by type: childcare on non-domestic premises 177 "
+                "providers, 9,223 places; childminders 208, 1,261; childcare on domestic premises 4, 93. Ofsted defines "
+                "places as 'the maximum number of children aged under 8 that may attend the provision at any one "
+                "time' - capacity, not vacancies, and not limited to under-5s. Denominator: ONS mid-year estimates, "
+                "age 0-4 (NOMIS NM_2002_1), mid-2022 to mid-2025: Lewisham 18,513 / 17,958 / 17,580 / 17,184 (down "
+                "7.2% 2022-2025); June 2026 uses mid-2025 because mid-2026 is not yet published. Lewisham 61.6, London "
+                "46.5, England 43.8 places per 100 children (June 2026). Childminders' postcodes are redacted in the "
+                "provider-level file, so a ward-level count is not possible."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        target_text="No official target; councils have a statutory duty to secure sufficient childcare.",
+        trend=cc_trend
+    )
+    return [gcse, neet, childcare]
 
 def build_income():
     """

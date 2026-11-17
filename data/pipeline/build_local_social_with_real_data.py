@@ -447,7 +447,7 @@ def build_education():
                 "be affected by local processing issues. Legal duty to participate to 18: Raising the Participation Age "
                 "(Education and Skills Act 2008), as described in the release's Legislation section. 16-24 NEET is published only "
                 "nationally and by region (DfE 'NEET age 16 to 24', EES data set 019cc380-4628-71be-bdc2-a01a95b64c89, LFS): "
-                "London Q4 (Oct-Dec) 2025 12.0% (+/-2.6), England 13.3%."
+                "London 2025 quarters 12.4 / 12.5 / 15.1 / 12.0% (Q4 +/-2.6), average 13.0%; England Q4 13.3%."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,

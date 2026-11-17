@@ -599,11 +599,11 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Education-specific explanations
         if (baseName === 'GCSE attainment (grades 9-4 in English & Maths)') {
-            return `This is the share of pupils at state-funded schools who get at least a grade 4, a standard pass, in both English and Maths GCSE. In Lewisham, 65.5% did in 2025/26, below London's 70.9%. That leaves about one in three pupils without it; colleges and sixth forms must keep teaching those students English and Maths to receive their funding. The gap with London isn't because Lewisham has many more disadvantaged pupils (38.5% against 36.2%): both disadvantaged pupils (53.0% against 57.4%) and others (73.3% against 78.5%) pass less often than their London peers. Results from 2019/20 to 2021/22 are left out of the chart, because grades in the pandemic years were assessed differently and can't be compared. The figures come from the Department for Education, and those for 2025/26 are provisional.`;
+            return `This is the share of pupils at state-funded schools who get at least a grade 4, a standard pass, in both English and Maths GCSE. In Lewisham, 65.5% did in 2025/26, below London's 70.9%. That leaves about one in three pupils without it; colleges and sixth forms must keep teaching those students English and Maths to receive their funding. The gap with London isn't because Lewisham has many more disadvantaged pupils, those on free school meals in the past six years or in care (38.5% against 36.2%): both disadvantaged pupils (53.0% against 57.4%) and others (73.3% against 78.5%) pass less often than their London peers. Pandemic-era results (2019/20 to 2021/22) are left off the chart because grading changed. Department for Education figures; 2025/26 is provisional.`;
         }
 
         if (baseName === '% of 16-17 year olds not in education, employment or training (NEET)') {
-            return `This is the share of 16 and 17 year olds not in education, employment or training, averaged over December to February; young people in England must stay in education or training until 18. In Lewisham it was 1.9% in 2025/26, about 134 young people, close to London's 2.0%. The council didn't know what a further 2.9% were doing, against 1.2% across London, so the true share may be higher. Young people with an education, health and care plan for special educational needs were far more likely to be out of education or work: 6.2%. For 16 to 24 year olds, figures are published only for regions: 12.0% of young Londoners were out of education, employment or training in October to December 2025. The figures come from the Department for Education.`;
+            return `This is the share of 16 and 17 year olds not in education, employment or training, averaged over December to February; young people in England must stay in education or training until 18. In Lewisham it was 1.9% in 2025/26, about 134 young people, close to London's 2.0%. The council didn't know what a further 2.9% were doing, against 1.2% across London, so the true share may be higher. Young people with an education, health and care plan were far more likely to be out of education or work: 6.2%, against 1.4% of those without special educational needs. For 16 to 24 year olds, only regional survey estimates exist: about 13% of young Londoners in 2025. These figures come from the Department for Education.`;
         }
 
         if (baseName === 'Registered childcare places per 100 children aged 0-4') {
@@ -1011,14 +1011,14 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Education dimension council context - the council's Standards Report (school
         // results and its Progress 8 framing). Figures were removed from the card in Nov 2026
-        // because the page's GCSE data now comes straight from DfE; the report link is on the
-        // bot-blocked lewisham.moderngov.co.uk host. NEET and childcare have no card yet.
+        // because the page's GCSE data now comes straight from DfE; the report (1 April 2025) is
+        // read via WebFetch of the councilmeetings mirror (curl gets 403). NEET and childcare have no card yet.
         if (dimensionName === 'education') {
             return [{
                 title: 'Validated Outcomes 2024 Standards Report — Primary and Secondary Schools',
                 year: 'April 2025',
                 url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=119735',
-                summary: `<p>Lewisham's April 2025 standards report found that two in three pupils got a grade 4 in English and Maths in 2024, in line with England but behind London. Progress 8, which compares pupils' progress with similar pupils nationally, was above the England average but below London and similar boroughs. The council's priorities show where it sees the problem: uneven results between secondary schools, and gaps for disadvantaged, Black and Mixed-heritage pupils that open early, which it aims to narrow from the end of Reception and in early phonics. For secondary schools, its plan is to spread what works through head teacher meetings and new networks for senior leaders, and to raise the share of pupils getting a stronger grade 5 in English and Maths.</p>`
+                summary: `<p>Lewisham's April 2025 standards report found that two in three pupils got a grade 4 in English and Maths in 2024, in line with the England average. Progress 8, which compares pupils' progress with similar pupils nationally, was above the England average but below London and similar boroughs. Its priorities include narrowing the gap for Black pupils at the end of Reception, and for pupils on free school meals and Black and Mixed-heritage pupils in early phonics, and reducing uneven results between secondary schools. For secondary schools, its plan is to spread what works through head teacher meetings and new networks for senior leaders, and to raise the share of pupils getting a stronger grade 5 in English and Maths.</p>`
             },
             {
                 title: 'Perspectives from global education research',

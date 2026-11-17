@@ -526,90 +526,147 @@ def build_income():
 def build_equality():
     """
     Equality dimension - 4 indicators matching data/lookups/dimension_data_sources.json
-    ("equality"). Only one indicator (pay inequality) has a genuine borough-level figure;
-    the other three are London-wide, because no Lewisham- or borough-specific data was
-    found after a real search effort for wealth share, gender pay gap, or ethnicity pay
-    gap (see per-indicator source notes for what was tried). "Pay gap (ethnic, gender)" in
-    the source registry has been split into two separate indicators - gender and ethnicity
-    pay gaps come from different underlying ONS surveys (ASHE vs Annual Population Survey)
-    and telling genuinely distinct stories, so combining them into one number would have
-    hidden more than it showed. dimension_data_sources.json updated accordingly (4 rows).
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    ("equality"). Pay inequality is a genuine Lewisham (residence-based) series from ONS ASHE
+    Table 8, charted against London and England. Wealth inequality has no borough-level
+    source at all, so it uses ONS's London vs Great Britain wealth percentiles. Gender and
+    ethnicity pay gaps are London-wide (see per-indicator source notes). Gender and
+    ethnicity gaps are split into two indicators because they come from different ONS
+    surveys (ASHE vs Annual Population Survey).
+    Written into the ward JSON files by scripts/splice_dimension.py.
     """
+    # Pay inequality: 80th / 20th percentile of gross hourly pay, all employee jobs,
+    # place of RESIDENCE (ONS ASHE Table 8). This is the same series Trust for London
+    # charts (its Lewisham 2015/2019/2025 values 2.6/2.59/2.43 match Table 8 exactly),
+    # but taken from the raw ONS data so the full annual trend can be plotted.
+    # 2017-2024: NOMIS NM_30_1 (ASHE resident analysis, current revised versions).
+    # 2025: Table 8.5a 2025 revised. 2026: Table 8.5a 2026 provisional (ONS, 22 Oct 2026).
+    # Each value is P80 / P20 rounded to 2dp; (P20, P80) in pounds kept alongside.
+    pay_ratio_pcts = {
+        "Lewisham": {2017: (9.59, 25.26), 2018: (10.00, 25.55), 2019: (10.21, 26.46), 2020: (10.57, 29.13),
+                     2021: (10.82, 26.84), 2022: (11.50, 27.42), 2023: (12.44, 30.88), 2024: (13.46, 33.71),
+                     2025: (14.72, 36.30), 2026: (15.44, 38.28)},
+        "London":   {2017: (9.62, 26.20), 2018: (9.88, 27.36), 2019: (10.27, 28.10), 2020: (10.55, 29.12),
+                     2021: (11.00, 29.04), 2022: (11.57, 29.63), 2023: (12.54, 31.86), 2024: (13.53, 33.50),
+                     2025: (14.40, 36.29), 2026: (15.12, 39.41)},
+        "England":  {2017: (8.49, 21.14), 2018: (8.74, 21.75), 2019: (9.20, 22.50), 2020: (9.52, 23.17),
+                     2021: (9.98, 23.44), 2022: (10.56, 24.15), 2023: (11.57, 25.72), 2024: (12.50, 27.38),
+                     2025: (13.24, 28.97), 2026: (13.90, 30.77)},
+    }
+    pay_ratio_trend = []
+    for area in ("Lewisham", "London", "England"):
+        for yr, (p20, p80) in pay_ratio_pcts[area].items():
+            point = {"period": str(yr), "value": round(p80 / p20, 2), "series": area}
+            if yr == 2026:
+                point["note"] = "Provisional (ASHE 2026); revised figures due October 2027"
+            pay_ratio_trend.append(point)
+
     pay_inequality = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
         target=Target(
-            text="Pay inequality (80:20 hourly wage ratio) target: England average pay inequality",
-            source_body="Trust for London benchmarks (underlying: ONS ASHE via NOMIS)",
-            has_official_target=True
+            text="Pay inequality (80:20 hourly pay ratio) benchmark: England average",
+            source_body="ONS Annual Survey of Hours and Earnings (ASHE), Table 8",
+            has_official_target=False
         ),
         indicator="Pay inequality (80th:20th percentile ratio)",
-        threshold=Threshold(value=1.52, unit="ratio", description="England average 80:20 hourly pay ratio"),
-        snapshot=Snapshot(value=2.43, unit="ratio", year=2023),
+        threshold=Threshold(value=2.21, unit="ratio", description="England 80:20 hourly pay ratio, 2026 (provisional)"),
+        snapshot=Snapshot(value=2.48, unit="ratio", year=2026),
         status=Status.SHORTFALL,
         source=Source(
-            name="Trust for London - Pay inequality by London borough",
-            url="https://trustforlondon.org.uk/data/pay-inequality-borough/",
-            accessed="2026-07-17",
+            name="ONS Annual Survey of Hours and Earnings (ASHE) Table 8 - place of residence by local authority",
+            url="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/placeofresidencebylocalauthorityashetable8",
+            accessed="2026-11-17",
             notes=(
-                "Lewisham's 80:20 hourly wage ratio is 2.43 (the top-paid 20% earn 2.43x more per hour than the "
-                "bottom-paid 20%), vs an England average of 1.52 and a London average of 2.5. Underlying source: "
-                "ONS Annual Survey of Hours and Earnings (ASHE) via NOMIS. Re-verified 2026-07-17: this figure is "
-                "still shown as Lewisham's current value and is independently corroborated across multiple Trust "
-                "for London borough/data pages. However, the Trust for London page itself now shows a 'last "
-                "updated January 2026' stamp and states pay inequality has fallen in most London boroughs since "
-                "the prior release (Lewisham is not among the four named exceptions - Hackney, Wandsworth, "
-                "Hammersmith & Fulham, Richmond upon Thames - where it rose), which suggests a newer (likely "
-                "2024 ASHE-based) figure may now be live and slightly lower than 2.43. This session's tools "
-                "(WebFetch and direct curl) were blocked by the environment's egress policy for "
-                "trustforlondon.org.uk, ons.gov.uk and nomisweb.co.uk, so the exact updated value and the "
-                "multi-year trend behind the interactive chart could not be extracted - only the aggregate "
-                "figures summarised in search results were retrievable. No historical series is included below "
-                "for this reason; adding one would mean fabricating intermediate points, which the project's "
-                "spec explicitly prohibits. A follow-up session with working page-fetch access should re-check "
-                "this page directly for both the current value and the 2015-2025 trend."
+                "Ratio of the 80th to the 20th percentile of gross hourly pay, all employee jobs, by place of "
+                "residence (Table 8.5a, 'All' sheet). Lewisham 2026 (provisional): P20 GBP 15.44, P80 GBP 38.28 "
+                "-> 2.48; London P20 15.12, P80 39.41 -> 2.61; England P20 13.90, P80 30.77 -> 2.21. 2025 values "
+                "from the 2025 revised Table 8; 2017-2024 from NOMIS dataset NM_30_1 (ASHE resident analysis, "
+                "hourly pay - gross, items '20 percentile' and '80 percentile'), "
+                "https://www.nomisweb.co.uk/datasets/asher. This is the same series Trust for London charts at "
+                "trustforlondon.org.uk/data/pay-inequality-borough/ (its Lewisham values for 2015, 2019 and 2025 - "
+                "2.6, 2.59, 2.43 - match ONS's figures, the 2025 one being the provisional release). Trust for "
+                "London's England 2025 value of 1.52 does not match ONS (2.18 provisional, 2.19 revised) and looks "
+                "like an error, so it is not used. Sampling uncertainty: ONS rates Lewisham's P80 estimate with a "
+                "coefficient of variation of roughly 8-11% in recent years (P20 about 2%), so year-to-year moves "
+                "in the Lewisham line are within noise; the London and England lines are far more precise. "
+                "2020 and 2021 ASHE data carry extra uncertainty from the pandemic, and ONS notes 2023 onwards "
+                "may not be directly comparable with 2022 because of methodological changes. Cause cited in "
+                "indicator text: Low Pay Commission Report 2025 says raising the National Living Wage towards "
+                "two-thirds of median earnings 'unavoidably compresses the lower half of the aggregate pay "
+                "distribution in relative terms'; LPC 2025 coverage tables put residence-based minimum wage "
+                "coverage (jobs paid at or within 5p of the applicable rate) at 2.7% for Lewisham against 6.6% "
+                "for the UK (https://www.gov.uk/government/publications/low-pay-commission-report-2025)."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM
+        confidence=Confidence.MEDIUM,
+        trend=pay_ratio_trend
     )
 
-    wealth_share_poorest_half = create_descriptive_dimension(
+    # Wealth inequality: no borough, ward or LSOA wealth-distribution data exists. The
+    # only source, ONS's Wealth and Assets Survey (WAS), publishes regional figures at
+    # best (London: ~1,200 households sampled in 2020-22). The GLA's poorest-50% share
+    # (data.london.gov.uk dataset 2y5m7) stops at 2016-18 and its earlier rounds are more
+    # than 10 years old, so the trend uses ONS's own regional percentile points instead
+    # (Total wealth tables, Table 2.8, released 24 Jan 2025), which run to 2020-22.
+    wealth_pcts = {
+        # period: {area: (P25, P75)} household total wealth, GBP
+        "2016-18": {"London": (39600, 882100), "Great Britain": (69100, 709000)},
+        "2018-20": {"London": (32200, 902400), "Great Britain": (71000, 733800)},
+        "2020-22": {"London": (30500, 791400), "Great Britain": (70500, 662100)},
+    }
+    wealth_period_labels = {
+        "2016-18": "April 2016 to March 2018", "2018-20": "April 2018 to March 2020",
+        "2020-22": "April 2020 to March 2022",
+    }
+    wealth_ratio_trend = [
+        {"period": per, "value": round(p75 / p25, 1), "series": area,
+         "note": f"ONS Wealth and Assets Survey, {wealth_period_labels[per]}"}
+        for area in ("London", "Great Britain")
+        for per, areas in wealth_pcts.items()
+        for (p25, p75) in [areas[area]]
+    ]
+
+    wealth_gap = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
-        indicator="% of wealth held by the poorest 50%",
-        snapshot=Snapshot(value=4.0, unit="%", year=2022),
+        indicator="Wealth gap between richer and poorer households (75th:25th percentile ratio)",
+        snapshot=Snapshot(value=25.9, unit="ratio", year="2020-22"),
         source=Source(
-            name="GLA London Datastore - Economic Fairness: Wealth Inequality",
-            url="https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
-            accessed="2026-07-17",
+            name="ONS Household total wealth in Great Britain - Total wealth tables (Wealth and Assets Survey), Table 2.8",
+            url="https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/datasets/totalwealthwealthingreatbritain",
+            accessed="2026-11-17",
             notes=(
-                "No Lewisham- or borough-level wealth distribution figure exists (the underlying ONS Wealth and "
-                "Assets Survey - WAS - is not designed to produce reliable local authority estimates), so this "
-                "uses the GLA's London-wide figure instead, labelled accordingly: households in the bottom half "
-                "of London's wealth distribution hold just 4% of the capital's total household wealth, while the "
-                "richest 10% of households hold over 60%. Underlying source: ONS Wealth and Assets Survey "
-                "microdata, as analysed by the GLA's Economic Fairness programme. An older Trust for London "
-                "page (trustforlondon.org.uk/data/wealth-distribution/, now archived and no longer updated) put "
-                "the same England-wide poorest-50%-wealth-share at 9% and London's bottom-half share at 6.8%, "
-                "using 2018-2020 WAS data - the GLA's 4% figure is treated as the more current reference here, "
-                "but the two aren't a clean like-for-like trend (different WAS rounds/methodology), so no trend "
-                "array is given rather than implying a precise year-on-year decline. Caveat: the Office for "
-                "Statistics Regulation removed WAS's Official Statistics accreditation in June 2025, saying it "
-                "was 'no longer of sufficient value or quality to meet users' needs' - treat this figure as "
-                "broadly indicative of London's wealth concentration, not a precise measurement. This session's "
-                "WebFetch/curl tools were blocked for both trustforlondon.org.uk and ons.gov.uk, so the exact "
-                "WAS survey round behind the GLA's 4% figure could not be independently confirmed."
+                "Ratio of the 75th to the 25th percentile of household total wealth (property, financial, "
+                "physical and private pension wealth, net of debts), Table 2.8 'Distribution of household total "
+                "wealth, by region', July 2006 to June 2016 and April 2014 to March 2022 edition (released 24 "
+                "January 2025; the latest WAS release). London April 2020 to March 2022: P25 GBP 30,500, P75 "
+                "GBP 791,400 -> 25.9; Great Britain P25 70,500, P75 662,100 -> 9.4. Earlier points: London 2016-18 "
+                "39,600/882,100 (22.3), 2018-20 32,200/902,400 (28.0); GB 2016-18 69,100/709,000 (10.3), "
+                "2018-20 71,000/733,800 (10.3). London's unweighted sample is 1,214 households in 2020-22, so "
+                "the London percentiles (especially P25) are imprecise and the 2018-20 to 2020-22 dip should not "
+                "be read as a real change. No borough, ward or LSOA wealth-distribution estimate exists. Property "
+                "share (Table 2.7): net property wealth was 51% of London household wealth in 2020-22 against "
+                "40% across GB. The GLA's Economic Fairness dataset 'Wealth inequality' "
+                "(data.london.gov.uk/download/2y5m7/..., WAS microdata) puts the bottom half of London "
+                "households' share of total wealth at 4% (rounded) in April 2016 to March 2018 (GB: 8%); its "
+                "earlier rounds (5.8% in 2010-12, 4.9% in 2012-14, 4.5% in 2014-16) are more than ten years old "
+                "and the series was not updated beyond 2016-18, so it is cited in text but not charted. The "
+                "Office for Statistics Regulation suspended WAS's accredited official statistics status on 13 June "
+                "2025 over falling response rates and quality concerns - treat these as indicative. Home "
+                "ownership in text: ONS Subnational estimates of households by tenure, England, 2022 to 2024 "
+                "(released 11 February 2026), Lewisham 2024 owned outright 15.33% + owned with mortgage or loan "
+                "27.88% = 43.2%; England 62.4% (sum of regional household counts)."
             )
         ),
         geography=GeographyLevel.LONDON_INHERITED,
         confidence=Confidence.LOW,
-        target_text="No official GLA or UK Government target established for this indicator."
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=wealth_ratio_trend
     )
 
     gender_pay_gap = create_descriptive_dimension(
@@ -678,7 +735,7 @@ def build_equality():
         ]
     )
 
-    return [pay_inequality, wealth_share_poorest_half, gender_pay_gap, ethnicity_pay_gap]
+    return [pay_inequality, wealth_gap, gender_pay_gap, ethnicity_pay_gap]
 
 # Keep existing dimensions from build_local_social_full.py for dimensions without new data
 def build_water_dimensions():

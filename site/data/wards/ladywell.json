@@ -2745,32 +2745,187 @@
       "lens": "local_social",
       "dimension": "equality",
       "target": {
-        "text": "Pay inequality (80:20 hourly wage ratio) target: England average pay inequality",
-        "source_body": "Trust for London benchmarks (underlying: ONS ASHE via NOMIS)",
-        "has_official_target": true
+        "text": "Pay inequality (80:20 hourly pay ratio) benchmark: England average",
+        "source_body": "ONS Annual Survey of Hours and Earnings (ASHE), Table 8",
+        "has_official_target": false
       },
       "indicator": "Pay inequality (80th:20th percentile ratio)",
       "threshold": {
-        "value": 1.52,
+        "value": 2.21,
         "unit": "ratio",
-        "description": "England average 80:20 hourly pay ratio"
+        "description": "England 80:20 hourly pay ratio, 2026 (provisional)"
       },
       "snapshot": {
-        "value": 2.43,
+        "value": 2.48,
         "unit": "ratio",
-        "year": 2023,
+        "year": 2026,
         "date": null
       },
       "status": "shortfall",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Pay inequality by London borough",
-        "url": "https://trustforlondon.org.uk/data/pay-inequality-borough/",
-        "accessed": "2026-07-17",
-        "notes": "Lewisham's 80:20 hourly wage ratio is 2.43 (the top-paid 20% earn 2.43x more per hour than the bottom-paid 20%), vs an England average of 1.52 and a London average of 2.5. Underlying source: ONS Annual Survey of Hours and Earnings (ASHE) via NOMIS. Re-verified 2026-07-17: this figure is still shown as Lewisham's current value and is independently corroborated across multiple Trust for London borough/data pages. However, the Trust for London page itself now shows a 'last updated January 2026' stamp and states pay inequality has fallen in most London boroughs since the prior release (Lewisham is not among the four named exceptions - Hackney, Wandsworth, Hammersmith & Fulham, Richmond upon Thames - where it rose), which suggests a newer (likely 2024 ASHE-based) figure may now be live and slightly lower than 2.43. This session's tools (WebFetch and direct curl) were blocked by the environment's egress policy for trustforlondon.org.uk, ons.gov.uk and nomisweb.co.uk, so the exact updated value and the multi-year trend behind the interactive chart could not be extracted - only the aggregate figures summarised in search results were retrievable. No historical series is included below for this reason; adding one would mean fabricating intermediate points, which the project's spec explicitly prohibits. A follow-up session with working page-fetch access should re-check this page directly for both the current value and the 2015-2025 trend."
+        "name": "ONS Annual Survey of Hours and Earnings (ASHE) Table 8 - place of residence by local authority",
+        "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/placeofresidencebylocalauthorityashetable8",
+        "accessed": "2026-11-17",
+        "notes": "Ratio of the 80th to the 20th percentile of gross hourly pay, all employee jobs, by place of residence (Table 8.5a, 'All' sheet). Lewisham 2026 (provisional): P20 GBP 15.44, P80 GBP 38.28 -> 2.48; London P20 15.12, P80 39.41 -> 2.61; England P20 13.90, P80 30.77 -> 2.21. 2025 values from the 2025 revised Table 8; 2017-2024 from NOMIS dataset NM_30_1 (ASHE resident analysis, hourly pay - gross, items '20 percentile' and '80 percentile'), https://www.nomisweb.co.uk/datasets/asher. This is the same series Trust for London charts at trustforlondon.org.uk/data/pay-inequality-borough/ (its Lewisham values for 2015, 2019 and 2025 - 2.6, 2.59, 2.43 - match ONS's figures, the 2025 one being the provisional release). Trust for London's England 2025 value of 1.52 does not match ONS (2.18 provisional, 2.19 revised) and looks like an error, so it is not used. Sampling uncertainty: ONS rates Lewisham's P80 estimate with a coefficient of variation of roughly 8-11% in recent years (P20 about 2%), so year-to-year moves in the Lewisham line are within noise; the London and England lines are far more precise. 2020 and 2021 ASHE data carry extra uncertainty from the pandemic, and ONS notes 2023 onwards may not be directly comparable with 2022 because of methodological changes. Cause cited in indicator text: Low Pay Commission Report 2025 says raising the National Living Wage towards two-thirds of median earnings 'unavoidably compresses the lower half of the aggregate pay distribution in relative terms'; LPC 2025 coverage tables put residence-based minimum wage coverage (jobs paid at or within 5p of the applicable rate) at 2.7% for Lewisham against 6.6% for the UK (https://www.gov.uk/government/publications/low-pay-commission-report-2025)."
       },
       "confidence": "medium",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2017",
+          "value": 2.63,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018",
+          "value": 2.56,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019",
+          "value": 2.59,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020",
+          "value": 2.76,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021",
+          "value": 2.48,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022",
+          "value": 2.38,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023",
+          "value": 2.48,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024",
+          "value": 2.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2025",
+          "value": 2.47,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2026",
+          "value": 2.48,
+          "series": "Lewisham",
+          "note": "Provisional (ASHE 2026); revised figures due October 2027"
+        },
+        {
+          "period": "2017",
+          "value": 2.72,
+          "series": "London"
+        },
+        {
+          "period": "2018",
+          "value": 2.77,
+          "series": "London"
+        },
+        {
+          "period": "2019",
+          "value": 2.74,
+          "series": "London"
+        },
+        {
+          "period": "2020",
+          "value": 2.76,
+          "series": "London"
+        },
+        {
+          "period": "2021",
+          "value": 2.64,
+          "series": "London"
+        },
+        {
+          "period": "2022",
+          "value": 2.56,
+          "series": "London"
+        },
+        {
+          "period": "2023",
+          "value": 2.54,
+          "series": "London"
+        },
+        {
+          "period": "2024",
+          "value": 2.48,
+          "series": "London"
+        },
+        {
+          "period": "2025",
+          "value": 2.52,
+          "series": "London"
+        },
+        {
+          "period": "2026",
+          "value": 2.61,
+          "series": "London",
+          "note": "Provisional (ASHE 2026); revised figures due October 2027"
+        },
+        {
+          "period": "2017",
+          "value": 2.49,
+          "series": "England"
+        },
+        {
+          "period": "2018",
+          "value": 2.49,
+          "series": "England"
+        },
+        {
+          "period": "2019",
+          "value": 2.45,
+          "series": "England"
+        },
+        {
+          "period": "2020",
+          "value": 2.43,
+          "series": "England"
+        },
+        {
+          "period": "2021",
+          "value": 2.35,
+          "series": "England"
+        },
+        {
+          "period": "2022",
+          "value": 2.29,
+          "series": "England"
+        },
+        {
+          "period": "2023",
+          "value": 2.22,
+          "series": "England"
+        },
+        {
+          "period": "2024",
+          "value": 2.19,
+          "series": "England"
+        },
+        {
+          "period": "2025",
+          "value": 2.19,
+          "series": "England"
+        },
+        {
+          "period": "2026",
+          "value": 2.21,
+          "series": "England",
+          "note": "Provisional (ASHE 2026); revised figures due October 2027"
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -2782,28 +2937,66 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "% of wealth held by the poorest 50%",
+      "indicator": "Wealth gap between richer and poorer households (75th:25th percentile ratio)",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 4.0,
-        "unit": "%",
-        "year": 2022,
+        "value": 25.9,
+        "unit": "ratio",
+        "year": "2020-22",
         "date": null
       },
       "status": "descriptive_only",
       "geography_of_data": "london_inherited",
       "source": {
-        "name": "GLA London Datastore - Economic Fairness: Wealth Inequality",
-        "url": "https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
-        "accessed": "2026-07-17",
-        "notes": "No Lewisham- or borough-level wealth distribution figure exists (the underlying ONS Wealth and Assets Survey - WAS - is not designed to produce reliable local authority estimates), so this uses the GLA's London-wide figure instead, labelled accordingly: households in the bottom half of London's wealth distribution hold just 4% of the capital's total household wealth, while the richest 10% of households hold over 60%. Underlying source: ONS Wealth and Assets Survey microdata, as analysed by the GLA's Economic Fairness programme. An older Trust for London page (trustforlondon.org.uk/data/wealth-distribution/, now archived and no longer updated) put the same England-wide poorest-50%-wealth-share at 9% and London's bottom-half share at 6.8%, using 2018-2020 WAS data - the GLA's 4% figure is treated as the more current reference here, but the two aren't a clean like-for-like trend (different WAS rounds/methodology), so no trend array is given rather than implying a precise year-on-year decline. Caveat: the Office for Statistics Regulation removed WAS's Official Statistics accreditation in June 2025, saying it was 'no longer of sufficient value or quality to meet users' needs' - treat this figure as broadly indicative of London's wealth concentration, not a precise measurement. This session's WebFetch/curl tools were blocked for both trustforlondon.org.uk and ons.gov.uk, so the exact WAS survey round behind the GLA's 4% figure could not be independently confirmed."
+        "name": "ONS Household total wealth in Great Britain - Total wealth tables (Wealth and Assets Survey), Table 2.8",
+        "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/datasets/totalwealthwealthingreatbritain",
+        "accessed": "2026-11-17",
+        "notes": "Ratio of the 75th to the 25th percentile of household total wealth (property, financial, physical and private pension wealth, net of debts), Table 2.8 'Distribution of household total wealth, by region', July 2006 to June 2016 and April 2014 to March 2022 edition (released 24 January 2025; the latest WAS release). London April 2020 to March 2022: P25 GBP 30,500, P75 GBP 791,400 -> 25.9; Great Britain P25 70,500, P75 662,100 -> 9.4. Earlier points: London 2016-18 39,600/882,100 (22.3), 2018-20 32,200/902,400 (28.0); GB 2016-18 69,100/709,000 (10.3), 2018-20 71,000/733,800 (10.3). London's unweighted sample is 1,214 households in 2020-22, so the London percentiles (especially P25) are imprecise and the 2018-20 to 2020-22 dip should not be read as a real change. No borough, ward or LSOA wealth-distribution estimate exists. Property share (Table 2.7): net property wealth was 51% of London household wealth in 2020-22 against 40% across GB. The GLA's Economic Fairness dataset 'Wealth inequality' (data.london.gov.uk/download/2y5m7/..., WAS microdata) puts the bottom half of London households' share of total wealth at 4% (rounded) in April 2016 to March 2018 (GB: 8%); its earlier rounds (5.8% in 2010-12, 4.9% in 2012-14, 4.5% in 2014-16) are more than ten years old and the series was not updated beyond 2016-18, so it is cited in text but not charted. The Office for Statistics Regulation suspended WAS's accredited official statistics status on 13 June 2025 over falling response rates and quality concerns - treat these as indicative. Home ownership in text: ONS Subnational estimates of households by tenure, England, 2022 to 2024 (released 11 February 2026), Lewisham 2024 owned outright 15.33% + owned with mortgage or loan 27.88% = 43.2%; England 62.4% (sum of regional household counts)."
       },
       "confidence": "low",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2016-18",
+          "value": 22.3,
+          "series": "London",
+          "note": "ONS Wealth and Assets Survey, April 2016 to March 2018"
+        },
+        {
+          "period": "2018-20",
+          "value": 28.0,
+          "series": "London",
+          "note": "ONS Wealth and Assets Survey, April 2018 to March 2020"
+        },
+        {
+          "period": "2020-22",
+          "value": 25.9,
+          "series": "London",
+          "note": "ONS Wealth and Assets Survey, April 2020 to March 2022"
+        },
+        {
+          "period": "2016-18",
+          "value": 10.3,
+          "series": "Great Britain",
+          "note": "ONS Wealth and Assets Survey, April 2016 to March 2018"
+        },
+        {
+          "period": "2018-20",
+          "value": 10.3,
+          "series": "Great Britain",
+          "note": "ONS Wealth and Assets Survey, April 2018 to March 2020"
+        },
+        {
+          "period": "2020-22",
+          "value": 9.4,
+          "series": "Great Britain",
+          "note": "ONS Wealth and Assets Survey, April 2020 to March 2022"
+        }
+      ]
     },
     {
       "ward": "Ladywell",

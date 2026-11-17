@@ -428,18 +428,18 @@
     "dimension": "equality",
     "category": "Empowered",
     "indicator": "Hourly wage ratio",
-    "source_url": "https://trustforlondon.org.uk/data/pay-inequality-borough/",
-    "granularity": "London boroughs",
-    "notes": "Underlying source: ONS Annual Survey of Hours and Earnings (ASHE) via NOMIS. Re-verified 2026-07-17: Lewisham's 80:20 hourly wage ratio is 2.43 vs England's 1.52 average. Trust for London's page shows a 'last updated January 2026' stamp reporting pay inequality has fallen in most London boroughs since the prior release (Lewisham not named among the four exceptions), but this session's WebFetch/curl tools were blocked by the environment's egress policy for trustforlondon.org.uk and ons.gov.uk, so neither the exact updated value nor the multi-year trend behind the interactive chart could be extracted - a follow-up session with working page-fetch access should re-check both."
+    "source_url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/placeofresidencebylocalauthorityashetable8",
+    "granularity": "Local authority (place of residence)",
+    "notes": "ONS Annual Survey of Hours and Earnings (ASHE) Table 8.5a, gross hourly pay, all employee jobs: ratio of 80th to 20th percentile. Lewisham 2026 (provisional) 2.48, London 2.61, England 2.21. Trend 2017-2026: NOMIS NM_30_1 for 2017-2024, Table 8 2025 revised and 2026 provisional. Same series as Trust for London's pay-inequality-borough chart (its Lewisham values match ONS), but Trust for London's England 2025 value of 1.52 does not match ONS (2.19) and is not used. Checked 2026-11-17."
   },
   {
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
-    "indicator": "% wealth hold by poorest 50%",
-    "source_url": "https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
-    "granularity": "London-wide",
-    "notes": "No Lewisham- or borough-level wealth distribution figure exists (ONS's Wealth and Assets Survey - WAS - isn't designed to support reliable local authority estimates). Uses the GLA's London-wide figure instead: bottom half of London households hold 4% of the capital's total wealth. Underlying source: ONS Wealth and Assets Survey microdata via the GLA's Economic Fairness programme. Caveat: the Office for Statistics Regulation removed WAS's Official Statistics accreditation in June 2025, citing insufficient quality - treat as indicative. An older, now-archived Trust for London page (trustforlondon.org.uk/data/wealth-distribution/, 2018-2020 WAS data) put London's bottom-half wealth share at 6.8% and England's poorest-50%-share at 9%; not used as the headline figure here since it's no longer updated, but kept as background context."
+    "indicator": "Wealth gap between richer and poorer households (75th:25th percentile ratio)",
+    "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/datasets/totalwealthwealthingreatbritain",
+    "granularity": "London-wide (region)",
+    "notes": "Framework indicator was '% wealth held by poorest 50%'. No borough, ward or LSOA wealth-distribution data exists; ONS's Wealth and Assets Survey reports regions at best. The GLA's poorest-half share (data.london.gov.uk dataset 2y5m7, WAS microdata) stops at April 2016-March 2018 (London 4%, GB 8%) and earlier rounds are over ten years old, so it is cited in text only. Charted instead: ONS Total wealth tables Table 2.8 (released 24 Jan 2025), 75th/25th percentile of household total wealth, London vs Great Britain, 2016-18 to 2020-22 (London 25.9, GB 9.4 in 2020-22). OSR suspended WAS accreditation on 13 June 2025 - treat as indicative. Home ownership context from ONS Subnational estimates of households by tenure, England, 2022 to 2024. Checked 2026-11-17."
   },
   {
     "lens": "local_social",

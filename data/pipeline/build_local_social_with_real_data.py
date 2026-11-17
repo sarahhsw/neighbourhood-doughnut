@@ -402,6 +402,10 @@ def build_education():
                 "59% (2019) and 66% (2023/24) were the council's rounded Standards Report figures; DfE's are used now. "
                 "2019/20 (66.6) and 2020/21 (67.5) used centre- and teacher-assessed grades and 2021/22 (66.6) was a "
                 "transition year, so they are excluded from the chart. Grade-5 'strong pass' 2025/26: Lewisham 47.9%. "
+                "Disadvantage (EES data set National characteristics summary data, 19e39901-560d-f972-b6f3-dd085539c095, "
+                "2025/26): disadvantaged pupils 38.5% of Lewisham's cohort v 36.2% London; grade 4+ English and maths: "
+                "disadvantaged 53.0% Lewisham v 57.4% London, not known to be disadvantaged 73.3% v 78.5%. Progress 8 is not "
+                "published for 2025/26. 
                 "Text claim on post-16 English and maths: DfE '16 to 19 funding: maths and English condition of "
                 "funding' (students without grade 4 in maths and English get support to improve and progress)."
             )
@@ -441,7 +445,9 @@ def build_education():
                 "2.4%, 5.8%. Lewisham by SEN: EHC plan 6.2% NEET, SEN support 3.9%, no SEN 1.4%. Lewisham's not-known "
                 "share was 4.1-6.3% in 2023-2025. DfE warns the figures are management-information estimates that may "
                 "be affected by local processing issues. Legal duty to participate to 18: Raising the Participation Age "
-                "(Education and Skills Act 2008), as described in the release's Legislation section."
+                "(Education and Skills Act 2008), as described in the release's Legislation section. 16-24 NEET is published only "
+                "nationally and by region (DfE 'NEET age 16 to 24', EES data set 019cc380-4628-71be-bdc2-a01a95b64c89, LFS): "
+                "London Q4 (Oct-Dec) 2025 12.0% (+/-2.6), England 13.3%."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,

@@ -1967,6 +1967,17 @@ behind it. The poverty card now follows the same order: the plan's status in one
 problem and aim, its main tool so far, where the older commitments now sit, and its priorities.
 General rule: one paragraph, in that order, with every sentence a plain statement about the plan.
 
+**Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
+reported results and a Progress 8 concern without saying why Lewisham trails London or what the
+council is doing about it. The user asked for the reason and said always ask why and so what. The
+card now says where the council sees the problem (uneven results between secondary schools, gaps for
+disadvantaged, Black and Mixed-heritage pupils that open early) and what it is doing (sharing
+practice through head teacher meetings and senior-leader networks, raising grade 5 passes), and the
+GCSE indicator text adds DfE's breakdown showing the London gap is not explained by Lewisham having
+more disadvantaged pupils. General rule: for every finding on the page, the reader should learn why
+it is the case (from a source) and what follows from it (the response, or the consequence); if the
+source gives no reason, say what the data does and doesn't explain.
+
 ## 4. "Get Involved" Section
 
 **Replaced August 2026.** This section used to be "Neighbour Voices" - a fictional-but-realistic

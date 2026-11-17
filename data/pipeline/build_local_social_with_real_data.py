@@ -405,7 +405,7 @@ def build_education():
                 "Disadvantage (EES data set National characteristics summary data, 19e39901-560d-f972-b6f3-dd085539c095, "
                 "2025/26): disadvantaged pupils 38.5% of Lewisham's cohort v 36.2% London; grade 4+ English and maths: "
                 "disadvantaged 53.0% Lewisham v 57.4% London, not known to be disadvantaged 73.3% v 78.5%. Progress 8 is not "
-                "published for 2025/26. 
+                "published for 2025/26. "
                 "Text claim on post-16 English and maths: DfE '16 to 19 funding: maths and English condition of "
                 "funding' (students without grade 4 in maths and English get support to improve and progress)."
             )

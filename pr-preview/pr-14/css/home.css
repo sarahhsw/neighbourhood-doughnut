@@ -1,0 +1,334 @@
+/* Homepage hero — ported from Claude Design "Homepage Concepts" (2a desktop / 2d mobile) */
+
+/* The homepage is a single fixed-viewport screen, not a scrolling page. */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* styles.css caps main's width for ward.html's desktop layout — not wanted here. */
+    max-width: none;
+    margin: 0;
+}
+
+.home-header {
+    flex-shrink: 0;
+    padding: 12px 22px 0;
+    display: block;
+}
+
+.home-brand {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+@media (min-width: 768px) {
+    .home-header {
+        padding: 14px 48px;
+    }
+
+    .home-brand {
+        font-size: 16px;
+    }
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-doughnut {
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-doughnut svg {
+    pointer-events: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-search {
+    position: relative;
+}
+
+.hero-search input {
+    font-family: var(--font-sans);
+    outline: none;
+}
+
+.hero-search input::placeholder {
+    color: rgba(36, 18, 38, 0.4);
+}
+
+.search-results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    z-index: 5;
+    animation: dropIn 0.16s ease-out;
+    box-shadow: 4px 4px 0 rgba(36, 18, 38, 0.13);
+}
+
+.search-results.hidden {
+    display: none;
+}
+
+.search-result {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--font-sans);
+}
+
+.search-tag {
+    font-weight: 700;
+}
+
+.search-tag.live {
+    color: var(--met);
+}
+
+.search-tag.soon {
+    color: rgba(36, 18, 38, 0.47);
+}
+
+.search-empty {
+    font-style: italic;
+    color: rgba(36, 18, 38, 0.47);
+}
+
+.search-picked {
+    background: var(--ringA);
+    color: var(--paper);
+    border: 2px solid var(--ink);
+    font-weight: 600;
+    animation: fadeUp 0.2s ease-out;
+}
+
+.search-picked.hidden {
+    display: none;
+}
+
+/* Mobile hero (default) — content column, then the doughnut filling the rest of the
+   screen (left half visible, cropped/bled off the right edge, flush with the bottom) */
+.hero-mobile {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-desktop {
+    display: none;
+}
+
+.hero-mobile .hero-content {
+    flex-shrink: 0;
+    padding: 28px 22px 12px 34px;
+    max-width: 230px;
+}
+
+.hero-mobile .hero-headline {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 29px;
+    line-height: 1.06;
+    margin: 0 0 6px;
+    color: var(--ink);
+}
+
+.hero-mobile .hero-subtitle {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0.67;
+    margin: 0 0 10px;
+}
+
+.hero-mobile .hero-search input {
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.hero-mobile .search-results {
+    top: 44px;
+    border-radius: 14px;
+    padding: 6px;
+}
+
+.hero-mobile .search-result {
+    padding: 9px 10px;
+    border-radius: 8px;
+    font-size: 12.5px;
+}
+
+.hero-mobile .search-tag {
+    font-size: 10px;
+}
+
+.hero-mobile .search-empty {
+    padding: 10px;
+    font-size: 11.5px;
+}
+
+.hero-mobile .search-picked {
+    margin-top: 12px;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 12px;
+}
+
+.hero-mobile .hero-doughnut {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Desktop hero — centered content, half-doughnut pinned to the bottom */
+@media (min-width: 768px) {
+    .hero-mobile {
+        display: none;
+    }
+
+    .hero-desktop {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-desktop .hero-content {
+        flex-shrink: 0;
+        text-align: center;
+        padding: 16px 48px 0;
+    }
+
+    .hero-desktop .hero-headline {
+        font-family: var(--font-serif);
+        font-weight: 700;
+        font-size: 52px;
+        line-height: 1.02;
+        margin: 0 0 8px;
+        color: var(--ink);
+    }
+
+    .hero-desktop .hero-subtitle {
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--ink);
+        opacity: 0.67;
+        max-width: 520px;
+        margin: 0 auto 14px;
+    }
+
+    .hero-desktop .hero-search {
+        max-width: 460px;
+        margin: 0 auto;
+    }
+
+    .hero-desktop .hero-search input {
+        width: 100%;
+        box-sizing: border-box;
+        background: transparent;
+        border: 2px solid var(--ink);
+        border-radius: 26px;
+        padding: 14px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink);
+        text-align: center;
+    }
+
+    .hero-desktop .search-results {
+        top: 52px;
+        border-radius: 16px;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .hero-desktop .search-result {
+        padding: 11px 12px;
+        border-radius: 9px;
+        font-size: 14px;
+    }
+
+    .hero-desktop .search-tag {
+        font-size: 11px;
+    }
+
+    .hero-desktop .search-empty {
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .hero-desktop .search-picked {
+        max-width: 460px;
+        margin: 14px auto 0;
+        border-radius: 14px;
+        padding: 12px 16px;
+        font-size: 13.5px;
+    }
+
+    .hero-desktop .hero-doughnut {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+    }
+}
+
+@keyframes dropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes doughnutIn {
+    from { opacity: 0; transform: scale(0.86); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -436,7 +436,7 @@
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
-    "indicator": "% wealth hold by poorest 50%",
+    "indicator": "% wealth held by bottom 50%",
     "source_url": "https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
     "granularity": "London-wide (region)",
     "notes": "Share of household wealth held by households in the bottom half of the Great Britain wealth distribution. GLA Economic Fairness dataset (wealth-inequality.xls, ONS Wealth and Assets Survey microdata), London vs GB, 2010-12 to 2016-18. Latest (April 2016-March 2018): London 3.8% (45.6% of London households are in GB's bottom half), GB 8.5%, recomputed from decile totals (the Summary sheet rounds to 4 and 8). No borough/ward/LSOA data exists and no newer London decile breakdown has been published. Points before 2016-18 are over ten years old, kept at the user's request as the only series for this framework indicator. OSR suspended WAS accreditation 13 June 2025 - treat as indicative. Checked 2026-11-17."

@@ -528,7 +528,7 @@ def build_equality():
     Equality dimension - 5 indicators matching data/lookups/dimension_data_sources.json
     ("equality"). Pay inequality is a genuine Lewisham (residence-based) series from ONS ASHE
     Table 8, charted against London and England. Wealth inequality has no borough-level
-    source at all, so it uses the GLA's London vs Great Britain share held by the poorest half. The three
+    source at all, so it uses the GLA's London vs Great Britain share held by the bottom half. The three
     employment rate gaps (gender, ethnicity, disability) are London-wide and share one
     chart (they replaced the gender and ethnicity pay gap indicators in Nov 2026).
     Written into the ward JSON files by scripts/splice_dimension.py.
@@ -604,7 +604,7 @@ def build_equality():
         trend=pay_ratio_trend
     )
 
-    # Wealth inequality: % of wealth held by the poorest 50% (the framework's own indicator;
+    # Wealth inequality: % of wealth held by the bottom 50% (the framework's own indicator;
     # the user asked for it back in Nov 2026 after a short-lived swap to ONS's 75th:25th
     # percentile ratio). No borough, ward or LSOA wealth-distribution data exists; ONS's
     # Wealth and Assets Survey (WAS) reports regions at best. GLA Economic Fairness dataset
@@ -631,7 +631,7 @@ def build_equality():
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
-        indicator="% of wealth held by the poorest 50%",
+        indicator="% of wealth held by the bottom 50%",
         snapshot=Snapshot(value=3.8, unit="%", year="2016-18"),
         source=Source(
             name="GLA London Datastore - Economic Fairness: Wealth inequality (ONS Wealth and Assets Survey microdata)",

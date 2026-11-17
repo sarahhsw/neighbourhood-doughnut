@@ -680,6 +680,14 @@ agree they can personally influence decisions". General rule: when the summary d
 indicator, give its figure in plain words ("about a third, 32%") rather than only a relative
 position.
 
+**Keep related indicators together in the summary, and drop a "why" clause that doesn't help the
+reader (Equality, November 2026).** The summary ran pay inequality, then a sentence on the National
+Living Wage and minimum-wage coverage, then wealth, then employment gaps. The user said the
+minimum-wage sentence had no clear point and should go, and that the two job-related indicators
+(pay inequality and employment gaps) should sit next to each other. General rule: order the summary
+by theme, so indicators about the same thing are adjacent; a cause belongs in the summary only when it
+changes how the reader understands the finding, otherwise leave it in the indicator text.
+
 ### 2.2 Description Writing Style
 
 **CRITICAL: Descriptions must be narrative, concise, and findings-focused**
@@ -1046,6 +1054,22 @@ or jobs up; say where on the line each figure sits), never with inverted constru
 rate only a fifth earn more than". Replace a source's metaphor (squeeze, compress, bite, spillover)
 with what literally happens to whom. Test each sentence by reading it aloud once: if it needs a
 second read, rewrite it.
+
+**Use the plain everyday phrase, not a constructed one (Equality, November 2026, second round).**
+The fix above went too far the other way: "a job a fifth of the way down from the top paid £38.28 an
+hour: 2.48 times the £15.44 paid by a job a fifth of the way up from the bottom", and in the
+summary "one a fifth of the way down from the top of the pay scale paid about two and a half times
+as much per hour as one a fifth of the way up from the bottom". The user called both cryptic and
+asked for normal conversational language such as "top fifth" and "bottom fifth". It became "the
+best-paid fifth of jobs paid £38.28 an hour or more, and the lowest-paid fifth £15.44 or less: a
+ratio of 2.48". General rule: say it the way a person would say it out loud; reach for the common
+phrase ("top fifth", "bottom half") before building a precise but unusual one.
+
+**Say "bottom" and "top", not "poorest" and "richest", for distribution groups (Equality, November
+2026).** The wealth indicator was named "% of wealth held by the poorest 50%". The user asked for
+"bottom" throughout, name and copy included. General rule: describe distribution groups by their
+position ("bottom 50%", "top tenth"), which is neutral and matches the measure, rather than labelling
+the people in them.
 
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`
@@ -1905,6 +1929,17 @@ was unnecessary and that context cards shouldn't link back to indicators on the 
 rule: a card says what the policy sets out to do and what it found; leave dates of meetings,
 counts of recommendations and governance arrangements out, and let the reader connect it to the
 indicators themselves.
+
+**Structure a council-plan card as problem, response, takeaway - not as a history (Equality,
+November 2026).** The first Poverty Reduction Approach card walked through the Poverty Commission,
+the Lewisham Deal, the Strategic Partnership and the Cost-of-Living Programme in date order. The user
+said it read like a stream of consciousness and asked: what are the main problems or opportunities,
+and what is the reader's main takeaway? It became three short paragraphs: the problem (one in three
+residents in poverty after housing costs) and the response so far (mostly emergency cash support);
+where the longer-term levers sit (the Strategic Partnership's workstreams); and an explicit takeaway
+(a plan to reduce poverty rather than respond to crises was still being built in 2025, with three
+stated priorities). General rule: lead with the problem, say what the plan does about it, and end
+with one sentence the reader should remember; history only where it explains the present.
 
 ## 4. "Get Involved" Section
 

@@ -2901,7 +2901,7 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "% of wealth held by the poorest 50%",
+      "indicator": "% of wealth held by the bottom 50%",
       "threshold": {
         "value": null,
         "unit": null,

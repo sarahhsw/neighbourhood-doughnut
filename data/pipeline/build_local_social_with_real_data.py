@@ -704,7 +704,7 @@ def build_equality():
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
         indicator="Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)",
-        snapshot=Snapshot(value=22.0, unit="%", year=2023),
+        snapshot=Snapshot(value=22.0, unit="%", year=2022),
         source=Source(
             name="GLA London Datastore - Economic Fairness: Ethnicity Pay Gap",
             url="https://data.london.gov.uk/economic-fairness/labour-market/ethnicity-pay-gap",
@@ -731,7 +731,7 @@ def build_equality():
         trend=[
             {"period": "2018", "value": 21.7, "note": "ONS Ethnicity pay gaps in Great Britain: 2018 (London region, unadjusted gap)"},
             {"period": "2019", "value": 23.8, "note": "ONS Ethnicity pay gaps in Great Britain: 2019 (London region, unadjusted gap)"},
-            {"period": "2023", "value": 22.0, "note": "GLA Economic Fairness states 'more than 22%'; exact decimal not confirmed this session"},
+            {"period": "2022", "value": 22.0, "note": "GLA Economic Fairness ethnicity_pay_gap.xlsx: 22.53% median gap, London, 2022 (fact-checked 2026-11-17)"},
         ]
     )
 

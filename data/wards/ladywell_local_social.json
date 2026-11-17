@@ -3014,7 +3014,7 @@
       "snapshot": {
         "value": 22.0,
         "unit": "%",
-        "year": 2023,
+        "year": 2022,
         "date": null
       },
       "status": "descriptive_only",
@@ -3039,9 +3039,9 @@
           "note": "ONS Ethnicity pay gaps in Great Britain: 2019 (London region, unadjusted gap)"
         },
         {
-          "period": "2023",
+          "period": "2022",
           "value": 22.0,
-          "note": "GLA Economic Fairness states 'more than 22%'; exact decimal not confirmed this session"
+          "note": "GLA Economic Fairness ethnicity_pay_gap.xlsx: 22.53% median gap, London, 2022 (fact-checked 2026-11-17)"
         }
       ]
     },

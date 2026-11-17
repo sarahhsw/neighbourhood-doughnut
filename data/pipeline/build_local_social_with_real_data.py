@@ -417,7 +417,8 @@ def build_income():
     "Unemployment rate" (survey estimate with a wide local margin of error) and the income-dimension "Index of
     Multiple Deprivation Decile" (user chose poverty rate instead; the key IMD 2025 findings
     are folded into the poverty text/top summary - verified against IoD2025 File 7 and
-    File 10). The peace_justice IMD indicator is separate and untouched.
+    File 10). The peace_justice IMD indicator was removed separately, at the user's request,
+    in November 2026.
 
     The claimant count (NM_162_1) was its own indicator for part of November 2026; at the
     user's request it was removed and its insight folded into the out-of-work benefits text:
@@ -1415,104 +1416,123 @@ def build_energy():
 
 def build_peace_justice():
     """
-    Peace & Justice dimension - 2 indicators (crime rate; IMD Crime domain deprivation).
-
-    IMPORTANT PROVENANCE NOTE (2026-07-18 build): the intended primary sources for both
-    indicators - MPS Recorded Crime: Geographic Breakdown (data.london.gov.uk, genuine
-    ward-level monthly crime counts for Ladywell) and Trust for London's Crime-domain-specific
-    IMD 2025 page (trustforlondon.org.uk) - could NOT be downloaded/parsed this session due to
-    a sustained outbound-network access failure in this environment (confirmed via repeated
-    curl/fetch attempts against these hosts AND neutral control hosts like example.com and
-    en.wikipedia.org, all returning connection failures across a multi-hour window). Per
-    DIMENSION_PAGE_SPECIFICATION.md's hard rule against fabricating data, both indicators below
-    use the best real, sourced figures locatable via web search of secondary aggregators built
-    on the same underlying MPS/MHCLG datasets, at Confidence.MEDIUM/LOW with the specific
-    limitation spelled out in each Source.notes. Both should be revisited to pull the true
-    ward-level MPS figure and the true Crime-domain LSOA decile once direct source access is
-    restored - see notes below for exactly what's missing and where to get it.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    Peace & Justice dimension - 2 indicators (November 2026 rebuild):
+    1. Crime rate per 1,000 residents - Ladywell ward, from MPS Recorded Crime: Geographic
+       Breakdown (London Datastore), with Lewisham and London built from the same ward file.
+    2. % of residents who trust the Metropolitan Police - Lewisham borough, from MOPAC's Public
+       Attitude Survey (Public Voice quarterly packs, London Datastore dataset 'MOPAC Surveys').
+    The previous build used crime-rate aggregator websites (the London Datastore was
+    unreachable in July 2026) and an overall-IMD proxy; the IMD indicator was removed at the
+    user's request in November 2026.
     """
     crime_rate = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="peace_justice",
-        indicator="Crime rate per 1,000 population",
-        snapshot=Snapshot(value=93.0, unit="per 1,000 population", year="2025/26", date="12 months to ~Feb 2026"),
+        indicator="Crime rate per 1,000 residents",
+        snapshot=Snapshot(value=119.3, unit="per 1,000 residents", year="12 months to Oct 2026", date="November 2025 - October 2026"),
         source=Source(
-            name="MPS recorded crime data (Lewisham borough-wide), via CrimeRate.co.uk and homenicom.co.uk aggregation of Metropolitan Police statistics",
-            url="https://homenicom.co.uk/area/lewisham/crime-rate",
-            accessed="2026-07-18",
+            name="Metropolitan Police Service - MPS Recorded Crime: Geographic Breakdown (London Datastore); ONS small-area population estimates (Nomis)",
+            url="https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
+            accessed="2026-11-14",
             notes=(
-                "Lewisham borough-wide recorded crime rate. crimerate.co.uk reports ~93 per 1,000 "
-                "population for the 12 months to ~Feb 2026 (vs London's 82 per 1,000 on a "
-                "daytime-population basis - not a like-for-like comparison, included here for "
-                "directional context only); homenicom.co.uk separately reports 94.4 per 1,000 to "
-                "September 2025, explicitly attributed to 'official Metropolitan Police statistics'. "
-                "A third aggregator (scos.co.uk) reports a notably higher 119.4 per 1,000 for 2025, "
-                "likely reflecting a different scope/population base and treated as an outlier, not "
-                "used. PRIMARY SOURCE NOT YET DIRECTLY QUERIED: the MPS Recorded Crime: Geographic "
-                "Breakdown dataset (data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m) "
-                "publishes genuine ward-level monthly crime counts for Ladywell specifically (by Home "
-                "Office offence category, back to 2008 for historic categories / 2019 for current "
-                "ones) - a future update should download it directly and divide Ladywell's 12-month "
-                "total by Ladywell's ONS/Census population to get a true ward-level rate, rather than "
-                "this borough-wide figure. This session could not download/parse it due to a sustained "
-                "network access failure. Partial ward-level context found via search: Ladywell recorded "
-                "192 violence-and-sexual-offence incidents in the 12 months to March 2026 (unchanged "
-                "from 2025), the single largest crime category, plus 29 robbery, 21 theft-from-person, "
-                "8 weapons-possession and 5 shoplifting offences over the same period (crimerate.co.uk, "
-                "itself built on police.uk/MPS data) - this is a partial category list, not an "
-                "exhaustive cross-category total, so was not used as the headline figure."
+                "Counts: 'MPS Ward Level Crime (most recent 24 months)' (Nov 2024-Oct 2026) and 'MPS Ward Level Crime "
+                "(Historical)' (Nov 2020-Oct 2024), both from the 6 November 2026 release, summed across all offence "
+                "groups for WardCode E05013725 over 12-month years ending October. Ladywell totals: 1,528 (Nov 2020-Oct "
+                "2021), 1,446, 1,573, 1,720, 1,711, 1,833 (Nov 2025-Oct 2026). Lewisham and London are the sums of every "
+                "ward in the same files (London = the 32 MPS boroughs; the City of London has its own police force and "
+                "is not included): Lewisham 26,757 / 28,367 / 30,246 / 28,752 / 28,014 / 30,263; London 777,017 / "
+                "864,237 / 919,687 / 881,139 / 870,614 / 879,261. Ward files are used for all three so the comparison is "
+                "like for like: from March 2024 some offences appear in the MPS borough file without a ward (Lewisham "
+                "borough file 31,450 vs ward sum 30,263 for Nov 2025-Oct 2026), so ward-based totals from then on run "
+                "slightly low and the recent rise is, if anything, understated. Ladywell by offence group, Nov 2020-Oct "
+                "2021 vs Nov 2025-Oct 2026: violence against the person 526 -> 818 (of which violence without injury "
+                "219 -> 433, violence with injury 192 -> 248, stalking and harassment 115 -> 136); theft 203 -> 248; "
+                "public order 142 -> 153; criminal damage and arson 132 -> 134; vehicle offences 183 -> 117; sexual "
+                "offences 69 -> 101; burglary 100 -> 80; drugs 92 -> 75; robbery 37 -> 68. Denominators: ONS "
+                "'Population estimates - small area (2021 based)' (Nomis NM_2014_1), all persons, mid-year of the year "
+                "each period ends in: Ladywell 15,631 (2021), 15,505 (2022), 15,476 (2023), 15,363 (2024); Lewisham "
+                "300,013 / 299,164 / 300,225 / 301,255; London region minus City of London 8,796,080 / 8,859,753 / "
+                "8,986,099 / 9,074,625. Mid-2024 is the latest ward estimate, so it is used for the 2025 and 2026 "
+                "periods too. The first period (Nov 2020-Oct 2021) includes lockdown months, so page text measures change from Nov 2021-Oct 2022 (1,446). Rates are recorded crimes per resident, not per visitor or worker, so areas with town "
+                "centres, stations or hospitals can score high. Replaces the July 2026 figure (93 per 1,000, Lewisham "
+                "borough-wide, from crimerate.co.uk / homenicom.co.uk), which was taken from aggregator websites because "
+                "the London Datastore was unreachable at the time."
             )
         ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM,
-        target_text="No official GLA or UK Government target established for this indicator."
+        geography=GeographyLevel.WARD,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "Oct 2021", "value": 97.8, "series": "Ladywell"},
+            {"period": "Oct 2022", "value": 93.3, "series": "Ladywell"},
+            {"period": "Oct 2023", "value": 101.6, "series": "Ladywell"},
+            {"period": "Oct 2024", "value": 112.0, "series": "Ladywell"},
+            {"period": "Oct 2025", "value": 111.4, "series": "Ladywell"},
+            {"period": "Oct 2026", "value": 119.3, "series": "Ladywell"},
+            {"period": "Oct 2021", "value": 89.2, "series": "Lewisham"},
+            {"period": "Oct 2022", "value": 94.8, "series": "Lewisham"},
+            {"period": "Oct 2023", "value": 100.7, "series": "Lewisham"},
+            {"period": "Oct 2024", "value": 95.4, "series": "Lewisham"},
+            {"period": "Oct 2025", "value": 93.0, "series": "Lewisham"},
+            {"period": "Oct 2026", "value": 100.5, "series": "Lewisham"},
+            {"period": "Oct 2021", "value": 88.3, "series": "London"},
+            {"period": "Oct 2022", "value": 97.5, "series": "London"},
+            {"period": "Oct 2023", "value": 102.3, "series": "London"},
+            {"period": "Oct 2024", "value": 97.1, "series": "London"},
+            {"period": "Oct 2025", "value": 95.9, "series": "London"},
+            {"period": "Oct 2026", "value": 96.9, "series": "London"},
+        ]
     )
 
-    imd_crime_decile = create_descriptive_dimension(
+    trust_police = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="peace_justice",
-        indicator="Index of Multiple Deprivation Decile",
-        snapshot=Snapshot(value=172, unit="rank out of 296 English local authorities (IMD 2025, overall/all-domain; 1 = most deprived)", year=2025),
+        indicator="% of residents who trust the Metropolitan Police",
+        snapshot=Snapshot(value=60, unit="%", year="2025/26", date="12 months to March 2026"),
         source=Source(
-            name="MHCLG English Indices of Deprivation 2025 (overall/all-domain local authority summary), via Ladywell Live reporting on the government release",
-            url="https://ladywell-live.org/2025/10/31/2-of-neighbourhoods-in-lewisham-highly-deprived-with-borough-ranked-172-out-of-296-government-deprivation-data-shows/",
-            accessed="2026-07-18",
+            name="MOPAC Public Attitude Survey - Public Voice quarterly results packs (London Datastore, MOPAC Surveys)",
+            url="https://data.london.gov.uk/dataset/mopac-surveys-236kk",
+            accessed="2026-11-14",
             notes=(
-                "dimension_data_sources.json specifies Trust for London's Crime-domain-specific IMD "
-                "page (trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/) as "
-                "the intended source for THIS indicator - itself built on the MHCLG English Indices of "
-                "Deprivation 2025 (published 30 Oct 2025, LSOA-level; "
-                "gov.uk/government/statistics/english-indices-of-deprivation-2025). That page, and the "
-                "government's own LSOA-level Local Deprivation Explorer "
-                "(deprivation.communities.gov.uk) which would let a future update pinpoint the actual "
-                "Crime domain decile for each of Ladywell's 7 constituent LSOAs individually, could not "
-                "be accessed this session due to a sustained outbound-network access failure; web "
-                "search located only partial, non-crime-domain-specific figures. What IS confirmed via "
-                "search this session: Lewisham ranks 172nd of 296 English local authorities on the "
-                "OVERALL (all 7 domains combined) IMD 2025 - close to the middle, moderately deprived, "
-                "little changed in relative position since IMD 2019 - and locally, 1 of Ladywell's 7 "
-                "LSOAs falls within the most-deprived 20% of neighbourhoods in England on that same "
-                "overall index (Ladywell Live, 31 Oct 2025, reporting on the same government release). "
-                "Crime contributes only 9.3% of the weighting toward that overall IMD score (one of "
-                "seven domains, alongside Income and Employment at 22.5% each, Education and Health at "
-                "13.5% each, and Barriers to Housing/Services and Living Environment at 9.3% each) - so "
-                "neither figure above is a substitute for the crime-specific decile this indicator is "
-                "meant to track, and the value/unit above is reported as an overall-IMD local authority "
-                "rank, not a neighbourhood-level crime decile, to avoid overstating precision. Revisit "
-                "once direct access to Trust for London or the government's LSOA explorer is restored."
+                "Share of respondents agreeing 'The Metropolitan Police Service is an organisation that I can trust' "
+                "(base excludes don't know / refused), rolling 12 months to March, from the borough performance table "
+                "in each year's Q4 Public Voice results pack. Lewisham / MPS (London) trust: 2021/22 67% / 73%; "
+                "2022/23 61% / 71%; 2023/24 59% / 69%; 2024/25 64% / 74%; 2025/26 60% / 71%. 'Police do a good job in "
+                "the local area' (confidence), Lewisham / MPS: 2021/22 40% / 49%; 2022/23 42% / 50%; 2023/24 46% / 47%; "
+                "2024/25 38% / 45%; 2025/26 45% / 45%. 2025/26 Lewisham also: police treat everyone fairly 53%, stop "
+                "and search used fairly 41%. The 2025/26 pack lists Lewisham's trust as -4pp and confidence as +7pp "
+                "against 2024/25. The London figure for 2023/24 is the pack's 'weighted MPS result' (that pack's "
+                "borough table has no MPS row). The PAS interviews around 600 residents per borough a year (about "
+                "19,000 Londoners), so it is not published below borough level and year-to-year moves of a few points "
+                "may be sampling noise. Feeling safe walking alone in the local area after dark: the packs and the Q1 "
+                "2026-27 headlines report it for London only (70% in the 12 months to June 2026, 68% a year earlier; "
+                "women 60%). A borough breakdown may be on MOPAC's dashboards on london.gov.uk, which this environment "
+                "cannot reach, so it is unverified rather than unavailable. Packs used: Q4 21-22, Q4 22-23, Q4 23-24, "
+                "Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page. Survey mode: the PAS moved to telephone interviewing in FY 20-21 and FY 21-22, phased back to face-to-face in FY 22-23, and has been entirely face-to-face since FY 23-24; MOPAC says this 'may affect the comparability of trends' (Q4 25-26 pack), so 2021/22 and 2022/23 are drawn as separate '(phone/mixed)' series."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.LOW,
-        target_text="No official GLA or UK Government target established for this indicator."
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2021/22", "value": 67, "series": "Lewisham (phone/mixed)"},
+            {"period": "2022/23", "value": 61, "series": "Lewisham (phone/mixed)"},
+            {"period": "2023/24", "value": 59, "series": "Lewisham"},
+            {"period": "2024/25", "value": 64, "series": "Lewisham"},
+            {"period": "2025/26", "value": 60, "series": "Lewisham"},
+            {"period": "2021/22", "value": 73, "series": "London (phone/mixed)"},
+            {"period": "2022/23", "value": 71, "series": "London (phone/mixed)"},
+            {"period": "2023/24", "value": 69, "series": "London"},
+            {"period": "2024/25", "value": 74, "series": "London"},
+            {"period": "2025/26", "value": 71, "series": "London"},
+        ]
     )
 
-    return [crime_rate, imd_crime_decile]
+    return [crime_rate, trust_police]
 
 def build_political_voice():
     """
@@ -1525,9 +1545,9 @@ def build_political_voice():
     (CES civic engagement Table A3, influencing local decisions Table B3). The CES Community-
     pathway tables (A-G) use the CLS methodology "to allow for robust comparability with the
     CLS time-series" (both releases' 'Methodological Alignment' note), so the England CES
-    2025/26 points continue the CLS England series. Each chart shows two labelled series:
-    England 2018/19 onward (CLS Timeseries sheet, then CES) and Lewisham 2023/24 onward - the
-    same pattern as build_community().
+    2025/26 points continue the CLS England series. Each chart shows three labelled series:
+    England 2018/19 onward (CLS Timeseries sheet, then CES), and Lewisham and London 2023/24
+    onward (London added November 2026: compare borough with London before England).
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     turnout = create_descriptive_dimension(
@@ -1619,6 +1639,9 @@ def build_political_voice():
             {"period": "2023/24", "value": 44.2, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.4-49.1%"},
             {"period": "2024/25", "value": 44.0, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.3-48.9%"},
             {"period": "2025/26", "value": 47.8, "series": "Lewisham", "note": "CES 2025/26 Table A3; 95% CI 43.7-52.0%"},
+            {"period": "2023/24", "value": 38.3, "series": "London", "note": "CLS 2024/25 Table X1b (ITL1)"},
+            {"period": "2024/25", "value": 37.4, "series": "London", "note": "CLS 2024/25 Table X1b (ITL1)"},
+            {"period": "2025/26", "value": 41.3, "series": "London", "note": "CES 2025/26 civic engagement Table A2 (ITL1)"},
         ]
     )
 
@@ -1664,6 +1687,9 @@ def build_political_voice():
             {"period": "2023/24", "value": 31.0, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 26.7-35.7%"},
             {"period": "2024/25", "value": 28.7, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 24.6-33.3%"},
             {"period": "2025/26", "value": 31.7, "series": "Lewisham", "note": "CES 2025/26 Table B3; 95% CI 28.1-35.6%"},
+            {"period": "2023/24", "value": 27.3, "series": "London", "note": "CLS 2024/25 Table B5b (ITL1)"},
+            {"period": "2024/25", "value": 28.4, "series": "London", "note": "CLS 2024/25 Table B5b (ITL1)"},
+            {"period": "2025/26", "value": 31.8, "series": "London", "note": "CES 2025/26 influencing local decisions Table B2 (ITL1)"},
         ]
     )
 

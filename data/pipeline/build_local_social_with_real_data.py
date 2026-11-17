@@ -640,8 +640,8 @@ def build_equality():
             notes=(
                 "Share of total household wealth (property, financial, physical and private pension wealth, net of "
                 "debts) held by households in deciles 1-5 of the Great Britain wealth distribution. GLA dataset "
-                "wealth-inequality.xls (data.london.gov.uk download 2y5m7; National Data Library record updated 25 "
-                "September 2026, data still ending April 2016-March 2018). London 2016-18: those households were "
+                "wealth-inequality.xls (data.london.gov.uk download 2y5m7; National Data Library record shows 25 "
+                "September 2026, though the GLA datastore API dates the file 1 February 2021; data end April 2016-March 2018). London 2016-18: those households were "
                 "45.6% of London households (household counts derived as total / mean wealth per decile) and held "
                 "3.79% of London's wealth; London households in GB's top decile held 61.9%. GB 2016-18: 8.48%. "
                 "Recomputed values match the Summary sheet for 2010-12 (London 5.75, GB 9.58), 2012-14 (4.89, 8.60) "
@@ -685,7 +685,7 @@ def build_equality():
     }
     emp_gap_notes = (
         "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population "
-        "Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) "
+        "Survey (APS) via NOMIS dataset NM_17_5, calendar years (Jan-Dec) 2016-2025, then the latest rolling 12-month period (Jul 2025-Jun 2026) as the final point and headline. Gender: males (variable 54) "
         "minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% "
         "v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting "
         "disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v "

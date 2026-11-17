@@ -525,13 +525,12 @@ def build_income():
 
 def build_equality():
     """
-    Equality dimension - 4 indicators matching data/lookups/dimension_data_sources.json
+    Equality dimension - 5 indicators matching data/lookups/dimension_data_sources.json
     ("equality"). Pay inequality is a genuine Lewisham (residence-based) series from ONS ASHE
     Table 8, charted against London and England. Wealth inequality has no borough-level
-    source at all, so it uses ONS's London vs Great Britain wealth percentiles. Gender and
-    ethnicity pay gaps are London-wide (see per-indicator source notes). Gender and
-    ethnicity gaps are split into two indicators because they come from different ONS
-    surveys (ASHE vs Annual Population Survey).
+    source at all, so it uses ONS's London vs Great Britain wealth percentiles. The three
+    employment rate gaps (gender, ethnicity, disability) are London-wide and share one
+    chart (they replaced the gender and ethnicity pay gap indicators in Nov 2026).
     Written into the ward JSON files by scripts/splice_dimension.py.
     """
     # Pay inequality: 80th / 20th percentile of gross hourly pay, all employee jobs,
@@ -669,73 +668,67 @@ def build_equality():
         trend=wealth_ratio_trend
     )
 
-    gender_pay_gap = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="equality",
-        indicator="Gender pay gap (mean hourly pay)",
-        snapshot=Snapshot(value=14.0, unit="%", year=2023),
-        source=Source(
-            name="GLA London Datastore - Economic Fairness: Gender Pay Gap",
-            url="https://data.london.gov.uk/economic-fairness/labour-market/gender-pay-gap",
-            accessed="2026-07-17",
-            notes=(
-                "No Lewisham-specific gender pay gap figure was found for borough residents (ONS does publish "
-                "ASHE Table 8, a residence-based earnings-by-local-authority dataset, which in principle could "
-                "be used to derive one, but this session's tools could not reach ons.gov.uk to extract it - "
-                "WebFetch and direct curl were both blocked by the environment's egress policy). This uses the "
-                "GLA's London-wide figure instead: female employees in London were paid 14% less per hour than "
-                "male employees on average in 2023 (mean hourly pay, all employees). Underlying source: ONS "
-                "Annual Survey of Hours and Earnings (ASHE). Only this single year's figure could be confirmed "
-                "via search; the GLA's own page reportedly notes the London gap 'has not fallen over more than a "
-                "decade' unlike the national trend, but exact values for other years were not retrievable this "
-                "session, so no fabricated trend is given - see Confidence.LOW."
-            )
-        ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.LOW,
-        target_text="No official GLA or UK Government target established for this indicator."
+    # Employment rate gaps (replaced the gender and ethnicity pay gap indicators,
+    # Nov 2026): percentage-point gap between employment rates of working-age (16-64)
+    # residents, London, calendar years (Jan-Dec), ONS Annual Population Survey via
+    # NOMIS dataset NM_17_5. Variables: 54 males / 63 females; 593 White / 594 ethnic
+    # minority; 1760 not EA core or work-limiting disabled / 1757 EA core or
+    # work-limiting disabled (the definitions the GLA's Economic Fairness "Employment
+    # gaps" dataset uses - its gender and disability rates match NOMIS exactly).
+    # Each tuple is (higher-rate group, lower-rate group) employment rate, %.
+    emp_rates = {
+        "Women vs men": {
+            2016: (80.4, 66.9), 2017: (80.2, 67.6), 2018: (80.5, 68.0), 2019: (79.9, 69.0), 2020: (78.8, 71.5),
+            2021: (78.7, 71.0), 2022: (80.8, 71.5), 2023: (78.6, 70.5), 2024: (80.4, 70.9), 2025: (79.3, 70.3)},
+        "Ethnic minority vs White": {
+            2016: (78.6, 66.3), 2017: (78.8, 66.4), 2018: (79.6, 66.4), 2019: (79.3, 67.1), 2020: (79.3, 68.8),
+            2021: (78.9, 68.8), 2022: (80.1, 70.7), 2023: (79.3, 68.2), 2024: (80.2, 70.1), 2025: (78.9, 70.3)},
+        "Disabled vs non-disabled": {
+            2016: (78.2, 51.6), 2017: (78.4, 51.2), 2018: (78.9, 51.8), 2019: (78.8, 54.3), 2020: (79.6, 54.6),
+            2021: (79.3, 56.3), 2022: (80.7, 57.8), 2023: (78.9, 57.6), 2024: (80.2, 59.3), 2025: (79.2, 58.5)},
+    }
+    emp_gap_notes = (
+        "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population "
+        "Survey (APS) via NOMIS dataset NM_17_5, calendar-year periods (Jan-Dec). Gender: males (variable 54) "
+        "minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% "
+        "v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting "
+        "disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v "
+        "58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. "
+        "These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses "
+        "(data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match "
+        "NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all "
+        "three series are taken from NOMIS directly for one consistent method. A later rolling period (Jul 2025-"
+        "Jun 2026) exists but is not mixed into the calendar-year series. Lewisham figures exist but are too "
+        "imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 "
+        "(women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the "
+        "Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text "
+        "(data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be "
+        "attributed to differences in employment levels between parents and those without dependent children.'"
     )
+    emp_gap_dims = []
+    for label, series in emp_rates.items():
+        trend = [{"period": str(yr), "value": round(hi - lo, 1), "series": label} for yr, (hi, lo) in series.items()]
+        hi, lo = series[2025]
+        emp_gap_dims.append(create_descriptive_dimension(
+            ward=LADYWELL_WARD_NAME,
+            ward_code=LADYWELL_WARD_CODE,
+            lens=Lens.LOCAL_SOCIAL,
+            dimension_name="equality",
+            indicator=f"Employment rate gap ({label})",
+            snapshot=Snapshot(value=round(hi - lo, 1), unit="percentage points", year=2025),
+            source=Source(
+                name="ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
+                url="https://www.nomisweb.co.uk/datasets/apsnew",
+                accessed="2026-11-17",
+                notes=emp_gap_notes
+            ),
+            geography=GeographyLevel.LONDON_INHERITED,
+            confidence=Confidence.MEDIUM,
+            target_text="No official GLA or UK Government target established for this indicator.",
+            trend=trend
+        ))
 
-    ethnicity_pay_gap = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="equality",
-        indicator="Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)",
-        snapshot=Snapshot(value=22.0, unit="%", year=2022),
-        source=Source(
-            name="GLA London Datastore - Economic Fairness: Ethnicity Pay Gap",
-            url="https://data.london.gov.uk/economic-fairness/labour-market/ethnicity-pay-gap",
-            accessed="2026-07-17",
-            notes=(
-                "No Lewisham-specific ethnicity pay gap figure exists at borough level (sample sizes in ONS's "
-                "source surveys are too small to support reliable local authority breakdowns by ethnicity), so "
-                "this uses London-wide figures. The GLA states the gap in median hourly pay between White and "
-                "Black/Asian/minority ethnic employees in London is 'more than 22%' (most recent, based on the "
-                "ONS Annual Population Survey), against roughly 1% across England & Wales outside London - "
-                "London has consistently had the largest regional ethnicity pay gap in the country. Trend points "
-                "for 2018 (21.7%) and 2019 (23.8%) are from ONS's own annual 'Ethnicity pay gaps in Great "
-                "Britain' regional bulletins (unadjusted/raw gap, London region); the current point uses 22.0 as "
-                "a conservative reading of the GLA's 'more than 22%' statement since an exact decimal for the "
-                "latest year could not be confirmed - WebFetch/curl access to data.london.gov.uk and ons.gov.uk "
-                "was blocked in this session, so this is built from search-result summaries rather than the "
-                "primary tables directly. Treat the three points as broadly indicative of a persistently large, "
-                "fairly stable gap rather than a precise year-on-year series."
-            )
-        ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.MEDIUM,
-        target_text="No official GLA or UK Government target established for this indicator.",
-        trend=[
-            {"period": "2018", "value": 21.7, "note": "ONS Ethnicity pay gaps in Great Britain: 2018 (London region, unadjusted gap)"},
-            {"period": "2019", "value": 23.8, "note": "ONS Ethnicity pay gaps in Great Britain: 2019 (London region, unadjusted gap)"},
-            {"period": "2022", "value": 22.0, "note": "GLA Economic Fairness ethnicity_pay_gap.xlsx: 22.53% median gap, London, 2022 (fact-checked 2026-11-17)"},
-        ]
-    )
-
-    return [pay_inequality, wealth_gap, gender_pay_gap, ethnicity_pay_gap]
+    return [pay_inequality, wealth_gap, *emp_gap_dims]
 
 # Keep existing dimensions from build_local_social_full.py for dimensions without new data
 def build_water_dimensions():

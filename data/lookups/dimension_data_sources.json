@@ -445,18 +445,27 @@
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
-    "indicator": "Gender pay gap (mean hourly pay)",
-    "source_url": "https://data.london.gov.uk/economic-fairness/labour-market/gender-pay-gap",
-    "granularity": "London-wide",
-    "notes": "Split out from the former combined 'Pay gap (ethnic, gender)' row - gender and ethnicity pay gaps come from different ONS surveys (ASHE vs Annual Population Survey) and are genuinely distinct measures, so combining them into one number would have hidden more than it showed. No Lewisham-specific figure found (ONS ASHE Table 8 could in principle produce a residence-based local authority figure, but this session's tools could not reach ons.gov.uk to extract it). Uses the GLA's London-wide figure: women's mean hourly pay was 14% below men's in 2023. Underlying source: ONS Annual Survey of Hours and Earnings (ASHE)."
+    "indicator": "Employment rate gap (Women vs men)",
+    "source_url": "https://www.nomisweb.co.uk/datasets/apsnew",
+    "granularity": "London-wide (region)",
+    "notes": "Replaced the gender and ethnicity pay gap indicators (Nov 2026). Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey via NOMIS NM_17_5, calendar years 2016-2025; gender = males (54) minus females (63), ethnicity = White (593) minus ethnic minority (594), disability = not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757). Same definitions as the GLA Economic Fairness 'Employment gaps' dataset (data.london.gov.uk/economic-fairness/labour-market/employment-gaps). Lewisham APS rates have 95% confidence intervals of about 5-14 points, too wide to chart borough gaps. Checked 2026-11-17."
   },
   {
     "lens": "local_social",
     "dimension": "equality",
     "category": "Empowered",
-    "indicator": "Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)",
-    "source_url": "https://data.london.gov.uk/economic-fairness/labour-market/ethnicity-pay-gap",
-    "granularity": "London-wide",
-    "notes": "Split out from the former combined 'Pay gap (ethnic, gender)' row - see note on the Gender pay gap row above for why. No Lewisham-specific figure exists (sample sizes in ONS's source surveys are too small for reliable local-authority-by-ethnicity breakdowns). Uses the GLA's London-wide figure: median hourly pay gap between White and Black/Asian/minority ethnic employees is 'more than 22%' (most recent), the largest of any English region, vs roughly 1% across England & Wales outside London. Underlying source: ONS Annual Population Survey. Historical points (2018: 21.7%, 2019: 23.8%) are from ONS's own annual 'Ethnicity pay gaps in Great Britain' regional bulletins."
+    "indicator": "Employment rate gap (Ethnic minority vs White)",
+    "source_url": "https://www.nomisweb.co.uk/datasets/apsnew",
+    "granularity": "London-wide (region)",
+    "notes": "Replaced the gender and ethnicity pay gap indicators (Nov 2026). Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey via NOMIS NM_17_5, calendar years 2016-2025; gender = males (54) minus females (63), ethnicity = White (593) minus ethnic minority (594), disability = not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757). Same definitions as the GLA Economic Fairness 'Employment gaps' dataset (data.london.gov.uk/economic-fairness/labour-market/employment-gaps). Lewisham APS rates have 95% confidence intervals of about 5-14 points, too wide to chart borough gaps. Checked 2026-11-17."
+  },
+  {
+    "lens": "local_social",
+    "dimension": "equality",
+    "category": "Empowered",
+    "indicator": "Employment rate gap (Disabled vs non-disabled)",
+    "source_url": "https://www.nomisweb.co.uk/datasets/apsnew",
+    "granularity": "London-wide (region)",
+    "notes": "Replaced the gender and ethnicity pay gap indicators (Nov 2026). Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population Survey via NOMIS NM_17_5, calendar years 2016-2025; gender = males (54) minus females (63), ethnicity = White (593) minus ethnic minority (594), disability = not EA core or work-limiting disabled (1760) minus EA core or work-limiting disabled (1757). Same definitions as the GLA Economic Fairness 'Employment gaps' dataset (data.london.gov.uk/economic-fairness/labour-market/employment-gaps). Lewisham APS rates have 95% confidence intervals of about 5-14 points, too wide to chart borough gaps. Checked 2026-11-17."
   }
 ]

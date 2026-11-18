@@ -1457,6 +1457,15 @@ under the "23.7 points" headline defines the unit. General rule: a short unit is
 headline only if the label beside it says what the unit is; in summary prose, prefer the two
 underlying percentages to a points gap.
 
+**Community and social cohesion are one dimension: "Social cohesion" (November 2026).** Asked to
+keep only loneliness, getting on across backgrounds and volunteering in social cohesion, the first
+attempt moved loneliness over from the community dimension and left community standing with its
+other two indicators. The user said the two dimensions are combined into one. The community
+dimension was removed (its belonging and support-network indicators, cards and Get Involved items
+with it), leaving Social cohesion with three indicators. General rule: when the user lists the
+indicators a dimension should keep and one of them lives in another dimension, ask whether the
+dimensions are meant to be merged before moving indicators between them.
+
 ### 2.6 No Separate "Target" Line or Marker
 
 **As of July 2026, dimension pages do NOT render a standalone "Target: X" line or a dashed

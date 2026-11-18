@@ -218,24 +218,6 @@
   },
   {
     "lens": "local_social",
-    "dimension": "community",
-    "category": "Connected",
-    "indicator": "% adults felt strongly belonged to their neighbourhood",
-    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
-    "granularity": "Borough (Lewisham) - local authority breakdown, 2023/24 onward",
-    "notes": "Snapshot: Lewisham 53.8% in 2025/26 (95% CI 49.5-58.0%; CES 2025/26 Table D3), shown as 54%. Earlier Lewisham estimates: 56.8% (2023/24) and 56.6% (2024/25) from CLS 2024/25 Table B1c. London 57.9% and England 61.2% in 2025/26. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table D1) and Lewisham 2023/24-2025/26. No official GLA or UK Government target exists for this indicator."
-  },
-  {
-    "lens": "local_social",
-    "dimension": "community",
-    "category": "Connected",
-    "indicator": "% adults agreed that if they needed help, there would be people there for them",
-    "source_url": "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
-    "granularity": "ITL2 sub-region (Inner London - East, includes Lewisham) - no local-authority breakdown published for this question",
-    "notes": "No local-authority breakdown in any year; snapshot is the ITL2 sub-region 'Inner London - East' (includes Lewisham): 95.2% in 2025/26, 93.4% in 2024/25 (CES 2025/26 Table F13), not a statistically significant change. Chart shows two labelled series: England 2018/19-2025/26 (CLS Timeseries sheet, then CES Table F12; 95.9% in 2025/26, a significant rise) and Inner London East 2024/25-2025/26. Asked online only (CES Note 6). No official GLA or UK Government target exists for this indicator."
-  },
-  {
-    "lens": "local_social",
     "dimension": "culture",
     "category": "Connected",
     "indicator": "# of cultural venue per 1,000 population",

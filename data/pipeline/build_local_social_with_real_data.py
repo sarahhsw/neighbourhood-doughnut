@@ -1031,104 +1031,6 @@ def build_connectivity():
 
     return [broadband, mobile, digital_exclusion]
 
-def build_community():
-    """
-    Community dimension - 2 indicators (loneliness moved to social cohesion, Nov 2026, at the
-    user's request). DCMS replaced the Community Life Survey (CLS) with
-    the Community and Engagement Survey (CES) in October 2025. CES's Community-pathway
-    tables are produced with the CLS methodology "to allow for robust comparability with the
-    CLS time-series" (CES data tables, 'Methodological Alignment' note), so CES 2025/26 points
-    continue the CLS England series directly. Local-authority estimates exist from 2023/24:
-    DCMS/MHCLG boosted the CLS sample in 2023/24 and 2024/25 (CLS 2024/25 tables, Note 20) and
-    CES again in 2025/26. Loneliness and belonging therefore show two series each - England
-    (2018/19 onward, the CLS's own published time series) and Lewisham (2023/24 onward).
-    Support networks has no LA breakdown in any year, so its local series is the ITL2
-    sub-region 'Inner London - East', which includes Lewisham. Trend points carry a `series`
-    label that app.js draws as a separate, labelled line. No official GLA or UK Government
-    target exists for any of the three, so all three are descriptive_only.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
-    """
-    england_note = "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
-    belonging = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="community",
-        indicator="% adults felt strongly belonged to their neighbourhood",
-        snapshot=Snapshot(value=54, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Neighbourhood and community (Tables D1-D3); Community Life Survey 2024/25 annual data tables (Timeseries, Table B1c)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
-            accessed="2026-11-01",
-            notes=(
-                "53.8% of Lewisham adults felt they belonged 'very strongly' or 'fairly strongly' to their immediate "
-                "neighbourhood in 2025/26 (95% CI 49.5-58.0%, 458 of 797 respondents; CES 2025/26 Table D3, LAD25 "
-                "E09000023), shown rounded to 54%. Earlier Lewisham estimates from the CLS local-authority boost (CLS "
-                "2024/25 Table B1c): 56.8% in 2023/24 (95% CI 51.7-61.7%) and 56.6% in 2024/25 (95% CI 51.7-61.4%). The "
-                "survey's own test marks both year-on-year moves as 'No Change'. Lewisham sits below both London (57.9% in "
-                "2025/26, 59.0% in 2024/25; CES Table D2, ITL1 row) and England (61.2% in 2025/26; Table D1). England "
-                "series (CLS Timeseries sheet, then CES Table D1): 62.1% (2018/19), 62.6% (2019/20), 64.6% (2020/21, "
-                "pandemic-era high), 62.5% (2021/22), no survey in 2022/23, 61.1% (2023/24), 62.1% (2024/25), 61.2% "
-                "(2025/26). CES Community-pathway tables use the CLS methodology for comparability with the CLS time "
-                "series, so the 2025/26 points continue the same series."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        trend=[
-            {"period": "2018/19", "value": 62.1, "series": "England", "note": england_note},
-            {"period": "2019/20", "value": 62.6, "series": "England"},
-            {"period": "2020/21", "value": 64.6, "series": "England", "note": "Pandemic-era high"},
-            {"period": "2021/22", "value": 62.5, "series": "England"},
-            {"period": "2023/24", "value": 61.1, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 62.1, "series": "England"},
-            {"period": "2025/26", "value": 61.2, "series": "England", "note": "CES 2025/26 Table D1 (CLS methodology)"},
-            {"period": "2023/24", "value": 56.8, "series": "Lewisham", "note": "CLS 2024/25 Table B1c; 95% CI 51.7-61.7%"},
-            {"period": "2024/25", "value": 56.6, "series": "Lewisham", "note": "CLS 2024/25 Table B1c; 95% CI 51.7-61.4%"},
-            {"period": "2025/26", "value": 53.8, "series": "Lewisham", "note": "CES 2025/26 Table D3; 95% CI 49.5-58.0%"},
-        ]
-    )
-
-    support_networks = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="community",
-        indicator="% adults agreed that if they needed help, there would be people there for them",
-        snapshot=Snapshot(value=95, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Support Networks (Tables F12-F13); Community Life Survey 2024/25 annual data tables (Timeseries)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
-            accessed="2026-11-01",
-            notes=(
-                "95.2% of adults in the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, "
-                "Lewisham, Newham, Southwark, Tower Hamlets) agreed that if they needed help there are people who would "
-                "be there for them in 2025/26 (95% CI 93.8-96.3%, 1,661 of 1,740 respondents agreeing; CES Table F13), up from 93.4% in "
-                "2024/25 (95% CI 91.6-94.8%) - marked 'No Change' by the survey's own test. This question is not "
-                "published at local-authority level in any year, so the sub-region is the most granular figure available. "
-                "London (ITL1) ran 94.7% in 2025/26 and 92.9% in 2024/25. England series (CLS Timeseries sheet, then CES "
-                "Table F12): 95.2% (2018/19), 95.2% (2019/20), 95.3% (2020/21), 95.2% (2021/22), no survey in 2022/23, "
-                "94.3% (2023/24), 94.3% (2024/25), 95.9% (2025/26) - England's 2025/26 rise is statistically significant. "
-                "These questions were asked online only (CES Note 6), so results reflect the online-responding population."
-            )
-        ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.MEDIUM,
-        trend=[
-            {"period": "2018/19", "value": 95.2, "series": "England", "note": england_note},
-            {"period": "2019/20", "value": 95.2, "series": "England"},
-            {"period": "2020/21", "value": 95.3, "series": "England"},
-            {"period": "2021/22", "value": 95.2, "series": "England"},
-            {"period": "2023/24", "value": 94.3, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 94.3, "series": "England"},
-            {"period": "2025/26", "value": 95.9, "series": "England", "note": "CES 2025/26 Table F12 (CLS methodology)"},
-            {"period": "2024/25", "value": 93.4, "series": "Inner London East", "note": "CES 2025/26 Table F13; 95% CI 91.6-94.8%"},
-            {"period": "2025/26", "value": 95.2, "series": "Inner London East", "note": "CES 2025/26 Table F13; 95% CI 93.8-96.3%"},
-        ]
-    )
-
-    return [belonging, support_networks]
-
 def build_culture_dimensions():
     """
     Culture dimension - 3 indicators matching data/lookups/dimension_data_sources.json
@@ -1815,8 +1717,9 @@ def build_political_voice():
 
 def build_social_cohesion_dimensions():
     """
-    Social cohesion dimension - 3 indicators (Nov 2026, user's choice: loneliness, moved from
-    community; getting on across backgrounds; volunteering - trust and pride removed), all from DCMS's Community Life Survey (CLS) and
+    Social cohesion dimension - 3 indicators (Nov 2026, user's choice). The former community
+    dimension was merged into this one: loneliness moved here; belonging, support networks,
+    trust and pride were removed. All from DCMS's Community Life Survey (CLS) and
     its successor, the Community and Engagement Survey (CES). All four have Lewisham
     local-authority estimates from 2023/24: DCMS/MHCLG boosted the CLS sample in 2023/24 and
     2024/25 (CLS 2024/25 annual data tables, Note 20; Tables B4c, B6c, B10c, C1c(F)) and the
@@ -1826,7 +1729,7 @@ def build_social_cohesion_dimensions():
     Community-pathway tables (A-G) use the CLS methodology "to allow for robust comparability
     with the CLS time-series" ('Methodological Alignment' note in each release), so England
     CES 2025/26 points continue the CLS England series. Each chart shows two labelled series,
-    England and Lewisham - the same pattern as build_community() and build_political_voice().
+    England and Lewisham - the same pattern as build_political_voice().
     All four are descriptive_only (no official GLA/UK Government target for any of them).
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
@@ -1968,7 +1871,6 @@ def main():
         *build_food_dimensions(),
         *build_water_dimensions(),
         *build_connectivity(),
-        *build_community(),
         *build_culture_dimensions(),
         *build_mobility_dimensions(),
         *build_education(),

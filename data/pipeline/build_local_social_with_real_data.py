@@ -1033,7 +1033,8 @@ def build_connectivity():
 
 def build_community():
     """
-    Community dimension - 3 indicators. DCMS replaced the Community Life Survey (CLS) with
+    Community dimension - 2 indicators (loneliness moved to social cohesion, Nov 2026, at the
+    user's request). DCMS replaced the Community Life Survey (CLS) with
     the Community and Engagement Survey (CES) in October 2025. CES's Community-pathway
     tables are produced with the CLS methodology "to allow for robust comparability with the
     CLS time-series" (CES data tables, 'Methodological Alignment' note), so CES 2025/26 points
@@ -1048,49 +1049,6 @@ def build_community():
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     england_note = "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
-    loneliness = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="community",
-        indicator="% adults reported feeling lonely often or always",
-        snapshot=Snapshot(value=8, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Loneliness (Table C3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table A1c)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
-            accessed="2026-11-01",
-            notes=(
-                "8.0% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 5.9-10.8%, 61 "
-                "respondents, unweighted base 869; CES 2025/26 Table C3, LAD25 E09000023). Lewisham figures exist for "
-                "two earlier years from the CLS local-authority boost (CLS 2024/25 tables, Table A1c and Note 20): 6.3% "
-                "in 2023/24 (95% CI 4.4-8.8%) and 7.4% in 2024/25 (95% CI 5.3-10.2%). The survey's own significance test "
-                "marks both year-on-year moves as 'No Change' - the confidence intervals overlap, so the apparent rise is "
-                "within sampling noise. England series (CLS Timeseries sheet, then CES Table C1): 6.1% (2018/19), 6.4% "
-                "(2019/20), 6.5% (2020/21), 6.2% (2021/22), no survey in 2022/23, 7.1% (2023/24), 6.6% (2024/25), 6.7% "
-                "(2025/26). The CLS time series starts in 2018/19. Demographic breakdown (CES Table C2, England-wide, not "
-                "Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) "
-                "and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among "
-                "16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic "
-                "groups (10-16% vs 6% White British). Earlier versions of this page said 2025/26 was the first year with a "
-                "Lewisham figure; that was wrong - the CLS published Lewisham estimates for 2023/24 and 2024/25."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        trend=[
-            {"period": "2018/19", "value": 6.1, "series": "England", "note": england_note},
-            {"period": "2019/20", "value": 6.4, "series": "England"},
-            {"period": "2020/21", "value": 6.5, "series": "England"},
-            {"period": "2021/22", "value": 6.2, "series": "England"},
-            {"period": "2023/24", "value": 7.1, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 6.6, "series": "England"},
-            {"period": "2025/26", "value": 6.7, "series": "England", "note": "CES 2025/26 Table C1 (CLS methodology)"},
-            {"period": "2023/24", "value": 6.3, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 4.4-8.8%"},
-            {"period": "2024/25", "value": 7.4, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 5.3-10.2%"},
-            {"period": "2025/26", "value": 8.0, "series": "Lewisham", "note": "CES 2025/26 Table C3; 95% CI 5.9-10.8%"},
-        ]
-    )
-
     belonging = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
@@ -1169,7 +1127,7 @@ def build_community():
         ]
     )
 
-    return [loneliness, belonging, support_networks]
+    return [belonging, support_networks]
 
 def build_culture_dimensions():
     """
@@ -1857,7 +1815,8 @@ def build_political_voice():
 
 def build_social_cohesion_dimensions():
     """
-    Social cohesion dimension - 4 indicators, all from DCMS's Community Life Survey (CLS) and
+    Social cohesion dimension - 3 indicators (Nov 2026, user's choice: loneliness, moved from
+    community; getting on across backgrounds; volunteering - trust and pride removed), all from DCMS's Community Life Survey (CLS) and
     its successor, the Community and Engagement Survey (CES). All four have Lewisham
     local-authority estimates from 2023/24: DCMS/MHCLG boosted the CLS sample in 2023/24 and
     2024/25 (CLS 2024/25 annual data tables, Note 20; Tables B4c, B6c, B10c, C1c(F)) and the
@@ -1873,49 +1832,6 @@ def build_social_cohesion_dimensions():
     """
     cls_ts_note = "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
     ces_nbh = "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood"
-
-    trust = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="social_cohesion",
-        indicator="% adults agreed that people in neighbourhood can be trusted",
-        snapshot=Snapshot(value=30, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Neighbourhood and community (Table D12, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table B4c)",
-            url=ces_nbh,
-            accessed="2026-11-01",
-            notes=(
-                "29.5% of Lewisham adults said 'many of the people' in their neighbourhood can be trusted in 2025/26 "
-                "(95% CI 25.8-33.4%, 246 respondents; CES 2025/26 Table D12, LAD25 E09000023), shown rounded to 30%. "
-                "Earlier Lewisham estimates from the CLS local-authority boost (CLS 2024/25 Table B4c, Note 20): 32.2% in "
-                "2023/24 (95% CI 27.6-37.1%) and 29.9% in 2024/25 (95% CI 25.6-34.4%); both year-on-year moves 'No "
-                "Change' per the survey's own test. London (ITL1): 31.8% (2023/24), 31.0% (2024/25), 29.3% (2025/26) (CLS "
-                "Table B4b, CES Table D11) - Lewisham is level with London. England series (CLS Timeseries, then CES Table "
-                "D10): 39.9% (2018/19), 39.7% (2019/20), 41.5% (2020/21), 42.2% (2021/22), no survey in 2022/23, 40.7% "
-                "(2023/24), 40.3% (2024/25), 37.6% (2025/26, a statistically significant decrease). National pattern (CES "
-                "2025/26 neighbourhood and community report, England-wide): 26% of 16-24s and 25-34s vs 56% of those aged "
-                "75+; 17% in the most deprived IMD decile vs 58% in the least deprived; London 29%, the lowest ITL1 region. "
-                "The earlier 2013/14 England point (48%) was dropped under the 10-year data-age rule, and the earlier "
-                "2021/22 England value (41%) was corrected to the Timeseries figure (42.2%)."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        target_text="No official GLA or UK Government target established for this indicator.",
-        trend=[
-            {"period": "2018/19", "value": 39.9, "series": "England", "note": cls_ts_note},
-            {"period": "2019/20", "value": 39.7, "series": "England"},
-            {"period": "2020/21", "value": 41.5, "series": "England"},
-            {"period": "2021/22", "value": 42.2, "series": "England"},
-            {"period": "2023/24", "value": 40.7, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 40.3, "series": "England"},
-            {"period": "2025/26", "value": 37.6, "series": "England", "note": "CES 2025/26 Table D10 (CLS methodology)"},
-            {"period": "2023/24", "value": 32.2, "series": "Lewisham", "note": "CLS 2024/25 Table B4c; 95% CI 27.6-37.1%"},
-            {"period": "2024/25", "value": 29.9, "series": "Lewisham", "note": "CLS 2024/25 Table B4c; 95% CI 25.6-34.4%"},
-            {"period": "2025/26", "value": 29.5, "series": "Lewisham", "note": "CES 2025/26 Table D12; 95% CI 25.8-33.4%"},
-        ]
-    )
 
     cohesion = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
@@ -1959,42 +1875,6 @@ def build_social_cohesion_dimensions():
         ]
     )
 
-    pride = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="social_cohesion",
-        indicator="% proud to live in their local area",
-        snapshot=Snapshot(value=58, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Pride in local area (Table E3, by local authority); Community Life Survey 2024/25 annual data tables (Table B10c)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-pride-in-local-area",
-            accessed="2026-11-01",
-            notes=(
-                "58.0% of Lewisham adults agreed they are proud to live in their local area in 2025/26 (95% CI "
-                "53.5-62.5%, 486 respondents; CES 2025/26 Table E3, LAD25 E09000023). Earlier Lewisham estimates (CLS "
-                "2024/25 Table B10c, Note 20): 58.0% in 2023/24 (95% CI 52.8-63.0%) and 53.9% in 2024/25 (95% CI "
-                "48.9-58.9%); 'No Change' in both years. London (ITL1): 56.2%, 57.8%, 59.4% (CLS Table B10b, CES Table "
-                "E2). England: 59.4% (2023/24), 59.7% (2024/25) (CLS Table B10a), 61.6% (2025/26, a statistically "
-                "significant increase; CES Table E1). The question was first asked in 2023/24. Lewisham's 2025/26 CI "
-                "contains both the London and England figures. Main reasons for pride among those agreeing, England "
-                "2025/26 (CES Table E10): safe area 69.7%, green and natural spaces 64.2%, people respectful and friendly "
-                "59.3%."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        target_text="No official GLA or UK Government target established for this indicator.",
-        trend=[
-            {"period": "2023/24", "value": 59.4, "series": "England", "note": "First year this question was asked; CLS 2024/25 Table B10a"},
-            {"period": "2024/25", "value": 59.7, "series": "England", "note": "CLS 2024/25 Table B10a"},
-            {"period": "2025/26", "value": 61.6, "series": "England", "note": "CES 2025/26 Table E1 (CLS methodology)"},
-            {"period": "2023/24", "value": 58.0, "series": "Lewisham", "note": "CLS 2024/25 Table B10c; 95% CI 52.8-63.0%"},
-            {"period": "2024/25", "value": 53.9, "series": "Lewisham", "note": "CLS 2024/25 Table B10c; 95% CI 48.9-58.9%"},
-            {"period": "2025/26", "value": 58.0, "series": "Lewisham", "note": "CES 2025/26 Table E3; 95% CI 53.5-62.5%"},
-        ]
-    )
-
     volunteering = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
@@ -2035,7 +1915,50 @@ def build_social_cohesion_dimensions():
         ]
     )
 
-    return [trust, cohesion, pride, volunteering]
+    loneliness = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="social_cohesion",
+        indicator="% adults reported feeling lonely often or always",
+        snapshot=Snapshot(value=8, unit="%", year="2025/26"),
+        source=Source(
+            name="Community and Engagement Survey 2025/26 - Loneliness (Table C3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table A1c)",
+            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
+            accessed="2026-11-01",
+            notes=(
+                "8.0% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 5.9-10.8%, 61 "
+                "respondents, unweighted base 869; CES 2025/26 Table C3, LAD25 E09000023). Lewisham figures exist for "
+                "two earlier years from the CLS local-authority boost (CLS 2024/25 tables, Table A1c and Note 20): 6.3% "
+                "in 2023/24 (95% CI 4.4-8.8%) and 7.4% in 2024/25 (95% CI 5.3-10.2%). The survey's own significance test "
+                "marks both year-on-year moves as 'No Change' - the confidence intervals overlap, so the apparent rise is "
+                "within sampling noise. England series (CLS Timeseries sheet, then CES Table C1): 6.1% (2018/19), 6.4% "
+                "(2019/20), 6.5% (2020/21), 6.2% (2021/22), no survey in 2022/23, 7.1% (2023/24), 6.6% (2024/25), 6.7% "
+                "(2025/26). The CLS time series starts in 2018/19. Demographic breakdown (CES Table C2, England-wide, not "
+                "Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) "
+                "and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among "
+                "16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic "
+                "groups (10-16% vs 6% White British). Earlier versions of this page said 2025/26 was the first year with a "
+                "Lewisham figure; that was wrong - the CLS published Lewisham estimates for 2023/24 and 2024/25."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        trend=[
+            {"period": "2018/19", "value": 6.1, "series": "England", "note": cls_ts_note},
+            {"period": "2019/20", "value": 6.4, "series": "England"},
+            {"period": "2020/21", "value": 6.5, "series": "England"},
+            {"period": "2021/22", "value": 6.2, "series": "England"},
+            {"period": "2023/24", "value": 7.1, "series": "England", "note": "No survey in 2022/23"},
+            {"period": "2024/25", "value": 6.6, "series": "England"},
+            {"period": "2025/26", "value": 6.7, "series": "England", "note": "CES 2025/26 Table C1 (CLS methodology)"},
+            {"period": "2023/24", "value": 6.3, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 4.4-8.8%"},
+            {"period": "2024/25", "value": 7.4, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 5.3-10.2%"},
+            {"period": "2025/26", "value": 8.0, "series": "Lewisham", "note": "CES 2025/26 Table C3; 95% CI 5.9-10.8%"},
+        ]
+    )
+
+    return [loneliness, cohesion, volunteering]
 
 def main():
     """Build all Local Social dimensions with real Lewisham data where available"""

@@ -455,13 +455,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Two of the company's three levers for closing that gap are moving at different speeds: per-person water use has fallen modestly since 2019/20, though unevenly, with a pandemic-era spike and a recent uptick; leakage - after falling from close to a third of supply in the mid-2000s to around a fifth by 2019/20 - has barely moved since. Both remain well short of what's needed: the Environment Act's 2038 demand-reduction target and the water industry's 2018 commitment to halve leakage by 2050 both require considerably faster progress than either metric is currently making.",
         'mobility': "Public transport access in Ladywell is best near the station: planning assessments rate it excellent (PTAL 6) right by Ladywell station and good (PTAL 4) a few streets away. Across Lewisham, 71.6% of residents' trips are made on foot, by bike or by public transport, well below the 82.1% Inner London average and short of the Mayor's target of 80% by 2041.",
         'equality': "Pay in Lewisham is more unequal than across England, though a little below London's level: jobs near the top of residents' pay scale pay nearly two and a half times as much per hour as jobs near the bottom. Work is also unevenly shared across London: 56% of disabled working-age residents are in work, against 80% of non-disabled residents, and women and ethnic minority residents are also less likely to be in work than men and White residents. Wealth is even more unevenly held: London households in the bottom half of Britain's households held just 3.8% of the city's wealth in 2016-18, and fewer than half of Lewisham households own their home.",
-        'community': "Most adults around Lewisham have someone to turn to, but fewer feel they belong where they live. Across inner-east London, the sub-region that includes Lewisham, 95% agreed people would be there for them if they needed help in 2025/26. Neighbourhood belonging is the lowest-scoring of the three: 54% of Lewisham adults feel they belong to their immediate neighbourhood, below England's 61% and not significantly different from London's 58%. Severe loneliness affects 8% of the borough's adults, within the survey's margin of error of England's rate, and nationally runs four times higher among disabled than non-disabled adults, and three times higher in the most deprived areas than the least.",
+        'community': "Most adults around Lewisham have someone to turn to, but fewer feel they belong where they live. Across inner-east London, the sub-region that includes Lewisham, 95% agreed people would be there for them if they needed help in 2025/26. But only 54% of Lewisham adults feel they belong to their immediate neighbourhood, below England's 61% and not significantly different from London's 58%.",
         'political_voice': "Turnout in Lewisham's mayoral election rose to 42% in May 2026, when the Green Party won control of the council and the mayoralty for the first time. Between elections, residents are unusually active: 48% contacted a councillor or MP, signed a petition or went to a public meeting or protest in the past year, against 41% across London. Yet only about a third, 32%, feel they can personally influence decisions affecting their area, the same as across London.",
         'culture': "Lewisham's dedicated arts grants have been cut by almost 40%, part of a wider squeeze on council arts budgets across England. Cultural spaces are unevenly spread: Ladywell has only five open venues, around 60% of the borough's density, with Lewisham's clustered in Deptford and Brockley. Participation is high locally: 88.5% of Lewisham residents engaged with the arts in 2025/26, above both the London and England averages.",
         'education': "Fewer Lewisham pupils leave school with the basics than across London. In 2025/26, 65.5% got at least a standard pass in both English and Maths GCSE, against 70.9% across London, so about one in three left without it. After 16, few young people drop out of the system altogether: 1.9% of 16 and 17 year olds were not in education, employment or training, close to the London rate, though the council didn't know what a further 2.9% were doing. Childcare for the youngest is comparatively plentiful: there are about 62 registered places for every 100 children under five, against 47 across London, helped by a fall in the number of young children in the borough.",
         'connectivity': "Ladywell's physical connectivity is strong: full fibre broadband and 5G coverage both sit close to or above typical levels. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, sits below the national median, consistent with London's younger, well-connected population. But that score is an average, and it can hide pockets of risk: a third of Ladywell's children live in income-deprived households and 15% of residents are disabled, both groups that London research identifies as more vulnerable to digital exclusion.",
         'energy': "Ladywell's homes are among the least energy-efficient in Lewisham. Around 38% of local homes with a recent Energy Performance Certificate (EPC) reach Band C or above, against 56% across the borough. Its housing is older: more than half of Ladywell's homes were built before 1930, and only about a quarter of Lewisham's pre-1929 homes reach Band C. Fuel poverty is about average, though: around one in ten Ladywell households were fuel poor in 2024, similar to Lewisham and England. The two are linked: the official measure only counts low-income households living in homes rated Band D or below, and the national 2030 target is framed around lifting fuel-poor homes to Band C.",
-        'social_cohesion': "Lewisham pairs low trust with strong cohesion. Fewer than a third of residents think many of their neighbours can be trusted - well below England, though level with London - yet more than four in five say people from different backgrounds get on well locally, above the national figure. In 2025/26 residents were also slightly more likely than average to volunteer, while pride in the local area sits in line with England and London. Nationally, trust and cross-background cohesion both fell in 2025/26, as volunteering and pride edged up.",
+        'social_cohesion': "Lewisham's communities mostly hold together well. More than four in five adults (83%) say people from different backgrounds get on well locally, above England's 78.5%, and 61% volunteered at least once in the past year, above England's 56%. Against that, 8% of Lewisham adults feel lonely often or always, within the survey's margin of error of England's 6.7%; nationally, loneliness runs several times higher among disabled adults and in the most deprived areas.",
         'income': "Deprivation is patchy within Ladywell: one of its seven neighbourhoods is among England's most deprived for income and employment. In Lewisham, more than a quarter of residents live in poverty after housing costs, close to the London average, and around two-thirds of them are in a family where someone works. Out-of-work benefits reach 17.7% of working-age residents, above London's 15.2%, while the claimant count of job-seekers equals only about two in five of that total. Since 2020, the rise has mostly come among recipients not required to look for work, a group that includes people too ill to work; nationally, the number out of work through long-term sickness rose after the pandemic, often alongside depression or anxiety.",
         'peace_justice': "Ladywell records more crime per resident than Lewisham as a whole: 119 crimes for every 1,000 residents in the year to October 2026, against 100 across the borough. About half the rise since 2022 is violence in which nobody was injured. Trust in the police is also weaker in Lewisham than across the capital: in the year to March 2026, 60% of the borough's residents said they trust the Metropolitan Police, against 71% of Londoners.",
     };
@@ -896,19 +896,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Community dimension council context - 2 documents: the Health and Wellbeing
-        // Strategy covers loneliness/social isolation as a named adult social care
-        // priority (delivered practically through Community Connections Lewisham); the
-        // Main Grants Programme Allocations report covers the funding behind
-        // neighbourhood-level community infrastructure and belonging.
+        // Community dimension council context - the Main Grants Programme Allocations report
+        // (funding behind neighbourhood-level community infrastructure and belonging). The
+        // Health and Wellbeing Strategy card moved to social_cohesion with the loneliness
+        // indicator (Nov 2026).
         if (dimensionName === 'community') {
             return [
-                {
-                    title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
-                    year: '2025-2030',
-                    url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
-                    summary: `<p>Lewisham's Health and Wellbeing Strategy names "promoting social connection and purpose" and "reducing isolation and loneliness" as explicit priorities within its adult social care outcomes, and identifies social participation - alongside housing - as a core wider determinant of health that poverty erodes. In practice this is delivered through Community Connections Lewisham, a free social prescribing service for residents aged 18 and over that matches isolated adults with local groups, activities, and trained befriending volunteers rather than clinical treatment. The council-backed "Lewisham Against Loneliness" campaign, run through the same service, has recruited over a hundred volunteer befrienders and matched 84 residents to date.</p>`
-                },
                 {
                     title: 'Main Grants Programme Allocations 2026-2029 (Mayor and Cabinet report)',
                     year: '2026-2029',
@@ -917,10 +910,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     title: 'Perspectives from global community research',
-                    summary: `<p>WHO's Commission on Social Connection has declared loneliness a global public health priority: worldwide, it's linked to roughly 871,000 deaths a year, with poor social connection raising mortality risk by around a quarter to a third. Sociologist Eric Klinenberg's research into Chicago's 1995 heat wave found why: neighbourhoods with near-identical poverty had very different death tolls depending on their "social infrastructure" - libraries, shops, parks and community spaces that gave isolated residents somewhere to go and someone nearby to notice if they went missing. Shared public spaces aren't just amenities, they're protective infrastructure - without them, isolated residents have no safety net, no matter how caring their neighbours might otherwise be.</p>`,
+                    summary: `<p>Sociologist Eric Klinenberg's research into Chicago's 1995 heat wave found that neighbourhoods with near-identical poverty had very different death tolls depending on their "social infrastructure" - libraries, shops, parks and community spaces that gave isolated residents somewhere to go and someone nearby to notice if they went missing. Shared public spaces aren't just amenities, they're protective infrastructure - without them, isolated residents have no safety net, no matter how caring their neighbours might otherwise be.</p>`,
                     sources: [
-                        { name: 'From Loneliness to Social Connection - WHO Commission on Social Connection', url: 'https://www.who.int/news/item/30-06-2025-social-connection-linked-to-improved-heath-and-reduced-risk-of-early-death' },
-                        { name: 'Loneliness and Social Isolation as Risk Factors for Mortality - Holt-Lunstad et al., 2015', url: 'https://journals.sagepub.com/doi/full/10.1177/1745691614568352' },
                         { name: 'Safety and Community: A Tale of Two Neighborhoods (Klinenberg\'s Chicago research) - Congress for the New Urbanism', url: 'https://www.cnu.org/publicsquare/safety-and-community-tale-two-neighborhoods' }
                     ]
                 }
@@ -1184,25 +1175,29 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         // found but are now well past their own end dates with no confirmed successor, so
         // are not used here - DIMENSION_PAGE_SPECIFICATION.md 3.1 requires verifying a
         // document is the latest version, and neither of those two is current policy.
+        // Social cohesion council context (Nov 2026): Community Action Plan (cohesion,
+        // volunteering) and the Health and Wellbeing Strategy (loneliness, moved here from
+        // community); the Corporate Strategy card (trust) was dropped with the trust indicator.
         if (dimensionName === 'social_cohesion') {
             return [
                 {
                     title: 'Lewisham Community Action Plan 2024 (Lewisham Strategic Partnership)',
                     year: '2024-2030',
                     url: 'https://lewisham.gov.uk/-/media/0-mayor-and-council/strategic-partnership/lewisham-community-action-plan-2024---print-file.pdf',
-                    summary: `<p>Lewisham's Strategic Partnership - the council working alongside the NHS, the Metropolitan Police, London Fire Brigade, Goldsmiths University of London, Phoenix Community Housing and voluntary-sector partners including Lewisham Local - launched a Community Action Plan in July 2024, shaped by engagement with over 1,000 residents and building on an earlier borough-wide "Lewisham 2030" listening campaign. It sets six long-term objectives running to 2030; two speak directly to this page's indicators - improving residents' health, wellbeing and housing, and celebrating the borough's diverse communities while challenging inequality based on race, disability, sexuality, gender and other characteristics. Lewisham Local, the charity behind the borough's volunteering and community-group infrastructure (500+ groups supported, 4,000+ volunteering hours facilitated a year), is a named delivery partner, tying the plan directly to this page's volunteering indicator.</p>`
+                    summary: `<p>Lewisham's Strategic Partnership - the council working alongside the NHS, the Metropolitan Police, London Fire Brigade, Goldsmiths University of London, Phoenix Community Housing and voluntary-sector partners including Lewisham Local - launched a Community Action Plan in July 2024, shaped by engagement with over 1,000 residents and building on an earlier borough-wide "Lewisham 2030" listening campaign. It sets six long-term objectives running to 2030; two of them are improving residents' health, wellbeing and housing, and celebrating the borough's diverse communities while challenging inequality based on race, disability, sexuality, gender and other characteristics. Lewisham Local, the charity behind the borough's volunteering and community-group infrastructure (500+ groups supported, 4,000+ volunteering hours facilitated a year), is a named delivery partner.</p>`
                 },
                 {
-                    title: 'Lewisham Corporate Strategy 2022-2026',
-                    year: '2022-2026',
-                    url: 'https://lewisham.gov.uk/-/media/files/lewisham-council-corporate-plan-2022-2026.ashx',
-                    summary: `<p>Lewisham's Corporate Strategy organises the council's work around seven priorities, including Open Lewisham, Health and Wellbeing, Safer Communities and Cleaner and Greener. Two threads running through it speak to trust and cohesion specifically: a commitment to listen to and co-design services with residents, reaching people whose voices are seldom heard, and the council's own description of Lewisham as a "Borough of Sanctuary" and London's leading borough for refugee resettlement. It also commits to what it calls the "Lewisham Way" of working - maintaining and strengthening the council's collaboration with the borough's voluntary and community sector rather than running services alone, the same sector this page's volunteering indicator tracks participation in.</p>`
+                    title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
+                    year: '2025-2030',
+                    url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
+                    summary: `<p>Lewisham's Health and Wellbeing Strategy names "promoting social connection and purpose" and "reducing isolation and loneliness" as explicit priorities within its adult social care outcomes, and identifies social participation - alongside housing - as a core wider determinant of health that poverty erodes. In practice this is delivered through Community Connections Lewisham, a free social prescribing service for residents aged 18 and over that matches isolated adults with local groups, activities, and trained befriending volunteers rather than clinical treatment. The council-backed "Lewisham Against Loneliness" campaign, run through the same service, has recruited over a hundred volunteer befrienders and matched 84 residents to date.</p>`
                 },
                 {
                     title: 'Perspectives from global social cohesion research',
-                    summary: `<p>Trust and cohesion research points to both a structural and an interpersonal driver. On the structural side, most cross-country research finds income inequality erodes generalised trust - people are less likely to trust strangers in more unequal places, independent of overall wealth. On the interpersonal side, social psychology's intergroup contact theory, dating to Gordon Allport's work in the 1950s and confirmed across hundreds of later studies, finds sustained, positive contact between people from different backgrounds - not just living nearby - reliably increases trust, particularly when working toward a shared goal together.</p>`,
+                    summary: `<p>Research points to two kinds of connection. Between groups, social psychology's intergroup contact theory, dating to Gordon Allport's work in the 1950s and confirmed across hundreds of later studies, finds sustained, positive contact between people from different backgrounds - not just living nearby - reliably increases trust, particularly when working toward a shared goal together. For individuals, WHO's Commission on Social Connection has declared loneliness a global public health priority: worldwide, it's linked to roughly 871,000 deaths a year, with poor social connection raising mortality risk by around a quarter to a third.</p>`,
                     sources: [
-                        { name: 'Income Inequality and Generalised Trust - Social Indicators Research', url: 'https://link.springer.com/article/10.1007/s11205-014-0777-5' },
+                        { name: 'From Loneliness to Social Connection - WHO Commission on Social Connection', url: 'https://www.who.int/news/item/30-06-2025-social-connection-linked-to-improved-heath-and-reduced-risk-of-early-death' },
+                        { name: 'Loneliness and Social Isolation as Risk Factors for Mortality - Holt-Lunstad et al., 2015', url: 'https://journals.sagepub.com/doi/full/10.1177/1745691614568352' },
                         { name: 'A Meta-Analytic Test of Intergroup Contact Theory - Pettigrew & Tropp, 2006', url: 'https://www.researchgate.net/publication/7046266_A_Meta-Analytic_Test_of_Intergroup_Contact_Theory' }
                     ]
                 }
@@ -1366,13 +1361,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         if (dimensionName === 'community') {
             return [
                 {
-                    action: 'Volunteer with Community Connections Lewisham',
-                    text: `The charity behind 'Lewisham Against Loneliness', matching isolated residents with local groups, activities and trained volunteers. It currently needs Transport and Cancer Champion volunteers, alongside general roles.`,
-                    url: 'https://communityconnectionslewisham.org/volunteer/'
-                },
-                {
                     action: 'Join Rushey Green Time Bank',
-                    text: `A multi-award-winning time bank based at PLACE/Ladywell on Lewisham High Street, where members trade an hour of help given for an hour of help received - skills for connection, not money.`,
+                    text: `A multi-award-winning time bank at PLACE/Ladywell on Lewisham High Street, where members trade an hour of help given for an hour of help received.`,
                     url: 'https://timebanking.org/timebanks/rushey-green-time-bank/'
                 }
             ];
@@ -1527,13 +1517,18 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: 'Befriend a resettled refugee family',
-                    text: `Volunteers give about two hours a week helping Syrian and Iraqi families resettled in Lewisham - the first UK council awarded "Borough of Sanctuary" status, in 2021 - with English practice and local life.`,
+                    text: `Volunteers give about two hours a week helping Syrian and Iraqi families resettled in Lewisham, the first UK council awarded Borough of Sanctuary status, with English practice and local life.`,
                     url: 'https://www.lewishamrefugeewelcome.org/'
                 },
                 {
                     action: 'Walk the Lewisham Interfaith Walk for Peace',
-                    text: `An annual multi-faith walk, started in 2015 after the Charlie Hebdo attack, taking in a synagogue, church, mosque and Hindu temple, organised with the council and Met Police. Open to any faith or none.`,
+                    text: `A multi-faith walk, started in 2015 after the Charlie Hebdo attack, taking in a synagogue, church, mosque and Hindu temple, organised with the council and Met Police. Open to all.`,
                     url: 'https://www.lewishaminterfaithforum.org.uk/'
+                },
+                {
+                    action: 'Volunteer with Community Connections Lewisham',
+                    text: `The charity behind 'Lewisham Against Loneliness', matching isolated residents with local groups, activities and trained volunteers. Its volunteer roles are listed on its website.`,
+                    url: 'https://communityconnectionslewisham.org/volunteer/'
                 }
             ];
         }

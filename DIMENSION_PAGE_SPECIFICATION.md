@@ -680,6 +680,25 @@ agree they can personally influence decisions". General rule: when the summary d
 indicator, give its figure in plain words ("about a third, 32%") rather than only a relative
 position.
 
+**Keep related indicators together in the summary, and drop a "why" clause that doesn't help the
+reader (Equality, November 2026).** The summary ran pay inequality, then a sentence on the National
+Living Wage and minimum-wage coverage, then wealth, then employment gaps. The user said the
+minimum-wage sentence had no clear point and should go, and that the two job-related indicators
+(pay inequality and employment gaps) should sit next to each other. General rule: order the summary
+by theme, so indicators about the same thing are adjacent; a cause belongs in the summary only when it
+changes how the reader understands the finding, otherwise leave it in the indicator text.
+
+**In the summary, give a comparison as a ratio or as two plain percentages, not as raw cut-offs or a
+"points" gap (Equality, November 2026).** The summary said the best-paid fifth of jobs "pay £38 an
+hour or more, while the lowest-paid fifth pay around £15 or less", and that disabled residents were
+"24 points less likely to be in work". The user asked for the ratio instead, to help people make
+sense of the pay figures, and asked whether "24 points" meant a percentage. They became "jobs near
+the top of residents' pay scale pay nearly two and a half times as much per hour as jobs near the
+bottom" and "56% of disabled working-age residents are in work, against 80% of non-disabled
+residents". General rule: the summary should hand the reader the comparison already made (a ratio,
+or two percentages side by side); leave raw cut-offs and percentage-point gaps to the indicator
+text, where they can be explained.
+
 ### 2.2 Description Writing Style
 
 **CRITICAL: Descriptions must be narrative, concise, and findings-focused**
@@ -1032,6 +1051,43 @@ belonged under the crime indicator, since it is about safety, not about the poli
 rule: place context with the indicator whose subject it shares, not wherever the source that
 reported it was discussed.
 
+**Explain a distribution measure with a picture, and replace figurative verbs (Equality,
+November 2026).** The pay-inequality text first described the 80:20 ratio as "the rate that only a
+fifth earn more than (£38.28 an hour in 2026) against the rate that only a fifth earn less than
+(£15.44)", and said National Living Wage rises "squeeze the lower half of the pay scale". The user
+found the first sentence very hard to understand and asked what "squeezing" means. It became "Line
+up every job held by Lewisham residents from lowest to highest hourly pay. In 2026, a job a fifth of
+the way down from the top paid £38.28 an hour: 2.48 times the £15.44 paid by a job a fifth of the
+way up from the bottom", and "each rise in the National Living Wage lifts the lowest pay closer to
+middle pay". General rule: readability is a hard requirement, not polish. Describe percentiles,
+ratios and other distribution measures with a concrete image a resident could picture (line people
+or jobs up; say where on the line each figure sits), never with inverted constructions like "the
+rate only a fifth earn more than". Replace a source's metaphor (squeeze, compress, bite, spillover)
+with what literally happens to whom. Test each sentence by reading it aloud once: if it needs a
+second read, rewrite it.
+
+**Use the plain everyday phrase, not a constructed one (Equality, November 2026, second round).**
+The fix above went too far the other way: "a job a fifth of the way down from the top paid £38.28 an
+hour: 2.48 times the £15.44 paid by a job a fifth of the way up from the bottom", and in the
+summary "one a fifth of the way down from the top of the pay scale paid about two and a half times
+as much per hour as one a fifth of the way up from the bottom". The user called both cryptic and
+asked for normal conversational language such as "top fifth" and "bottom fifth". It became "the
+best-paid fifth of jobs paid £38.28 an hour or more, and the lowest-paid fifth £15.44 or less: a
+ratio of 2.48". General rule: say it the way a person would say it out loud; reach for the common
+phrase ("top fifth", "bottom half") before building a precise but unusual one.
+
+**Say "bottom" and "top", not "poorest" and "richest", for distribution groups (Equality, November
+2026).** The wealth indicator was named "% of wealth held by the poorest 50%". The user asked for
+"bottom" throughout, name and copy included. General rule: describe distribution groups by their
+position ("bottom 50%", "top tenth"), which is neutral and matches the measure, rather than labelling
+the people in them.
+
+**Cut caveats about data gaps that don't change the reader's takeaway (Education, November 2026).**
+The NEET text and summary said the council "didn't know what a further 2.9% were doing, against 1.2%
+across London, so the true share may be higher". The user called it unnecessary data. General rule:
+a data-quality figure (records "not known", suppressed cells, sample notes) belongs in
+`source.notes`, not in reader-facing copy, unless it reverses or substantially changes the finding.
+
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`
 - **Spacing**: Ensure adequate vertical spacing between chart and dimension cards (minimum 48px padding-top)
@@ -1375,6 +1431,47 @@ sub-series' label is the full indicator name, not just the suffix** (`indicators
 surfaced indicator the label renders in full, e.g. "% non-decent homes (Private rented)"), so a
 bare suffix like "Private rented" is never shown on its own without the indicator it belongs to.
 
+**Equality employment gaps (November 2026): the rule above, missed again.** Three sub-series
+(women vs men, ethnic minority vs White, disabled vs non-disabled) went live with three big-value
+cards. The user pointed back to this rule and chose disability as the most insightful gap; it is now
+the only headline (`singleHeadlineFilter: {'Employment rate gap': 'Disabled'}`). The miss happened
+because the rule lived only here and not in `SPEC_RULES.md`, which now carries it.
+
+**Keep headline units short; a gap between two percentages is "points" (Equality, November 2026).**
+The employment-gap headline read "23.7 percentage points". The user asked why not "%" and to keep
+it concise. "%" would be wrong: a 23.7% gap reads as a relative difference (23.7% of 79.5%, about 19
+points), not the 23.7-point difference between 79.5% and 55.8%. The headline unit is now "points",
+and prose says "percentage points" once, then "points". General rule: use the shortest unit that
+is still correct, and never put a long unit phrase in a headline.
+
+**Keep the framework's own indicator; don't swap the measure to get fresher data (Equality,
+November 2026).** The framework indicator is "% of wealth held by the poorest 50%", whose only
+London series (GLA analysis of the ONS Wealth and Assets Survey) ends in 2016-18. To get a series
+running to 2020-22 and satisfy the 10-year rule, it was replaced with ONS's 75th:25th percentile
+wealth ratio. The user asked for the poorest-50% share back. General rule: the framework indicator
+wins. If its only data is old, show it with its real year as the headline, say in the text that it
+is the latest published, and keep older trend points when they are the only series for that
+indicator (note the exception in `source.notes`). Offer a substitute measure to the user as a
+question, not as a silent swap. Also check what a published figure actually measures: the GLA's
+"poorest 50%" uses national (GB) deciles, so the London figure covers the 46% of London households
+in Britain's poorest half, not London's own poorest half.
+
+**Say "percentage points" where the reader first meets a points figure (Equality, November 2026).**
+After the unit was shortened to "points", the user asked whether "24 points" was the same as a
+percentage. The indicator is now named "Employment rate gap, percentage points (...)", so the label
+under the "23.7 points" headline defines the unit. General rule: a short unit is fine in the
+headline only if the label beside it says what the unit is; in summary prose, prefer the two
+underlying percentages to a points gap.
+
+**Community and social cohesion are one dimension: "Social cohesion" (November 2026).** Asked to
+keep only loneliness, getting on across backgrounds and volunteering in social cohesion, the first
+attempt moved loneliness over from the community dimension and left community standing with its
+other two indicators. The user said the two dimensions are combined into one. The community
+dimension was removed (its belonging and support-network indicators, cards and Get Involved items
+with it), leaving Social cohesion with three indicators. General rule: when the user lists the
+indicators a dimension should keep and one of them lives in another dimension, ask whether the
+dimensions are meant to be merged before moving indicators between them.
+
 ### 2.6 No Separate "Target" Line or Marker
 
 **As of July 2026, dimension pages do NOT render a standalone "Target: X" line or a dashed
@@ -1667,6 +1764,16 @@ that actually cover rent affordability and housing conditions.
    candidate is thinner or less substantively interesting than folding its ground into an
    existing document's summary (see 3.2), prefer the fold-in.
 
+**Look for what superseded an old programme, not just the newest edition of the same document
+(Equality, November 2026).** Both council-context cards were from 2017-18 (the Lewisham Poverty
+Commission and the GLA's Workforce Integration Network). The user asked why the context was so
+dated. Each was the latest edition of its own document, but both programmes had been absorbed into
+newer ones: the Poverty Commission's work runs through the Lewisham Strategic Partnership (traced in
+a February 2025 Poverty Reduction Approach report), and WIN sits within the GLA and London Councils'
+Inclusive Talent Strategy (October 2025). General rule: if a card's document is more than about
+five years old, search for what replaced or absorbed the programme before keeping it, and prefer
+the current framework.
+
 ### 3.2 Content Requirements
 
 **Dated commitments go stale; phrase them as commitments and check what happened.** Caught on
@@ -1855,6 +1962,36 @@ was unnecessary and that context cards shouldn't link back to indicators on the 
 rule: a card says what the policy sets out to do and what it found; leave dates of meetings,
 counts of recommendations and governance arrangements out, and let the reader connect it to the
 indicators themselves.
+
+**Structure a council-plan card as problem, response, takeaway - not as a history (Equality,
+November 2026).** The first Poverty Reduction Approach card walked through the Poverty Commission,
+the Lewisham Deal, the Strategic Partnership and the Cost-of-Living Programme in date order. The user
+said it read like a stream of consciousness and asked: what are the main problems or opportunities,
+and what is the reader's main takeaway? It became three short paragraphs: the problem (one in three
+residents in poverty after housing costs) and the response so far (mostly emergency cash support);
+where the longer-term levers sit (the Strategic Partnership's workstreams); and an explicit takeaway
+(a plan to reduce poverty rather than respond to crises was still being built in 2025, with three
+stated priorities). General rule: lead with the problem, say what the plan does about it, and end
+with one sentence the reader should remember; history only where it explains the present.
+
+**Model a council-plan card on a card that already works (Equality, November 2026).** The
+problem-response-takeaway version of the Poverty Reduction Approach card was still hard to follow;
+the user pointed to the Inclusive Talent Strategy card on the same page as the model. That card is
+one paragraph: what the plan is and who made it, its headline aims, what it does, and the evidence
+behind it. The poverty card now follows the same order: the plan's status in one sentence, the
+problem and aim, its main tool so far, where the older commitments now sit, and its priorities.
+General rule: one paragraph, in that order, with every sentence a plain statement about the plan.
+
+**Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
+reported results and a Progress 8 concern without saying why Lewisham trails London or what the
+council is doing about it. The user asked for the reason and said always ask why and so what. The
+card now says where the council sees the problem (uneven results between secondary schools, gaps for
+disadvantaged, Black and Mixed-heritage pupils that open early) and what it is doing (sharing
+practice through head teacher meetings and senior-leader networks, raising grade 5 passes), and the
+GCSE indicator text adds DfE's breakdown showing the London gap is not explained by Lewisham having
+more disadvantaged pupils. General rule: for every finding on the page, the reader should learn why
+it is the case (from a source) and what follows from it (the response, or the consequence); if the
+source gives no reason, say what the data does and doesn't explain.
 
 ## 4. "Get Involved" Section
 

@@ -230,7 +230,7 @@ function renderTrendChart(allIndicators, dimension) {
     // geographies or survey versions - each label gets its own line, colour and legend
     // entry, so a change of geography or method is never drawn as one continuous line.
     // Points without a label form a single series per indicator, as before.
-    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
+    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled)\)$/, '');
     const seriesList = [];
     indicatorsWithTrend.forEach(ind => {
         const labels = [...new Set(ind.trend.map(t => t.series || ''))];
@@ -333,7 +333,7 @@ function renderTrendChart(allIndicators, dimension) {
 
     // X-axis labels - use midpoint year for rolling periods
     allPeriods.forEach((period, i) => {
-        if (i % 2 === 0 || i === allPeriods.length - 1) {
+        if (allPeriods.length <= 6 || i % 2 === 0 || i === allPeriods.length - 1) {
             const x = xScale(i);
             // Extract midpoint year from period like "2011-2013" or "2011 to 2013"
             const years = period.match(/\d{4}/g);
@@ -440,7 +440,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // Group indicators by their base name (without gender/age-group suffix)
     const indicatorGroups = {};
     allIndicators.forEach(ind => {
-        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented)\)$/, '');
+        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled)\)$/, '');
         if (!indicatorGroups[baseName]) {
             indicatorGroups[baseName] = [];
         }
@@ -454,14 +454,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'food': "Lewisham's diet-related health is mixed. Dental decay in five-year-olds runs below both the London and England averages, and diagnosed diabetes stays well below England's rate too (though now almost identical to London's). Demand on local foodbanks tells a starker story: Trussell network parcels distributed in Lewisham tripled between 2018 and 2025. Child obesity near-doubles between Reception and Year 6 - a pattern repeated every year since measurement began in 2006/07, and slightly worse than London's Year 6 average.",
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Two of the company's three levers for closing that gap are moving at different speeds: per-person water use has fallen modestly since 2019/20, though unevenly, with a pandemic-era spike and a recent uptick; leakage - after falling from close to a third of supply in the mid-2000s to around a fifth by 2019/20 - has barely moved since. Both remain well short of what's needed: the Environment Act's 2038 demand-reduction target and the water industry's 2018 commitment to halve leakage by 2050 both require considerably faster progress than either metric is currently making.",
         'mobility': "Public transport access in Ladywell is best near the station: planning assessments rate it excellent (PTAL 6) right by Ladywell station and good (PTAL 4) a few streets away. Across Lewisham, 71.6% of residents' trips are made on foot, by bike or by public transport, well below the 82.1% Inner London average and short of the Mayor's target of 80% by 2041.",
-        'equality': "Lewisham's highest-paid fifth earn 2.43 times more per hour than the lowest-paid fifth, a wider gap than England's 1.52 average - the only indicator here with a genuine borough figure. The other three describe London as a whole, because no equivalent breakdown exists for Lewisham specifically: the bottom half of the city's households hold just 4% of its wealth, and gender and ethnicity pay gaps (14% and over 22% respectively) both run well above the national picture. None of these numbers are new arrivals - each reflects a long-standing, slow-moving pattern rather than a recent shift - but taken together they describe income, wealth, gender and ethnicity inequalities that compound rather than cancel out.",
-        'community': "Most adults around Lewisham have someone to turn to, but fewer feel they belong where they live. Across inner-east London, the sub-region that includes Lewisham, 95% agreed people would be there for them if they needed help in 2025/26. Neighbourhood belonging is the lowest-scoring of the three: 54% of Lewisham adults feel they belong to their immediate neighbourhood, below England's 61% and not significantly different from London's 58%. Severe loneliness affects 8% of the borough's adults, within the survey's margin of error of England's rate, and nationally runs four times higher among disabled than non-disabled adults, and three times higher in the most deprived areas than the least.",
+        'equality': "Pay in Lewisham is more unequal than across England, though a little below London's level: jobs near the top of residents' pay scale pay nearly two and a half times as much per hour as jobs near the bottom. Work is also unevenly shared across London: 56% of disabled working-age residents are in work, against 80% of non-disabled residents, and women and ethnic minority residents are also less likely to be in work than men and White residents. Wealth is even more unevenly held: London households in the bottom half of Britain's households held just 3.8% of the city's wealth in 2016-18, and fewer than half of Lewisham households own their home.",
         'political_voice': "Turnout in Lewisham's mayoral election rose to 42% in May 2026, when the Green Party won control of the council and the mayoralty for the first time. Between elections, residents are unusually active: 48% contacted a councillor or MP, signed a petition or went to a public meeting or protest in the past year, against 41% across London. Yet only about a third, 32%, feel they can personally influence decisions affecting their area, the same as across London.",
         'culture': "Lewisham's dedicated arts grants have been cut by almost 40%, part of a wider squeeze on council arts budgets across England. Cultural spaces are unevenly spread: Ladywell has only five open venues, around 60% of the borough's density, with Lewisham's clustered in Deptford and Brockley. Participation is high locally: 88.5% of Lewisham residents engaged with the arts in 2025/26, above both the London and England averages.",
-        'education': "GCSE attainment measures the share of pupils leaving compulsory schooling with at least a standard pass (grade 4) in both English and Maths - the government's baseline for further study, apprenticeships and most jobs. In Lewisham, 66% of pupils met it in 2023/24, up from 61% the year before and 59% in 2019, fully reversing the pandemic-era dip. That leaves the borough five points below London's 71% for the same year - London being the strongest-performing region in England - so roughly one in three Lewisham pupils still leaves school without this baseline qualification, a marker closely tied to what comes next in education or work.",
+        'education': "Fewer Lewisham pupils leave school with the basics than across London. In 2025/26, 65.5% got at least a standard pass in both English and Maths GCSE, against 70.9% across London, so about one in three left without it. After 16, few young people drop out of the system altogether: 1.9% of 16 and 17 year olds were not in education, employment or training, close to the London rate. Childcare for the youngest is comparatively plentiful: there are about 62 registered places for every 100 children under five, against 47 across London, helped by a fall in the number of young children in the borough.",
         'connectivity': "Ladywell's physical connectivity is strong: full fibre broadband and 5G coverage both sit close to or above typical levels. Ladywell's Digital Exclusion Risk Index score, 2.5 out of 10, sits below the national median, consistent with London's younger, well-connected population. But that score is an average, and it can hide pockets of risk: a third of Ladywell's children live in income-deprived households and 15% of residents are disabled, both groups that London research identifies as more vulnerable to digital exclusion.",
         'energy': "Ladywell's homes are among the least energy-efficient in Lewisham. Around 38% of local homes with a recent Energy Performance Certificate (EPC) reach Band C or above, against 56% across the borough. Its housing is older: more than half of Ladywell's homes were built before 1930, and only about a quarter of Lewisham's pre-1929 homes reach Band C. Fuel poverty is about average, though: around one in ten Ladywell households were fuel poor in 2024, similar to Lewisham and England. The two are linked: the official measure only counts low-income households living in homes rated Band D or below, and the national 2030 target is framed around lifting fuel-poor homes to Band C.",
-        'social_cohesion': "Lewisham pairs low trust with strong cohesion. Fewer than a third of residents think many of their neighbours can be trusted - well below England, though level with London - yet more than four in five say people from different backgrounds get on well locally, above the national figure. In 2025/26 residents were also slightly more likely than average to volunteer, while pride in the local area sits in line with England and London. Nationally, trust and cross-background cohesion both fell in 2025/26, as volunteering and pride edged up.",
+        'social_cohesion': "Lewisham's communities mostly hold together well. More than four in five adults (83%) say people from different backgrounds get on well locally, above England's 78.5%, and 61% volunteered at least once in the past year, above England's 56%. Against that, 8% of Lewisham adults feel lonely often or always.",
         'income': "Deprivation is patchy within Ladywell: one of its seven neighbourhoods is among England's most deprived for income and employment. In Lewisham, more than a quarter of residents live in poverty after housing costs, close to the London average, and around two-thirds of them are in a family where someone works. Out-of-work benefits reach 17.7% of working-age residents, above London's 15.2%, while the claimant count of job-seekers equals only about two in five of that total. Since 2020, the rise has mostly come among recipients not required to look for work, a group that includes people too ill to work; nationally, the number out of work through long-term sickness rose after the pandemic, often alongside depression or anxiety.",
         'peace_justice': "Ladywell records more crime per resident than Lewisham as a whole: 119 crimes for every 1,000 residents in the year to October 2026, against 100 across the borough. About half the rise since 2022 is violence in which nobody was injured. Trust in the police is also weaker in Lewisham than across the capital: in the year to March 2026, 60% of the borough's residents said they trust the Metropolitan Police, against 71% of Londoners.",
     };
@@ -547,32 +546,20 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Equality-specific explanations
         if (baseName === 'Pay inequality (80th:20th percentile ratio)') {
-            return `This compares hourly pay at the 80th percentile (higher earners) against the 20th percentile (lower earners) among people working in Lewisham, using ONS's Annual Survey of Hours and Earnings. A ratio of 2.43 means the top-paid fifth earn nearly two and a half times more per hour than the bottom-paid fifth here - noticeably wider than England's 1.52 average, and close to London's own average of around 2.5, reflecting a labour market where well-paid professional and financial jobs sit alongside a large low-paid service sector. Trust for London's data page was refreshed in January 2026 and now reports pay inequality falling in most London boroughs since the previous release; Lewisham was not named among the small number of boroughs where it rose, which suggests some narrowing, though Lewisham's precise updated figure and the year-by-year trend behind it aren't available here.`;
+            return `This compares pay at the top and bottom of the scale for jobs held by Lewisham residents. In 2026, the best-paid fifth of jobs paid £38.28 an hour or more, and the lowest-paid fifth £15.44 or less: a ratio of 2.48. That is close to London's 2.61. Across England the gap has narrowed faster over the past decade, to 2.21. The Low Pay Commission says each rise in the National Living Wage lifts the lowest pay closer to middle pay. In 2025, 2.7% of Lewisham residents' jobs were paid at or near the minimum wage, against 6.6% across the UK. The figures come from the Office for National Statistics' Annual Survey of Hours and Earnings.`;
         }
 
-        if (baseName === '% of wealth held by the poorest 50%') {
-            return `This measures how household wealth - property, pensions, savings, and other assets, not income - is split between the richest and poorest halves of the population, drawn from the ONS Wealth and Assets Survey. No Lewisham or borough figure is published, so the number shown is London-wide: households in the bottom half of London's wealth distribution hold just 4% of the capital's total wealth, while the richest tenth hold more than 60%. Because property makes up a larger share of wealth in London than anywhere else in Great Britain, and London property prices have risen far faster than incomes, this gap is structurally wider here than the England-wide picture (where the poorest half hold closer to a tenth of total wealth). Wealth gaps like this tend to compound over generations, since assets - unlike pay - can be passed on and grow largely independently of work.`;
+        if (baseName === '% of wealth held by the bottom 50%') {
+            return `This shows how much of London's household wealth - homes, pensions, savings and possessions, minus debts - belongs to households in the bottom half of all British households. In 2016-18 they made up 46% of London households but held just 3.8% of the city's wealth; across Great Britain, the bottom half held 8.5%. London households in Britain's top tenth held 62%. Property made up half of London households' wealth in 2020-22, and fewer Lewisham households own their home: 43% in 2024, against 62% across England. The figures come from the Greater London Authority's analysis of the Office for National Statistics' Wealth and Assets Survey; that breakdown runs only to 2016-18, and the survey does not report boroughs.`;
         }
 
-        if (baseName === 'Gender pay gap (mean hourly pay)') {
-            return `This compares average hourly pay for men and women across all employee jobs, drawn from ONS's Annual Survey of Hours and Earnings. No Lewisham-specific figure is published, so the number shown - a 14% gap in 2023 - is London-wide. It is driven less by unequal pay for the same job (illegal since 1970) than by occupational segregation and the "motherhood penalty": women remain more likely to work part-time or in lower-paid sectors, often after taking on a larger share of childcare and caring responsibilities. London's gap has been reported as unusually persistent, not falling over the past decade the way the national figure has - a pattern researchers link to the capital's especially high childcare costs and its concentration of very high-paying, male-dominated finance and tech roles at the top of the distribution.`;
+        if (baseName === 'Employment rate gap, percentage points') {
+            return `This is the difference, in percentage points, between the shares of two groups of working-age Londoners (aged 16 to 64) who are in work. The widest gap is for disability: in the year to June 2026, 55.8% of disabled Londoners were in work against 79.5% of non-disabled Londoners, a gap of 23.7 points, narrower than England's 25.8. Women's employment rate was 8.7 points below men's (70.1% against 78.8%), wider than England's 6.2; the Greater London Authority attributes at least some of this to differences in employment between parents and people without children. The gap between White and ethnic minority Londoners was 10.1 points (79.2% against 69.1%). The figures come from the Office for National Statistics' Annual Population Survey, which samples too few Lewisham residents to measure these gaps reliably.`;
         }
 
-        if (baseName === 'Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)') {
-            return `This compares median hourly pay between White employees and employees from Black, Asian, and other minority ethnic backgrounds, drawn from ONS's Annual Population Survey. No Lewisham-specific figure is published, so the number shown is London-wide, where the gap has consistently been the largest of any English region - more than 22%, versus roughly 1% across the rest of England and Wales. That's a striking contrast given London is also the most ethnically diverse region: Black, African, Caribbean and Black British workers alone make up close to half of that group nationally while concentrated in London, yet are paid proportionately less here than the same gap would predict elsewhere. Researchers attribute the London-specific scale of the gap to a mix of occupational segregation, discrimination in hiring and promotion, and the capital's unusually high-paying finance sector being disproportionately White at senior levels.`;
-        }
-
-        // Community-specific explanations
+        // Social cohesion: loneliness (moved from the former community dimension, Nov 2026)
         if (baseName === '% adults reported feeling lonely often or always') {
             return `Lewisham's rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26. Local estimates have existed since 2023/24, when DCMS began boosting its survey sample to report by council, and none of the year-on-year changes since are statistically significant: Lewisham has moved from just below England's rate to just above it, all within the survey's margin of error. Loneliness is far from evenly spread: nationally it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
-        }
-
-        if (baseName === '% adults felt strongly belonged to their neighbourhood') {
-            return `This measures the share of adults who say they belong very or fairly strongly to their immediate neighbourhood. Lewisham's 54% in 2025/26 sits below England's 61%, and close to London's 58%. The borough's own estimates, available since 2023/24, have edged down, though not by a statistically significant amount given the survey's sample size. Nationally, belonging peaked in 2020/21 and has since eased back.`;
-        }
-
-        if (baseName === '% adults agreed that if they needed help, there would be people there for them') {
-            return `This asks adults how strongly they agree that people would be there for them if they needed help - one of the survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any council; the most local figure covers inner-east London, the sub-region Lewisham sits within, where 95% agreed in 2025/26, in line with England's 96%. Agreement is near-universal and has barely moved nationally since 2018/19, making it the most stable of the three community measures.`;
         }
 
         // Political voice-specific explanations
@@ -603,7 +590,15 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Education-specific explanations
         if (baseName === 'GCSE attainment (grades 9-4 in English & Maths)') {
-            return `This tracks the government's standard pass benchmark - grade 4 or above in both English and Maths GCSE - the threshold used to judge whether a pupil leaves compulsory education equipped for further study or work; anyone missing it is generally required to keep resitting English and/or Maths post-16. Lewisham's 66% in 2023/24 sits five points below London's 71% for the same year, though the borough has closed the gap that opened during the pandemic: results dipped through the disrupted 2020-2022 exam years before recovering past pre-pandemic levels to a new recent high. Attainment 8, a broader points score across 8 subjects, tells a similar story - up 2.5 points on 2019. The remaining shortfall matters because English and Maths passes gate entry to most level 3 courses and apprenticeships.`;
+            return `This is the share of pupils at state-funded schools who get at least a grade 4, a standard pass, in both English and Maths GCSE. In Lewisham, 65.5% did in 2025/26, below London's 70.9%. That leaves about one in three pupils without it; colleges and sixth forms must keep teaching those students English and Maths to receive their funding. The gap with London isn't because Lewisham has many more disadvantaged pupils, those on free school meals in the past six years or in care (38.5% against 36.2%): both disadvantaged pupils (53.0% against 57.4%) and others (73.3% against 78.5%) pass less often than their London peers. Pandemic-era results (2019/20 to 2021/22) are left off the chart because grading changed. Department for Education figures; 2025/26 is provisional.`;
+        }
+
+        if (baseName === '% of 16-17 year olds not in education, employment or training (NEET)') {
+            return `This is the share of 16 and 17 year olds not in education, employment or training, averaged over December to February; young people in England must stay in education or training until 18. In Lewisham it was 1.9% in 2025/26, about 134 young people, close to London's 2.0%. Young people with an education, health and care plan were far more likely to be out of education or work: 6.2%, against 1.4% of those without special educational needs. For 16 to 24 year olds, only regional survey estimates exist: about 13% of young Londoners in 2025. These figures come from the Department for Education.`;
+        }
+
+        if (baseName === 'Registered childcare places per 100 children aged 0-4') {
+            return `This compares the number of registered early years childcare places with the number of children under five. In June 2026, Lewisham had 10,577 places at nurseries, pre-schools and childminders: about 62 for every 100 children aged 0 to 4, against 47 across London. Places have grown since 2022 while the number of young children in the borough fell by 7%. A place is the most children a provider may care for at one time, and can include children up to age 7, so this measures capacity, not free spaces or cost. The figures come from Ofsted's register of childcare providers and the Office for National Statistics' population estimates for mid-2025.`;
         }
 
         // Connectivity-specific explanations
@@ -892,65 +887,38 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Community dimension council context - 2 documents: the Health and Wellbeing
-        // Strategy covers loneliness/social isolation as a named adult social care
-        // priority (delivered practically through Community Connections Lewisham); the
-        // Main Grants Programme Allocations report covers the funding behind
-        // neighbourhood-level community infrastructure and belonging.
-        if (dimensionName === 'community') {
-            return [
-                {
-                    title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
-                    year: '2025-2030',
-                    url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
-                    summary: `<p>Lewisham's Health and Wellbeing Strategy names "promoting social connection and purpose" and "reducing isolation and loneliness" as explicit priorities within its adult social care outcomes, and identifies social participation - alongside housing - as a core wider determinant of health that poverty erodes. In practice this is delivered through Community Connections Lewisham, a free social prescribing service for residents aged 18 and over that matches isolated adults with local groups, activities, and trained befriending volunteers rather than clinical treatment. The council-backed "Lewisham Against Loneliness" campaign, run through the same service, has recruited over a hundred volunteer befrienders and matched 84 residents to date.</p>`
-                },
-                {
-                    title: 'Main Grants Programme Allocations 2026-2029 (Mayor and Cabinet report)',
-                    year: '2026-2029',
-                    url: 'https://lewisham.moderngov.co.uk/documents/s123458/Main%20Grants%20Programme%20Allocations%202026-2029%20REPORT.pdf',
-                    summary: `<p>Lewisham's Main Grants Programme - the council's core funding route for the voluntary and community sector - drops from £2.46m a year under the 2022-25 cycle to a total of £2.11m across the whole 2026-29 cycle, a cut the council links to a £30m borough-wide budget shortfall in 2025/26. Rather than spreading the reduced pot thinly, the new model commissions advice services directly instead of through grants, and channels £900,000 into neighbourhood-focused infrastructure across four areas of the borough - funding local coordination, signposting, and capacity-building alongside the NHS's Integrated Neighbourhood Teams - with a further stream for Black-led organisations, digital inclusion, and equalities groups.</p>`
-                },
-                {
-                    title: 'Perspectives from global community research',
-                    summary: `<p>WHO's Commission on Social Connection has declared loneliness a global public health priority: worldwide, it's linked to roughly 871,000 deaths a year, with poor social connection raising mortality risk by around a quarter to a third. Sociologist Eric Klinenberg's research into Chicago's 1995 heat wave found why: neighbourhoods with near-identical poverty had very different death tolls depending on their "social infrastructure" - libraries, shops, parks and community spaces that gave isolated residents somewhere to go and someone nearby to notice if they went missing. Shared public spaces aren't just amenities, they're protective infrastructure - without them, isolated residents have no safety net, no matter how caring their neighbours might otherwise be.</p>`,
-                    sources: [
-                        { name: 'From Loneliness to Social Connection - WHO Commission on Social Connection', url: 'https://www.who.int/news/item/30-06-2025-social-connection-linked-to-improved-heath-and-reduced-risk-of-early-death' },
-                        { name: 'Loneliness and Social Isolation as Risk Factors for Mortality - Holt-Lunstad et al., 2015', url: 'https://journals.sagepub.com/doi/full/10.1177/1745691614568352' },
-                        { name: 'Safety and Community: A Tale of Two Neighborhoods (Klinenberg\'s Chicago research) - Congress for the New Urbanism', url: 'https://www.cnu.org/publicsquare/safety-and-community-tale-two-neighborhoods' }
-                    ]
-                }
-            ];
-        }
-
-        // Equality dimension council context - 2 documents: the Lewisham Poverty
-        // Commission's report covers low pay and pay inequality locally (its own remit
-        // and recommendations); the Mayor of London's Workforce Integration Network
-        // covers the structural drivers behind the gender and ethnicity pay gaps
-        // citywide, since no Lewisham-specific strategy exists for either. Wealth
-        // concentration has no dedicated strategy document at either level - noted as a
-        // gap rather than forcing a weak third citation.
+        // Equality dimension council context - 2 documents plus the research card (cap 3).
+        // Replaced Nov 2026 (user asked for newer context than the 2017 Poverty Commission and
+        // 2018 WIN cards): Lewisham's Poverty Reduction Approach report (Overview and Scrutiny,
+        // 25 Feb 2025, read in full via the councilmeetings mirror) traces where the Poverty
+        // Commission's work went; the GLA/London Councils Inclusive Talent Strategy (Oct 2025)
+        // is London's current plan on employment gaps and low pay (WIN now sits within it).
+        // The ITS document itself is on london.gov.uk (bot-blocked); facts here come from the
+        // GLA's own summary of its evidence base on the London Datastore (27 Nov 2025) and the
+        // ITS consultation summary (London Datastore, Oct 2025).
         if (dimensionName === 'equality') {
             return [
                 {
-                    title: 'Working together to tackle poverty in Lewisham (Lewisham Poverty Commission)',
-                    year: '2017',
-                    url: 'https://lewisham.gov.uk/-/media/archive/files/imported/lewishampovertycommissionreportfinal.pdf?sc_lang=en',
-                    summary: `<p>Lewisham's cross-sector Poverty Commission, launched in 2017, made 52 recommendations after finding that low pay - not just worklessness - was trapping working households in poverty, with the borough's pay inequality one symptom of a labour market split between well-paid professional jobs and a large, insecure, low-paid service sector. Its central response was accreditation as a Living Wage borough: the council became one of the first UK local authorities to gain Living Wage Employer status, used business-rate incentives to grow the number of accredited local employers, and proposed the "Lewisham Deal" - a partnership between the council, health, and education employers to expand local apprenticeships and Living Wage jobs. The Commission also pushed for improved in-work progression support, on the basis that raising the pay floor alone does not close a gap driven mainly by who reaches the top of it.</p>`
+                    title: "Lewisham Council's Poverty Reduction Approach (report to Overview and Scrutiny)",
+                    year: 'February 2025',
+                    url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=119344',
+                    summary: `<p>In early 2025, Lewisham's plan to tackle poverty was still being built. A February 2025 report to councillors sets out where it stands: one in three residents lived in poverty after housing costs in 2021/22, and the council wants to move beyond crisis support to a longer-term, council-wide approach. Since September 2022, its Cost-of-Living Programme has given residents in crisis support, mainly through a cash-first approach, alongside longer-term help through voluntary and community groups. Commitments on the Living Wage, apprenticeships, procurement and progression for Black, Asian and minority ethnic staff, grouped in the Lewisham Deal that grew out of the 2017 Poverty Commission, now run through the Lewisham Strategic Partnership. Public health evidence points the new approach to three priorities: maximising income, help with essential costs, and financial resilience and debt management.</p>`
                 },
                 {
-                    title: "Workforce Integration Network (WIN) — Bridging the Gap",
-                    year: '2018-present',
-                    url: 'https://www.london.gov.uk/programmes-strategies/communities-and-social-justice/workforce-integration-network-win/bridging-gap',
-                    summary: `<p>WIN is the Mayor of London's response to London having the widest ethnicity pay gap of any English region - GLA Economics estimates closing ethnic minority employment and progression gaps could unlock £17.4 billion in economic benefit for London. It targets the groups facing the largest combined barriers, including Black men and Pakistani, Bangladeshi, and Black women specifically, on the basis that gender and ethnicity disadvantage compound rather than operate separately - directly relevant to both the gender and ethnicity pay gap figures shown here. Rather than setting a citywide pay-gap target, WIN works employer-by-employer through "Design Labs" that analyse where a given organisation's recruitment, retention, and promotion practices are excluding underrepresented groups, then build a tailored action plan. No dedicated strategy document exists addressing wealth concentration specifically, at either Lewisham or London level.</p>`
+                    title: 'Inclusive Talent Strategy (Mayor of London and London Councils)',
+                    year: '2025',
+                    url: 'https://data.london.gov.uk/blog/the-inclusive-talent-strategy',
+                    summary: `<p>London's plan for skills and jobs, launched in October 2025 by the Mayor and London Councils as part of the London Growth Plan, sets two headline targets: lift London's employment rate to 80%, and raise the real weekly income, after housing costs, of the lowest-earning fifth of Londoners by 20% by 2035. It aims to join up jobs, skills, health and careers services, help Londoners facing barriers to work into quality jobs, and make London a centre of excellence for fair pay and good work, tracking how many Londoners earn below the London Living Wage. Its evidence base names caring responsibilities, insecure or expensive housing, a lack of flexible work and limited transport as barriers that keep people out of work or stop them taking on more hours. GLA Economics estimates that equalising employment rates across ethnic groups would add 290,000 Londoners to the workforce, worth £17.4 billion in salaries.</p>`,
+                    sources: [
+                        { name: 'The Inclusive Talent Strategy - GLA summary of the evidence base (London Datastore, November 2025)', url: 'https://data.london.gov.uk/blog/the-inclusive-talent-strategy' },
+                        { name: 'Inclusive Talent Strategy - consultation summary (GLA, 2025)', url: 'https://data.london.gov.uk/download/e70mq/qdx/Inclusive%20Talent%20Strategy%20-%20Consultation%20summary.pdf' }
+                    ]
                 },
                 {
                     title: 'Perspectives from global equality research',
-                    summary: `<p>Wealth is far more unequally shared than income almost everywhere researchers have looked, and one of the clearest findings on why is about housing specifically, not investments or business ownership: economist Matthew Rognlie found that nearly all of the long-term growth in wealth compared to earnings in Britain and similar countries comes down to how much homes are worth, not other kinds of wealth. In practice, that means who owns property, and how fast house prices rise compared to wages, is doing most of the work in pulling wealth away from people who don't own a home and towards those who do.</p><p>That housing-driven wealth gap connects to a much larger one across ethnic groups, though the drivers turn out to be broader than housing alone: UK research finds under a third of Black African adults own their own home, against around 70% of White British and Indian adults, but Resolution Foundation research points to inheritance and savings as the bigger factors overall - White British households inherit roughly 50% more on average than Indian households, and at least half of Black African, Bangladeshi and Black Caribbean households have under £1,000 in savings. Homeownership alone doesn't tell the whole story either: Pakistani households have high homeownership rates but still end up with less wealth than Indian households. However it breaks down, the result is stark - Black African and Bangladeshi households hold roughly a tenth of the wealth of the average White British household.</p><p>On gender pay gaps specifically, the most consistent finding across countries with very different labour laws is the "child penalty": pay gaps between men and women are close to zero before a first child and open up sharply afterward, driven by mothers reducing hours or stepping back from careers in ways fathers largely don't.</p>`,
+                    summary: `<p>Wealth gaps between ethnic groups in Britain are wide and slow to close. Resolution Foundation research finds that in 2016-18 the typical Black African adult had £23,700 in family wealth, about an eighth of the typical White British adult's £197,000, and at least half of people of Black African, Bangladeshi and Black Caribbean ethnicity had under £1,000 in savings. Gains in the value of homes and other assets, together with falling interest rates, have helped sustain these gaps, and unequal inheritance is likely to carry them forward: the average White British person inherits 50% more than someone from the next highest-inheriting group, while the average Black African, Chinese, Bangladeshi or Pakistani person inherits nothing.</p><p>On gender, the Child Penalty Atlas, covering 134 countries, finds that women's and men's employment track each other until a first child, then diverge sharply and persistently, by very different amounts from place to place.</p>`,
                     sources: [
-                        { name: "Das House Kapital: The Evolution of Housing Wealth - Rognlie's finding, summarised by CEPR", url: 'https://cepr.org/voxeu/columns/das-house-kapital-evolution-housing-wealth' },
                         { name: "A gap that won't close - Resolution Foundation", url: 'https://www.resolutionfoundation.org/app/uploads/2020/12/A-gap-that-wont-close.pdf' },
-                        { name: 'The Colour of Money - Runnymede Trust', url: 'https://www.runnymedetrust.org/publications/the-colour-of-money' },
                         { name: 'The Child Penalty Atlas - Kleven et al., NBER', url: 'https://www.nber.org/papers/w31649' }
                     ]
                 }
@@ -1001,17 +969,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        // Education dimension council context - 1 document: the council's own Standards
-        // Report covers the dimension's single indicator (GCSE English & Maths attainment)
-        // directly, including the year-on-year comparison and the council's own framing of
-        // where progress still lags. No second document was found substantively covering
-        // ground this one doesn't already address, so a 2nd/3rd citation wasn't forced.
+        // Education dimension council context - the council's Standards Report (school
+        // results and its Progress 8 framing). Figures were removed from the card in Nov 2026
+        // because the page's GCSE data now comes straight from DfE; the report (1 April 2025) is
+        // read via WebFetch of the councilmeetings mirror (curl gets 403). NEET and childcare have no card yet.
         if (dimensionName === 'education') {
             return [{
                 title: 'Validated Outcomes 2024 Standards Report — Primary and Secondary Schools',
-                year: '2024',
-                url: 'https://lewisham.moderngov.co.uk/mgConvert2PDF.aspx?ID=119735',
-                summary: `<p>Lewisham Council's own school standards reporting shows 2023/24 as the borough's best GCSE year on record for the basics measure: 66% of pupils achieved grade 4 or above in both English and Maths, up from 59% in 2019 and continuing a recovery from the pandemic-disrupted exam years. Attainment 8 - a broader points score covering 8 subjects - moved the same direction, up 2.5 points on 2019 to 46.9. The report is more cautious about Progress 8, which measures how much progress pupils make relative to pupils with similar starting points nationally: it has historically run below the national average in Lewisham, and the council frames closing that gap - not just raising the raw attainment percentage - as the harder, ongoing task for its school improvement work.</p>`
+                year: 'April 2025',
+                url: 'https://councilmeetings.lewisham.gov.uk/mgConvert2PDF.aspx?ID=119735',
+                summary: `<p>Lewisham's April 2025 standards report found that two in three pupils got a grade 4 in English and Maths in 2024, in line with the England average. Progress 8, which compares pupils' progress with similar pupils nationally, was above the England average but below London and similar boroughs. Its priorities include narrowing the gap for Black pupils at the end of Reception, and for pupils on free school meals and Black and Mixed-heritage pupils in early phonics, and reducing uneven results between secondary schools. For secondary schools, its plan is to spread what works through head teacher meetings and new networks for senior leaders, and to raise the share of pupils getting a stronger grade 5 in English and Maths.</p>`
             },
             {
                 title: 'Perspectives from global education research',
@@ -1177,25 +1144,29 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         // found but are now well past their own end dates with no confirmed successor, so
         // are not used here - DIMENSION_PAGE_SPECIFICATION.md 3.1 requires verifying a
         // document is the latest version, and neither of those two is current policy.
+        // Social cohesion council context (Nov 2026): Community Action Plan (cohesion,
+        // volunteering) and the Health and Wellbeing Strategy (loneliness, moved here from
+        // community); the Corporate Strategy card (trust) was dropped with the trust indicator.
         if (dimensionName === 'social_cohesion') {
             return [
                 {
                     title: 'Lewisham Community Action Plan 2024 (Lewisham Strategic Partnership)',
                     year: '2024-2030',
                     url: 'https://lewisham.gov.uk/-/media/0-mayor-and-council/strategic-partnership/lewisham-community-action-plan-2024---print-file.pdf',
-                    summary: `<p>Lewisham's Strategic Partnership - the council working alongside the NHS, the Metropolitan Police, London Fire Brigade, Goldsmiths University of London, Phoenix Community Housing and voluntary-sector partners including Lewisham Local - launched a Community Action Plan in July 2024, shaped by engagement with over 1,000 residents and building on an earlier borough-wide "Lewisham 2030" listening campaign. It sets six long-term objectives running to 2030; two speak directly to this page's indicators - improving residents' health, wellbeing and housing, and celebrating the borough's diverse communities while challenging inequality based on race, disability, sexuality, gender and other characteristics. Lewisham Local, the charity behind the borough's volunteering and community-group infrastructure (500+ groups supported, 4,000+ volunteering hours facilitated a year), is a named delivery partner, tying the plan directly to this page's volunteering indicator.</p>`
+                    summary: `<p>Lewisham's Strategic Partnership - the council working alongside the NHS, the Metropolitan Police, London Fire Brigade, Goldsmiths University of London, Phoenix Community Housing and voluntary-sector partners including Lewisham Local - launched a Community Action Plan in July 2024, shaped by engagement with over 1,000 residents and building on an earlier borough-wide "Lewisham 2030" listening campaign. It sets six long-term objectives running to 2030; two of them are improving residents' health, wellbeing and housing, and celebrating the borough's diverse communities while challenging inequality based on race, disability, sexuality, gender and other characteristics. Lewisham Local, the charity behind the borough's volunteering and community-group infrastructure (500+ groups supported, 4,000+ volunteering hours facilitated a year), is a named delivery partner.</p>`
                 },
                 {
-                    title: 'Lewisham Corporate Strategy 2022-2026',
-                    year: '2022-2026',
-                    url: 'https://lewisham.gov.uk/-/media/files/lewisham-council-corporate-plan-2022-2026.ashx',
-                    summary: `<p>Lewisham's Corporate Strategy organises the council's work around seven priorities, including Open Lewisham, Health and Wellbeing, Safer Communities and Cleaner and Greener. Two threads running through it speak to trust and cohesion specifically: a commitment to listen to and co-design services with residents, reaching people whose voices are seldom heard, and the council's own description of Lewisham as a "Borough of Sanctuary" and London's leading borough for refugee resettlement. It also commits to what it calls the "Lewisham Way" of working - maintaining and strengthening the council's collaboration with the borough's voluntary and community sector rather than running services alone, the same sector this page's volunteering indicator tracks participation in.</p>`
+                    title: 'Lewisham Health & Wellbeing Strategy — Going further with prevention',
+                    year: '2025-2030',
+                    url: 'https://lewisham.gov.uk/-/media/mayor-and-council/about-us/strategies/health-and-wellbeing-strategy-2025-2030.pdf',
+                    summary: `<p>Lewisham's Health and Wellbeing Strategy names "promoting social connection and purpose" and "reducing isolation and loneliness" as explicit priorities within its adult social care outcomes, and identifies social participation - alongside housing - as a core wider determinant of health that poverty erodes. Community Connections Lewisham, a free social prescribing service run by Age UK Lewisham and Southwark for residents aged 18 and over, matches isolated adults with local groups, activities and trained befriending volunteers rather than clinical treatment.</p>`
                 },
                 {
                     title: 'Perspectives from global social cohesion research',
-                    summary: `<p>Trust and cohesion research points to both a structural and an interpersonal driver. On the structural side, most cross-country research finds income inequality erodes generalised trust - people are less likely to trust strangers in more unequal places, independent of overall wealth. On the interpersonal side, social psychology's intergroup contact theory, dating to Gordon Allport's work in the 1950s and confirmed across hundreds of later studies, finds sustained, positive contact between people from different backgrounds - not just living nearby - reliably increases trust, particularly when working toward a shared goal together.</p>`,
+                    summary: `<p>Research points to two kinds of connection. Between groups, social psychology's intergroup contact theory, dating to Gordon Allport's work in the 1950s and confirmed across hundreds of later studies, finds sustained, positive contact between people from different backgrounds - not just living nearby - typically reduces prejudice, and works best under conditions such as a shared goal. For individuals, WHO's Commission on Social Connection urges countries to make social connection a public health priority: worldwide, it's linked to roughly 871,000 deaths a year, with poor social connection raising mortality risk by around a quarter to a third.</p>`,
                     sources: [
-                        { name: 'Income Inequality and Generalised Trust - Social Indicators Research', url: 'https://link.springer.com/article/10.1007/s11205-014-0777-5' },
+                        { name: 'From Loneliness to Social Connection - WHO Commission on Social Connection', url: 'https://www.who.int/news/item/30-06-2025-social-connection-linked-to-improved-heath-and-reduced-risk-of-early-death' },
+                        { name: 'Loneliness and Social Isolation as Risk Factors for Mortality - Holt-Lunstad et al., 2015', url: 'https://journals.sagepub.com/doi/full/10.1177/1745691614568352' },
                         { name: 'A Meta-Analytic Test of Intergroup Contact Theory - Pettigrew & Tropp, 2006', url: 'https://www.researchgate.net/publication/7046266_A_Meta-Analytic_Test_of_Intergroup_Contact_Theory' }
                     ]
                 }
@@ -1356,26 +1327,21 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
-        if (dimensionName === 'community') {
-            return [
-                {
-                    action: 'Volunteer with Community Connections Lewisham',
-                    text: `The charity behind 'Lewisham Against Loneliness', matching isolated residents with local groups, activities and trained volunteers. It currently needs Transport and Cancer Champion volunteers, alongside general roles.`,
-                    url: 'https://communityconnectionslewisham.org/volunteer/'
-                },
-                {
-                    action: 'Join Rushey Green Time Bank',
-                    text: `A multi-award-winning time bank based at PLACE/Ladywell on Lewisham High Street, where members trade an hour of help given for an hour of help received - skills for connection, not money.`,
-                    url: 'https://timebanking.org/timebanks/rushey-green-time-bank/'
-                }
-            ];
-        }
-
         if (dimensionName === 'equality') {
             return [
                 {
-                    action: 'Sign up to Lewisham Works',
-                    text: `The council's free employment service for unemployed residents aged 18+, helping people into the better-paid work that narrows the borough's pay gap - it helped over 330 residents into jobs or training in its first year.`,
+                    action: 'Find a Living Wage employer',
+                    text: `Search the Living Wage Foundation's map of accredited employers by region and industry to find London employers committed to paying at least the real Living Wage.`,
+                    url: 'https://www.livingwage.org.uk/accredited-living-wage-employers'
+                },
+                {
+                    action: 'Join Lewisham and Greenwich Citizens',
+                    text: `An alliance of local schools, faith groups and charities that won Lewisham's place among the first Living Wage accredited councils. Members choose its campaigns; organisations can join.`,
+                    url: 'https://www.citizensuk.org/chapters/south-london/lewisham/'
+                },
+                {
+                    action: 'Get support from Lewisham Works',
+                    text: `The council's own employment service offers free support to residents looking for work, including Connect to Work for people with disabilities or health conditions.`,
                     url: 'https://lewisham.gov.uk/myservices/employment-support-and-careers-advice/lewisham-works'
                 }
             ];
@@ -1415,12 +1381,12 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 },
                 {
                     action: 'Become a school governor',
-                    text: `Lewisham Council partners with the charity Governors for Schools to match residents with local governing boards - no special qualifications needed, just enthusiasm, to help close the borough's attainment gap.`,
+                    text: `Lewisham Council works with the charity Governors for Schools to match residents with local school governing boards, which set each school's direction and hold its leaders to account.`,
                     url: 'https://governorsforschools.org.uk/'
                 },
                 {
                     action: 'Tutor with Action Tutoring',
-                    text: `A national charity giving free one-to-one English and maths tutoring to disadvantaged pupils across South East London school programmes; Ladywell's own community news site has promoted it directly to local residents.`,
+                    text: `A national charity giving free one-to-one English and maths tutoring to disadvantaged pupils, with volunteer tutors working in schools across South East London.`,
                     url: 'https://actiontutoring.org.uk/get-involved/volunteer/'
                 }
             ];
@@ -1510,13 +1476,18 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: 'Befriend a resettled refugee family',
-                    text: `Volunteers give about two hours a week helping Syrian and Iraqi families resettled in Lewisham - the first UK council awarded "Borough of Sanctuary" status, in 2021 - with English practice and local life.`,
+                    text: `Volunteers give about two hours a week helping refugee families resettled in Lewisham, a Borough of Sanctuary, with English practice and local life.`,
                     url: 'https://www.lewishamrefugeewelcome.org/'
                 },
                 {
                     action: 'Walk the Lewisham Interfaith Walk for Peace',
-                    text: `An annual multi-faith walk, started in 2015 after the Charlie Hebdo attack, taking in a synagogue, church, mosque and Hindu temple, organised with the council and Met Police. Open to any faith or none.`,
+                    text: `An annual multi-faith walk, first organised in 2015 by local faith leaders, Lewisham Council and Lewisham Police, visiting the borough's places of worship. Open to all.`,
                     url: 'https://www.lewishaminterfaithforum.org.uk/'
+                },
+                {
+                    action: 'Volunteer with Community Connections Lewisham',
+                    text: `Age UK Lewisham and Southwark's free social prescribing service, matching isolated residents with local groups, activities and trained volunteers. Its volunteer roles are listed on its website.`,
+                    url: 'https://communityconnectionslewisham.org/volunteer/'
                 }
             ];
         }
@@ -1570,7 +1541,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         const singleHeadlineFilter = {
             'Healthy life expectancy at birth': 'Male',
             '% of children with obesity': 'Year 6',
-            '% non-decent homes': 'Private rented'
+            '% non-decent homes': 'Private rented',
+            'Employment rate gap, percentage points': 'Disabled'
         };
         const indicatorsToShow = (indicators.length > 1 && singleHeadlineFilter[baseName])
             ? indicators.filter(ind => ind.indicator.includes(singleHeadlineFilter[baseName]))

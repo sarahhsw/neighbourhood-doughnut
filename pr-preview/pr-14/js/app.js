@@ -455,7 +455,6 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'water': "Lewisham sits in Thames Water's supply area, classified as seriously water-stressed in both 2013 and 2021. Two of the company's three levers for closing that gap are moving at different speeds: per-person water use has fallen modestly since 2019/20, though unevenly, with a pandemic-era spike and a recent uptick; leakage - after falling from close to a third of supply in the mid-2000s to around a fifth by 2019/20 - has barely moved since. Both remain well short of what's needed: the Environment Act's 2038 demand-reduction target and the water industry's 2018 commitment to halve leakage by 2050 both require considerably faster progress than either metric is currently making.",
         'mobility': "Public transport access in Ladywell is best near the station: planning assessments rate it excellent (PTAL 6) right by Ladywell station and good (PTAL 4) a few streets away. Across Lewisham, 71.6% of residents' trips are made on foot, by bike or by public transport, well below the 82.1% Inner London average and short of the Mayor's target of 80% by 2041.",
         'equality': "Pay in Lewisham is more unequal than across England, though a little below London's level: jobs near the top of residents' pay scale pay nearly two and a half times as much per hour as jobs near the bottom. Work is also unevenly shared across London: 56% of disabled working-age residents are in work, against 80% of non-disabled residents, and women and ethnic minority residents are also less likely to be in work than men and White residents. Wealth is even more unevenly held: London households in the bottom half of Britain's households held just 3.8% of the city's wealth in 2016-18, and fewer than half of Lewisham households own their home.",
-        'community': "Most adults around Lewisham have someone to turn to, but fewer feel they belong where they live. Across inner-east London, the sub-region that includes Lewisham, 95% agreed people would be there for them if they needed help in 2025/26. But only 54% of Lewisham adults feel they belong to their immediate neighbourhood, below England's 61% and not significantly different from London's 58%.",
         'political_voice': "Turnout in Lewisham's mayoral election rose to 42% in May 2026, when the Green Party won control of the council and the mayoralty for the first time. Between elections, residents are unusually active: 48% contacted a councillor or MP, signed a petition or went to a public meeting or protest in the past year, against 41% across London. Yet only about a third, 32%, feel they can personally influence decisions affecting their area, the same as across London.",
         'culture': "Lewisham's dedicated arts grants have been cut by almost 40%, part of a wider squeeze on council arts budgets across England. Cultural spaces are unevenly spread: Ladywell has only five open venues, around 60% of the borough's density, with Lewisham's clustered in Deptford and Brockley. Participation is high locally: 88.5% of Lewisham residents engaged with the arts in 2025/26, above both the London and England averages.",
         'education': "Fewer Lewisham pupils leave school with the basics than across London. In 2025/26, 65.5% got at least a standard pass in both English and Maths GCSE, against 70.9% across London, so about one in three left without it. After 16, few young people drop out of the system altogether: 1.9% of 16 and 17 year olds were not in education, employment or training, close to the London rate, though the council didn't know what a further 2.9% were doing. Childcare for the youngest is comparatively plentiful: there are about 62 registered places for every 100 children under five, against 47 across London, helped by a fall in the number of young children in the borough.",
@@ -558,17 +557,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return `This is the difference, in percentage points, between the shares of two groups of working-age Londoners (aged 16 to 64) who are in work. The widest gap is for disability: in the year to June 2026, 55.8% of disabled Londoners were in work against 79.5% of non-disabled Londoners, a gap of 23.7 points, narrower than England's 25.8. Women's employment rate was 8.7 points below men's (70.1% against 78.8%), wider than England's 6.2; the Greater London Authority attributes at least some of this to differences in employment between parents and people without children. The gap between White and ethnic minority Londoners was 10.1 points (79.2% against 69.1%). The figures come from the Office for National Statistics' Annual Population Survey, which samples too few Lewisham residents to measure these gaps reliably.`;
         }
 
-        // Community-specific explanations
+        // Social cohesion: loneliness (moved from the former community dimension, Nov 2026)
         if (baseName === '% adults reported feeling lonely often or always') {
             return `Lewisham's rate of severe loneliness - feeling lonely often or always - was 8% in 2025/26. Local estimates have existed since 2023/24, when DCMS began boosting its survey sample to report by council, and none of the year-on-year changes since are statistically significant: Lewisham has moved from just below England's rate to just above it, all within the survey's margin of error. Loneliness is far from evenly spread: nationally it runs several times higher among disabled adults and residents of England's most deprived areas than among their counterparts, and highest among younger adults, LGB+ people, and some minority ethnic groups.`;
-        }
-
-        if (baseName === '% adults felt strongly belonged to their neighbourhood') {
-            return `This measures the share of adults who say they belong very or fairly strongly to their immediate neighbourhood. Lewisham's 54% in 2025/26 sits below England's 61%, and close to London's 58%. The borough's own estimates, available since 2023/24, have edged down, though not by a statistically significant amount given the survey's sample size. Nationally, belonging peaked in 2020/21 and has since eased back.`;
-        }
-
-        if (baseName === '% adults agreed that if they needed help, there would be people there for them') {
-            return `This asks adults how strongly they agree that people would be there for them if they needed help - one of the survey's core measures of support networks, alongside loneliness and neighbourhood belonging above. It isn't published for Lewisham or any council; the most local figure covers inner-east London, the sub-region Lewisham sits within, where 95% agreed in 2025/26, in line with England's 96%. Agreement is near-universal and has barely moved nationally since 2018/19, making it the most stable of the three community measures.`;
         }
 
         // Political voice-specific explanations
@@ -891,28 +882,6 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     sources: [
                         { name: 'Making the Connections: Final Report on Transport and Social Exclusion - UK Social Exclusion Unit (2003)', url: 'https://www.ilo.org/media/312721/download' },
                         { name: 'The Fundamental Law of Road Congestion - Duranton & Turner, American Economic Review (2011)', url: 'https://www.nber.org/papers/w15376' }
-                    ]
-                }
-            ];
-        }
-
-        // Community dimension council context - the Main Grants Programme Allocations report
-        // (funding behind neighbourhood-level community infrastructure and belonging). The
-        // Health and Wellbeing Strategy card moved to social_cohesion with the loneliness
-        // indicator (Nov 2026).
-        if (dimensionName === 'community') {
-            return [
-                {
-                    title: 'Main Grants Programme Allocations 2026-2029 (Mayor and Cabinet report)',
-                    year: '2026-2029',
-                    url: 'https://lewisham.moderngov.co.uk/documents/s123458/Main%20Grants%20Programme%20Allocations%202026-2029%20REPORT.pdf',
-                    summary: `<p>Lewisham's Main Grants Programme - the council's core funding route for the voluntary and community sector - drops from £2.46m a year under the 2022-25 cycle to a total of £2.11m across the whole 2026-29 cycle, a cut the council links to a £30m borough-wide budget shortfall in 2025/26. Rather than spreading the reduced pot thinly, the new model commissions advice services directly instead of through grants, and channels £900,000 into neighbourhood-focused infrastructure across four areas of the borough - funding local coordination, signposting, and capacity-building alongside the NHS's Integrated Neighbourhood Teams - with a further stream for Black-led organisations, digital inclusion, and equalities groups.</p>`
-                },
-                {
-                    title: 'Perspectives from global community research',
-                    summary: `<p>Sociologist Eric Klinenberg's research into Chicago's 1995 heat wave found that neighbourhoods with near-identical poverty had very different death tolls depending on their "social infrastructure" - libraries, shops, parks and community spaces that gave isolated residents somewhere to go and someone nearby to notice if they went missing. Shared public spaces aren't just amenities, they're protective infrastructure - without them, isolated residents have no safety net, no matter how caring their neighbours might otherwise be.</p>`,
-                    sources: [
-                        { name: 'Safety and Community: A Tale of Two Neighborhoods (Klinenberg\'s Chicago research) - Congress for the New Urbanism', url: 'https://www.cnu.org/publicsquare/safety-and-community-tale-two-neighborhoods' }
                     ]
                 }
             ];
@@ -1354,16 +1323,6 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     action: 'Apply to close your street for a Play Street',
                     text: `Lewisham Council lets residents apply, with six weeks' notice, to close their street to through-traffic so children can play outside - reclaiming space for active, car-free use.`,
                     url: 'https://lewisham.gov.uk/myservices/roads-and-transport/closing-a-road-for-a-play-street-event'
-                }
-            ];
-        }
-
-        if (dimensionName === 'community') {
-            return [
-                {
-                    action: 'Join Rushey Green Time Bank',
-                    text: `A multi-award-winning time bank at PLACE/Ladywell on Lewisham High Street, where members trade an hour of help given for an hour of help received.`,
-                    url: 'https://timebanking.org/timebanks/rushey-green-time-bank/'
                 }
             ];
         }

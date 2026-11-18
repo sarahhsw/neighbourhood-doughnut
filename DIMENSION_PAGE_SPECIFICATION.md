@@ -1082,6 +1082,12 @@ phrase ("top fifth", "bottom half") before building a precise but unusual one.
 position ("bottom 50%", "top tenth"), which is neutral and matches the measure, rather than labelling
 the people in them.
 
+**Cut caveats about data gaps that don't change the reader's takeaway (Education, November 2026).**
+The NEET text and summary said the council "didn't know what a further 2.9% were doing, against 1.2%
+across London, so the true share may be higher". The user called it unnecessary data. General rule:
+a data-quality figure (records "not known", suppressed cells, sample notes) belongs in
+`source.notes`, not in reader-facing copy, unless it reverses or substantially changes the finding.
+
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`
 - **Spacing**: Ensure adequate vertical spacing between chart and dimension cards (minimum 48px padding-top)

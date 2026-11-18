@@ -76,6 +76,7 @@ when you're doing something this file doesn't cover.
 - Put a fact under the indicator whose subject it shares. [2.2]
 - Explain percentiles and ratios in everyday words ("the best-paid fifth", "the bottom half"), and replace a source's metaphors ("squeeze") with what literally happens; if it needs a second read, rewrite it. [2.2]
 - Name distribution groups by position ("bottom 50%", "top tenth"), not "poorest"/"richest". [2.2]
+- Keep data-quality figures ("activity not known", sample caveats) in `source.notes`, not the copy, unless they change the finding. [2.2]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]
 
 ## Context cards [3]

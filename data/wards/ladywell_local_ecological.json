@@ -1,0 +1,1155 @@
+{
+  "ward": "Ladywell",
+  "ward_code": "E05013725",
+  "local_ecological": [
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "water_provisioning",
+      "target": {
+        "text": "No official GLA or UK Government target established for this indicator - this is a regulatory classification, not a target.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Areas of water stress",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": "Seriously water stressed",
+        "unit": null,
+        "year": 2021,
+        "date": "1 July 2021"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "water_company",
+      "source": {
+        "name": "Environment Agency / Defra - Water stressed areas: 2021 classification",
+        "url": "https://www.gov.uk/government/publications/water-stressed-areas-2021-classification",
+        "accessed": "2026-07-15",
+        "notes": "Thames Water - which supplies Lewisham - was classified as an area of 'serious' water stress in both the original 2013 determination and the 2021 update; the classification has not changed between rounds, so no numeric trend applies here (this is a one-off regulatory determination, not an annual measurement). In 2021 several other companies (e.g. Severn Trent, Wessex Water, South Staffordshire) moved from 'not serious' to 'serious' for the first time, widening the list, but Thames Water's own status was unchanged. The determination is used to decide which water companies can introduce compulsory water metering for all customers."
+      },
+      "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "water_provisioning",
+      "target": {
+        "text": "Reduce Thames Water's average per capita water use to 110 litres/person/day by 2050, matching the Environment Act 2021 national statutory target (122 litres/person/day by March 2038 from the 2019/20 baseline).",
+        "source_body": "Defra / Environment Act 2021 target framework; Thames Water's government-approved WRMP24 (October 2024)",
+        "has_official_target": true
+      },
+      "indicator": "Per capita water consumption (litres/day)",
+      "threshold": {
+        "value": 122.0,
+        "unit": "litres/person/day",
+        "description": "Environment Act 2021 target: 122 l/p/d by March 2038 (from a 2019/20 baseline); 110 l/p/d by 2050, which Thames Water's approved WRMP24 commits to matching."
+      },
+      "snapshot": {
+        "value": 139.01,
+        "unit": "litres/person/day",
+        "year": "2025/26",
+        "date": null
+      },
+      "status": "overshoot",
+      "geography_of_data": "water_company",
+      "source": {
+        "name": "Environment Agency / Defra - Water resources 2025 to 2026: analysis of the water industry's annual water resources performance",
+        "url": "https://www.gov.uk/government/publications/water-resources-2025-2026-analysis-of-the-water-industrys-annual-water-resources-performance/water-resources-2025-to-2026-analysis-of-the-water-industrys-annual-water-resources-performance",
+        "accessed": "2026-10-31",
+        "notes": "Replaces the previous England-wide snapshot with Thames Water's own company-level per capita consumption (PCC), more granular and more relevant to Ladywell (entirely within Thames Water's supply area) than the national average - the earlier session's note that company-level data 'could not be downloaded... blocked by this environment's network egress policy' did not hold on retry; both data.gov.uk and the EA's gov.uk report pages were directly fetchable. 2025/26 figure (139.01 l/p/d) taken directly from the EA's published report tables - the England-wide average for the same year is 136.87 l/p/d, slightly lower, confirming Thames Water's own PCC genuinely runs a little above the national figure (correcting an earlier version of this indicator that implied otherwise by substituting the national figure for Lewisham's actual supplier). Earlier years (2019/20-2024/25) are Thames Water's own 'Average household - pcc' figures from the same WRMP Annual Review Data workbook used for the leakage indicator below (data.gov.uk dataset 87b59684-3da3-45cf-8881-e4727cfd1415, file 'Annual Review Historic Data- For publication 17112025.xlsx', one tab per year). The 2024/25 figure from that workbook (137.69) matches the EA's separately-published 2024/25 report (137.70) almost exactly, cross-confirming both sources. The 2025/26 figure isn't yet in that workbook (published before that year's data existed), so it's taken from the EA's standalone 2025/26 report instead."
+      },
+      "confidence": "high",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2019/20",
+          "value": 145.0,
+          "note": "Environment Act 2021 baseline year (national baseline is 140 l/p/d; Thames Water's own 2019/20 figure was higher, at 145)"
+        },
+        {
+          "period": "2020/21",
+          "value": 152.0
+        },
+        {
+          "period": "2021/22",
+          "value": 145.0
+        },
+        {
+          "period": "2022/23",
+          "value": 140.0
+        },
+        {
+          "period": "2023/24",
+          "value": 138.0
+        },
+        {
+          "period": "2024/25",
+          "value": 137.7
+        },
+        {
+          "period": "2025/26",
+          "value": 139.01
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "water_provisioning",
+      "target": {
+        "text": "Good ecological status by 2027 (Environment Agency objective for this water body, low confidence); good overall status by 2063.",
+        "source_body": "Environment Agency - Thames River Basin Management Plan objectives (Catchment Data Explorer)",
+        "has_official_target": true
+      },
+      "indicator": "River water body status (Ravensbourne, Catford to Deptford)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": "Good ecological status (Water Framework Directive scale: high, good, moderate, poor, bad)"
+      },
+      "snapshot": {
+        "value": "Moderate",
+        "unit": null,
+        "year": "2022",
+        "date": "Cycle 3 classification"
+      },
+      "status": "overshoot",
+      "geography_of_data": "water_body",
+      "source": {
+        "name": "Environment Agency - Catchment Data Explorer, Ravensbourne (Catford to Deptford) water body GB106039023270",
+        "url": "https://environment.data.gov.uk/catchment-planning/WaterBody/GB106039023270",
+        "accessed": "2026-11-19",
+        "notes": "Classifications CSV (data updated 17 March 2025). The water body's geometry was intersected with the ONS 2022 ward boundary: it runs through Ladywell (Ladywell Fields); the upstream Keston-to-Catford water body (GB106039023260) does not. Ecological status: 2009 Poor, 2010 Poor, 2011 Bad, 2012 Bad, 2013 Poor, 2014 Moderate, 2015 Moderate, 2016 Moderate, 2019 Moderate, 2022 Moderate. Classification methods change between planning cycles (cycle 1 to 2009-15, cycle 3 for 2019 and 2022), so no line is drawn. In 2022: fish Bad, invertebrates Moderate, macrophytes Poor, phosphate Poor, dissolved oxygen and ammonia High. Chemical status failed in 2019 (PFOS and PBDEs); in 2022 it is listed as 'does not require assessment'. Designated heavily modified. Reasons for not achieving good status (cycle 3) include physical modification (flood protection structures, barriers to fish, urbanisation), sewage discharges, leaking sewers and misconnected household drains (confirmed for invertebrates). Objectives CSV: ecological Good by 2027 (low confidence), overall Good by 2063."
+      },
+      "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "water_provisioning",
+      "target": {
+        "text": "No official target for impervious surface. The London Environment Strategy aims for more than half of London to be green by 2050.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "% of land not covered by vegetation (proxy for impervious surface)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 53.4,
+        "unit": "%",
+        "year": "2022",
+        "date": "aerial imagery captured mainly in 2022"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "Greater London Authority - Green Cover 2024 (ward and borough statistics)",
+        "url": "https://data.london.gov.uk/dataset/green-cover-2024-e56n0",
+        "accessed": "2026-11-19",
+        "notes": "Proxy: 100% minus the GLA's 2024 green cover estimate. It counts everything not vegetated - roofs, roads, paving, bare ground and open water - so it slightly overstates sealed surfaces where there is water or bare soil. Ladywell: ward area 204.26 ha, green 95.16 ha (46.59%), so 53.4% not vegetated. Lewisham: 39.06% green, 60.9% not. London: 51.68% green, 48.3% not. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
+      },
+      "confidence": "medium",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "carbon_sequestration",
+      "target": {
+        "text": "London Environment Strategy (2018): increase London's tree canopy cover by 10% by 2050.",
+        "source_body": "Mayor of London - London Environment Strategy",
+        "has_official_target": true
+      },
+      "indicator": "% tree canopy coverage",
+      "threshold": {
+        "value": null,
+        "unit": "%",
+        "description": "London average 19.56% (2022 imagery)"
+      },
+      "snapshot": {
+        "value": 25.0,
+        "unit": "%",
+        "year": "2022",
+        "date": "aerial imagery captured mainly in 2022"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "Greater London Authority - Tree Canopy Cover 2024 (ward and borough statistics)",
+        "url": "https://data.london.gov.uk/dataset/tree-canopy-cover-2024-2w4m3",
+        "accessed": "2026-11-19",
+        "notes": "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London 19.56% (SE 0.30). Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not detected. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
+      },
+      "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "carbon_sequestration",
+      "target": {
+        "text": "London Environment Strategy (2018): make more than half of London green by 2050.",
+        "source_body": "Mayor of London - London Environment Strategy",
+        "has_official_target": true
+      },
+      "indicator": "% green cover",
+      "threshold": {
+        "value": 50.0,
+        "unit": "%",
+        "description": "More than half of London green by 2050 (London-wide aim)"
+      },
+      "snapshot": {
+        "value": 46.6,
+        "unit": "%",
+        "year": "2022",
+        "date": "aerial imagery captured mainly in 2022"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "Greater London Authority - Green Cover 2024 (ward and borough statistics)",
+        "url": "https://data.london.gov.uk/dataset/green-cover-2024-e56n0",
+        "accessed": "2026-11-19",
+        "notes": "Green cover = all vegetation (trees, shrubs, grass, gardens, green roofs). Ladywell: 95.16 ha of 204.26 ha = 46.59%. Lewisham 39.06% (SE 1.14), London 51.68% (SE 1.11). The 2019 'How green is London' baseline (2016 imagery) gave London only as a range, 47.6-50.7%, so no comparable earlier ward figure exists. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
+      },
+      "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "biodiversity_support",
+      "target": {
+        "text": "No numeric target. The LNRS sets London's biodiversity priorities and maps where nature recovery could happen.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "% of land identified for nature recovery (London Local Nature Recovery Strategy)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 26.5,
+        "unit": "%",
+        "year": "2026",
+        "date": "London LNRS published March 2026"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "Greater London Authority / GiGL - London Local Nature Recovery Strategy (LNRS) open data layers (April 2026)",
+        "url": "https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6",
+        "accessed": "2026-11-19",
+        "notes": "Area of the union of 'Potential measure locations' polygons inside the ONS 2022 ward boundary, divided by ward area: 54.2 ha of 204.2 ha = 26.5%. Lewisham 19.5%; Greater London 28.0% (against the GLA's 159,523 ha London area). Priorities assigned to the Ladywell locations: parks and open spaces, woodland, floodplain, lowland meadow, rivers and streams, ponds and lakes, scrub and urban mosaic habitat. Areas of Particular Importance for Biodiversity (APIB) in the open layer cover 0% of Ladywell (3.2% of Lewisham, 6.2% of London), but the open layer includes only nationally designated sites, Local Nature Reserves and ancient woodland: Local Wildlife Sites (SINCs) are excluded for licensing reasons (GiGL metadata, 7 April 2026), so local sites in Ladywell are not counted. The 'Areas that could become of particular importance' layer covers 1.9 ha (0.9%). Potential measure locations are opportunities, not designations."
+      },
+      "confidence": "medium",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "energy_harvesting",
+      "target": {
+        "text": "No official GLA or UK Government target established for this dimension.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Energy consumption per resident (MWh per year)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 10.1,
+        "unit": "MWh",
+        "year": "2024",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "DESNZ - Total final energy consumption at regional and local authority level: 2005 to 2024 (July 2026)",
+        "url": "https://www.gov.uk/government/statistics/total-final-energy-consumption-at-regional-and-local-authority-level-2005-to-2024",
+        "accessed": "2026-11-19",
+        "notes": "All fuels total (domestic, transport, industrial and commercial) in ktoe, converted at 1 ktoe = 11.63 GWh, divided by the ONS mid-year population carried in DESNZ's 2005-2024 local authority greenhouse gas workbook (Table 1.1). Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London (E12000007) 14.0 MWh; England (E92000001) 19.2 MWh. Borough is the smallest geography published."
+      },
+      "confidence": "high",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015",
+          "value": 12.3,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2016",
+          "value": 12.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2017",
+          "value": 12.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018",
+          "value": 12.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019",
+          "value": 12.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020",
+          "value": 11.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021",
+          "value": 11.2,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022",
+          "value": 10.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023",
+          "value": 10.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024",
+          "value": 10.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2015",
+          "value": 16.8,
+          "series": "London"
+        },
+        {
+          "period": "2016",
+          "value": 16.6,
+          "series": "London"
+        },
+        {
+          "period": "2017",
+          "value": 16.7,
+          "series": "London"
+        },
+        {
+          "period": "2018",
+          "value": 16.6,
+          "series": "London"
+        },
+        {
+          "period": "2019",
+          "value": 16.4,
+          "series": "London"
+        },
+        {
+          "period": "2020",
+          "value": 15.3,
+          "series": "London"
+        },
+        {
+          "period": "2021",
+          "value": 15.5,
+          "series": "London"
+        },
+        {
+          "period": "2022",
+          "value": 14.6,
+          "series": "London"
+        },
+        {
+          "period": "2023",
+          "value": 14.3,
+          "series": "London"
+        },
+        {
+          "period": "2024",
+          "value": 14.0,
+          "series": "London"
+        },
+        {
+          "period": "2015",
+          "value": 22.8,
+          "series": "England"
+        },
+        {
+          "period": "2016",
+          "value": 22.4,
+          "series": "England"
+        },
+        {
+          "period": "2017",
+          "value": 22.6,
+          "series": "England"
+        },
+        {
+          "period": "2018",
+          "value": 22.5,
+          "series": "England"
+        },
+        {
+          "period": "2019",
+          "value": 22.3,
+          "series": "England"
+        },
+        {
+          "period": "2020",
+          "value": 20.6,
+          "series": "England"
+        },
+        {
+          "period": "2021",
+          "value": 20.8,
+          "series": "England"
+        },
+        {
+          "period": "2022",
+          "value": 19.9,
+          "series": "England"
+        },
+        {
+          "period": "2023",
+          "value": 19.5,
+          "series": "England"
+        },
+        {
+          "period": "2024",
+          "value": 19.2,
+          "series": "England"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "energy_harvesting",
+      "target": {
+        "text": "No local target for renewable electricity share.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "% of electricity use matched by solar generated in the borough",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 1.1,
+        "unit": "%",
+        "year": "2024",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "DESNZ - Regional Renewable Statistics: renewable electricity by local authority 2014-2025 (September 2026); Total final energy consumption 2005-2024",
+        "url": "https://www.gov.uk/government/statistics/regional-renewable-statistics",
+        "accessed": "2026-11-19",
+        "notes": "Solar PV generation in Lewisham (MWh) divided by Lewisham's electricity consumption from the total final energy consumption tables (ktoe x 11.63). 2024: 7,078 MWh of 641.7 GWh = 1.1%. Installed solar capacity rose from 3.3 MW (2015) to 9.9 MW (2024) and 11.0 MW (2025). Solar is the only renewable source with published Lewisham generation: the borough also has 35 MW of municipal solid waste capacity (the SELCHP energy-from-waste plant), whose generation is suppressed ([X]) from 2019 for confidentiality, so a full renewable share cannot be calculated. 2025 is not used: DESNZ notes many 2025 installations could not yet be assigned to a local authority, and 2025 consumption is not published. London series uses the sum of London local authority rows (installations not assigned to any authority are excluded)."
+      },
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015",
+          "value": 0.36,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2016",
+          "value": 0.44,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2017",
+          "value": 0.46,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018",
+          "value": 0.52,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019",
+          "value": 0.68,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020",
+          "value": 0.5,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021",
+          "value": 0.72,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022",
+          "value": 0.99,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023",
+          "value": 0.97,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024",
+          "value": 1.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2015",
+          "value": 0.19,
+          "series": "London"
+        },
+        {
+          "period": "2016",
+          "value": 0.24,
+          "series": "London"
+        },
+        {
+          "period": "2017",
+          "value": 0.27,
+          "series": "London"
+        },
+        {
+          "period": "2018",
+          "value": 0.31,
+          "series": "London"
+        },
+        {
+          "period": "2019",
+          "value": 0.43,
+          "series": "London"
+        },
+        {
+          "period": "2020",
+          "value": 0.33,
+          "series": "London"
+        },
+        {
+          "period": "2021",
+          "value": 0.47,
+          "series": "London"
+        },
+        {
+          "period": "2022",
+          "value": 0.62,
+          "series": "London"
+        },
+        {
+          "period": "2023",
+          "value": 0.63,
+          "series": "London"
+        },
+        {
+          "period": "2024",
+          "value": 0.7,
+          "series": "London"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "energy_harvesting",
+      "target": {
+        "text": "London Environment Strategy: 65% of London's municipal waste recycled by 2030.",
+        "source_body": "Mayor of London - London Environment Strategy",
+        "has_official_target": true
+      },
+      "indicator": "Household recycling and composting rate",
+      "threshold": {
+        "value": null,
+        "unit": "%",
+        "description": "London average 32.6% (2024/25)"
+      },
+      "snapshot": {
+        "value": 27.2,
+        "unit": "%",
+        "year": "2024/25",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "Defra - Local authority collected waste management: annual results 2024/25 (March 2026), Tables 3 and 3a",
+        "url": "https://www.gov.uk/government/statistics/local-authority-collected-waste-management-annual-results",
+        "accessed": "2026-11-19",
+        "notes": "Percentage of household waste sent for reuse, recycling or composting (ex NI192). Lewisham (E09000023) Table 3: 2010/11 18.1%, 2011/12 17.2%, 2012/13 20.0%, 2013/14 17.7%, 2014/15 17.1%, then as charted. London and England from Table 3a. England 2024/25: 42.0%."
+      },
+      "confidence": "high",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015/16",
+          "value": 18.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2016/17",
+          "value": 17.7,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2017/18",
+          "value": 21.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018/19",
+          "value": 28.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019/20",
+          "value": 26.6,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020/21",
+          "value": 28.4,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021/22",
+          "value": 27.2,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022/23",
+          "value": 23.0,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023/24",
+          "value": 26.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024/25",
+          "value": 27.2,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2015/16",
+          "value": 32.0,
+          "series": "London"
+        },
+        {
+          "period": "2016/17",
+          "value": 33.0,
+          "series": "London"
+        },
+        {
+          "period": "2017/18",
+          "value": 33.1,
+          "series": "London"
+        },
+        {
+          "period": "2018/19",
+          "value": 33.4,
+          "series": "London"
+        },
+        {
+          "period": "2019/20",
+          "value": 33.5,
+          "series": "London"
+        },
+        {
+          "period": "2020/21",
+          "value": 33.0,
+          "series": "London"
+        },
+        {
+          "period": "2021/22",
+          "value": 32.7,
+          "series": "London"
+        },
+        {
+          "period": "2022/23",
+          "value": 32.7,
+          "series": "London"
+        },
+        {
+          "period": "2023/24",
+          "value": 32.7,
+          "series": "London"
+        },
+        {
+          "period": "2024/25",
+          "value": 32.6,
+          "series": "London"
+        },
+        {
+          "period": "2015/16",
+          "value": 43.0,
+          "series": "England"
+        },
+        {
+          "period": "2016/17",
+          "value": 43.7,
+          "series": "England"
+        },
+        {
+          "period": "2017/18",
+          "value": 43.2,
+          "series": "England"
+        },
+        {
+          "period": "2018/19",
+          "value": 43.5,
+          "series": "England"
+        },
+        {
+          "period": "2019/20",
+          "value": 43.8,
+          "series": "England"
+        },
+        {
+          "period": "2020/21",
+          "value": 42.3,
+          "series": "England"
+        },
+        {
+          "period": "2021/22",
+          "value": 42.5,
+          "series": "England"
+        },
+        {
+          "period": "2022/23",
+          "value": 41.7,
+          "series": "England"
+        },
+        {
+          "period": "2023/24",
+          "value": 42.3,
+          "series": "England"
+        },
+        {
+          "period": "2024/25",
+          "value": 42.0,
+          "series": "England"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "air_quality_regulation",
+      "target": {
+        "text": "UK legal limit for nitrogen dioxide: 40 \u00b5g/m\u00b3 annual mean. WHO 2021 guideline: 10 \u00b5g/m\u00b3.",
+        "source_body": "Air Quality Standards Regulations 2010; World Health Organization",
+        "has_official_target": true
+      },
+      "indicator": "% of residents living where air pollution exceeds legal limits",
+      "threshold": {
+        "value": null,
+        "unit": "%",
+        "description": "UK annual mean limit value for NO2, 40 \u00b5g/m\u00b3"
+      },
+      "snapshot": {
+        "value": 0,
+        "unit": "%",
+        "year": "2022",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "Transport for London / GLA - LAEI 2022 Population Exposure and Proportion of Road Length Exceeding statistics (November 2025)",
+        "url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
+        "accessed": "2026-11-19",
+        "notes": "Modelled 2022 annual mean concentrations, population-weighted by Output Area. Lewisham: 298,700 residents, 0 living where NO2 exceeds the 40 \u00b5g/m\u00b3 legal limit; 100 above 30 \u00b5g/m\u00b3; 272,900 (91.4%) above 20 \u00b5g/m\u00b3, the WHO interim target that the workbook notes will be the EU legal limit from 2030 (London 70.2%). Every Londoner lives above the WHO 2021 guideline of 10 \u00b5g/m\u00b3. PM2.5: 2.5% of Lewisham residents live above 10 \u00b5g/m\u00b3 (London 11.8%). London as a whole: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. Lewisham's population-weighted NO2 fell from 27.7 to 21.9 \u00b5g/m\u00b3 between 2019 and 2022. The workbook publishes boroughs, not wards. Breathe London (suggested source) runs a sensor network and does not publish resident exposure shares, so LAEI is used."
+      },
+      "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "air_quality_regulation",
+      "target": {
+        "text": "London Environment Strategy (2018): increase London's tree canopy cover by 10% by 2050.",
+        "source_body": "Mayor of London - London Environment Strategy",
+        "has_official_target": true
+      },
+      "indicator": "% tree canopy coverage",
+      "threshold": {
+        "value": null,
+        "unit": "%",
+        "description": "London average 19.56% (2022 imagery)"
+      },
+      "snapshot": {
+        "value": 25.0,
+        "unit": "%",
+        "year": "2022",
+        "date": "aerial imagery captured mainly in 2022"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "Greater London Authority - Tree Canopy Cover 2024 (ward and borough statistics)",
+        "url": "https://data.london.gov.uk/dataset/tree-canopy-cover-2024-2w4m3",
+        "accessed": "2026-11-19",
+        "notes": "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London 19.56% (SE 0.30). Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not detected. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
+      },
+      "confidence": "high",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "air_quality_regulation",
+      "target": {
+        "text": "UK legal annual limits: NO2 40 \u00b5g/m\u00b3, PM10 40 \u00b5g/m\u00b3, PM2.5 20 \u00b5g/m\u00b3 (10 \u00b5g/m\u00b3 by 2040). WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Annual average air pollution concentration (\u00b5g/m\u00b3)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 21.9,
+        "unit": "\u00b5g/m\u00b3",
+        "year": "2022",
+        "date": "nitrogen dioxide (NO2)"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "GLA / TfL - London Atmospheric Emissions Inventory (LAEI) 2022 and 2019, modelled concentrations (20m grid)",
+        "url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
+        "accessed": "2026-11-19",
+        "notes": "Ward mean of every 20m grid point inside the ONS 2022 Ladywell boundary (5,107 points), from LAEI2022_V1_*.csv and LAEI2019v3_CorNOx15_*.csv. NO2 27.6 (2019) to 21.9 (2022); PM2.5 10.7 to 9.4; PM10 16.3 to 16.4. Lewisham area means: NO2 27.3 to 21.6; PM2.5 10.7 to 9.3; PM10 16.2 to 16.0. These are area averages, not population-weighted. 1.2% of the ward's area exceeded 40 \u00b5g/m\u00b3 NO2 in 2019 and 0.06% in 2022 (along the busiest roads); all of it was above 20 \u00b5g/m\u00b3 in both years. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15. The GLA's own tables compare 2019 and 2022, though each inventory is a separate modelling exercise."
+      },
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2019",
+          "value": 27.6,
+          "series": "Nitrogen dioxide (NO2)"
+        },
+        {
+          "period": "2022",
+          "value": 21.9,
+          "series": "Nitrogen dioxide (NO2)"
+        },
+        {
+          "period": "2019",
+          "value": 16.3,
+          "series": "Coarse particles (PM10)"
+        },
+        {
+          "period": "2022",
+          "value": 16.4,
+          "series": "Coarse particles (PM10)"
+        },
+        {
+          "period": "2019",
+          "value": 10.7,
+          "series": "Fine particles (PM2.5)"
+        },
+        {
+          "period": "2022",
+          "value": 9.4,
+          "series": "Fine particles (PM2.5)"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "temperature_regulation",
+      "target": {
+        "text": "Lewisham Council declared a climate emergency in 2019 with an aim of a carbon-neutral borough by 2030; the UK target is net zero by 2050.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Territorial greenhouse gas emissions per resident (tonnes CO2e)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 2.1,
+        "unit": "tonnes",
+        "year": "2024",
+        "date": null
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "borough_inherited",
+      "source": {
+        "name": "DESNZ - UK local authority and regional greenhouse gas emissions statistics, 2005 to 2024 (June 2026), Table 1.1",
+        "url": "https://www.gov.uk/government/statistics/uk-local-authority-and-regional-greenhouse-gas-emissions-statistics-2005-to-2024",
+        "accessed": "2026-11-19",
+        "notes": "Territorial emissions: everything emitted within the borough boundary, including electricity attributed to where it is used, not emissions embodied in goods. Lewisham 2024: 637.4 kt CO2e, 2.12 t per resident; 2005: 1,382.7 kt (-54%); 2015: 1,107.9 kt (-42%). 2024 by sector: domestic 286.6 kt (45%), transport 179.4 kt (28%), commercial 87.3, public sector 26.5, industry 30.0, waste 25.3 (191.5 in 2015). London Total 3.01 t, England Total 4.67 t per resident. Borough is the smallest geography published."
+      },
+      "confidence": "high",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015",
+          "value": 3.75,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2016",
+          "value": 3.8,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2017",
+          "value": 3.49,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2018",
+          "value": 3.15,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2019",
+          "value": 3.1,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2020",
+          "value": 2.58,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2021",
+          "value": 2.55,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2022",
+          "value": 2.32,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2023",
+          "value": 2.17,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2024",
+          "value": 2.12,
+          "series": "Lewisham"
+        },
+        {
+          "period": "2015",
+          "value": 4.73,
+          "series": "London"
+        },
+        {
+          "period": "2016",
+          "value": 4.39,
+          "series": "London"
+        },
+        {
+          "period": "2017",
+          "value": 4.16,
+          "series": "London"
+        },
+        {
+          "period": "2018",
+          "value": 4.05,
+          "series": "London"
+        },
+        {
+          "period": "2019",
+          "value": 3.83,
+          "series": "London"
+        },
+        {
+          "period": "2020",
+          "value": 3.46,
+          "series": "London"
+        },
+        {
+          "period": "2021",
+          "value": 3.72,
+          "series": "London"
+        },
+        {
+          "period": "2022",
+          "value": 3.4,
+          "series": "London"
+        },
+        {
+          "period": "2023",
+          "value": 3.14,
+          "series": "London"
+        },
+        {
+          "period": "2024",
+          "value": 3.01,
+          "series": "London"
+        },
+        {
+          "period": "2015",
+          "value": 6.9,
+          "series": "England"
+        },
+        {
+          "period": "2016",
+          "value": 6.43,
+          "series": "England"
+        },
+        {
+          "period": "2017",
+          "value": 6.23,
+          "series": "England"
+        },
+        {
+          "period": "2018",
+          "value": 6.11,
+          "series": "England"
+        },
+        {
+          "period": "2019",
+          "value": 5.84,
+          "series": "England"
+        },
+        {
+          "period": "2020",
+          "value": 5.32,
+          "series": "England"
+        },
+        {
+          "period": "2021",
+          "value": 5.52,
+          "series": "England"
+        },
+        {
+          "period": "2022",
+          "value": 5.13,
+          "series": "England"
+        },
+        {
+          "period": "2023",
+          "value": 4.81,
+          "series": "England"
+        },
+        {
+          "period": "2024",
+          "value": 4.67,
+          "series": "England"
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "temperature_regulation",
+      "target": {
+        "text": "No official target for local air temperature.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Summer daytime air temperature compared with the London average (\u00b0C)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": "+0.25",
+        "unit": "\u00b0C",
+        "year": "2018-2022",
+        "date": "summer months"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "lsoa_aggregated",
+      "source": {
+        "name": "GLA - Properties Vulnerable to Heat Impacts in London (Arup, 2024): LSOA air temperature (T2) layer",
+        "url": "https://data.london.gov.uk/dataset/properties-vulnerable-to-heat-impacts-in-london-e769n",
+        "accessed": "2026-11-19",
+        "notes": "The geodatabase's T2 field is the high-resolution air temperature at the surface produced by Arup, averaged over summer daytime 2018-2022 for each 2021 LSOA (described in the GLA London Climate Risk Maps metadata, September 2024, which uses it as its 'mean air temperature' layer: data.london.gov.uk/dataset/climate-risk-mapping-2oxg6). Area-weighted means: Ladywell's 7 LSOAs 18.21\u00b0C, Lewisham 18.05\u00b0C, London (4,994 LSOAs) 17.96\u00b0C, so Ladywell is 0.25\u00b0C warmer than London's average and Lewisham 0.09\u00b0C. LSOA values in Ladywell range from 18.00\u00b0C to 18.75\u00b0C (Lewisham 011A and 011D, the two warmest). This is a difference from the London average, not the classic urban heat island differential against surrounding countryside, which this dataset does not give; London-wide heat-island maps on the Datastore use 2006 and 2011 data, older than the 10-year limit."
+      },
+      "confidence": "medium",
+      "community_notes": []
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "wellbeing",
+      "target": {
+        "text": "Environmental Improvement Plan 2025: everyone in England should have access to green or blue space within a 15-minute walk from home.",
+        "source_body": "Defra - Environmental Improvement Plan 2025",
+        "has_official_target": true
+      },
+      "indicator": "% of households within a 15-minute walk of green or blue space",
+      "threshold": {
+        "value": 100.0,
+        "unit": "%",
+        "description": "Everyone within a 15-minute walk (EIP 2025 commitment)"
+      },
+      "snapshot": {
+        "value": 99.8,
+        "unit": "%",
+        "year": "2026",
+        "date": "published 4 March 2026"
+      },
+      "status": "met",
+      "geography_of_data": "lsoa_aggregated",
+      "source": {
+        "name": "Defra - Access to green and blue space in England (official statistics in development, March 2026)",
+        "url": "https://www.gov.uk/government/statistics/access-to-green-and-blue-space-in-england",
+        "accessed": "2026-11-19",
+        "notes": "Output Area table, worksheet 1 (green and blue space, 15-minute commitment): households (residential addresses, UPRNs) within walking-network distance of a qualifying space, summed over the Output Areas in Ladywell's 7 LSOAs: 5,276 of 5,288 = 99.8%. Lewisham 63.4% (137,698 households), London 73.2%, England 80.1%. Green space only: Ladywell 93.9%, Lewisham 57.5%. Blue space only: Ladywell 94.1%, Lewisham 25.3%. Doorstep standard (small space very close to home): Ladywell 25.2%, Lewisham 17.8%. First edition, so no time series yet."
+      },
+      "confidence": "high",
+      "community_notes": []
+    }
+  ]
+}

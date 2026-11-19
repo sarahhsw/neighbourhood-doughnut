@@ -36,6 +36,7 @@ class GeographyLevel(str, Enum):
     POSTCODE_AGGREGATED = "postcode_aggregated"
     BOROUGH_INHERITED = "borough_inherited"
     WATER_COMPANY = "water_company"
+    WATER_BODY = "water_body"  # an Environment Agency river water body (e.g. Ravensbourne, Catford to Deptford)
     LONDON_INHERITED = "london_inherited"
     ENGLAND = "england"
     UK = "uk"

@@ -26,10 +26,14 @@ const COLORS = {
 };
 
 // Display names for dimensions whose ids don't title-case cleanly
-// (e.g. peace_justice would otherwise render as "Peace Justice").
+// (e.g. peace_justice would otherwise render as "Peace Justice"), or whose
+// framework name is simplified for residents (air_quality_regulation shows as
+// "Air Quality"; see DIMENSION_PAGE_SPECIFICATION.md 2.3). Ids stay unchanged.
 // Shared with app.js, which loads after this file.
 const DIMENSION_DISPLAY_NAMES = {
-    peace_justice: 'Peace & Justice'
+    peace_justice: 'Peace & Justice',
+    air_quality_regulation: 'Air Quality',
+    biodiversity_support: 'Biodiversity'
 };
 window.DIMENSION_DISPLAY_NAMES = DIMENSION_DISPLAY_NAMES;
 

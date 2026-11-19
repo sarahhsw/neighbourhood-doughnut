@@ -111,6 +111,7 @@ when you're doing something this file doesn't cover.
 - Never run `assemble.py`; run scripts from the repo root.
 - Bump `app.js?v=` (and `styles.css?v=` / `chart.js?v=` separately) in `site/ward.html` whenever that file changes.
 - Escape apostrophes in single-quoted JS strings.
+- Display dimension names in plain words ("Air Quality", not "Air Quality Regulation"); change them via `DIMENSION_DISPLAY_NAMES` in `chart.js`, never by renaming the id. [2.3]
 
 ## When the user corrects something
 

@@ -1094,6 +1094,17 @@ a data-quality figure (records "not known", suppressed cells, sample notes) belo
 - **Typography**: Match existing design system fonts and sizes
 - **Colors**: Use CSS variables (--ink, --paper, --coral, etc.)
 
+**Dimension names in plain words (Air quality and Biodiversity, November 2026).** The local
+ecological dimensions came in with the framework's ecosystem-function names, title-cased from
+their ids: "Air Quality Regulation" and "Biodiversity Support". Sarah asked for the naming to be
+simplified, so the site now shows "Air Quality" and "Biodiversity". The rule: the name a
+resident sees on the doughnut and the page heading should be the plainest words for what the
+dimension covers; framework suffixes like "regulation" or "support" add nothing a resident needs.
+Change the displayed name through `DIMENSION_DISPLAY_NAMES` in `site/js/chart.js` (shared with
+`app.js`), not by renaming the dimension id, which is the key in the ward JSON, builders, copy
+lookups and `dimension_data_sources.json`; keep the `category` in `dimension_data_sources.json`
+in step with the displayed name, and bump `chart.js?v=`.
+
 ### 2.4 Status Labels and Dots
 
 **CRITICAL: Status labels must be consistent across dimension cards and detail pages**

@@ -4,11 +4,11 @@ A hyper-local implementation of Doughnut Economics for London neighbourhoods, st
 
 ## Overview
 
-This project visualizes ward-level data across four lenses of the Doughnut Economics framework:
-- **Local Social** (15 dimensions): Health, Housing, Food, Water, Connectivity, Community, Culture, Mobility, Education, Energy, Income, Jobs, Peace & Justice, Political Voice, Social Equity, Equality in Diversity
-- **Local Ecological**: Green space, air quality, biodiversity proxies, flood risk
-- **Global Ecological**: Climate, materials, land use (London-inherited)
-- **Global Social**: International supply-chain impacts (London-inherited)
+This project visualizes ward-level data across the two local lenses of the Doughnut Economics framework (the site covers local only; there is no local/global toggle):
+- **Local Social**: the social foundation dimensions (health, housing, food, water, education, income and others)
+- **Local Ecological** (7 dimensions): water provisioning, carbon sequestration, biodiversity support, energy harvesting, air quality regulation, temperature regulation, wellbeing
+
+The ward JSON still carries `global_ecological` and `global_social` lists from an earlier phase, but nothing on the site reads them.
 
 ## Project Structure
 

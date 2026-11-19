@@ -365,8 +365,8 @@ def build_air_quality_regulation():
         trend=[
             {"period": "2019", "value": 27.6, "series": "Nitrogen dioxide (NO2)"},
             {"period": "2022", "value": 21.9, "series": "Nitrogen dioxide (NO2)"},
-            {"period": "2019", "value": 16.3, "series": "Coarse particles (PM10)"},
-            {"period": "2022", "value": 16.4, "series": "Coarse particles (PM10)"},
+            {"period": "2019", "value": 16.3, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2022", "value": 16.4, "series": "All particles up to 10 microns (PM10)"},
             {"period": "2019", "value": 10.7, "series": "Fine particles (PM2.5)"},
             {"period": "2022", "value": 9.4, "series": "Fine particles (PM2.5)"},
         ],

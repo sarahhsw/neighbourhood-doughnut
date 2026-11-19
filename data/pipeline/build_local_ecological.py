@@ -123,7 +123,7 @@ def build_water_provisioning():
         ),
         geography=GeographyLevel.WARD,
         confidence=Confidence.MEDIUM,
-        target_text="No official target for impervious surface. The London Environment Strategy aims for more than half of London to be green by 2050.",
+        target_text="No official target for impervious surface. The London Environment Strategy aims for at least 50% of London to be green by 2050.",
     )
     return [stress, pcc, river, sealed]
 
@@ -160,12 +160,12 @@ def build_carbon_sequestration():
         ward=WARD, ward_code=WARD_CODE, lens=ECO,
         dimension_name="carbon_sequestration",
         target=Target(
-            text="London Environment Strategy (2018): make more than half of London green by 2050.",
+            text="London Environment Strategy (2018): increase green cover to at least 50% of London by 2050.",
             source_body="Mayor of London - London Environment Strategy",
             has_official_target=True,
         ),
         indicator="% green cover",
-        threshold=Threshold(value=50.0, unit="%", description="More than half of London green by 2050 (London-wide aim)"),
+        threshold=Threshold(value=50.0, unit="%", description="At least 50% of London green by 2050 (London-wide aim)"),
         snapshot=Snapshot(value=46.6, unit="%", year="2022", date="aerial imagery captured mainly in 2022"),
         status=Status.DESCRIPTIVE_ONLY,
         source=Source(
@@ -254,7 +254,7 @@ def build_energy_harvesting():
                 "Solar PV generation in Lewisham (MWh) divided by Lewisham's electricity consumption from the total final energy "
                 "consumption tables (ktoe x 11.63). 2024: 7,078 MWh of 641.7 GWh = 1.1%. Installed solar capacity rose from 3.3 MW "
                 "(2015) to 9.9 MW (2024) and 11.0 MW (2025). Solar is the only renewable source with published Lewisham generation: "
-                "the borough also has 35 MW of municipal solid waste capacity (the SELCHP energy-from-waste plant), whose generation "
+                "the borough also has 35 MW of municipal solid waste (energy-from-waste) capacity, whose generation "
                 "is suppressed ([X]) from 2019 for confidentiality, so a full renewable share cannot be calculated. 2025 is not used: "
                 "DESNZ notes many 2025 installations could not yet be assigned to a local authority, and 2025 consumption is not "
                 "published. London series uses the sum of London local authority rows (installations not assigned to any authority "
@@ -395,7 +395,7 @@ def build_temperature_regulation():
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.HIGH,
-        target_text="Lewisham Council declared a climate emergency in 2019 with an aim of a carbon-neutral borough by 2030; the UK target is net zero by 2050.",
+        target_text="Lewisham's Climate Emergency Action Plan (approved 2020) aims for a carbon-neutral borough by 2030 (Lewisham Air Quality Action Plan 2022-2027 foreword); the UK target is net zero by 2050.",
         trend=(
             [{"period": str(y), "value": v, "series": "Lewisham"} for y, v in zip(yrs,
                 [3.75, 3.80, 3.49, 3.15, 3.10, 2.58, 2.55, 2.32, 2.17, 2.12])]

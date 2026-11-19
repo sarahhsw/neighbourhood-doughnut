@@ -1507,6 +1507,7 @@ source line for every indicator group (`geographyLabel()` in `site/js/app.js`) -
 | `postcode_aggregated` | Postcode area | Aggregated from postcode-level data |
 | `borough_inherited` | Borough (Lewisham) | Local-authority-level figure, applied uniformly to every ward in Lewisham |
 | `water_company` | Water company (Thames Water) | Set by the water company's supply-area boundary, which doesn't align with borough or ward boundaries |
+| `water_body` | River water body (Ravensbourne) | An Environment Agency river water body (Water Framework Directive classification unit), e.g. Ravensbourne (Catford to Deptford), which runs through Ladywell Fields. Added November 2026 for the local ecological water provisioning page |
 | `london_inherited` | London-wide | Greater London figure, applied uniformly to every ward in the city |
 | `england` | England-wide | England-only source (won't include Scotland/Wales/NI figures even if the source's title says "national" or "UK") |
 | `uk` | UK-wide | Genuinely UK-wide source |

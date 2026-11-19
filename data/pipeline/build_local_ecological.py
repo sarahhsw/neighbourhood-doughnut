@@ -195,7 +195,7 @@ def build_biodiversity_support():
             accessed=ACCESSED,
             notes=(
                 "Area of the union of 'Potential measure locations' polygons inside the ONS 2022 ward boundary, divided by ward area: "
-                "54.2 ha of 204.2 ha = 26.5%. Lewisham 19.5%; Greater London 28.0% (against the GLA's 159,523 ha London area). "
+                "54.2 ha of 204.2 ha = 26.5%. Lewisham 19.5% (683.7 of 3,514.8 ha, ONS LAD BFC); Greater London 28.4% (44,618 of 157,340 ha, ONS Region December 2022 BFC, the same boundary basis as ward and borough). "
                 "Priorities assigned to the Ladywell locations: parks and open spaces, woodland, floodplain, lowland meadow, rivers "
                 "and streams, ponds and lakes, scrub and urban mosaic habitat. "
                 "Areas of Particular Importance for Biodiversity (APIB) in the open layer cover 0% of Ladywell (3.2% of Lewisham, "

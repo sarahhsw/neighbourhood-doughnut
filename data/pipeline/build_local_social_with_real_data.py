@@ -354,42 +354,155 @@ def build_food_dimensions():
 
 def build_education():
     """
-    Education dimension - 1 indicator (GCSE attainment), matching
-    data/lookups/dimension_data_sources.json ("education"). Re-verified July 2026: the
-    site's previous 63.1%/"2023" figure paired a stale Lewisham value with what is actually
-    London's 2024/25 average, not a same-year comparison - see source notes for the
-    corrected, matched-year figures and the sourcing chain used to get them.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    Education dimension - 3 indicators matching data/lookups/dimension_data_sources.json
+    ("education"), rebuilt Nov 2026 from the primary DfE / Ofsted / ONS data:
+    GCSE attainment (DfE KS4 performance), % NEET aged 16-17 (DfE NCCIS by LA), and
+    registered childcare places per 100 children aged 0-4 (Ofsted childcare MI / ONS
+    mid-year estimates). All borough level: KS4 and NEET publish down to LA only, and
+    Ofsted redacts childminders' postcodes, so a Ladywell-only childcare count isn't possible.
+    Written into the ward JSON files by scripts/splice_dimension.py.
     """
+    # GCSE: % of pupils at state-funded schools achieving grade 4+ in both English and
+    # maths (engmath_94_percent), establishment_type_group 'All state-funded'. EES API data
+    # set "Geography by school types data" (18e39901-b47f-4a75-9c4b-d529e590d916), Key stage
+    # 4 performance 2025/26 (provisional; 2018/19 to 2024/25 final/revised). 2019/20 and
+    # 2020/21 (centre/teacher-assessed grades) and 2021/22 (exams back, DfE advises against
+    # comparison with other years) are left out of the chart.
+    gcse_pct = {
+        "Lewisham": {"2018/19": 58.1, "2022/23": 61.0, "2023/24": 65.0, "2024/25": 63.1, "2025/26": 65.5},
+        "London":   {"2018/19": 68.7, "2022/23": 71.2, "2023/24": 72.0, "2024/25": 70.7, "2025/26": 70.9},
+        "England":  {"2018/19": 64.6, "2022/23": 65.1, "2023/24": 65.0, "2024/25": 64.8, "2025/26": 64.8},
+    }
+    gcse_trend = [{"period": per, "value": v, "series": area}
+                  for area, pts in gcse_pct.items() for per, v in pts.items()]
     gcse = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="education",
         target=Target(
-            text="GCSE attainment (grades 9-4 in English & Maths) target: London average for state-funded schools, same academic year",
-            source_body="Trust for London benchmarks",
-            has_official_target=True
+            text="GCSE attainment (grade 4+ in English and maths) benchmark: London average, state-funded schools, same year",
+            source_body="DfE Key stage 4 performance",
+            has_official_target=False
         ),
         indicator="GCSE attainment (grades 9-4 in English & Maths)",
-        threshold=Threshold(value=71.0, unit="%", description="London average (state-funded schools), 2023/24 - the same academic year as Lewisham's latest confirmed figure"),
-        snapshot=Snapshot(value=66.0, unit="%", year="2023/24"),
+        threshold=Threshold(value=70.9, unit="%", description="London, state-funded schools, 2025/26 (provisional)"),
+        snapshot=Snapshot(value=65.5, unit="%", year="2025/26"),
         status=Status.SHORTFALL,
         source=Source(
-            name="Trust for London - GCSE attainment in English and Maths by London borough",
-            url="https://trustforlondon.org.uk/data/gcse-attainment-borough/",
-            accessed="2026-07-18",
-            notes="66% of Lewisham pupils achieved grade 4 or above in both English and Maths GCSE in 2023/24 (summer 2024 exams), up from 61% in 2022/23 and 59% in 2018/19 (pre-pandemic baseline) - Lewisham Council's own Validated Outcomes 2024 Standards Report (lewisham.moderngov.co.uk) cites the 66%/59% comparison directly; the 61% figure for 2022/23 (58.8% boys, 63.2% girls) comes from GOV.UK's Ethnicity Facts and Figures local-authority breakdown of the same underlying DfE dataset. London (state-funded schools) averaged 71% for 2023/24 and 70.5% for 2024/25, against an England average of 64.8% (2024/25) and 65.1% (2022/23) - Lewisham has run below London throughout. Underlying primary source is DfE's Key Stage 4 performance statistics (published via Explore Education Statistics and reflected in GOV.UK Ethnicity Facts and Figures' local authority tables), which Trust for London's borough chart (the source originally listed in dimension_data_sources.json) also draws on. Trust for London's own interactive chart, and DfE's Explore Education Statistics portal, could not be queried directly in this session - both trustforlondon.org.uk and explore-education-statistics.service.gov.uk were blocked by this session's network egress policy - so the figures above were independently corroborated via Lewisham Council's own published Standards Report and GOV.UK's Ethnicity Facts and Figures instead, both of which trace back to the same DfE KS4 dataset. A confirmed Lewisham figure for 2024/25 (summer 2025 exams) was not found. 2019/20-2021/22 are excluded from the trend: GCSEs were not sat as standard exams in 2020 or 2021 (COVID-19 centre/teacher-assessed grading), DfE did not publish comparable local authority performance tables for those years, and a comparable grade-4 figure for 2021/22 could not be confirmed."
+            name="Department for Education - Key stage 4 performance, 2025/26 (Explore Education Statistics)",
+            url="https://explore-education-statistics.service.gov.uk/find-statistics/key-stage-4-performance",
+            accessed="2026-11-17",
+            notes=(
+                "Percentage of pupils at the end of key stage 4 in state-funded schools achieving grade 4 or above in "
+                "both English and maths (engmath_94_percent, establishment type 'All state-funded'), from the EES API "
+                "data set 'Geography by school types data' (id 18e39901-b47f-4a75-9c4b-d529e590d916). Lewisham "
+                "2025/26 (provisional): 1,557 of 2,378 pupils, 65.5%; London 70.9%; Inner London 69.7%; England 64.8%. "
+                "Lewisham 2018/19 58.1, 2022/23 61.0, 2023/24 65.0, 2024/25 63.1 (final). Earlier page figures of "
+                "59% (2019) and 66% (2023/24) were the council's rounded Standards Report figures; DfE's are used now. "
+                "2019/20 (66.6) and 2020/21 (67.5) used centre- and teacher-assessed grades and 2021/22 (66.6) was a "
+                "transition year, so they are excluded from the chart. Grade-5 'strong pass' 2025/26: Lewisham 47.9%. "
+                "Disadvantage (EES data set National characteristics summary data, 19e39901-560d-f972-b6f3-dd085539c095, "
+                "2025/26): disadvantaged pupils 38.5% of Lewisham's cohort v 36.2% London; grade 4+ English and maths: "
+                "disadvantaged 53.0% Lewisham v 57.4% London, not known to be disadvantaged 73.3% v 78.5%. Progress 8 is not "
+                "published for 2025/26. "
+                "Text claim on post-16 English and maths: DfE '16 to 19 funding: maths and English condition of "
+                "funding' (students without grade 4 in maths and English get support to improve and progress)."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        trend=gcse_trend
+    )
+
+    # NEET: % of 16-17 year olds (academic age) not in education, employment or training,
+    # average of December/January/February. DfE "Participation in education, training and
+    # NEET age 16 to 17 by local authority" 2025-26, ud_neet_characteristics.csv, age
+    # '16 to 17', characteristic 'Total'. time_period 2026 = Dec 2025-Feb 2026 (shown as
+    # 2025/26). Not-known share reported separately in notes and text.
+    neet_pct = {
+        "Lewisham": {2019: 1.84, 2020: 1.76, 2021: 1.38, 2022: 1.151, 2023: 1.51, 2024: 1.58, 2025: 1.56, 2026: 1.92},
+        "London":   {2019: 1.7, 2020: 1.8, 2021: 1.8, 2022: 1.5, 2023: 1.6, 2024: 1.8, 2025: 1.9, 2026: 2.0},
+        "England":  {2019: 2.6, 2020: 2.7, 2021: 2.8, 2022: 2.6, 2023: 2.8, 2024: 3.2, 2025: 3.4, 2026: 3.4},
+    }
+    neet_trend = [{"period": f"{yr-1}/{str(yr)[2:]}", "value": round(v, 1), "series": area}
+                  for area, pts in neet_pct.items() for yr, v in pts.items()]
+    neet = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="education",
+        indicator="% of 16-17 year olds not in education, employment or training (NEET)",
+        snapshot=Snapshot(value=1.9, unit="%", year="2025/26"),
+        source=Source(
+            name="Department for Education - Participation in education, training and NEET age 16 to 17 by local authority, 2025-26",
+            url="https://explore-education-statistics.service.gov.uk/find-statistics/participation-in-education-training-and-neet-age-16-to-17-by-local-authority/2025-26",
+            accessed="2026-11-17",
+            notes=(
+                "ud_neet_characteristics.csv, age '16 to 17', characteristic 'Total'; average of December 2025, January "
+                "and February 2026 (time_period 2026). Lewisham: cohort 6,973, NEET 134 (1.92%), activity not known "
+                "2.86%, NEET or not known 4.79%. London NEET 2.0%, not known 1.2%, NEET or not known 3.2%; England 3.4%, "
+                "2.4%, 5.8%. Lewisham by SEN: EHC plan 6.2% NEET, SEN support 3.9%, no SEN 1.4%. Lewisham's not-known "
+                "share was 4.1-6.3% in 2023-2025. DfE warns the figures are management-information estimates that may "
+                "be affected by local processing issues. Legal duty to participate to 18: Raising the Participation Age "
+                "(Education and Skills Act 2008), as described in the release's Legislation section. 16-24 NEET is published only "
+                "nationally and by region (DfE 'NEET age 16 to 24', EES data set 019cc380-4628-71be-bdc2-a01a95b64c89, LFS): "
+                "London 2025 quarters 12.4 / 12.5 / 15.1 / 12.0% (Q4 +/-2.6), average 13.0%; England Q4 13.3%."
+            )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
         confidence=Confidence.MEDIUM,
-        trend=[
-            {"period": "2018/19", "value": 59.0, "note": "Pre-pandemic baseline, as cited in Lewisham Council's 2024 Standards Report"},
-            {"period": "2022/23", "value": 61.0, "note": "58.8% boys / 63.2% girls - GOV.UK Ethnicity Facts and Figures local authority data"},
-            {"period": "2023/24", "value": 66.0, "note": "Latest confirmed borough figure - Lewisham Council's Validated Outcomes 2024 Standards Report"},
-        ]
+        target_text="No official target; local authorities have a duty to encourage young people's participation to age 18.",
+        trend=neet_trend
     )
-    return [gcse]
+
+    # Childcare places per 100 children aged 0-4: Ofsted "EYR places at end" (Early Years
+    # Register places including estimates, all provision; Table 2a of the childcare
+    # providers and inspections management information, as at 30 June each year) divided
+    # by ONS mid-year population aged 0-4 (NOMIS NM_2002_1) for the same 30 June. Mid-2026
+    # estimates aren't published yet, so June 2026 uses mid-2025.
+    cc_places = {
+        "Lewisham": {2022: 9103.59, 2023: 9508.9, 2024: 9610.6, 2025: 9806.45, 2026: 10576.96},
+        "London":   {2022: 224548.53, 2023: 226804.5, 2024: 229669.9, 2025: 231718.66, 2026: 238652.66},
+        "England":  {2022: 1290036.7, 2023: 1266488.9, 2024: 1274210.8, 2025: 1288696.2, 2026: 1317004.04},
+    }
+    pop_0_4 = {
+        "Lewisham": {2022: 18513, 2023: 17958, 2024: 17580, 2025: 17184},
+        "London":   {2022: 524356, 2023: 523675, 2024: 522446, 2025: 513549},
+        "England":  {2022: 3061181, 2023: 3065740, 2024: 3053783, 2025: 3003917},
+    }
+    cc_trend = [{"period": f"June {yr}", "value": round(pl / pop_0_4[area][min(yr, 2025)] * 100, 1), "series": area}
+                for area, pts in cc_places.items() for yr, pl in pts.items()]
+    childcare = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="education",
+        indicator="Registered childcare places per 100 children aged 0-4",
+        snapshot=Snapshot(value=61.6, unit="places", year="June 2026"),
+        source=Source(
+            name="Ofsted - Childcare providers and inspections: management information (as at 30 June 2026); ONS mid-year population estimates",
+            url="https://www.gov.uk/government/statistical-data-sets/childcare-providers-and-inspections-management-information",
+            accessed="2026-11-17",
+            notes=(
+                "Numerator: Early Years Register places at end of quarter, all provision (Table 2a 'EYR places at end', "
+                "which uses 'places including estimates'), as at 30 June 2022-2026: Lewisham 9,103.6 / 9,508.9 / "
+                "9,610.6 / 9,806.5 / 10,577.0. Lewisham June 2026 by type: childcare on non-domestic premises 177 "
+                "providers, 9,223 places; childminders 208, 1,261; childcare on domestic premises 4, 93. Ofsted defines "
+                "places as 'the maximum number of children aged under 8 that may attend the provision at any one "
+                "time' - capacity, not vacancies, and not limited to under-5s. Denominator: ONS mid-year estimates, "
+                "age 0-4 (NOMIS NM_2002_1), mid-2022 to mid-2025: Lewisham 18,513 / 17,958 / 17,580 / 17,184 (down "
+                "7.2% 2022-2025); June 2026 uses mid-2025 because mid-2026 is not yet published. Lewisham 61.6, London "
+                "46.5, England 43.8 places per 100 children (June 2026). Childminders' postcodes are redacted in the "
+                "provider-level file, so a ward-level count is not possible."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.MEDIUM,
+        target_text="No official target; councils have a statutory duty to secure sufficient childcare.",
+        trend=cc_trend
+    )
+    return [gcse, neet, childcare]
 
 def build_income():
     """
@@ -417,7 +530,8 @@ def build_income():
     "Unemployment rate" (survey estimate with a wide local margin of error) and the income-dimension "Index of
     Multiple Deprivation Decile" (user chose poverty rate instead; the key IMD 2025 findings
     are folded into the poverty text/top summary - verified against IoD2025 File 7 and
-    File 10). The peace_justice IMD indicator is separate and untouched.
+    File 10). The peace_justice IMD indicator was removed separately, at the user's request,
+    in November 2026.
 
     The claimant count (NM_162_1) was its own indicator for part of November 2026; at the
     user's request it was removed and its insight folded into the out-of-work benefits text:
@@ -524,160 +638,207 @@ def build_income():
 
 def build_equality():
     """
-    Equality dimension - 4 indicators matching data/lookups/dimension_data_sources.json
-    ("equality"). Only one indicator (pay inequality) has a genuine borough-level figure;
-    the other three are London-wide, because no Lewisham- or borough-specific data was
-    found after a real search effort for wealth share, gender pay gap, or ethnicity pay
-    gap (see per-indicator source notes for what was tried). "Pay gap (ethnic, gender)" in
-    the source registry has been split into two separate indicators - gender and ethnicity
-    pay gaps come from different underlying ONS surveys (ASHE vs Annual Population Survey)
-    and telling genuinely distinct stories, so combining them into one number would have
-    hidden more than it showed. dimension_data_sources.json updated accordingly (4 rows).
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    Equality dimension - 5 indicators matching data/lookups/dimension_data_sources.json
+    ("equality"). Pay inequality is a genuine Lewisham (residence-based) series from ONS ASHE
+    Table 8, charted against London and England. Wealth inequality has no borough-level
+    source at all, so it uses the GLA's London vs Great Britain share held by the bottom half. The three
+    employment rate gaps (gender, ethnicity, disability) are London-wide and share one
+    chart (they replaced the gender and ethnicity pay gap indicators in Nov 2026).
+    Written into the ward JSON files by scripts/splice_dimension.py.
     """
+    # Pay inequality: 80th / 20th percentile of gross hourly pay, all employee jobs,
+    # place of RESIDENCE (ONS ASHE Table 8). This is the same series Trust for London
+    # charts (its Lewisham 2015/2019/2025 values 2.6/2.59/2.43 match Table 8 exactly),
+    # but taken from the raw ONS data so the full annual trend can be plotted.
+    # 2017-2024: NOMIS NM_30_1 (ASHE resident analysis, current revised versions).
+    # 2025: Table 8.5a 2025 revised. 2026: Table 8.5a 2026 provisional (ONS, 22 Oct 2026).
+    # Each value is P80 / P20 rounded to 2dp; (P20, P80) in pounds kept alongside.
+    pay_ratio_pcts = {
+        "Lewisham": {2017: (9.59, 25.26), 2018: (10.00, 25.55), 2019: (10.21, 26.46), 2020: (10.57, 29.13),
+                     2021: (10.82, 26.84), 2022: (11.50, 27.42), 2023: (12.44, 30.88), 2024: (13.46, 33.71),
+                     2025: (14.72, 36.30), 2026: (15.44, 38.28)},
+        "London":   {2017: (9.62, 26.20), 2018: (9.88, 27.36), 2019: (10.27, 28.10), 2020: (10.55, 29.12),
+                     2021: (11.00, 29.04), 2022: (11.57, 29.63), 2023: (12.54, 31.86), 2024: (13.53, 33.50),
+                     2025: (14.40, 36.29), 2026: (15.12, 39.41)},
+        "England":  {2017: (8.49, 21.14), 2018: (8.74, 21.75), 2019: (9.20, 22.50), 2020: (9.52, 23.17),
+                     2021: (9.98, 23.44), 2022: (10.56, 24.15), 2023: (11.57, 25.72), 2024: (12.50, 27.38),
+                     2025: (13.24, 28.97), 2026: (13.90, 30.77)},
+    }
+    pay_ratio_trend = []
+    for area in ("Lewisham", "London", "England"):
+        for yr, (p20, p80) in pay_ratio_pcts[area].items():
+            point = {"period": str(yr), "value": round(p80 / p20, 2), "series": area}
+            if yr == 2026:
+                point["note"] = "Provisional (ASHE 2026); revised figures due October 2027"
+            pay_ratio_trend.append(point)
+
     pay_inequality = create_targeted_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
         target=Target(
-            text="Pay inequality (80:20 hourly wage ratio) target: England average pay inequality",
-            source_body="Trust for London benchmarks (underlying: ONS ASHE via NOMIS)",
-            has_official_target=True
+            text="Pay inequality (80:20 hourly pay ratio) benchmark: England average",
+            source_body="ONS Annual Survey of Hours and Earnings (ASHE), Table 8",
+            has_official_target=False
         ),
         indicator="Pay inequality (80th:20th percentile ratio)",
-        threshold=Threshold(value=1.52, unit="ratio", description="England average 80:20 hourly pay ratio"),
-        snapshot=Snapshot(value=2.43, unit="ratio", year=2023),
+        threshold=Threshold(value=2.21, unit="ratio", description="England 80:20 hourly pay ratio, 2026 (provisional)"),
+        snapshot=Snapshot(value=2.48, unit="ratio", year=2026),
         status=Status.SHORTFALL,
         source=Source(
-            name="Trust for London - Pay inequality by London borough",
-            url="https://trustforlondon.org.uk/data/pay-inequality-borough/",
-            accessed="2026-07-17",
+            name="ONS Annual Survey of Hours and Earnings (ASHE) Table 8 - place of residence by local authority",
+            url="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/placeofresidencebylocalauthorityashetable8",
+            accessed="2026-11-17",
             notes=(
-                "Lewisham's 80:20 hourly wage ratio is 2.43 (the top-paid 20% earn 2.43x more per hour than the "
-                "bottom-paid 20%), vs an England average of 1.52 and a London average of 2.5. Underlying source: "
-                "ONS Annual Survey of Hours and Earnings (ASHE) via NOMIS. Re-verified 2026-07-17: this figure is "
-                "still shown as Lewisham's current value and is independently corroborated across multiple Trust "
-                "for London borough/data pages. However, the Trust for London page itself now shows a 'last "
-                "updated January 2026' stamp and states pay inequality has fallen in most London boroughs since "
-                "the prior release (Lewisham is not among the four named exceptions - Hackney, Wandsworth, "
-                "Hammersmith & Fulham, Richmond upon Thames - where it rose), which suggests a newer (likely "
-                "2024 ASHE-based) figure may now be live and slightly lower than 2.43. This session's tools "
-                "(WebFetch and direct curl) were blocked by the environment's egress policy for "
-                "trustforlondon.org.uk, ons.gov.uk and nomisweb.co.uk, so the exact updated value and the "
-                "multi-year trend behind the interactive chart could not be extracted - only the aggregate "
-                "figures summarised in search results were retrievable. No historical series is included below "
-                "for this reason; adding one would mean fabricating intermediate points, which the project's "
-                "spec explicitly prohibits. A follow-up session with working page-fetch access should re-check "
-                "this page directly for both the current value and the 2015-2025 trend."
+                "Ratio of the 80th to the 20th percentile of gross hourly pay, all employee jobs, by place of "
+                "residence (Table 8.5a, 'All' sheet). Lewisham 2026 (provisional): P20 GBP 15.44, P80 GBP 38.28 "
+                "-> 2.48; London P20 15.12, P80 39.41 -> 2.61; England P20 13.90, P80 30.77 -> 2.21. 2025 values "
+                "from the 2025 revised Table 8; 2017-2024 from NOMIS dataset NM_30_1 (ASHE resident analysis, "
+                "hourly pay - gross, items '20 percentile' and '80 percentile'), "
+                "https://www.nomisweb.co.uk/datasets/asher. This is the same series Trust for London charts at "
+                "trustforlondon.org.uk/data/pay-inequality-borough/ (its Lewisham values for 2015, 2019 and 2025 - "
+                "2.6, 2.59, 2.43 - match ONS's figures, the 2025 one being the provisional release). Trust for "
+                "London's England 2025 value of 1.52 does not match ONS (2.18 provisional, 2.19 revised) and looks "
+                "like an error, so it is not used. Sampling uncertainty: ONS rates Lewisham's P80 estimate with a "
+                "coefficient of variation of roughly 8-11% in recent years (P20 about 2%), so year-to-year moves "
+                "in the Lewisham line are within noise; the London and England lines are far more precise. "
+                "2020 and 2021 ASHE data carry extra uncertainty from the pandemic, and ONS notes 2023 onwards "
+                "may not be directly comparable with 2022 because of methodological changes. Cause cited in "
+                "indicator text: Low Pay Commission Report 2025 says raising the National Living Wage towards "
+                "two-thirds of median earnings 'unavoidably compresses the lower half of the aggregate pay "
+                "distribution in relative terms'; LPC 2025 coverage tables put residence-based minimum wage "
+                "coverage (jobs paid at or within 5p of the applicable rate) at 2.7% for Lewisham against 6.6% "
+                "for the UK (https://www.gov.uk/government/publications/low-pay-commission-report-2025)."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM
+        confidence=Confidence.MEDIUM,
+        trend=pay_ratio_trend
     )
+
+    # Wealth inequality: % of wealth held by the bottom 50% (the framework's own indicator;
+    # the user asked for it back in Nov 2026 after a short-lived swap to ONS's 75th:25th
+    # percentile ratio). No borough, ward or LSOA wealth-distribution data exists; ONS's
+    # Wealth and Assets Survey (WAS) reports regions at best. GLA Economic Fairness dataset
+    # "Wealth inequality" (data.london.gov.uk/download/2y5m7/.../wealth-inequality.xls) is the
+    # only London series. Its deciles are NATIONAL (GB) wealth deciles: the London figure is
+    # the share of London's household wealth held by London households in the bottom half of
+    # GB's distribution (45.6% of London households in 2016-18). Values are recomputed from
+    # the London / Great Britain sheets (sum of decile 1-5 total wealth / sum of all deciles),
+    # which reproduces the Summary sheet exactly for 2010-12 to 2014-16; the Summary rounds
+    # 2016-18 to whole numbers (4, 8), the recomputed values are 3.79 and 8.48.
+    # Points before 2016-18 are more than 10 years old (SPEC_RULES 1.2); kept because this is
+    # the only series for the framework indicator and the user asked for the trend.
+    poorest_half_share = {
+        "London":        {"2010-12": 5.8, "2012-14": 4.9, "2014-16": 4.5, "2016-18": 3.8},
+        "Great Britain": {"2010-12": 9.6, "2012-14": 8.6, "2014-16": 8.7, "2016-18": 8.5},
+    }
+    wealth_share_trend = [
+        {"period": per, "value": val, "series": area}
+        for area, pts in poorest_half_share.items() for per, val in pts.items()
+    ]
 
     wealth_share_poorest_half = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="equality",
-        indicator="% of wealth held by the poorest 50%",
-        snapshot=Snapshot(value=4.0, unit="%", year=2022),
+        indicator="% of wealth held by the bottom 50%",
+        snapshot=Snapshot(value=3.8, unit="%", year="2016-18"),
         source=Source(
-            name="GLA London Datastore - Economic Fairness: Wealth Inequality",
+            name="GLA London Datastore - Economic Fairness: Wealth inequality (ONS Wealth and Assets Survey microdata)",
             url="https://data.london.gov.uk/economic-fairness/equal-opportunities/wealth-inequality",
-            accessed="2026-07-17",
+            accessed="2026-11-17",
             notes=(
-                "No Lewisham- or borough-level wealth distribution figure exists (the underlying ONS Wealth and "
-                "Assets Survey - WAS - is not designed to produce reliable local authority estimates), so this "
-                "uses the GLA's London-wide figure instead, labelled accordingly: households in the bottom half "
-                "of London's wealth distribution hold just 4% of the capital's total household wealth, while the "
-                "richest 10% of households hold over 60%. Underlying source: ONS Wealth and Assets Survey "
-                "microdata, as analysed by the GLA's Economic Fairness programme. An older Trust for London "
-                "page (trustforlondon.org.uk/data/wealth-distribution/, now archived and no longer updated) put "
-                "the same England-wide poorest-50%-wealth-share at 9% and London's bottom-half share at 6.8%, "
-                "using 2018-2020 WAS data - the GLA's 4% figure is treated as the more current reference here, "
-                "but the two aren't a clean like-for-like trend (different WAS rounds/methodology), so no trend "
-                "array is given rather than implying a precise year-on-year decline. Caveat: the Office for "
-                "Statistics Regulation removed WAS's Official Statistics accreditation in June 2025, saying it "
-                "was 'no longer of sufficient value or quality to meet users' needs' - treat this figure as "
-                "broadly indicative of London's wealth concentration, not a precise measurement. This session's "
-                "WebFetch/curl tools were blocked for both trustforlondon.org.uk and ons.gov.uk, so the exact "
-                "WAS survey round behind the GLA's 4% figure could not be independently confirmed."
+                "Share of total household wealth (property, financial, physical and private pension wealth, net of "
+                "debts) held by households in deciles 1-5 of the Great Britain wealth distribution. GLA dataset "
+                "wealth-inequality.xls (data.london.gov.uk download 2y5m7; National Data Library record shows 25 "
+                "September 2026, though the GLA datastore API dates the file 1 February 2021; data end April 2016-March 2018). London 2016-18: those households were "
+                "45.6% of London households (household counts derived as total / mean wealth per decile) and held "
+                "3.79% of London's wealth; London households in GB's top decile held 61.9%. GB 2016-18: 8.48%. "
+                "Recomputed values match the Summary sheet for 2010-12 (London 5.75, GB 9.58), 2012-14 (4.89, 8.60) "
+                "and 2014-16 (4.54, 8.74); the Summary rounds 2016-18 to 4 and 8. London's share of households in "
+                "the national bottom half fell from 50.4% (2010-12) to 45.6% (2016-18), so the London line is not a "
+                "fixed-population measure. Periods: July-June two-year rounds to 2014-16, April 2016-March 2018 for "
+                "the last. No newer London decile breakdown exists: ONS's latest WAS tables (released 24 January "
+                "2025, to April 2020-March 2022) give regional percentiles but not decile shares. The Office for "
+                "Statistics Regulation suspended WAS's accredited official statistics status on 13 June 2025 over "
+                "falling response rates and quality concerns - treat as indicative. Context in text: net property "
+                "wealth was 51% of London household wealth in April 2020-March 2022 (ONS Total wealth tables, Table "
+                "2.7); Lewisham home ownership 43.2% in 2024 (owned outright 15.33% + mortgage 27.88%) vs England "
+                "62.4% (ONS Subnational estimates of households by tenure, England, 2022 to 2024, released 11 "
+                "February 2026)."
             )
         ),
         geography=GeographyLevel.LONDON_INHERITED,
         confidence=Confidence.LOW,
-        target_text="No official GLA or UK Government target established for this indicator."
-    )
-
-    gender_pay_gap = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="equality",
-        indicator="Gender pay gap (mean hourly pay)",
-        snapshot=Snapshot(value=14.0, unit="%", year=2023),
-        source=Source(
-            name="GLA London Datastore - Economic Fairness: Gender Pay Gap",
-            url="https://data.london.gov.uk/economic-fairness/labour-market/gender-pay-gap",
-            accessed="2026-07-17",
-            notes=(
-                "No Lewisham-specific gender pay gap figure was found for borough residents (ONS does publish "
-                "ASHE Table 8, a residence-based earnings-by-local-authority dataset, which in principle could "
-                "be used to derive one, but this session's tools could not reach ons.gov.uk to extract it - "
-                "WebFetch and direct curl were both blocked by the environment's egress policy). This uses the "
-                "GLA's London-wide figure instead: female employees in London were paid 14% less per hour than "
-                "male employees on average in 2023 (mean hourly pay, all employees). Underlying source: ONS "
-                "Annual Survey of Hours and Earnings (ASHE). Only this single year's figure could be confirmed "
-                "via search; the GLA's own page reportedly notes the London gap 'has not fallen over more than a "
-                "decade' unlike the national trend, but exact values for other years were not retrievable this "
-                "session, so no fabricated trend is given - see Confidence.LOW."
-            )
-        ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.LOW,
-        target_text="No official GLA or UK Government target established for this indicator."
-    )
-
-    ethnicity_pay_gap = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="equality",
-        indicator="Ethnicity pay gap (median hourly pay, White vs ethnic minority employees)",
-        snapshot=Snapshot(value=22.0, unit="%", year=2023),
-        source=Source(
-            name="GLA London Datastore - Economic Fairness: Ethnicity Pay Gap",
-            url="https://data.london.gov.uk/economic-fairness/labour-market/ethnicity-pay-gap",
-            accessed="2026-07-17",
-            notes=(
-                "No Lewisham-specific ethnicity pay gap figure exists at borough level (sample sizes in ONS's "
-                "source surveys are too small to support reliable local authority breakdowns by ethnicity), so "
-                "this uses London-wide figures. The GLA states the gap in median hourly pay between White and "
-                "Black/Asian/minority ethnic employees in London is 'more than 22%' (most recent, based on the "
-                "ONS Annual Population Survey), against roughly 1% across England & Wales outside London - "
-                "London has consistently had the largest regional ethnicity pay gap in the country. Trend points "
-                "for 2018 (21.7%) and 2019 (23.8%) are from ONS's own annual 'Ethnicity pay gaps in Great "
-                "Britain' regional bulletins (unadjusted/raw gap, London region); the current point uses 22.0 as "
-                "a conservative reading of the GLA's 'more than 22%' statement since an exact decimal for the "
-                "latest year could not be confirmed - WebFetch/curl access to data.london.gov.uk and ons.gov.uk "
-                "was blocked in this session, so this is built from search-result summaries rather than the "
-                "primary tables directly. Treat the three points as broadly indicative of a persistently large, "
-                "fairly stable gap rather than a precise year-on-year series."
-            )
-        ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.MEDIUM,
         target_text="No official GLA or UK Government target established for this indicator.",
-        trend=[
-            {"period": "2018", "value": 21.7, "note": "ONS Ethnicity pay gaps in Great Britain: 2018 (London region, unadjusted gap)"},
-            {"period": "2019", "value": 23.8, "note": "ONS Ethnicity pay gaps in Great Britain: 2019 (London region, unadjusted gap)"},
-            {"period": "2023", "value": 22.0, "note": "GLA Economic Fairness states 'more than 22%'; exact decimal not confirmed this session"},
-        ]
+        trend=wealth_share_trend
     )
 
-    return [pay_inequality, wealth_share_poorest_half, gender_pay_gap, ethnicity_pay_gap]
+    # Employment rate gaps (replaced the gender and ethnicity pay gap indicators,
+    # Nov 2026): percentage-point gap between employment rates of working-age (16-64)
+    # residents, London, calendar years (Jan-Dec), ONS Annual Population Survey via
+    # NOMIS dataset NM_17_5. Variables: 54 males / 63 females; 593 White / 594 ethnic
+    # minority; 1760 not EA core or work-limiting disabled / 1757 EA core or
+    # work-limiting disabled (the definitions the GLA's Economic Fairness "Employment
+    # gaps" dataset uses - its gender and disability rates match NOMIS exactly).
+    # Each tuple is (higher-rate group, lower-rate group) employment rate, %.
+    emp_rates = {
+        "Women vs men": {
+            2016: (80.4, 66.9), 2017: (80.2, 67.6), 2018: (80.5, 68.0), 2019: (79.9, 69.0), 2020: (78.8, 71.5),
+            2021: (78.7, 71.0), 2022: (80.8, 71.5), 2023: (78.6, 70.5), 2024: (80.4, 70.9), 2025: (79.3, 70.3), "Jul 2025-Jun 2026": (78.8, 70.1)},
+        "Ethnic minority vs White": {
+            2016: (78.6, 66.3), 2017: (78.8, 66.4), 2018: (79.6, 66.4), 2019: (79.3, 67.1), 2020: (79.3, 68.8),
+            2021: (78.9, 68.8), 2022: (80.1, 70.7), 2023: (79.3, 68.2), 2024: (80.2, 70.1), 2025: (78.9, 70.3), "Jul 2025-Jun 2026": (79.2, 69.1)},
+        "Disabled vs non-disabled": {
+            2016: (78.2, 51.6), 2017: (78.4, 51.2), 2018: (78.9, 51.8), 2019: (78.8, 54.3), 2020: (79.6, 54.6),
+            2021: (79.3, 56.3), 2022: (80.7, 57.8), 2023: (78.9, 57.6), 2024: (80.2, 59.3), 2025: (79.2, 58.5), "Jul 2025-Jun 2026": (79.5, 55.8)},
+    }
+    emp_gap_notes = (
+        "Percentage-point gap between employment rates of residents aged 16-64, London, ONS Annual Population "
+        "Survey (APS) via NOMIS dataset NM_17_5, calendar years (Jan-Dec) 2016-2025, then the latest rolling 12-month period (Jul 2025-Jun 2026) as the final point and headline. Gender: males (variable 54) "
+        "minus females (63); 2025 79.3% v 70.3%. Ethnicity: White (593) minus ethnic minority (594); 2025 78.9% "
+        "v 70.3%. Disability: not EA core or work-limiting disabled (1760) minus EA core or work-limiting "
+        "disabled (1757), i.e. disabled under the Equality Act or with a work-limiting condition; 2025 79.2% v "
+        "58.5%. England 2025 gaps for comparison (same variables): gender 6.1, ethnicity 7.1, disability 25.8. "
+        "These are the definitions the GLA's Economic Fairness 'Employment gaps' dataset uses "
+        "(data.london.gov.uk/download/e6w50/..., updated May 2026); its gender and disability rates match "
+        "NOMIS, but its ethnicity rates differ slightly (e.g. 2025 White 76.8%, ethnic minority 70.0%), so all "
+        "three series are taken from NOMIS directly for one consistent method. The final point is the latest "
+        "rolling 12-month period, Jul 2025-Jun 2026 (London: men 78.8 v women 70.1; White 79.2 v ethnic minority 69.1; "
+        "non-disabled 79.5 v disabled 55.8; England gaps 6.2, 7.7, 25.8), so the headline uses the latest vintage. Lewisham figures exist but are too "
+        "imprecise to chart: in 2025 the 95% confidence intervals on Lewisham's rates were +/-7.0 (men), 6.9 "
+        "(women), 5.9 (White), 13.7 (ethnic minority), 5.0 (non-disabled) and 12.2 (disabled) points, and the "
+        "Lewisham gender gap swung between -6.3 and +16.9 points across 2016-2025. GLA statement cited in text "
+        "(data.london.gov.uk/economic-fairness/labour-market/employment-gaps): 'At least some of this gap can be "
+        "attributed to differences in employment levels between parents and those without dependent children.'"
+    )
+    emp_gap_dims = []
+    for label, series in emp_rates.items():
+        trend = [{"period": str(yr), "value": round(hi - lo, 1), "series": label} for yr, (hi, lo) in series.items()]
+        hi, lo = series["Jul 2025-Jun 2026"]
+        emp_gap_dims.append(create_descriptive_dimension(
+            ward=LADYWELL_WARD_NAME,
+            ward_code=LADYWELL_WARD_CODE,
+            lens=Lens.LOCAL_SOCIAL,
+            dimension_name="equality",
+            indicator=f"Employment rate gap, percentage points ({label})",
+            snapshot=Snapshot(value=round(hi - lo, 1), unit="points", year="Jul 2025-Jun 2026"),
+            source=Source(
+                name="ONS Annual Population Survey via NOMIS (dataset NM_17_5) - employment rates by sex, ethnicity and disability",
+                url="https://www.nomisweb.co.uk/datasets/apsnew",
+                accessed="2026-11-17",
+                notes=emp_gap_notes
+            ),
+            geography=GeographyLevel.LONDON_INHERITED,
+            confidence=Confidence.MEDIUM,
+            target_text="No official GLA or UK Government target established for this indicator.",
+            trend=trend
+        ))
+
+    return [pay_inequality, wealth_share_poorest_half, *emp_gap_dims]
 
 # Keep existing dimensions from build_local_social_full.py for dimensions without new data
 def build_water_dimensions():
@@ -869,146 +1030,6 @@ def build_connectivity():
     )
 
     return [broadband, mobile, digital_exclusion]
-
-def build_community():
-    """
-    Community dimension - 3 indicators. DCMS replaced the Community Life Survey (CLS) with
-    the Community and Engagement Survey (CES) in October 2025. CES's Community-pathway
-    tables are produced with the CLS methodology "to allow for robust comparability with the
-    CLS time-series" (CES data tables, 'Methodological Alignment' note), so CES 2025/26 points
-    continue the CLS England series directly. Local-authority estimates exist from 2023/24:
-    DCMS/MHCLG boosted the CLS sample in 2023/24 and 2024/25 (CLS 2024/25 tables, Note 20) and
-    CES again in 2025/26. Loneliness and belonging therefore show two series each - England
-    (2018/19 onward, the CLS's own published time series) and Lewisham (2023/24 onward).
-    Support networks has no LA breakdown in any year, so its local series is the ITL2
-    sub-region 'Inner London - East', which includes Lewisham. Trend points carry a `series`
-    label that app.js draws as a separate, labelled line. No official GLA or UK Government
-    target exists for any of the three, so all three are descriptive_only.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
-    """
-    england_note = "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
-    loneliness = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="community",
-        indicator="% adults reported feeling lonely often or always",
-        snapshot=Snapshot(value=8, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Loneliness (Table C3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table A1c)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
-            accessed="2026-11-01",
-            notes=(
-                "8.0% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 5.9-10.8%, 61 "
-                "respondents, unweighted base 869; CES 2025/26 Table C3, LAD25 E09000023). Lewisham figures exist for "
-                "two earlier years from the CLS local-authority boost (CLS 2024/25 tables, Table A1c and Note 20): 6.3% "
-                "in 2023/24 (95% CI 4.4-8.8%) and 7.4% in 2024/25 (95% CI 5.3-10.2%). The survey's own significance test "
-                "marks both year-on-year moves as 'No Change' - the confidence intervals overlap, so the apparent rise is "
-                "within sampling noise. England series (CLS Timeseries sheet, then CES Table C1): 6.1% (2018/19), 6.4% "
-                "(2019/20), 6.5% (2020/21), 6.2% (2021/22), no survey in 2022/23, 7.1% (2023/24), 6.6% (2024/25), 6.7% "
-                "(2025/26). The CLS time series starts in 2018/19. Demographic breakdown (CES Table C2, England-wide, not "
-                "Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) "
-                "and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among "
-                "16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic "
-                "groups (10-16% vs 6% White British). Earlier versions of this page said 2025/26 was the first year with a "
-                "Lewisham figure; that was wrong - the CLS published Lewisham estimates for 2023/24 and 2024/25."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        trend=[
-            {"period": "2018/19", "value": 6.1, "series": "England", "note": england_note},
-            {"period": "2019/20", "value": 6.4, "series": "England"},
-            {"period": "2020/21", "value": 6.5, "series": "England"},
-            {"period": "2021/22", "value": 6.2, "series": "England"},
-            {"period": "2023/24", "value": 7.1, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 6.6, "series": "England"},
-            {"period": "2025/26", "value": 6.7, "series": "England", "note": "CES 2025/26 Table C1 (CLS methodology)"},
-            {"period": "2023/24", "value": 6.3, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 4.4-8.8%"},
-            {"period": "2024/25", "value": 7.4, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 5.3-10.2%"},
-            {"period": "2025/26", "value": 8.0, "series": "Lewisham", "note": "CES 2025/26 Table C3; 95% CI 5.9-10.8%"},
-        ]
-    )
-
-    belonging = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="community",
-        indicator="% adults felt strongly belonged to their neighbourhood",
-        snapshot=Snapshot(value=54, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Neighbourhood and community (Tables D1-D3); Community Life Survey 2024/25 annual data tables (Timeseries, Table B1c)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood",
-            accessed="2026-11-01",
-            notes=(
-                "53.8% of Lewisham adults felt they belonged 'very strongly' or 'fairly strongly' to their immediate "
-                "neighbourhood in 2025/26 (95% CI 49.5-58.0%, 458 of 797 respondents; CES 2025/26 Table D3, LAD25 "
-                "E09000023), shown rounded to 54%. Earlier Lewisham estimates from the CLS local-authority boost (CLS "
-                "2024/25 Table B1c): 56.8% in 2023/24 (95% CI 51.7-61.7%) and 56.6% in 2024/25 (95% CI 51.7-61.4%). The "
-                "survey's own test marks both year-on-year moves as 'No Change'. Lewisham sits below both London (57.9% in "
-                "2025/26, 59.0% in 2024/25; CES Table D2, ITL1 row) and England (61.2% in 2025/26; Table D1). England "
-                "series (CLS Timeseries sheet, then CES Table D1): 62.1% (2018/19), 62.6% (2019/20), 64.6% (2020/21, "
-                "pandemic-era high), 62.5% (2021/22), no survey in 2022/23, 61.1% (2023/24), 62.1% (2024/25), 61.2% "
-                "(2025/26). CES Community-pathway tables use the CLS methodology for comparability with the CLS time "
-                "series, so the 2025/26 points continue the same series."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        trend=[
-            {"period": "2018/19", "value": 62.1, "series": "England", "note": england_note},
-            {"period": "2019/20", "value": 62.6, "series": "England"},
-            {"period": "2020/21", "value": 64.6, "series": "England", "note": "Pandemic-era high"},
-            {"period": "2021/22", "value": 62.5, "series": "England"},
-            {"period": "2023/24", "value": 61.1, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 62.1, "series": "England"},
-            {"period": "2025/26", "value": 61.2, "series": "England", "note": "CES 2025/26 Table D1 (CLS methodology)"},
-            {"period": "2023/24", "value": 56.8, "series": "Lewisham", "note": "CLS 2024/25 Table B1c; 95% CI 51.7-61.7%"},
-            {"period": "2024/25", "value": 56.6, "series": "Lewisham", "note": "CLS 2024/25 Table B1c; 95% CI 51.7-61.4%"},
-            {"period": "2025/26", "value": 53.8, "series": "Lewisham", "note": "CES 2025/26 Table D3; 95% CI 49.5-58.0%"},
-        ]
-    )
-
-    support_networks = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="community",
-        indicator="% adults agreed that if they needed help, there would be people there for them",
-        snapshot=Snapshot(value=95, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Support Networks (Tables F12-F13); Community Life Survey 2024/25 annual data tables (Timeseries)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-support-networks",
-            accessed="2026-11-01",
-            notes=(
-                "95.2% of adults in the ITL2 sub-region 'Inner London - East' (Hackney, Haringey, Islington, Lambeth, "
-                "Lewisham, Newham, Southwark, Tower Hamlets) agreed that if they needed help there are people who would "
-                "be there for them in 2025/26 (95% CI 93.8-96.3%, 1,661 of 1,740 respondents agreeing; CES Table F13), up from 93.4% in "
-                "2024/25 (95% CI 91.6-94.8%) - marked 'No Change' by the survey's own test. This question is not "
-                "published at local-authority level in any year, so the sub-region is the most granular figure available. "
-                "London (ITL1) ran 94.7% in 2025/26 and 92.9% in 2024/25. England series (CLS Timeseries sheet, then CES "
-                "Table F12): 95.2% (2018/19), 95.2% (2019/20), 95.3% (2020/21), 95.2% (2021/22), no survey in 2022/23, "
-                "94.3% (2023/24), 94.3% (2024/25), 95.9% (2025/26) - England's 2025/26 rise is statistically significant. "
-                "These questions were asked online only (CES Note 6), so results reflect the online-responding population."
-            )
-        ),
-        geography=GeographyLevel.LONDON_INHERITED,
-        confidence=Confidence.MEDIUM,
-        trend=[
-            {"period": "2018/19", "value": 95.2, "series": "England", "note": england_note},
-            {"period": "2019/20", "value": 95.2, "series": "England"},
-            {"period": "2020/21", "value": 95.3, "series": "England"},
-            {"period": "2021/22", "value": 95.2, "series": "England"},
-            {"period": "2023/24", "value": 94.3, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 94.3, "series": "England"},
-            {"period": "2025/26", "value": 95.9, "series": "England", "note": "CES 2025/26 Table F12 (CLS methodology)"},
-            {"period": "2024/25", "value": 93.4, "series": "Inner London East", "note": "CES 2025/26 Table F13; 95% CI 91.6-94.8%"},
-            {"period": "2025/26", "value": 95.2, "series": "Inner London East", "note": "CES 2025/26 Table F13; 95% CI 93.8-96.3%"},
-        ]
-    )
-
-    return [loneliness, belonging, support_networks]
 
 def build_culture_dimensions():
     """
@@ -1415,104 +1436,123 @@ def build_energy():
 
 def build_peace_justice():
     """
-    Peace & Justice dimension - 2 indicators (crime rate; IMD Crime domain deprivation).
-
-    IMPORTANT PROVENANCE NOTE (2026-07-18 build): the intended primary sources for both
-    indicators - MPS Recorded Crime: Geographic Breakdown (data.london.gov.uk, genuine
-    ward-level monthly crime counts for Ladywell) and Trust for London's Crime-domain-specific
-    IMD 2025 page (trustforlondon.org.uk) - could NOT be downloaded/parsed this session due to
-    a sustained outbound-network access failure in this environment (confirmed via repeated
-    curl/fetch attempts against these hosts AND neutral control hosts like example.com and
-    en.wikipedia.org, all returning connection failures across a multi-hour window). Per
-    DIMENSION_PAGE_SPECIFICATION.md's hard rule against fabricating data, both indicators below
-    use the best real, sourced figures locatable via web search of secondary aggregators built
-    on the same underlying MPS/MHCLG datasets, at Confidence.MEDIUM/LOW with the specific
-    limitation spelled out in each Source.notes. Both should be revisited to pull the true
-    ward-level MPS figure and the true Crime-domain LSOA decile once direct source access is
-    restored - see notes below for exactly what's missing and where to get it.
-    Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
+    Peace & Justice dimension - 2 indicators (November 2026 rebuild):
+    1. Crime rate per 1,000 residents - Ladywell ward, from MPS Recorded Crime: Geographic
+       Breakdown (London Datastore), with Lewisham and London built from the same ward file.
+    2. % of residents who trust the Metropolitan Police - Lewisham borough, from MOPAC's Public
+       Attitude Survey (Public Voice quarterly packs, London Datastore dataset 'MOPAC Surveys').
+    The previous build used crime-rate aggregator websites (the London Datastore was
+    unreachable in July 2026) and an overall-IMD proxy; the IMD indicator was removed at the
+    user's request in November 2026.
     """
     crime_rate = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="peace_justice",
-        indicator="Crime rate per 1,000 population",
-        snapshot=Snapshot(value=93.0, unit="per 1,000 population", year="2025/26", date="12 months to ~Feb 2026"),
+        indicator="Crime rate per 1,000 residents",
+        snapshot=Snapshot(value=119.3, unit="per 1,000 residents", year="12 months to Oct 2026", date="November 2025 - October 2026"),
         source=Source(
-            name="MPS recorded crime data (Lewisham borough-wide), via CrimeRate.co.uk and homenicom.co.uk aggregation of Metropolitan Police statistics",
-            url="https://homenicom.co.uk/area/lewisham/crime-rate",
-            accessed="2026-07-18",
+            name="Metropolitan Police Service - MPS Recorded Crime: Geographic Breakdown (London Datastore); ONS small-area population estimates (Nomis)",
+            url="https://data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m",
+            accessed="2026-11-14",
             notes=(
-                "Lewisham borough-wide recorded crime rate. crimerate.co.uk reports ~93 per 1,000 "
-                "population for the 12 months to ~Feb 2026 (vs London's 82 per 1,000 on a "
-                "daytime-population basis - not a like-for-like comparison, included here for "
-                "directional context only); homenicom.co.uk separately reports 94.4 per 1,000 to "
-                "September 2025, explicitly attributed to 'official Metropolitan Police statistics'. "
-                "A third aggregator (scos.co.uk) reports a notably higher 119.4 per 1,000 for 2025, "
-                "likely reflecting a different scope/population base and treated as an outlier, not "
-                "used. PRIMARY SOURCE NOT YET DIRECTLY QUERIED: the MPS Recorded Crime: Geographic "
-                "Breakdown dataset (data.london.gov.uk/dataset/mps-recorded-crime-geographic-breakdown-exy3m) "
-                "publishes genuine ward-level monthly crime counts for Ladywell specifically (by Home "
-                "Office offence category, back to 2008 for historic categories / 2019 for current "
-                "ones) - a future update should download it directly and divide Ladywell's 12-month "
-                "total by Ladywell's ONS/Census population to get a true ward-level rate, rather than "
-                "this borough-wide figure. This session could not download/parse it due to a sustained "
-                "network access failure. Partial ward-level context found via search: Ladywell recorded "
-                "192 violence-and-sexual-offence incidents in the 12 months to March 2026 (unchanged "
-                "from 2025), the single largest crime category, plus 29 robbery, 21 theft-from-person, "
-                "8 weapons-possession and 5 shoplifting offences over the same period (crimerate.co.uk, "
-                "itself built on police.uk/MPS data) - this is a partial category list, not an "
-                "exhaustive cross-category total, so was not used as the headline figure."
+                "Counts: 'MPS Ward Level Crime (most recent 24 months)' (Nov 2024-Oct 2026) and 'MPS Ward Level Crime "
+                "(Historical)' (Nov 2020-Oct 2024), both from the 6 November 2026 release, summed across all offence "
+                "groups for WardCode E05013725 over 12-month years ending October. Ladywell totals: 1,528 (Nov 2020-Oct "
+                "2021), 1,446, 1,573, 1,720, 1,711, 1,833 (Nov 2025-Oct 2026). Lewisham and London are the sums of every "
+                "ward in the same files (London = the 32 MPS boroughs; the City of London has its own police force and "
+                "is not included): Lewisham 26,757 / 28,367 / 30,246 / 28,752 / 28,014 / 30,263; London 777,017 / "
+                "864,237 / 919,687 / 881,139 / 870,614 / 879,261. Ward files are used for all three so the comparison is "
+                "like for like: from March 2024 some offences appear in the MPS borough file without a ward (Lewisham "
+                "borough file 31,450 vs ward sum 30,263 for Nov 2025-Oct 2026), so ward-based totals from then on run "
+                "slightly low and the recent rise is, if anything, understated. Ladywell by offence group, Nov 2020-Oct "
+                "2021 vs Nov 2025-Oct 2026: violence against the person 526 -> 818 (of which violence without injury "
+                "219 -> 433, violence with injury 192 -> 248, stalking and harassment 115 -> 136); theft 203 -> 248; "
+                "public order 142 -> 153; criminal damage and arson 132 -> 134; vehicle offences 183 -> 117; sexual "
+                "offences 69 -> 101; burglary 100 -> 80; drugs 92 -> 75; robbery 37 -> 68. Denominators: ONS "
+                "'Population estimates - small area (2021 based)' (Nomis NM_2014_1), all persons, mid-year of the year "
+                "each period ends in: Ladywell 15,631 (2021), 15,505 (2022), 15,476 (2023), 15,363 (2024); Lewisham "
+                "300,013 / 299,164 / 300,225 / 301,255; London region minus City of London 8,796,080 / 8,859,753 / "
+                "8,986,099 / 9,074,625. Mid-2024 is the latest ward estimate, so it is used for the 2025 and 2026 "
+                "periods too. The first period (Nov 2020-Oct 2021) includes lockdown months, so page text measures change from Nov 2021-Oct 2022 (1,446). Rates are recorded crimes per resident, not per visitor or worker, so areas with town "
+                "centres, stations or hospitals can score high. Replaces the July 2026 figure (93 per 1,000, Lewisham "
+                "borough-wide, from crimerate.co.uk / homenicom.co.uk), which was taken from aggregator websites because "
+                "the London Datastore was unreachable at the time."
             )
         ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.MEDIUM,
-        target_text="No official GLA or UK Government target established for this indicator."
+        geography=GeographyLevel.WARD,
+        confidence=Confidence.HIGH,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "Oct 2021", "value": 97.8, "series": "Ladywell"},
+            {"period": "Oct 2022", "value": 93.3, "series": "Ladywell"},
+            {"period": "Oct 2023", "value": 101.6, "series": "Ladywell"},
+            {"period": "Oct 2024", "value": 112.0, "series": "Ladywell"},
+            {"period": "Oct 2025", "value": 111.4, "series": "Ladywell"},
+            {"period": "Oct 2026", "value": 119.3, "series": "Ladywell"},
+            {"period": "Oct 2021", "value": 89.2, "series": "Lewisham"},
+            {"period": "Oct 2022", "value": 94.8, "series": "Lewisham"},
+            {"period": "Oct 2023", "value": 100.7, "series": "Lewisham"},
+            {"period": "Oct 2024", "value": 95.4, "series": "Lewisham"},
+            {"period": "Oct 2025", "value": 93.0, "series": "Lewisham"},
+            {"period": "Oct 2026", "value": 100.5, "series": "Lewisham"},
+            {"period": "Oct 2021", "value": 88.3, "series": "London"},
+            {"period": "Oct 2022", "value": 97.5, "series": "London"},
+            {"period": "Oct 2023", "value": 102.3, "series": "London"},
+            {"period": "Oct 2024", "value": 97.1, "series": "London"},
+            {"period": "Oct 2025", "value": 95.9, "series": "London"},
+            {"period": "Oct 2026", "value": 96.9, "series": "London"},
+        ]
     )
 
-    imd_crime_decile = create_descriptive_dimension(
+    trust_police = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
         lens=Lens.LOCAL_SOCIAL,
         dimension_name="peace_justice",
-        indicator="Index of Multiple Deprivation Decile",
-        snapshot=Snapshot(value=172, unit="rank out of 296 English local authorities (IMD 2025, overall/all-domain; 1 = most deprived)", year=2025),
+        indicator="% of residents who trust the Metropolitan Police",
+        snapshot=Snapshot(value=60, unit="%", year="2025/26", date="12 months to March 2026"),
         source=Source(
-            name="MHCLG English Indices of Deprivation 2025 (overall/all-domain local authority summary), via Ladywell Live reporting on the government release",
-            url="https://ladywell-live.org/2025/10/31/2-of-neighbourhoods-in-lewisham-highly-deprived-with-borough-ranked-172-out-of-296-government-deprivation-data-shows/",
-            accessed="2026-07-18",
+            name="MOPAC Public Attitude Survey - Public Voice quarterly results packs (London Datastore, MOPAC Surveys)",
+            url="https://data.london.gov.uk/dataset/mopac-surveys-236kk",
+            accessed="2026-11-14",
             notes=(
-                "dimension_data_sources.json specifies Trust for London's Crime-domain-specific IMD "
-                "page (trustforlondon.org.uk/data/crime-deprivation-across-london-neighbourhoods/) as "
-                "the intended source for THIS indicator - itself built on the MHCLG English Indices of "
-                "Deprivation 2025 (published 30 Oct 2025, LSOA-level; "
-                "gov.uk/government/statistics/english-indices-of-deprivation-2025). That page, and the "
-                "government's own LSOA-level Local Deprivation Explorer "
-                "(deprivation.communities.gov.uk) which would let a future update pinpoint the actual "
-                "Crime domain decile for each of Ladywell's 7 constituent LSOAs individually, could not "
-                "be accessed this session due to a sustained outbound-network access failure; web "
-                "search located only partial, non-crime-domain-specific figures. What IS confirmed via "
-                "search this session: Lewisham ranks 172nd of 296 English local authorities on the "
-                "OVERALL (all 7 domains combined) IMD 2025 - close to the middle, moderately deprived, "
-                "little changed in relative position since IMD 2019 - and locally, 1 of Ladywell's 7 "
-                "LSOAs falls within the most-deprived 20% of neighbourhoods in England on that same "
-                "overall index (Ladywell Live, 31 Oct 2025, reporting on the same government release). "
-                "Crime contributes only 9.3% of the weighting toward that overall IMD score (one of "
-                "seven domains, alongside Income and Employment at 22.5% each, Education and Health at "
-                "13.5% each, and Barriers to Housing/Services and Living Environment at 9.3% each) - so "
-                "neither figure above is a substitute for the crime-specific decile this indicator is "
-                "meant to track, and the value/unit above is reported as an overall-IMD local authority "
-                "rank, not a neighbourhood-level crime decile, to avoid overstating precision. Revisit "
-                "once direct access to Trust for London or the government's LSOA explorer is restored."
+                "Share of respondents agreeing 'The Metropolitan Police Service is an organisation that I can trust' "
+                "(base excludes don't know / refused), rolling 12 months to March, from the borough performance table "
+                "in each year's Q4 Public Voice results pack. Lewisham / MPS (London) trust: 2021/22 67% / 73%; "
+                "2022/23 61% / 71%; 2023/24 59% / 69%; 2024/25 64% / 74%; 2025/26 60% / 71%. 'Police do a good job in "
+                "the local area' (confidence), Lewisham / MPS: 2021/22 40% / 49%; 2022/23 42% / 50%; 2023/24 46% / 47%; "
+                "2024/25 38% / 45%; 2025/26 45% / 45%. 2025/26 Lewisham also: police treat everyone fairly 53%, stop "
+                "and search used fairly 41%. The 2025/26 pack lists Lewisham's trust as -4pp and confidence as +7pp "
+                "against 2024/25. The London figure for 2023/24 is the pack's 'weighted MPS result' (that pack's "
+                "borough table has no MPS row). The PAS interviews around 600 residents per borough a year (about "
+                "19,000 Londoners), so it is not published below borough level and year-to-year moves of a few points "
+                "may be sampling noise. Feeling safe walking alone in the local area after dark: the packs and the Q1 "
+                "2026-27 headlines report it for London only (70% in the 12 months to June 2026, 68% a year earlier; "
+                "women 60%). A borough breakdown may be on MOPAC's dashboards on london.gov.uk, which this environment "
+                "cannot reach, so it is unverified rather than unavailable. Packs used: Q4 21-22, Q4 22-23, Q4 23-24, "
+                "Q4 24-25, Q4 25-26, and Q1 26-27 headlines, all from the MOPAC Surveys dataset page. Survey mode: the PAS moved to telephone interviewing in FY 20-21 and FY 21-22, phased back to face-to-face in FY 22-23, and has been entirely face-to-face since FY 23-24; MOPAC says this 'may affect the comparability of trends' (Q4 25-26 pack), so 2021/22 and 2022/23 are drawn as separate '(phone/mixed)' series."
             )
         ),
         geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.LOW,
-        target_text="No official GLA or UK Government target established for this indicator."
+        confidence=Confidence.MEDIUM,
+        target_text="No official GLA or UK Government target established for this indicator.",
+        trend=[
+            {"period": "2021/22", "value": 67, "series": "Lewisham (phone/mixed)"},
+            {"period": "2022/23", "value": 61, "series": "Lewisham (phone/mixed)"},
+            {"period": "2023/24", "value": 59, "series": "Lewisham"},
+            {"period": "2024/25", "value": 64, "series": "Lewisham"},
+            {"period": "2025/26", "value": 60, "series": "Lewisham"},
+            {"period": "2021/22", "value": 73, "series": "London (phone/mixed)"},
+            {"period": "2022/23", "value": 71, "series": "London (phone/mixed)"},
+            {"period": "2023/24", "value": 69, "series": "London"},
+            {"period": "2024/25", "value": 74, "series": "London"},
+            {"period": "2025/26", "value": 71, "series": "London"},
+        ]
     )
 
-    return [crime_rate, imd_crime_decile]
+    return [crime_rate, trust_police]
 
 def build_political_voice():
     """
@@ -1525,9 +1565,9 @@ def build_political_voice():
     (CES civic engagement Table A3, influencing local decisions Table B3). The CES Community-
     pathway tables (A-G) use the CLS methodology "to allow for robust comparability with the
     CLS time-series" (both releases' 'Methodological Alignment' note), so the England CES
-    2025/26 points continue the CLS England series. Each chart shows two labelled series:
-    England 2018/19 onward (CLS Timeseries sheet, then CES) and Lewisham 2023/24 onward - the
-    same pattern as build_community().
+    2025/26 points continue the CLS England series. Each chart shows three labelled series:
+    England 2018/19 onward (CLS Timeseries sheet, then CES), and Lewisham and London 2023/24
+    onward (London added November 2026: compare borough with London before England).
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     turnout = create_descriptive_dimension(
@@ -1619,6 +1659,9 @@ def build_political_voice():
             {"period": "2023/24", "value": 44.2, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.4-49.1%"},
             {"period": "2024/25", "value": 44.0, "series": "Lewisham", "note": "CLS 2024/25 Table X1c; 95% CI 39.3-48.9%"},
             {"period": "2025/26", "value": 47.8, "series": "Lewisham", "note": "CES 2025/26 Table A3; 95% CI 43.7-52.0%"},
+            {"period": "2023/24", "value": 38.3, "series": "London", "note": "CLS 2024/25 Table X1b (ITL1)"},
+            {"period": "2024/25", "value": 37.4, "series": "London", "note": "CLS 2024/25 Table X1b (ITL1)"},
+            {"period": "2025/26", "value": 41.3, "series": "London", "note": "CES 2025/26 civic engagement Table A2 (ITL1)"},
         ]
     )
 
@@ -1664,6 +1707,9 @@ def build_political_voice():
             {"period": "2023/24", "value": 31.0, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 26.7-35.7%"},
             {"period": "2024/25", "value": 28.7, "series": "Lewisham", "note": "CLS 2024/25 Table B5c; 95% CI 24.6-33.3%"},
             {"period": "2025/26", "value": 31.7, "series": "Lewisham", "note": "CES 2025/26 Table B3; 95% CI 28.1-35.6%"},
+            {"period": "2023/24", "value": 27.3, "series": "London", "note": "CLS 2024/25 Table B5b (ITL1)"},
+            {"period": "2024/25", "value": 28.4, "series": "London", "note": "CLS 2024/25 Table B5b (ITL1)"},
+            {"period": "2025/26", "value": 31.8, "series": "London", "note": "CES 2025/26 influencing local decisions Table B2 (ITL1)"},
         ]
     )
 
@@ -1671,7 +1717,9 @@ def build_political_voice():
 
 def build_social_cohesion_dimensions():
     """
-    Social cohesion dimension - 4 indicators, all from DCMS's Community Life Survey (CLS) and
+    Social cohesion dimension - 3 indicators (Nov 2026, user's choice). The former community
+    dimension was merged into this one: loneliness moved here; belonging, support networks,
+    trust and pride were removed. All from DCMS's Community Life Survey (CLS) and
     its successor, the Community and Engagement Survey (CES). All four have Lewisham
     local-authority estimates from 2023/24: DCMS/MHCLG boosted the CLS sample in 2023/24 and
     2024/25 (CLS 2024/25 annual data tables, Note 20; Tables B4c, B6c, B10c, C1c(F)) and the
@@ -1681,55 +1729,12 @@ def build_social_cohesion_dimensions():
     Community-pathway tables (A-G) use the CLS methodology "to allow for robust comparability
     with the CLS time-series" ('Methodological Alignment' note in each release), so England
     CES 2025/26 points continue the CLS England series. Each chart shows two labelled series,
-    England and Lewisham - the same pattern as build_community() and build_political_voice().
+    England and Lewisham - the same pattern as build_political_voice().
     All four are descriptive_only (no official GLA/UK Government target for any of them).
     Kept in sync by hand with site/data/wards/ladywell.json - if you change one, change both.
     """
     cls_ts_note = "CLS time series table (CLS 2024/25 annual data tables, 'Timeseries' sheet)"
     ces_nbh = "https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-neighbourhood"
-
-    trust = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="social_cohesion",
-        indicator="% adults agreed that people in neighbourhood can be trusted",
-        snapshot=Snapshot(value=30, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Neighbourhood and community (Table D12, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table B4c)",
-            url=ces_nbh,
-            accessed="2026-11-01",
-            notes=(
-                "29.5% of Lewisham adults said 'many of the people' in their neighbourhood can be trusted in 2025/26 "
-                "(95% CI 25.8-33.4%, 246 respondents; CES 2025/26 Table D12, LAD25 E09000023), shown rounded to 30%. "
-                "Earlier Lewisham estimates from the CLS local-authority boost (CLS 2024/25 Table B4c, Note 20): 32.2% in "
-                "2023/24 (95% CI 27.6-37.1%) and 29.9% in 2024/25 (95% CI 25.6-34.4%); both year-on-year moves 'No "
-                "Change' per the survey's own test. London (ITL1): 31.8% (2023/24), 31.0% (2024/25), 29.3% (2025/26) (CLS "
-                "Table B4b, CES Table D11) - Lewisham is level with London. England series (CLS Timeseries, then CES Table "
-                "D10): 39.9% (2018/19), 39.7% (2019/20), 41.5% (2020/21), 42.2% (2021/22), no survey in 2022/23, 40.7% "
-                "(2023/24), 40.3% (2024/25), 37.6% (2025/26, a statistically significant decrease). National pattern (CES "
-                "2025/26 neighbourhood and community report, England-wide): 26% of 16-24s and 25-34s vs 56% of those aged "
-                "75+; 17% in the most deprived IMD decile vs 58% in the least deprived; London 29%, the lowest ITL1 region. "
-                "The earlier 2013/14 England point (48%) was dropped under the 10-year data-age rule, and the earlier "
-                "2021/22 England value (41%) was corrected to the Timeseries figure (42.2%)."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        target_text="No official GLA or UK Government target established for this indicator.",
-        trend=[
-            {"period": "2018/19", "value": 39.9, "series": "England", "note": cls_ts_note},
-            {"period": "2019/20", "value": 39.7, "series": "England"},
-            {"period": "2020/21", "value": 41.5, "series": "England"},
-            {"period": "2021/22", "value": 42.2, "series": "England"},
-            {"period": "2023/24", "value": 40.7, "series": "England", "note": "No survey in 2022/23"},
-            {"period": "2024/25", "value": 40.3, "series": "England"},
-            {"period": "2025/26", "value": 37.6, "series": "England", "note": "CES 2025/26 Table D10 (CLS methodology)"},
-            {"period": "2023/24", "value": 32.2, "series": "Lewisham", "note": "CLS 2024/25 Table B4c; 95% CI 27.6-37.1%"},
-            {"period": "2024/25", "value": 29.9, "series": "Lewisham", "note": "CLS 2024/25 Table B4c; 95% CI 25.6-34.4%"},
-            {"period": "2025/26", "value": 29.5, "series": "Lewisham", "note": "CES 2025/26 Table D12; 95% CI 25.8-33.4%"},
-        ]
-    )
 
     cohesion = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
@@ -1773,42 +1778,6 @@ def build_social_cohesion_dimensions():
         ]
     )
 
-    pride = create_descriptive_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="social_cohesion",
-        indicator="% proud to live in their local area",
-        snapshot=Snapshot(value=58, unit="%", year="2025/26"),
-        source=Source(
-            name="Community and Engagement Survey 2025/26 - Pride in local area (Table E3, by local authority); Community Life Survey 2024/25 annual data tables (Table B10c)",
-            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-pride-in-local-area",
-            accessed="2026-11-01",
-            notes=(
-                "58.0% of Lewisham adults agreed they are proud to live in their local area in 2025/26 (95% CI "
-                "53.5-62.5%, 486 respondents; CES 2025/26 Table E3, LAD25 E09000023). Earlier Lewisham estimates (CLS "
-                "2024/25 Table B10c, Note 20): 58.0% in 2023/24 (95% CI 52.8-63.0%) and 53.9% in 2024/25 (95% CI "
-                "48.9-58.9%); 'No Change' in both years. London (ITL1): 56.2%, 57.8%, 59.4% (CLS Table B10b, CES Table "
-                "E2). England: 59.4% (2023/24), 59.7% (2024/25) (CLS Table B10a), 61.6% (2025/26, a statistically "
-                "significant increase; CES Table E1). The question was first asked in 2023/24. Lewisham's 2025/26 CI "
-                "contains both the London and England figures. Main reasons for pride among those agreeing, England "
-                "2025/26 (CES Table E10): safe area 69.7%, green and natural spaces 64.2%, people respectful and friendly "
-                "59.3%."
-            )
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-        target_text="No official GLA or UK Government target established for this indicator.",
-        trend=[
-            {"period": "2023/24", "value": 59.4, "series": "England", "note": "First year this question was asked; CLS 2024/25 Table B10a"},
-            {"period": "2024/25", "value": 59.7, "series": "England", "note": "CLS 2024/25 Table B10a"},
-            {"period": "2025/26", "value": 61.6, "series": "England", "note": "CES 2025/26 Table E1 (CLS methodology)"},
-            {"period": "2023/24", "value": 58.0, "series": "Lewisham", "note": "CLS 2024/25 Table B10c; 95% CI 52.8-63.0%"},
-            {"period": "2024/25", "value": 53.9, "series": "Lewisham", "note": "CLS 2024/25 Table B10c; 95% CI 48.9-58.9%"},
-            {"period": "2025/26", "value": 58.0, "series": "Lewisham", "note": "CES 2025/26 Table E3; 95% CI 53.5-62.5%"},
-        ]
-    )
-
     volunteering = create_descriptive_dimension(
         ward=LADYWELL_WARD_NAME,
         ward_code=LADYWELL_WARD_CODE,
@@ -1849,7 +1818,50 @@ def build_social_cohesion_dimensions():
         ]
     )
 
-    return [trust, cohesion, pride, volunteering]
+    loneliness = create_descriptive_dimension(
+        ward=LADYWELL_WARD_NAME,
+        ward_code=LADYWELL_WARD_CODE,
+        lens=Lens.LOCAL_SOCIAL,
+        dimension_name="social_cohesion",
+        indicator="% adults reported feeling lonely often or always",
+        snapshot=Snapshot(value=8, unit="%", year="2025/26"),
+        source=Source(
+            name="Community and Engagement Survey 2025/26 - Loneliness (Table C3, by local authority); Community Life Survey 2024/25 annual data tables (Timeseries, Table A1c)",
+            url="https://www.gov.uk/government/statistics/community-and-engagement-survey-202526-loneliness",
+            accessed="2026-11-01",
+            notes=(
+                "8.0% of Lewisham adults reported feeling lonely 'often or always' in 2025/26 (95% CI 5.9-10.8%, 61 "
+                "respondents, unweighted base 869; CES 2025/26 Table C3, LAD25 E09000023). Lewisham figures exist for "
+                "two earlier years from the CLS local-authority boost (CLS 2024/25 tables, Table A1c and Note 20): 6.3% "
+                "in 2023/24 (95% CI 4.4-8.8%) and 7.4% in 2024/25 (95% CI 5.3-10.2%). The survey's own significance test "
+                "marks both year-on-year moves as 'No Change' - the confidence intervals overlap, so the apparent rise is "
+                "within sampling noise. England series (CLS Timeseries sheet, then CES Table C1): 6.1% (2018/19), 6.4% "
+                "(2019/20), 6.5% (2020/21), 6.2% (2021/22), no survey in 2022/23, 7.1% (2023/24), 6.6% (2024/25), 6.7% "
+                "(2025/26). The CLS time series starts in 2018/19. Demographic breakdown (CES Table C2, England-wide, not "
+                "Lewisham-specific): loneliness runs several times higher among disabled adults (14%, vs 3% non-disabled) "
+                "and residents of England's most deprived IMD decile (11%, vs 4% least deprived), and is highest among "
+                "16-24s (9%, tapering to 4% at 65-74), LGB+ people (11-14% vs 6% heterosexual), and some minority ethnic "
+                "groups (10-16% vs 6% White British). Earlier versions of this page said 2025/26 was the first year with a "
+                "Lewisham figure; that was wrong - the CLS published Lewisham estimates for 2023/24 and 2024/25."
+            )
+        ),
+        geography=GeographyLevel.BOROUGH_INHERITED,
+        confidence=Confidence.HIGH,
+        trend=[
+            {"period": "2018/19", "value": 6.1, "series": "England", "note": cls_ts_note},
+            {"period": "2019/20", "value": 6.4, "series": "England"},
+            {"period": "2020/21", "value": 6.5, "series": "England"},
+            {"period": "2021/22", "value": 6.2, "series": "England"},
+            {"period": "2023/24", "value": 7.1, "series": "England", "note": "No survey in 2022/23"},
+            {"period": "2024/25", "value": 6.6, "series": "England"},
+            {"period": "2025/26", "value": 6.7, "series": "England", "note": "CES 2025/26 Table C1 (CLS methodology)"},
+            {"period": "2023/24", "value": 6.3, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 4.4-8.8%"},
+            {"period": "2024/25", "value": 7.4, "series": "Lewisham", "note": "CLS 2024/25 Table A1c; 95% CI 5.3-10.2%"},
+            {"period": "2025/26", "value": 8.0, "series": "Lewisham", "note": "CES 2025/26 Table C3; 95% CI 5.9-10.8%"},
+        ]
+    )
+
+    return [loneliness, cohesion, volunteering]
 
 def main():
     """Build all Local Social dimensions with real Lewisham data where available"""
@@ -1859,7 +1871,6 @@ def main():
         *build_food_dimensions(),
         *build_water_dimensions(),
         *build_connectivity(),
-        *build_community(),
         *build_culture_dimensions(),
         *build_mobility_dimensions(),
         *build_education(),

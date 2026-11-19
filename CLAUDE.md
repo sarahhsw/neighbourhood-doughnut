@@ -22,7 +22,7 @@ The rules most often missed:
 All run from the repo root:
 
 - `python3 scripts/splice_dimension.py <dimension> --check` - confirm the builder in `data/pipeline/build_local_social_with_real_data.py` matches the live data before you edit it.
-- `python3 scripts/splice_dimension.py <dimension>` - after editing the builder, write its output into all three ward JSON files and verify they agree and pass the schema.
+- `python3 scripts/splice_dimension.py <dimension>` - after editing the builder (social builders in `build_local_social_with_real_data.py`, local ecological builders in `data/pipeline/build_local_ecological.py`), write its output into all three ward JSON files and verify they agree and pass the schema.
 - `python3 scripts/check_word_caps.py [dimension]` - word counts against the caps.
 - `node scripts/render_check.js [dimension ...] [--shots DIR]` - open each dimension page in a headless browser; reports page errors, chart counts, headline values and any "undefined"/"NaN".
 - `python3 scripts/ods2csv.py file.ods outdir` - convert an ODS spreadsheet to one CSV per sheet (pandas can't read ODS here).
@@ -30,7 +30,7 @@ All run from the repo root:
 ## Data sources: what works and what doesn't
 
 - curl goes through a preconfigured proxy. These work: gov.uk, assets.publishing.service.gov.uk, ons.gov.uk (including the Explore local statistics API at `ons.gov.uk/explore-local-statistics/api/v1/data/<indicator>.csv?geo=E09000023,...`), nomisweb.co.uk (API), data.london.gov.uk, trustforlondon.org.uk (chart data at `trustforlondon.org.uk/data/dataset/<id>/csv/`), councilmeetings.lewisham.gov.uk, healthystreetsscorecard.london (chart data via `datawrapper.dwcdn.net/<id>/<n>/dataset.csv`).
-- These return bot-check 403s; don't retry them or try to get around them: lewisham.moderngov.co.uk (use the councilmeetings.lewisham.gov.uk mirror, same document ids), ofcom.org.uk and labs.thinkbroadband.com (Ofcom coverage data is on the ONS Explore local statistics API), london.gov.uk. If a claim can only be checked there, say so and mark it unverified.
+- These return bot-check 403s; don't retry them or try to get around them: lewisham.moderngov.co.uk (use the councilmeetings.lewisham.gov.uk mirror, same document ids), ofcom.org.uk and labs.thinkbroadband.com (Ofcom coverage data is on the ONS Explore local statistics API), london.gov.uk, lewisham.gov.uk (and cms.lewisham.gov.uk). Since November 2026 councilmeetings.lewisham.gov.uk has also returned an Azure WAF bot-check page from this environment; council documents may still be reachable on consultation.lewisham.gov.uk, airquality.lewisham.gov.uk or the London Datastore. If a claim can only be checked there, say so and mark it unverified.
 - Never take a figure from a search-result snippet; snippet figures have been wrong several times.
 - Ladywell ward is E05013725 (2022 boundaries). Its 7 best-fit LSOAs (2021): E01003273, E01003274, E01003275, E01003276, E01003278, E01003279, E01003291.
 
@@ -41,3 +41,7 @@ Whenever the user corrects an approach to dimension-page copy or its surrounding
 ## If you're delegating this work to a subagent
 
 A subagent started via the `Agent` tool (anything other than a `fork`) does not inherit this conversation's context. Its prompt must **explicitly say** to read `CLAUDE.md` and `SPEC_RULES.md`, comply with the word caps, use the scripts above, and that its copy will be fact-checked (subagents may not have the Agent tool to run the fact-checker themselves; if not, the delegating session runs it after merging). Group delegated work by dimension, and give each parallel subagent its own worktree so their edits to `app.js` and the ward JSON don't collide.
+
+## Working through Todoist tasks
+
+The user's preference: after finishing a block of tasks from Todoist (e.g. the "Claude 🦀" project), give them one preview link for the whole block, not one per task. Previews are built only for pull requests: `.github/workflows/pr-preview.yml` publishes `site/` to `https://sarahhsw.github.io/neighbourhood-doughnut/pr-preview/pr-<number>/`. So the preview link needs an open PR from the working branch against `master`. Link to `.../pr-preview/pr-<number>/ward.html` and name the dimension card to click, since dimension pages have no URL of their own. The preview deploys a minute or two after each push; check the PR's preview comment before sharing the link. When reporting back, just say it's done and give the preview link: no summary of changes or process notes unless the user asks.

@@ -7,11 +7,9 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 
 class Lens(str, Enum):
-    """Four lenses of the Doughnut"""
+    """Lenses of the Doughnut covered by this project (local only; the global lenses were removed in November 2026)"""
     LOCAL_SOCIAL = "local_social"
     LOCAL_ECOLOGICAL = "local_ecological"
-    GLOBAL_ECOLOGICAL = "global_ecological"
-    GLOBAL_SOCIAL = "global_social"
 
 class Status(str, Enum):
     """Assessment status of a dimension"""
@@ -36,6 +34,7 @@ class GeographyLevel(str, Enum):
     POSTCODE_AGGREGATED = "postcode_aggregated"
     BOROUGH_INHERITED = "borough_inherited"
     WATER_COMPANY = "water_company"
+    WATER_BODY = "water_body"  # an Environment Agency river water body (e.g. Ravensbourne, Catford to Deptford)
     LONDON_INHERITED = "london_inherited"
     ENGLAND = "england"
     UK = "uk"
@@ -154,13 +153,11 @@ class Dimension:
 
 @dataclass
 class WardPortrait:
-    """Complete four-lens portrait for one ward"""
+    """Complete local portrait for one ward"""
     ward: str
     ward_code: str
     local_social: List[Dimension]
     local_ecological: List[Dimension]
-    global_ecological: List[Dimension]
-    global_social: List[Dimension]
     generated_at: Optional[str] = None  # ISO timestamp
 
     def to_dict(self) -> Dict[str, Any]:
@@ -170,8 +167,6 @@ class WardPortrait:
             "ward_code": self.ward_code,
             "local_social": [d.to_dict() for d in self.local_social],
             "local_ecological": [d.to_dict() for d in self.local_ecological],
-            "global_ecological": [d.to_dict() for d in self.global_ecological],
-            "global_social": [d.to_dict() for d in self.global_social],
             "generated_at": self.generated_at
         }
 

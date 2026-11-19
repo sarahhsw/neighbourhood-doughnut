@@ -172,6 +172,21 @@ Trust for London page says "Rent affordability"
 → Extract Lewisham historical values 2015-2025
 ```
 
+**When the primary source is unreachable, the indicator is unfinished - not finished with an
+aggregator figure (Peace & Justice, November 2026).** The July 2026 build couldn't reach the
+London Datastore, so it filled "Crime rate per 1,000 population" with a Lewisham borough-wide
+93 per 1,000 taken from crime-rate aggregator websites (crimerate.co.uk, homenicom.co.uk),
+documented the gap in `source.notes`, and had no trend. The user asked why official sources
+(ONS, police, MPS Recorded Crime: Geographic Breakdown) weren't used, and said they expected
+trend data. The fix: the MPS ward files give Ladywell's own monthly counts back to November
+2020, so the indicator became a true ward rate (119 per 1,000 in the 12 months to October 2026)
+with a six-year Ladywell / Lewisham / London series, all three built from the same ward file so
+the comparison is like for like. General rule: an aggregator figure is never an acceptable
+stand-in for a dataset the official publisher puts out at a finer geography; if the official
+source can't be fetched, leave the old indicator alone and flag it to the user rather than
+shipping a weaker number, and when you revisit any inherited indicator whose notes say "primary
+source not yet queried", fetch it first.
+
 ### 1.5 Data Interpretation
 - **Gender-specific data handling**:
   - If male and female data are similar, use an average figure without explicitly mentioning gender
@@ -647,6 +662,43 @@ disproportionately likely to be living in one of the borough's non-decent homes"
 folding it into the single-cause frame. See the correlation-vs-causation bullet earlier in this
 section.
 
+**Compare in the order ward, borough, London, then England (Political Voice, November 2026).**
+The summary said Lewisham's civic participation ran "about ten points above the national
+average", and both survey charts showed only Lewisham and England, although London figures
+were in the source notes. The user asked "I thought Lewisham is at London level?" (it isn't:
+48% vs London's 41%; it is level with London only on feeling able to influence decisions) and
+said: always compare ward to borough to London before comparing with England, but don't put
+every comparison in the summary. Fix: London added as a third chart series on both survey
+indicators, and the summary compares with London. General rule: the comparison ladder is ward,
+borough, London, England; plot each level that exists, compare with the nearest level above
+first, and keep the summary to the one or two that make the point.
+
+**Give each indicator's key figure in the summary (Political Voice, November 2026).** The
+summary said feeling able to influence decisions "sits above England's but level with London's"
+without the number. The user asked for key stats in the summary: "only about a third of adults
+agree they can personally influence decisions". General rule: when the summary describes an
+indicator, give its figure in plain words ("about a third, 32%") rather than only a relative
+position.
+
+**Keep related indicators together in the summary, and drop a "why" clause that doesn't help the
+reader (Equality, November 2026).** The summary ran pay inequality, then a sentence on the National
+Living Wage and minimum-wage coverage, then wealth, then employment gaps. The user said the
+minimum-wage sentence had no clear point and should go, and that the two job-related indicators
+(pay inequality and employment gaps) should sit next to each other. General rule: order the summary
+by theme, so indicators about the same thing are adjacent; a cause belongs in the summary only when it
+changes how the reader understands the finding, otherwise leave it in the indicator text.
+
+**In the summary, give a comparison as a ratio or as two plain percentages, not as raw cut-offs or a
+"points" gap (Equality, November 2026).** The summary said the best-paid fifth of jobs "pay £38 an
+hour or more, while the lowest-paid fifth pay around £15 or less", and that disabled residents were
+"24 points less likely to be in work". The user asked for the ratio instead, to help people make
+sense of the pay figures, and asked whether "24 points" meant a percentage. They became "jobs near
+the top of residents' pay scale pay nearly two and a half times as much per hour as jobs near the
+bottom" and "56% of disabled working-age residents are in work, against 80% of non-disabled
+residents". General rule: the summary should hand the reader the comparison already made (a ratio,
+or two percentages side by side); leave raw cut-offs and percentage-point gaps to the indicator
+text, where they can be explained.
+
 ### 2.2 Description Writing Style
 
 **CRITICAL: Descriptions must be narrative, concise, and findings-focused**
@@ -963,6 +1015,78 @@ can.
 All of the above, combined, must fit the 130-word limit from 2.1 (composite-metric
 methodology explanations are the one place a little more room is reasonable - use
 judgment, but still aim tight).
+
+**Don't define a measure by what it isn't (Peace & Justice, November 2026).** The crime-rate
+text opened "crimes reported to and recorded by the Metropolitan Police, divided by population,
+not a survey of residents' experience of crime". The user asked why that last clause was there
+at all. Nobody reading a crime count expects it to be a survey; naming the thing it isn't plants
+a doubt the reader didn't have and spends words on it. The rewrite says what the count is and,
+where it matters, the one way it can mislead (it moves with reporting and recording practice,
+and it divides by residents, not the visitors who pass through). General rule: describe a
+measure by what it counts; mention an alternative measure only when the page actually shows it
+or when its absence changes how the number should be read.
+
+**Don't use the survey's answer-scale wording (Political Voice, November 2026).** The influence
+text asked "whether they agree, definitely or tending to, that they personally can influence..."
+The user found it hard to understand. "Definitely or tend to agree" is how the survey groups its
+answer options; for a reader "agree" carries the meaning. General rule: report survey results in
+plain verbs; leave answer-scale groupings ("definitely or tending to", "strongly or tend to") to
+`source.notes`.
+
+**Say a category's meaning once, in plain words (Peace & Justice, November 2026).** The summary
+read "violence against the person, in particular offences recorded as violence without injury,
+which are mostly assaults where nobody is hurt". The user asked for it to be more concise. It
+became "violence in which nobody was injured". General rule: don't stack an official category
+name, a sub-category name and a definition in one clause; use the plain description and keep the
+official names for the indicator text or notes.
+
+**Every figure needs its own subject and verb (Peace & Justice, November 2026).** "70% of
+Londoners said they felt safe ..., 60% of women." The user couldn't tell what the trailing "60%
+of women" meant. It became "and 60% of women did". General rule: no tacked-on fragments; a
+second figure gets its own subject and verb so it reads as a complete statement.
+
+**Put a fact under the indicator it describes (Peace & Justice, November 2026).** London's
+"feel safe walking alone after dark" figure sat in the trust-in-police text. The user said it
+belonged under the crime indicator, since it is about safety, not about the police. General
+rule: place context with the indicator whose subject it shares, not wherever the source that
+reported it was discussed.
+
+**Explain a distribution measure with a picture, and replace figurative verbs (Equality,
+November 2026).** The pay-inequality text first described the 80:20 ratio as "the rate that only a
+fifth earn more than (£38.28 an hour in 2026) against the rate that only a fifth earn less than
+(£15.44)", and said National Living Wage rises "squeeze the lower half of the pay scale". The user
+found the first sentence very hard to understand and asked what "squeezing" means. It became "Line
+up every job held by Lewisham residents from lowest to highest hourly pay. In 2026, a job a fifth of
+the way down from the top paid £38.28 an hour: 2.48 times the £15.44 paid by a job a fifth of the
+way up from the bottom", and "each rise in the National Living Wage lifts the lowest pay closer to
+middle pay". General rule: readability is a hard requirement, not polish. Describe percentiles,
+ratios and other distribution measures with a concrete image a resident could picture (line people
+or jobs up; say where on the line each figure sits), never with inverted constructions like "the
+rate only a fifth earn more than". Replace a source's metaphor (squeeze, compress, bite, spillover)
+with what literally happens to whom. Test each sentence by reading it aloud once: if it needs a
+second read, rewrite it.
+
+**Use the plain everyday phrase, not a constructed one (Equality, November 2026, second round).**
+The fix above went too far the other way: "a job a fifth of the way down from the top paid £38.28 an
+hour: 2.48 times the £15.44 paid by a job a fifth of the way up from the bottom", and in the
+summary "one a fifth of the way down from the top of the pay scale paid about two and a half times
+as much per hour as one a fifth of the way up from the bottom". The user called both cryptic and
+asked for normal conversational language such as "top fifth" and "bottom fifth". It became "the
+best-paid fifth of jobs paid £38.28 an hour or more, and the lowest-paid fifth £15.44 or less: a
+ratio of 2.48". General rule: say it the way a person would say it out loud; reach for the common
+phrase ("top fifth", "bottom half") before building a precise but unusual one.
+
+**Say "bottom" and "top", not "poorest" and "richest", for distribution groups (Equality, November
+2026).** The wealth indicator was named "% of wealth held by the poorest 50%". The user asked for
+"bottom" throughout, name and copy included. General rule: describe distribution groups by their
+position ("bottom 50%", "top tenth"), which is neutral and matches the measure, rather than labelling
+the people in them.
+
+**Cut caveats about data gaps that don't change the reader's takeaway (Education, November 2026).**
+The NEET text and summary said the council "didn't know what a further 2.9% were doing, against 1.2%
+across London, so the true share may be higher". The user called it unnecessary data. General rule:
+a data-quality figure (records "not known", suppressed cells, sample notes) belongs in
+`source.notes`, not in reader-facing copy, unless it reverses or substantially changes the finding.
 
 ### 2.3 Visual Styling
 - **Section divider** required after top description: `<div class="section-divider"></div>`
@@ -1307,6 +1431,47 @@ sub-series' label is the full indicator name, not just the suffix** (`indicators
 surfaced indicator the label renders in full, e.g. "% non-decent homes (Private rented)"), so a
 bare suffix like "Private rented" is never shown on its own without the indicator it belongs to.
 
+**Equality employment gaps (November 2026): the rule above, missed again.** Three sub-series
+(women vs men, ethnic minority vs White, disabled vs non-disabled) went live with three big-value
+cards. The user pointed back to this rule and chose disability as the most insightful gap; it is now
+the only headline (`singleHeadlineFilter: {'Employment rate gap': 'Disabled'}`). The miss happened
+because the rule lived only here and not in `SPEC_RULES.md`, which now carries it.
+
+**Keep headline units short; a gap between two percentages is "points" (Equality, November 2026).**
+The employment-gap headline read "23.7 percentage points". The user asked why not "%" and to keep
+it concise. "%" would be wrong: a 23.7% gap reads as a relative difference (23.7% of 79.5%, about 19
+points), not the 23.7-point difference between 79.5% and 55.8%. The headline unit is now "points",
+and prose says "percentage points" once, then "points". General rule: use the shortest unit that
+is still correct, and never put a long unit phrase in a headline.
+
+**Keep the framework's own indicator; don't swap the measure to get fresher data (Equality,
+November 2026).** The framework indicator is "% of wealth held by the poorest 50%", whose only
+London series (GLA analysis of the ONS Wealth and Assets Survey) ends in 2016-18. To get a series
+running to 2020-22 and satisfy the 10-year rule, it was replaced with ONS's 75th:25th percentile
+wealth ratio. The user asked for the poorest-50% share back. General rule: the framework indicator
+wins. If its only data is old, show it with its real year as the headline, say in the text that it
+is the latest published, and keep older trend points when they are the only series for that
+indicator (note the exception in `source.notes`). Offer a substitute measure to the user as a
+question, not as a silent swap. Also check what a published figure actually measures: the GLA's
+"poorest 50%" uses national (GB) deciles, so the London figure covers the 46% of London households
+in Britain's poorest half, not London's own poorest half.
+
+**Say "percentage points" where the reader first meets a points figure (Equality, November 2026).**
+After the unit was shortened to "points", the user asked whether "24 points" was the same as a
+percentage. The indicator is now named "Employment rate gap, percentage points (...)", so the label
+under the "23.7 points" headline defines the unit. General rule: a short unit is fine in the
+headline only if the label beside it says what the unit is; in summary prose, prefer the two
+underlying percentages to a points gap.
+
+**Community and social cohesion are one dimension: "Social cohesion" (November 2026).** Asked to
+keep only loneliness, getting on across backgrounds and volunteering in social cohesion, the first
+attempt moved loneliness over from the community dimension and left community standing with its
+other two indicators. The user said the two dimensions are combined into one. The community
+dimension was removed (its belonging and support-network indicators, cards and Get Involved items
+with it), leaving Social cohesion with three indicators. General rule: when the user lists the
+indicators a dimension should keep and one of them lives in another dimension, ask whether the
+dimensions are meant to be merged before moving indicators between them.
+
 ### 2.6 No Separate "Target" Line or Marker
 
 **As of July 2026, dimension pages do NOT render a standalone "Target: X" line or a dashed
@@ -1342,6 +1507,7 @@ source line for every indicator group (`geographyLabel()` in `site/js/app.js`) -
 | `postcode_aggregated` | Postcode area | Aggregated from postcode-level data |
 | `borough_inherited` | Borough (Lewisham) | Local-authority-level figure, applied uniformly to every ward in Lewisham |
 | `water_company` | Water company (Thames Water) | Set by the water company's supply-area boundary, which doesn't align with borough or ward boundaries |
+| `water_body` | River water body (Ravensbourne) | An Environment Agency river water body (Water Framework Directive classification unit), e.g. Ravensbourne (Catford to Deptford), which runs through Ladywell Fields. Added November 2026 for the local ecological water provisioning page |
 | `london_inherited` | London-wide | Greater London figure, applied uniformly to every ward in the city |
 | `england` | England-wide | England-only source (won't include Scotland/Wales/NI figures even if the source's title says "national" or "UK") |
 | `uk` | UK-wide | Genuinely UK-wide source |
@@ -1599,6 +1765,16 @@ that actually cover rent affordability and housing conditions.
    candidate is thinner or less substantively interesting than folding its ground into an
    existing document's summary (see 3.2), prefer the fold-in.
 
+**Look for what superseded an old programme, not just the newest edition of the same document
+(Equality, November 2026).** Both council-context cards were from 2017-18 (the Lewisham Poverty
+Commission and the GLA's Workforce Integration Network). The user asked why the context was so
+dated. Each was the latest edition of its own document, but both programmes had been absorbed into
+newer ones: the Poverty Commission's work runs through the Lewisham Strategic Partnership (traced in
+a February 2025 Poverty Reduction Approach report), and WIN sits within the GLA and London Councils'
+Inclusive Talent Strategy (October 2025). General rule: if a card's document is more than about
+five years old, search for what replaced or absorbed the programme before keeping it, and prefer
+the current framework.
+
 ### 3.2 Content Requirements
 
 **Dated commitments go stale; phrase them as commitments and check what happened.** Caught on
@@ -1791,6 +1967,47 @@ removed the duplication that existed when one card tried to do both jobs.
 
 ---
 
+**Context cards describe the policy, not its process, and don't point back at the page (Political
+Voice, November 2026).** The Local Democracy Review card opened with when the review was set up,
+that it consulted residents and businesses, that 57 recommendations were agreed with the Mayor
+and all councillors in spring 2019, and that an eight-councillor working group oversaw delivery
+to 2021; it ended by saying a finding was "the sense of not being heard that the 'personally
+influence local decisions' indicator on this page measures". The user said the process detail
+was unnecessary and that context cards shouldn't link back to indicators on the page. General
+rule: a card says what the policy sets out to do and what it found; leave dates of meetings,
+counts of recommendations and governance arrangements out, and let the reader connect it to the
+indicators themselves.
+
+**Structure a council-plan card as problem, response, takeaway - not as a history (Equality,
+November 2026).** The first Poverty Reduction Approach card walked through the Poverty Commission,
+the Lewisham Deal, the Strategic Partnership and the Cost-of-Living Programme in date order. The user
+said it read like a stream of consciousness and asked: what are the main problems or opportunities,
+and what is the reader's main takeaway? It became three short paragraphs: the problem (one in three
+residents in poverty after housing costs) and the response so far (mostly emergency cash support);
+where the longer-term levers sit (the Strategic Partnership's workstreams); and an explicit takeaway
+(a plan to reduce poverty rather than respond to crises was still being built in 2025, with three
+stated priorities). General rule: lead with the problem, say what the plan does about it, and end
+with one sentence the reader should remember; history only where it explains the present.
+
+**Model a council-plan card on a card that already works (Equality, November 2026).** The
+problem-response-takeaway version of the Poverty Reduction Approach card was still hard to follow;
+the user pointed to the Inclusive Talent Strategy card on the same page as the model. That card is
+one paragraph: what the plan is and who made it, its headline aims, what it does, and the evidence
+behind it. The poverty card now follows the same order: the plan's status in one sentence, the
+problem and aim, its main tool so far, where the older commitments now sit, and its priorities.
+General rule: one paragraph, in that order, with every sentence a plain statement about the plan.
+
+**Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
+reported results and a Progress 8 concern without saying why Lewisham trails London or what the
+council is doing about it. The user asked for the reason and said always ask why and so what. The
+card now says where the council sees the problem (uneven results between secondary schools, gaps for
+disadvantaged, Black and Mixed-heritage pupils that open early) and what it is doing (sharing
+practice through head teacher meetings and senior-leader networks, raising grade 5 passes), and the
+GCSE indicator text adds DfE's breakdown showing the London gap is not explained by Lewisham having
+more disadvantaged pupils. General rule: for every finding on the page, the reader should learn why
+it is the case (from a source) and what follows from it (the response, or the consequence); if the
+source gives no reason, say what the data does and doesn't explain.
+
 ## 4. "Get Involved" Section
 
 **Replaced August 2026.** This section used to be "Neighbour Voices" - a fictional-but-realistic
@@ -1847,6 +2064,13 @@ dimension's headline indicator.
 
 **Aim for 5 ideas per dimension** once fully built out (fewer is fine while still researching -
 don't pad to hit 5).
+
+**Don't quote promotional lines at residents (Political Voice, November 2026).** The "Stand to
+become a local councillor" card quoted the council's guide: "whatever needs changing in your
+neighbourhood, you could be the person to change it." The user said this sounds condescending.
+It was replaced with who can stand (Local Government Act 1972, s.79). General rule: a Get
+Involved card states the practical facts of taking part (who can, what it involves, how to start),
+never an organisation's slogan or pep talk.
 
 ### 4.2 Format and Length
 
@@ -2538,7 +2762,7 @@ let it happen again.
 | `data/wards/ladywell_local_social.json` | The pipeline's **intermediate** per-lens file - the direct output of `data/pipeline/build_local_social_with_real_data.py`, and the input `assemble.py` reads to build the two files above. |
 
 `assemble.py` reads the intermediate per-lens files (`ladywell_local_social.json`,
-`ladywell_global_lenses.json`, `ladywell_local_ecological.json`) and does a **full overwrite**
+`ladywell_local_ecological.json`; the global lenses were removed in November 2026) and does a **full overwrite**
 of both `data/wards/ladywell.json` and `site/data/wards/ladywell.json` from them, in one run.
 
 ### 13.2 Do NOT run `assemble.py` yet - check this first

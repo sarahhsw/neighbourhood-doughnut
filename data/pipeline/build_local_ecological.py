@@ -93,7 +93,7 @@ def build_water_provisioning():
             notes=(
                 "Classifications CSV (data updated 17 March 2025). The water body's geometry was intersected with the ONS 2022 ward "
                 "boundary: it runs through Ladywell (Ladywell Fields); the upstream Keston-to-Catford water body (GB106039023260) does not. "
-                "Ecological status: 2009 Poor, 2010 Poor, 2011 Bad, 2012 Bad, 2013 Poor, 2014 Moderate, 2015 Moderate, 2016 Moderate, "
+                "Ecological status: 2009 Poor, 2010 Poor, 2011 Bad, 2012 Bad, 2013 Poor (cycle 2; cycle 1 rated 2013 Moderate), 2014 Moderate, 2015 Moderate, 2016 Moderate, "
                 "2019 Moderate, 2022 Moderate. Classification methods change between planning cycles (cycle 1 to 2009-15, cycle 3 for 2019 "
                 "and 2022), so no line is drawn. In 2022: fish Bad, invertebrates Moderate, macrophytes Poor, phosphate Poor, dissolved "
                 "oxygen and ammonia High. Chemical status failed in 2019 (PFOS and PBDEs); in 2022 it is listed as 'does not require "

@@ -34,10 +34,9 @@ const DIMENSION_DISPLAY_NAMES = {
 window.DIMENSION_DISPLAY_NAMES = DIMENSION_DISPLAY_NAMES;
 
 class DoughnutChart {
-    constructor(containerId, data, viewMode = 'local') {
+    constructor(containerId, data) {
         this.container = document.getElementById(containerId);
         this.data = data;
-        this.viewMode = viewMode;
         this.width = 600;
         this.height = 600;
         this.centerX = this.width / 2;
@@ -51,9 +50,11 @@ class DoughnutChart {
         this.ringBandWidth = 13;              // Thickness of the boundary bands
         this.wedgeFillFraction = 0.82;        // Portion of each dimension's sector filled by its wedge
 
-        // Tight viewBox around the drawn content (max radius + label/stroke buffer),
-        // so the rendered chart isn't surrounded by large blank margins at big sizes.
-        this.contentRadius = this.maxOvershootRadius + 15;
+        // Tight viewBox around the drawn content, so the rendered chart isn't surrounded by
+        // large blank margins at big sizes. Ecological labels are centred 17px outside the
+        // ceiling and run radially, so the longest ("Temperature Regulation", ~135px) reaches
+        // about 260px from the centre; the buffer must cover that, not just the bars.
+        this.contentRadius = this.maxOvershootRadius + 50;
     }
 
     groupDimensions(dimensions) {
@@ -128,13 +129,9 @@ class DoughnutChart {
         svg.setAttribute('height', boxSize);
         svg.setAttribute('viewBox', `${boxOrigin} ${boxOrigin} ${boxSize} ${boxSize}`);
 
-        // Get dimensions based on view mode
-        const socialIndicators = this.viewMode === 'local'
-            ? this.data.local_social
-            : this.data.global_social;
-        const ecologicalIndicators = this.viewMode === 'local'
-            ? this.data.local_ecological
-            : this.data.global_ecological;
+        // The site covers the local lenses only (local social and local ecological)
+        const socialIndicators = this.data.local_social;
+        const ecologicalIndicators = this.data.local_ecological;
 
         // Group indicators by dimension and blend
         const socialGrouped = this.groupDimensions(socialIndicators);

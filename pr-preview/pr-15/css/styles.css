@@ -97,34 +97,6 @@ h1 {
 }
 
 
-/* Local/Global toggle */
-.view-toggle {
-    display: inline-flex;
-    background: var(--card);
-    border: 2px solid var(--ink);
-    border-radius: 20px;
-    padding: 3px;
-    margin-top: 6px;
-}
-
-.toggle-btn {
-    border: none;
-    border-radius: 16px;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    background: transparent;
-    color: var(--ink);
-    font-family: var(--font-sans);
-    transition: all 0.2s ease;
-}
-
-.toggle-btn.active {
-    background: var(--ink);
-    color: var(--paper);
-}
-
 /* Doughnut chart section */
 .chart-section {
     position: relative;

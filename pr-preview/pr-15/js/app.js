@@ -2,7 +2,6 @@
 
 let wardData = null;
 let currentChart = null;
-let currentView = 'local'; // 'local' or 'global'
 
 // Global function to initialize tooltips for trend charts
 function initializeTooltips(dimensionName) {
@@ -83,36 +82,12 @@ async function loadWardData() {
 }
 
 function updateCounts() {
-    const socialDims = currentView === 'local'
-        ? wardData.local_social
-        : wardData.global_social;
-
-    const ecologicalDims = currentView === 'local'
-        ? wardData.local_ecological
-        : wardData.global_ecological;
-
-    const socialGrouped = groupDimensions(socialDims);
-    const ecoGrouped = groupDimensions(ecologicalDims);
-
-    const socialDimCount = Object.keys(socialGrouped).length;
-    const ecoDimCount = Object.keys(ecoGrouped).length;
-
     document.getElementById('generated-at').textContent = new Date(wardData.generated_at).toLocaleString();
-
-    // Update section headings
-    const viewLabel = currentView === 'local' ? 'LOCAL' : 'GLOBAL';
-    document.getElementById('social-heading').textContent = `${viewLabel} SOCIAL`;
-    document.getElementById('ecological-heading').textContent = `${viewLabel} ECOLOGICAL`;
 }
 
 function renderPinnedCards() {
-    const socialDims = currentView === 'local'
-        ? wardData.local_social
-        : wardData.global_social;
-
-    const ecologicalDims = currentView === 'local'
-        ? wardData.local_ecological
-        : wardData.global_ecological;
+    const socialDims = wardData.local_social;
+    const ecologicalDims = wardData.local_ecological;
 
     const socialGrouped = groupDimensions(socialDims);
     const ecoGrouped = groupDimensions(ecologicalDims);
@@ -120,9 +95,7 @@ function renderPinnedCards() {
     // Render social cards
     const socialCardsContainer = document.getElementById('social-cards');
     if (Object.keys(socialGrouped).length === 0) {
-        const emptyNote = currentView === 'local'
-            ? 'No local social data loaded yet.'
-            : 'Global social data (supply-chain impacts) not yet loaded — see project README.';
+        const emptyNote = 'No social data loaded yet.';
         socialCardsContainer.innerHTML = `<p class="empty-state">${emptyNote}</p>`;
     } else {
         socialCardsContainer.innerHTML = Object.keys(socialGrouped).sort().map(dimName => {
@@ -144,9 +117,7 @@ function renderPinnedCards() {
     // Render ecological cards
     const ecoCardsContainer = document.getElementById('ecological-cards');
     if (Object.keys(ecoGrouped).length === 0) {
-        const emptyNote = currentView === 'local'
-            ? 'Local ecological proxies (green space, air quality, flood risk) not yet loaded — see project README.'
-            : 'No global ecological data loaded yet.';
+        const emptyNote = 'No ecological data loaded yet.';
         ecoCardsContainer.innerHTML = `<p class="empty-state">${emptyNote}</p>`;
     } else {
         ecoCardsContainer.innerHTML = Object.keys(ecoGrouped).sort().map(dimName => {
@@ -178,16 +149,14 @@ function renderPinnedCards() {
 function renderChart() {
     if (!wardData) return;
 
-    currentChart = new DoughnutChart('doughnut-chart', wardData, currentView);
+    currentChart = new DoughnutChart('doughnut-chart', wardData);
     currentChart.render();
     updateCounts();
     renderPinnedCards();
 }
 
 function openDimensionDetail(dimName, ring) {
-    const allDims = currentView === 'local'
-        ? [...wardData.local_social, ...wardData.local_ecological]
-        : [...wardData.global_social, ...wardData.global_ecological];
+    const allDims = [...wardData.local_social, ...wardData.local_ecological];
 
     const grouped = groupDimensions(allDims);
     const indicators = grouped[dimName];
@@ -1890,17 +1859,6 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     container.innerHTML = html;
 }
 
-function switchView(newView) {
-    currentView = newView;
-
-    // Update toggle buttons
-    document.getElementById('toggle-local').classList.toggle('active', newView === 'local');
-    document.getElementById('toggle-global').classList.toggle('active', newView === 'global');
-
-    // Re-render chart
-    renderChart();
-}
-
 function groupDimensions(dimensions) {
     // Group dimensions by name
     const grouped = {};
@@ -1929,10 +1887,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     wardData = await loadWardData();
     if (wardData) {
         renderChart();
-
-        // Set up toggle buttons
-        document.getElementById('toggle-local').addEventListener('click', () => switchView('local'));
-        document.getElementById('toggle-global').addEventListener('click', () => switchView('global'));
 
         // Set up back button
         document.getElementById('back-button').addEventListener('click', closeDimensionDetail);

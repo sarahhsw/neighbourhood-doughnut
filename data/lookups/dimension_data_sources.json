@@ -566,7 +566,7 @@
     "lens": "local_ecological",
     "dimension": "temperature_regulation",
     "category": "Temperature regulation",
-    "indicator": "Summer daytime air temperature compared with the London average (°C)",
+    "indicator": "Summer air temperature compared with the London average (°C)",
     "source_url": "https://data.london.gov.uk/dataset/properties-vulnerable-to-heat-impacts-in-london-e769n",
     "granularity": "LSOA"
   },

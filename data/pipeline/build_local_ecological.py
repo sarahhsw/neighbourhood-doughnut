@@ -409,7 +409,7 @@ def build_temperature_regulation():
     uhi = create_descriptive_dimension(
         ward=WARD, ward_code=WARD_CODE, lens=ECO,
         dimension_name="temperature_regulation",
-        indicator="Summer daytime air temperature compared with the London average (°C)",
+        indicator="Summer air temperature compared with the London average (°C)",
         snapshot=Snapshot(value="+0.25", unit="°C", year="2018-2022", date="summer months"),
         source=Source(
             name="GLA - Properties Vulnerable to Heat Impacts in London (Arup, 2024): LSOA air temperature (T2) layer",
@@ -419,9 +419,9 @@ def build_temperature_regulation():
                 "The geodatabase's T2 field is the high-resolution air temperature at the surface produced by Arup, averaged over "
                 "summer daytime 2018-2022 for each 2021 LSOA (described in the GLA London Climate Risk Maps metadata, September 2024, "
                 "which uses it as its 'mean air temperature' layer: data.london.gov.uk/dataset/climate-risk-mapping-2oxg6). "
-                "Area-weighted means: Ladywell's 7 LSOAs 18.21°C, Lewisham 18.05°C, London (4,994 LSOAs) 17.96°C, so Ladywell is "
+                "Area-weighted means (weighting by LSOA area gives more weight to large, green outer-London LSOAs; the unweighted London LSOA mean, 18.07°C, would give a gap of about +0.14 to +0.19°C): Ladywell's 7 LSOAs 18.21°C, Lewisham 18.05°C, London (4,994 LSOAs) 17.96°C, so Ladywell is "
                 "0.25°C warmer than London's average and Lewisham 0.09°C. LSOA values in Ladywell range from 18.00°C to 18.75°C "
-                "(Lewisham 011A and 011D, the two warmest). This is a difference from the London average, not the classic urban heat "
+                "(Lewisham 011A and 011D share an identical value, 18.754°C, so they sit in one model cell; T2 has only 1,974 distinct values across 4,994 LSOAs). The metadata describes the layer as 'summertime, daytime LST' while calling it air temperature, and its ~18°C means look like 24-hour rather than daytime means, so the page says 'summer air temperature'. This is a difference from the London average, not the classic urban heat "
                 "island differential against surrounding countryside, which this dataset does not give; London-wide heat-island maps "
                 "on the Datastore use 2006 and 2011 data, older than the 10-year limit."
             ),

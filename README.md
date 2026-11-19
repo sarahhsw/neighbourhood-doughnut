@@ -4,11 +4,9 @@ A hyper-local implementation of Doughnut Economics for London neighbourhoods, st
 
 ## Overview
 
-This project visualizes ward-level data across the two local lenses of the Doughnut Economics framework (the site covers local only; there is no local/global toggle):
+This project visualizes ward-level data across the two local lenses of the Doughnut Economics framework (the project covers local lenses only):
 - **Local Social**: the social foundation dimensions (health, housing, food, water, education, income and others)
 - **Local Ecological** (7 dimensions): water provisioning, carbon sequestration, biodiversity support, energy harvesting, air quality regulation, temperature regulation, wellbeing
-
-The ward JSON still carries `global_ecological` and `global_social` lists from an earlier phase, but nothing on the site reads them.
 
 ## Project Structure
 
@@ -52,9 +50,9 @@ python fetch_ward_boundary.py
 python fetch_lookups.py  # (optional - bootstrap file exists)
 
 # 2. Build dimension data for each lens
-python build_global_lenses.py      # Global Ecological & Social (London-inherited)
-# python build_local_social.py     # TODO: 15 Local Social dimensions
-# python build_local_ecological.py # TODO: Local Ecological proxies
+# Dimensions are built per dimension and spliced into the ward JSON from the repo root:
+#   python3 scripts/splice_dimension.py <dimension>
+# (builders: build_local_social_with_real_data.py, build_local_ecological.py)
 
 # 3. Assemble final ward portrait
 python assemble.py
@@ -70,8 +68,6 @@ python3 -m http.server 8000
 ### Current Status (Phase 1)
 ✅ Repository structure and schema
 ✅ Ward boundary and geography lookups (bootstrap)
-✅ Global Ecological lens (11 dimensions from London City Portrait)
-✅ Global Social lens (placeholder)
 ✅ Frontend visualization (radial doughnut chart)
 ✅ GitHub Pages deployment workflow, with a preview of every pull request at `/pr-preview/pr-<number>/` (served from the `gh-pages` branch)
 
@@ -83,7 +79,6 @@ python3 -m http.server 8000
 - **Ward geography**: ONS Open Geography Portal (2022 boundaries)
 - **Local Social**: Census 2021, GLA Ward Atlas, London Datastore, DfE, OHID, DWP, TfL, etc.
 - **Local Ecological**: Proxies only (GiGL green space, LAEI air quality, street trees, EA flood risk)
-- **Global lenses**: Inherited from London City Portrait figures for Lewisham
 
 **Important**: Approximately half of the Local Social dimensions have **no official GLA or UK Government target** (Food, Community, Culture, Education, Political Voice, Social Equity, Equality in Diversity). These are marked `descriptive_only` in the visualization.
 

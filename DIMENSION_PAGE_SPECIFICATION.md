@@ -2748,7 +2748,7 @@ let it happen again.
 | `data/wards/ladywell_local_social.json` | The pipeline's **intermediate** per-lens file - the direct output of `data/pipeline/build_local_social_with_real_data.py`, and the input `assemble.py` reads to build the two files above. |
 
 `assemble.py` reads the intermediate per-lens files (`ladywell_local_social.json`,
-`ladywell_global_lenses.json`, `ladywell_local_ecological.json`) and does a **full overwrite**
+`ladywell_local_ecological.json`; the global lenses were removed in November 2026) and does a **full overwrite**
 of both `data/wards/ladywell.json` and `site/data/wards/ladywell.json` from them, in one run.
 
 ### 13.2 Do NOT run `assemble.py` yet - check this first

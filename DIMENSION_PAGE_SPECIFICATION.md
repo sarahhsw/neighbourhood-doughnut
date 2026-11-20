@@ -742,6 +742,15 @@ text, where they can be explained.
   which includes Lewisham": the reader needs to know *which* geography the number covers,
   not the reasoning behind choosing it. (The card's geography label already says the rest -
   see 2.7.)
+- ❌ **Closing "no smaller geography" sentences.** Caught on the Energy indicator "Energy
+  consumption per resident", November 2026: the text ended "Borough is the smallest geography
+  published." The user asked "Why bother mentioning?" The sentence had been copied from the
+  builder's `source.notes` into the reader-facing text. It tells the reader nothing about
+  energy use, and the card's geography label (2.7) already says the figure is for the
+  borough. Cut it; the same kind of line was also cut from the 5G coverage text ("No
+  ward-level figure exists; borough is the most granular level available..."). **Rule:**
+  never end, or pad, indicator text with a statement that no finer geography exists; that
+  belongs in `source.notes` and the geography label, not the prose.
 - ❌ **Filler characterisations that restate a trend without adding meaning.** Same Water
   text, November 2026: "Use spiked... then eased back before ticking up again - a bumpier
   path than a steady decline, leaving little net progress" - the user flagged "a bumpier
@@ -1093,6 +1102,17 @@ a data-quality figure (records "not known", suppressed cells, sample notes) belo
 - **Spacing**: Ensure adequate vertical spacing between chart and dimension cards (minimum 48px padding-top)
 - **Typography**: Match existing design system fonts and sizes
 - **Colors**: Use CSS variables (--ink, --paper, --coral, etc.)
+
+**Dimension names in plain words (Air quality and Biodiversity, November 2026).** The local
+ecological dimensions came in with the framework's ecosystem-function names, title-cased from
+their ids: "Air Quality Regulation" and "Biodiversity Support". Sarah asked for the naming to be
+simplified, so the site now shows "Air Quality" and "Biodiversity". The rule: the name a
+resident sees on the doughnut and the page heading should be the plainest words for what the
+dimension covers; framework suffixes like "regulation" or "support" add nothing a resident needs.
+Change the displayed name through `DIMENSION_DISPLAY_NAMES` in `site/js/chart.js` (shared with
+`app.js`), not by renaming the dimension id, which is the key in the ward JSON, builders, copy
+lookups and `dimension_data_sources.json`; keep the `category` in `dimension_data_sources.json`
+in step with the displayed name, and bump `chart.js?v=`.
 
 ### 2.4 Status Labels and Dots
 
@@ -1785,6 +1805,20 @@ access), so the bullet now reads "committed to retrofitting 250 council homes ..
 2025", in the past tense, which stays true whatever happened. **When a context card cites a target with
 a date, check whether the date has passed; if it has, report the outcome from a source, or
 reword it as a commitment and flag the outcome as a follow-up.**
+
+**A reported finding must say why it matters; don't leave it hanging.** Caught on the
+Lewisham Democracy Review card (political voice), November 2026. The closing paragraph read
+"The review set out to widen public involvement in council decisions, and heard that some
+residents saw formal consultation as tokenistic - the sense of not being heard that the
+'personally influence local decisions' indicator on this page measures." Gesturing at an
+indicator ("the sense ... that X measures") doesn't land the point. The user's note: "so
+what? don't leave this sentence hanging". The rewrite says why it matters (people who doubt
+the residents who feel unheard may see little point in taking part, hedged because no source
+was cited for a firmer causal claim) and connects it to what the page's own data shows (around
+two in three Lewisham residents aged 16+ don't agree they can influence local decisions),
+without implying the survey figure is caused by the finding. **When a card reports what a document found or heard, follow it
+with the consequence for residents or the link to the page's data, in plain words; naming
+which indicator "measures" it is not enough.**
 
 
 

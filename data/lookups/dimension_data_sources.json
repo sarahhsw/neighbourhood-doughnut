@@ -501,7 +501,7 @@
   {
     "lens": "local_ecological",
     "dimension": "biodiversity_support",
-    "category": "Biodiversity support",
+    "category": "Biodiversity",
     "indicator": "% of land identified for nature recovery (London Local Nature Recovery Strategy)",
     "source_url": "https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6",
     "granularity": "Ward"
@@ -533,7 +533,7 @@
   {
     "lens": "local_ecological",
     "dimension": "air_quality_regulation",
-    "category": "Air quality regulation",
+    "category": "Air quality",
     "indicator": "% of residents living where air pollution exceeds legal limits",
     "source_url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
     "granularity": "LA"
@@ -541,7 +541,7 @@
   {
     "lens": "local_ecological",
     "dimension": "air_quality_regulation",
-    "category": "Air quality regulation",
+    "category": "Air quality",
     "indicator": "% tree canopy coverage",
     "source_url": "https://data.london.gov.uk/dataset/tree-canopy-cover-2024-2w4m3",
     "granularity": "Ward"
@@ -549,7 +549,7 @@
   {
     "lens": "local_ecological",
     "dimension": "air_quality_regulation",
-    "category": "Air quality regulation",
+    "category": "Air quality",
     "indicator": "Annual average air pollution concentration (µg/m³)",
     "source_url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
     "granularity": "Ward"

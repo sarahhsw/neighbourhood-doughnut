@@ -585,7 +585,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         }
 
         if (baseName === '5G mobile coverage (% of landmass, at least one operator)') {
-            return `This measures how much of Lewisham's geographic area - not premises or population - has outdoor 5G signal from at least one mobile operator, at Ofcom's "high confidence" reporting threshold. Lewisham reaches 100%, per Ofcom data for January 2026 published through ONS's local-authority "Explore local statistics" service, against 87.6% for England as a whole, because the national figure is dragged down by rural not-spots that a small, fully built-up borough like Lewisham doesn't have. Outdoor 4G coverage is also 100% here. No ward-level figure exists; borough is the most granular level available, as with the full-fibre broadband indicator above.`;
+            return `This measures how much of Lewisham's geographic area - not premises or population - has outdoor 5G signal from at least one mobile operator, at Ofcom's standard signal-strength threshold. Lewisham reaches 100%, per Ofcom data for January 2026 published through ONS's local-authority "Explore local statistics" service, against 87.6% for England as a whole, where rural districts such as North Devon (45.2%) pull the figure down. Outdoor 4G coverage is also 100% here.`;
         }
 
         if (baseName === 'Digital exclusion risk score (0-10 scale)') {
@@ -675,7 +675,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Local ecological: energy harvesting
         if (baseName === 'Energy consumption per resident (MWh per year)') {
-            return `This is all the energy used within Lewisham in a year, by homes, transport, businesses and public services, divided by the number of residents, from Department for Energy Security and Net Zero figures. A megawatt-hour is 1,000 kilowatt-hours, the unit on household bills. In 2024 Lewisham used 10.1 megawatt-hours per resident, against 14.0 across London. Homes used just over half of the borough's total. Use per resident fell by almost a fifth between 2015 and 2024. Borough is the smallest geography published.`;
+            return `This is the energy used within Lewisham in a year by homes, businesses, public services and road and rail transport, divided by the number of residents, from Department for Energy Security and Net Zero figures. A megawatt-hour is 1,000 kilowatt-hours, the unit on household bills. In 2024 Lewisham used 10.1 megawatt-hours per resident, against 14.0 across London. Homes used just over half of the borough's total. Use per resident fell by almost a fifth between 2015 and 2024.`;
         }
 
         if (baseName === '% of electricity use matched by solar generated in the borough') {
@@ -1049,7 +1049,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                         <li><strong>More accessible scrutiny</strong> - a more flexible committee system, so residents can follow and influence council business more easily.</li>
                         <li><strong>Better digital access</strong> - an accessible website and clearer communications, since residents who can't find council information can't engage with it.</li>
                     </ul>
-                    <p>The review also heard that some residents saw formal consultation as tokenistic.</p>`
+                    <p>The review also heard that some residents saw formal consultation as tokenistic. That matters because residents who feel unheard may see little point in taking part; the survey on this page finds around two in three Lewisham residents aged 16 and over do not agree that they can personally influence decisions affecting their area.</p>`
                 },
                 {
                     title: 'Strategic Review of Engagement',

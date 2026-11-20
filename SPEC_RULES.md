@@ -58,6 +58,7 @@ when you're doing something this file doesn't cover.
 - No filler that restates a trend, and no dismissive words about a positive finding.
 - Every claim needs a real source, including text you inherited and didn't write. [2.2, 2.9]
 - Describe a measure by what it counts, not by what it isn't ("not a survey of..."). [2.2]
+- Don't tell the reader that no finer geography is published ("Borough is the smallest geography published"); the geography label covers it, and the detail goes in `source.notes`. [2.2]
 - Unit qualifiers belong in the indicator name, not the headline; no bracketed explainers in the big number.
 - Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
 - One headline stat per indicator: when an indicator has sub-series, add it to `singleHeadlineFilter` and headline the most insightful one. [2.5]
@@ -88,6 +89,7 @@ when you're doing something this file doesn't cover.
 - Write a council-plan card as one paragraph: what the plan is and its status, its aims, what it does, its priorities (model: the equality Inclusive Talent Strategy card). [3.2]
 - Always answer "why?" and "so what?": a card or indicator text should say why the finding is so (sourced) and what follows from it. [3.2]
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
+- When a card reports what a document found or heard, say why it matters or what the page's data shows; don't leave it hanging. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 - Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]
 
@@ -110,6 +112,7 @@ when you're doing something this file doesn't cover.
 - Never run `assemble.py`; run scripts from the repo root.
 - Bump `app.js?v=` (and `styles.css?v=` / `chart.js?v=` separately) in `site/ward.html` whenever that file changes.
 - Escape apostrophes in single-quoted JS strings.
+- Display dimension names in plain words ("Air Quality", not "Air Quality Regulation"); change them via `DIMENSION_DISPLAY_NAMES` in `chart.js`, never by renaming the id. [2.3]
 
 ## When the user corrects something
 

@@ -815,16 +815,17 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             water_provisioning: {
                 title: 'Perspectives from wider river research',
                 sources: [
+                    { name: 'New data to drive action to improve England\'s rivers and lakes - Environment Agency (August 2026)', url: 'https://www.gov.uk/government/news/new-data-to-drive-action-to-improve-englands-rivers-and-lakes' },
                     { name: 'State of the water environment indicator B3: supporting evidence - Environment Agency (May 2025)', url: 'https://www.gov.uk/government/publications/state-of-the-water-environment-indicator-b3-supporting-evidence/state-of-the-water-environment-indicator-b3-supporting-evidence' }
                 ],
-                summary: `<p>Clean and plentiful water is one of the goals of the government's 25 Year Environment Plan, and rivers are where a place's water use, drainage and sewage end up. Across England, only 14% of rivers reached good ecological status in the Environment Agency's 2019 classification. Its evidence names agriculture and the water industry, through sewage and wastewater, as the sectors affecting most water bodies, at 45% and 44%, with towns, cities and transport affecting 18%. It also notes that many lowland rivers have been straightened, dredged or enclosed in culverts, to drain farmland, reduce flood risk and make space for homes and roads. The Ravensbourne's shortfall from good status is shared by most English rivers.</p>`
+                summary: `<p>A river's health reflects how its whole catchment uses and drains water. In the Environment Agency's 2025 classification, published in August 2026, only 14.3% of England's surface waters reached good ecological status; the Agency says this can't be compared directly with 2019's 16.3%, because its methods changed. Its earlier evidence named agriculture and the water industry, through sewage and wastewater, as the sectors affecting most water bodies, at 45% and 44%, with towns, cities and transport affecting 18%. It also notes that many lowland rivers have been straightened, dredged or enclosed in culverts, to drain farmland, reduce flood risk and make space for homes and roads. The Ravensbourne's shortfall from good status is shared by most English waters.</p>`
             },
             carbon_sequestration: {
                 title: 'Perspectives from global urban forest research',
                 sources: [
                     { name: 'Carbon storage and sequestration by trees in urban and community areas of the United States - Nowak et al., Environmental Pollution (2013)', url: 'https://doi.org/10.1016/j.envpol.2013.03.019' }
                 ],
-                summary: `<p>Trees take carbon dioxide from the air and store the carbon in their wood as they grow, so a neighbourhood's canopy is a small, living carbon store. A study of urban trees across the United States, built on field data from 28 cities, found they hold an average of 7.69 kilograms of carbon for every square metre of canopy, and add 0.28 kilograms a year. Applied to Ladywell's 51 hectares of canopy, as a rough guide only, those averages suggest about 3,900 tonnes of carbon stored and about 520 tonnes of carbon dioxide taken up each year: roughly the yearly emissions of 250 Lewisham residents. Trees store carbon, but cutting emissions does far more.</p>`
+                summary: `<p>Trees take carbon dioxide from the air and store the carbon in their wood as they grow, so a neighbourhood's canopy is a small, living carbon store. A study of urban trees across the United States, built on field data from 28 cities, found they hold an average of 7.69 kilograms of carbon for every square metre of canopy, and add 0.28 kilograms a year. Applied to Ladywell's 51 hectares of canopy, as a rough guide only, those averages suggest about 3,900 tonnes of carbon stored and about 520 tonnes of carbon dioxide taken up each year: roughly the yearly emissions of 250 Lewisham residents.</p>`
             },
             biodiversity_support: {
                 title: 'Perspectives from global biodiversity research',
@@ -832,7 +833,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     { name: 'IPBES Global Assessment Report on Biodiversity and Ecosystem Services - media release (2019)', url: 'https://www.ipbes.net/news/Media-Release-Global-Assessment' },
                     { name: 'State of Nature 2023', url: 'https://stateofnature.org.uk/' }
                 ],
-                summary: `<p>The 2019 global assessment by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) warned that "the health of ecosystems on which we and all other species depend is deteriorating more rapidly than ever", with around a million species threatened with extinction. It ranked changes in how land and sea are used as the biggest cause, ahead of direct exploitation, climate change, pollution and invasive species. The UK has fared badly. The State of Nature 2023 report found that species studied across the UK had declined by 19% on average since 1970, and that nearly one in six is threatened with extinction from Great Britain. It calls the UK one of the most nature-depleted countries on Earth, but says the causes are clear and that conservation action delivers results.</p>`
+                summary: `<p>Launching the 2019 global assessment by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), its chair warned that "the health of ecosystems on which we and all other species depend is deteriorating more rapidly than ever". The assessment found around a million species threatened with extinction. It ranked changes in how land and sea are used as the biggest cause, ahead of direct exploitation, climate change, pollution and invasive species. The UK has fared badly. The State of Nature 2023 report found that species studied across the UK had declined by 19% on average since 1970, and that nearly one in six is threatened with extinction from Great Britain. It calls the UK one of the most nature-depleted countries on Earth, but says the causes are clear and that conservation action delivers results.</p>`
             },
             energy_harvesting: {
                 title: 'Perspectives from global solar research',
@@ -854,7 +855,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     { name: 'Cooling cities through urban green infrastructure: a health impact assessment of European cities - Iungman et al., The Lancet (2023)', url: 'https://doi.org/10.1016/S0140-6736(22)02585-5' },
                     { name: 'The role of urban trees in reducing land surface temperatures in European cities - Schwaab et al., Nature Communications (2021)', url: 'https://www.nature.com/articles/s41467-021-26768-w' }
                 ],
-                summary: `<p>High temperatures harm health and cause early deaths, and cities trap heat. A study of 93 European cities, published in The Lancet in 2023, estimated that urban heat raised summer temperatures by 1.5°C on average in 2015 and caused about 6,700 premature deaths, around 4% of all summer deaths. Raising tree cover to 30% would have cooled those cities by 0.4°C on average and prevented about 2,600 of those deaths. A satellite study of 293 European cities, in Nature Communications in 2021, found that in Central Europe ground under trees was 8 to 12°C cooler in summer than dense built-up areas, and that grass and other treeless green space cooled two to four times less than trees.</p>`
+                summary: `<p>High temperatures harm health and cause early deaths, and cities trap heat. A study of 93 European cities, published in The Lancet in 2023, estimated that urban heat raised summer temperatures by 1.5°C on average in 2015 and caused about 6,700 premature deaths, around 4% of all summer deaths. Raising tree cover to 30% would have cooled those cities by 0.4°C on average and prevented about 2,600 of those deaths. A satellite study of 293 European cities, in Nature Communications in 2021, found that in Central Europe areas covered by trees had summer surface temperatures 8 to 12°C lower than dense built-up areas, and that grass and other treeless green space cooled two to four times less than trees.</p>`
             },
             wellbeing: {
                 title: 'Perspectives from global nature and health research',
@@ -1396,7 +1397,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: "Join a Nature's Gym work day",
-                    text: `Free conservation sessions in Lewisham's parks and nature reserves, from wading in rivers to work in the woods, led by council and Glendale officers. No experience needed; newcomers start with taster sessions.`,
+                    text: `Free conservation sessions in Lewisham's parks and nature reserves, led by council and Glendale officers, with jobs for every ability. No experience needed; newcomers start with taster sessions.`,
                     url: 'https://natureconservationlewisham.co.uk/how-to/natures-gym-2/'
                 }
             ];

@@ -2006,6 +2006,47 @@ above a threshold is derived from the same measure as another indicator, report 
 indicator's text rather than as a separate headline, and prefer the source with the longest,
 most recent consistent series.
 
+**Name the measure in the headline, and lead indicator text with thresholds and comparators
+(Air quality, November 2026).** The air quality headline read "18.5 µg/m³ - Annual average air
+pollution concentration (µg/m³) · 2024", without saying which pollutant, and its text opened by
+listing the chart's numbers ("NO2 averaged 18.5 ... down from 25.4 in 2015 ... PM2.5 fell from 11.0
+to 9.0 ...") and ended with a methodology aside ("it updates the model most years, so small
+year-to-year changes may not be real"). The user asked for the pollutant to be named, pointed back
+to the rule against narrating a chart, said the decade's change can be one percentage, and that
+the most meaningful thing is the comparison with the legal and health thresholds and with
+Lewisham and London; methodology like the model-update caveat should go. The indicator is now
+three sub-indicators (NO2, PM2.5, PM10) on one chart, with NO2 as the headline, and the text
+leads with NO2 against the legal limit and WHO guideline, then Lewisham and London. General rule:
+a headline must say exactly what its number measures; where one chart carries several measures,
+make them sub-indicators and headline one by name. Lead indicator text with the comparison that
+gives the number meaning (thresholds, then comparator areas); give the trend as a single change.
+
+**Don't repeat another dimension's indicator; give every dimension Get Involved cards (local
+ecological, November 2026).** Tree canopy appeared on both the carbon sequestration and air
+quality pages; the user asked for it to be removed from air quality. The user also noted some
+local ecological dimensions had no Get Involved cards (air quality had none). General rule: an
+indicator belongs to the one dimension it best explains; and every dimension needs at least one
+verified Get Involved card, found before the page is called done.
+
+**Context cards: priorities and strategies, not how the map or method works (Biodiversity,
+November 2026).** The London Local Nature Recovery Strategy card described the strategy's map
+layers (Areas of Particular Importance for Biodiversity, potential measure locations, what the open
+version leaves out). The user said they would rather hear what the priorities and strategies are,
+and asked for the spec to say priorities and strategies matter more than methodology. The card now
+says what the strategy is for, how its priorities are set (habitat priorities with measures, and
+priority species such as the kingfisher), which habitats it targets most across London, and
+which it assigns to Ladywell. General rule: a context card says what a plan prioritises and what
+it will do; explain its method or data only where that changes what the reader understands.
+
+**Name the causes and the remedies, not just that they exist (Biodiversity, November 2026).** The
+research card said State of Nature 2023 "says the causes are clear and that conservation action
+delivers results". The user asked what the causes are, and said always to explain the root cause
+and the strategies where available. The card now names them: changes in how farmland is managed
+and climate change as the main causes on land, and nature-friendly farming at scale, habitat
+restoration, nature-based solutions such as native woodland and, in cities, Tiny Forests as the
+responses. General rule: never refer to causes or solutions without naming them; if a source
+gives them, state them.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

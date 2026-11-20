@@ -79,6 +79,9 @@ when you're doing something this file doesn't cover.
 - Name distribution groups by position ("bottom 50%", "top tenth"), not "poorest"/"richest". [2.2]
 - Keep data-quality figures ("activity not known", sample caveats) in `source.notes`, not the copy, unless they change the finding. [2.2]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]
+- A headline must say exactly what its number measures; when a chart carries several measures, make them sub-indicators and headline one by name. [2.5]
+- Lead indicator text with the comparison that gives the number meaning (thresholds, then comparator areas); give a trend as one change, never a list of the chart's values. [2.5]
+- An indicator belongs to the one dimension it best explains; don't repeat it on another page. [2.5]
 
 ## Context cards [3]
 
@@ -92,6 +95,8 @@ when you're doing something this file doesn't cover.
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 - Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]
+- Say what a plan prioritises and will do; explain its map, data or method only where that changes the reader's understanding. [3.2]
+- Never write that "the causes are clear" or that solutions exist without naming them. [3.2]
 
 ## Get Involved cards [4]
 
@@ -99,6 +104,7 @@ when you're doing something this file doesn't cover.
 - One merged paragraph of about 25-30 words; the whole card is the link.
 - No recurring-event dates, waiting lists, "recruiting now" or other status that will date quickly.
 - State the practical facts of taking part; never quote an organisation's slogan or pep talk. [4]
+- Every dimension needs at least one verified Get Involved card before the page is done. [4]
 
 ## Fact-checking [2.9]
 

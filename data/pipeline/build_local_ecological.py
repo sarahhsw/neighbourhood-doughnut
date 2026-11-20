@@ -311,7 +311,7 @@ def build_energy_harvesting():
 
 def build_air_quality_regulation():
     """
-    Air quality regulation - 2 indicators (November 2026 revision). The separate 'residents above
+    Air quality regulation - one concentration indicator split into NO2 / PM2.5 / PM10 sub-indicators (November 2026 revision). The separate 'residents above
     legal limits' indicator was folded into the concentration indicator at the user's request (one
     finding, one indicator), and the concentration series moved from LAEI 2019/2022 to Defra's
     yearly PCM background maps, 2015-2024.
@@ -380,7 +380,22 @@ def build_air_quality_regulation():
             {"period": "2024", "value": 9.0, "series": "Fine particles (PM2.5)"}
         ],
     )
-    return [conc, _canopy("air_quality_regulation")]
+    # One chart, three sub-indicators (grouped on the page by their bracketed suffix), so the
+    # headline can name its pollutant (NO2). Tree canopy was removed from this dimension at the
+    # user's request (it stays in carbon sequestration).
+    parts = []
+    for label, series, value in [
+        ("Nitrogen dioxide, NO2", "Nitrogen dioxide (NO2)", 18.5),
+        ("Fine particles, PM2.5", "Fine particles (PM2.5)", 9.0),
+        ("All particles up to 10 microns, PM10", "All particles up to 10 microns (PM10)", 14.4),
+    ]:
+        parts.append(replace(
+            conc,
+            indicator=f"Annual average air pollution, micrograms per cubic metre ({label})",
+            snapshot=Snapshot(value=value, unit="µg/m³", year="2024", date="background, away from the busiest roads"),
+            trend=[{"period": t["period"], "value": t["value"]} for t in conc.trend if t["series"] == series],
+        ))
+    return parts
 
 
 def build_temperature_regulation():

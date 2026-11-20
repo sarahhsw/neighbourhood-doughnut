@@ -82,7 +82,8 @@ async function loadWardData() {
 }
 
 function updateCounts() {
-    document.getElementById('generated-at').textContent = new Date(wardData.generated_at).toLocaleString();
+    document.getElementById('generated-at').textContent = new Date(wardData.generated_at)
+        .toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 function renderPinnedCards() {
@@ -199,7 +200,7 @@ function renderTrendChart(allIndicators, dimension) {
     // geographies or survey versions - each label gets its own line, colour and legend
     // entry, so a change of geography or method is never drawn as one continuous line.
     // Points without a label form a single series per indicator, as before.
-    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled)\)$/, '');
+    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled|Nitrogen dioxide, NO2|Fine particles, PM2\.5|All particles up to 10 microns, PM10)\)$/, '');
     const seriesList = [];
     indicatorsWithTrend.forEach(ind => {
         const labels = [...new Set(ind.trend.map(t => t.series || ''))];
@@ -410,7 +411,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // Group indicators by their base name (without gender/age-group suffix)
     const indicatorGroups = {};
     allIndicators.forEach(ind => {
-        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled)\)$/, '');
+        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled|Nitrogen dioxide, NO2|Fine particles, PM2\.5|All particles up to 10 microns, PM10)\)$/, '');
         if (!indicatorGroups[baseName]) {
             indicatorGroups[baseName] = [];
         }
@@ -688,8 +689,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Local ecological: air quality regulation
 
-        if (baseName === 'Annual average air pollution concentration (µg/m³)') {
-            return `Nitrogen dioxide (NO2) averaged 18.5 micrograms per cubic metre of air across Ladywell in 2024, down from 25.4 in 2015 and slightly above Lewisham's 17.5. Fine particles (PM2.5) fell from 11.0 to 9.0, and all particles up to 10 microns (PM10) from 17.2 to 14.4. These are the Department for Environment, Food and Rural Affairs' yearly modelled background levels, away from the busiest roads; it updates the model most years, so small year-to-year changes may not be real. London's emissions inventory found no Lewisham resident living above the NO2 legal limit of 40 in 2022, but 91% lived above 20, the World Health Organization's strictest interim target. NO2 and PM2.5 remain above its 2021 guidelines of 10 and 5; PM10, at 14.4, is just under its 15.`;
+        if (baseName === 'Annual average air pollution, micrograms per cubic metre') {
+            return `Ladywell's nitrogen dioxide level, 18.5 micrograms per cubic metre of air in 2024, is well under the legal limit of 40 but almost double the World Health Organization's guideline of 10. It is slightly above Lewisham's 17.5 and London's 15.9, and has fallen by more than a quarter in a decade. Fine particles, at 9.0, are also almost double the organisation's guideline of 5, though under the legal limit of 20. In 2022, London's emissions inventory found no Lewisham resident living above the nitrogen dioxide limit, but 91% lived above 20, the organisation's strictest interim target. These are background levels for the ward; in 2022, some stretches of busy road in inner London still exceeded the legal limit.`;
         }
 
         // Local ecological: temperature regulation
@@ -768,9 +769,10 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 title: 'London Local Nature Recovery Strategy',
                 year: '2026',
                 sources: [
-                    { name: 'London Local Nature Recovery Strategy (LNRS) - London Datastore', url: 'https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6' }
+                    { name: 'London Local Nature Recovery Strategy (LNRS) - London Datastore (open data layers)', url: 'https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6' },
+                    { name: "GiGL's role in developing London's Local Nature Recovery Strategy - Greenspace Information for Greater London (March 2026)", url: 'https://www.gigl.org.uk/?p=81432' }
                 ],
-                summary: `<p>London's first Local Nature Recovery Strategy was published by the Greater London Authority in March 2026, one of 48 such strategies covering England. It has two parts: a Statement of Biodiversity Priorities, setting out what London's nature needs, and a map. The map shows Areas of Particular Importance for Biodiversity, London's existing protected sites, and potential measure locations, where nature could recover through changes in how land is managed or through new habitat. Those locations are opportunities, not designations. The openly published map leaves out Local Wildlife Sites for licensing reasons; the full local version is held by Greenspace Information for Greater London.</p>`
+                summary: `<p>London's first Local Nature Recovery Strategy, published by the Greater London Authority in March 2026, is one of 48 such strategies across England, meant to guide local action for nature and direct funding to it, including money from Biodiversity Net Gain. Its Statement of Biodiversity Priorities sets habitat priorities, each with practical measures to achieve it, and a list of species prioritised for recovery, chosen by specialists from 1,467 threatened or locally significant species; the kingfisher and Essex skipper butterfly are among them. Across London, the places it marks for action are most often rivers and streams, then parks and open spaces, lowland meadow, woodland, and ponds and lakes. In Ladywell, the priorities are parks and open spaces, woodland, floodplain, lowland meadow, rivers, ponds and scrub.</p>`
             }];
         }
 
@@ -831,9 +833,9 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 title: 'Perspectives from global biodiversity research',
                 sources: [
                     { name: 'IPBES Global Assessment Report on Biodiversity and Ecosystem Services - media release (2019)', url: 'https://www.ipbes.net/news/Media-Release-Global-Assessment' },
-                    { name: 'State of Nature 2023', url: 'https://stateofnature.org.uk/' }
+                    { name: 'State of Nature 2023 - full report', url: 'https://stateofnature.org.uk/wp-content/uploads/2023/09/TP25999-State-of-Nature-main-report_2023_FULL-DOC-v12.pdf' }
                 ],
-                summary: `<p>Launching the 2019 global assessment by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), its chair warned that "the health of ecosystems on which we and all other species depend is deteriorating more rapidly than ever". The assessment found around a million species threatened with extinction. It ranked changes in how land and sea are used as the biggest cause, ahead of direct exploitation, climate change, pollution and invasive species. The UK has fared badly. The State of Nature 2023 report found that species studied across the UK had declined by 19% on average since 1970, and that nearly one in six is threatened with extinction from Great Britain. It calls the UK one of the most nature-depleted countries on Earth, but says the causes are clear and that conservation action delivers results.</p>`
+                summary: `<p>The 2019 global assessment by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) found around a million species threatened with extinction, and ranked changes in how land and sea are used as the biggest cause, ahead of direct exploitation, climate change, pollution and invasive species. In the UK, the State of Nature 2023 report found that species studied had declined by 19% on average since 1970, and that nearly one in six of those assessed is threatened with extinction from Great Britain. It traces most of the loss on land to changes in how farmland is managed, and to climate change. Its answers include nature-friendly farming on a much wider scale, restoring habitats, and nature-based solutions that also tackle climate change, such as creating native woodland. In cities, it highlights Tiny Forests: 600 native trees and shrubs planted in 200 square metres.</p>`
             },
             energy_harvesting: {
                 title: 'Perspectives from global solar research',
@@ -1413,6 +1415,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             ];
         }
 
+        if (dimensionName === 'air_quality_regulation') {
+            return [
+                {
+                    action: "Join Mums for Lungs' Lewisham group",
+                    text: `Volunteers campaigning for cleaner air in Lewisham, pressing the council for change and raising awareness in local communities, especially of the harm caused by burning wood at home.`,
+                    url: 'https://www.mumsforlungs.org/local-groups'
+                }
+            ];
+        }
+
         if (dimensionName === 'temperature_regulation') {
             return [
                 {
@@ -1763,7 +1775,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             'Healthy life expectancy at birth': 'Male',
             '% of children with obesity': 'Year 6',
             '% non-decent homes': 'Private rented',
-            'Employment rate gap, percentage points': 'Disabled'
+            'Employment rate gap, percentage points': 'Disabled',
+            'Annual average air pollution, micrograms per cubic metre': 'Nitrogen dioxide'
         };
         const indicatorsToShow = (indicators.length > 1 && singleHeadlineFilter[baseName])
             ? indicators.filter(ind => ind.indicator.includes(singleHeadlineFilter[baseName]))

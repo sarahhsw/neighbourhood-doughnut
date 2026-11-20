@@ -339,7 +339,9 @@ def build_air_quality_regulation():
                 "strictest interim target and the EU limit from 2030 (London 70.2%); every Londoner lived above the WHO 2021 guideline "
                 "of 10. London: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. LAEI's 20m model gave "
                 "a Ladywell area mean of 21.9 µg/m³ NO2 in 2022 (27.6 in 2019), including roadside cells, so it is not joined to the "
-                "PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15."
+                "PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15 (Ladywell PM10 was below 15 in 2023 and 2024). "
+                "Defra published 2025 modelled maps on 9 October 2026 (Air quality compliance assessment 2025) from a new model, "
+                "CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line."
             ),
         ),
         geography=GeographyLevel.WARD,

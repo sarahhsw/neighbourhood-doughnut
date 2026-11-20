@@ -661,7 +661,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
 
         // Local ecological: carbon sequestration and air quality (shared canopy indicator)
         if (baseName === '% tree canopy coverage') {
-            return `Tree canopy is the area covered by the leafy crowns of trees, seen from above. The Greater London Authority mapped it across London from aerial photographs, taken mainly in 2022, and height data, counting trees about 4 metres tall or more, so young and newly planted trees are mostly missed. Ladywell's 25% is above the 19.6% for both Lewisham and London. The Mayor's London Environment Strategy aims to increase London's canopy by 10% by 2050. The authority's earlier map, from 2016 photographs, used a different method, and it found no statistically significant change across London between the two, so no trend is shown.`;
+            return `Tree canopy is the area covered by the leafy crowns of trees, seen from above. The Greater London Authority mapped it across London from aerial photographs, taken mainly in 2022, and height data, counting trees about 4 metres tall or more, so young and newly planted trees are mostly missed. Ladywell's 25% is above the 19.6% for both Lewisham and London. A separate citizen-science survey for Forest Research, made in 2020 on the ward's older, smaller boundary, found a similar 26%. The Mayor's London Environment Strategy aims to increase London's canopy by 10% by 2050. The authority's earlier map, from 2016 photographs, used a different method, and it found no statistically significant change across London between the two, so no trend is shown.`;
         }
 
         if (baseName === '% green cover') {
@@ -748,7 +748,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // but a dimension can have up to 3 when its indicators span genuinely distinct policy
     // areas that no single document covers (see DIMENSION_PAGE_SPECIFICATION.md Section 3).
     function getCouncilContext(dimensionName) {
-        // Local ecological dimensions (November 2026)
+        function ecoLocalContext(dimensionName) {
         if (dimensionName === 'water_provisioning') {
             // Same Thames Water plan card as the social water dimension
             return [getCouncilContext('water')[0]];
@@ -762,7 +762,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     { name: 'Lewisham Local Plan - Green infrastructure chapter (Regulation 19 pre-submission version, 2023)', url: 'https://consultation.lewisham.gov.uk/planning/reg19consultation/user_uploads/green-infrastructure-chapter.pdf' },
                     { name: 'Adopted Lewisham Local Plan 2020-2040 - planning.data.gov.uk record', url: 'https://www.planning.data.gov.uk/entity/3801532' }
                 ],
-                summary: `<p>Lewisham's Local Plan, adopted in July 2025, sets the planning rules for new development until 2040. Its pre-submission text treats trees as part of the borough's urban forest and notes that many of them grow in private gardens, where the council has limited control. In its pre-submission (Regulation 19) version of 2023, Policy GR5 requires major developments to reach the London Plan's Urban Greening Factor, a score for the amount and quality of greening on a site, unless shown not to be feasible: 0.4 for mainly residential schemes and 0.3 for commercial ones. Developments must keep existing trees where possible, plant more, especially in streets and town centres, and replace trees that can't be kept; the council will refuse the removal of protected trees. Major schemes must show they have looked at green roofs and walls. The takeaway: planning can protect and add canopy on development sites, but many of the borough's trees grow in gardens it does not control.</p>`
+                summary: `<p>Lewisham's Local Plan, adopted in July 2025, sets the planning rules for new development until 2040. Its pre-submission text treats trees as part of the borough's urban forest and notes that many of them grow in private gardens, where the council has limited control. In its pre-submission (Regulation 19) version of 2023, Policy GR5 requires major developments to reach the London Plan's Urban Greening Factor, a score for the amount and quality of greening on a site, unless shown not to be feasible: 0.4 for mainly residential schemes and 0.3 for commercial ones. Developments must keep existing trees where possible, plant more, especially in streets and town centres, and replace trees that can't be kept; the council will refuse the removal of protected trees. Major schemes must show they have looked at green roofs and walls.</p>`
             }];
         }
 
@@ -773,7 +773,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 sources: [
                     { name: 'London Local Nature Recovery Strategy (LNRS) - London Datastore', url: 'https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6' }
                 ],
-                summary: `<p>London's first Local Nature Recovery Strategy was published by the Greater London Authority in March 2026, one of 48 such strategies covering England. It has two parts: a Statement of Biodiversity Priorities, setting out what London's nature needs, and a map. The map shows Areas of Particular Importance for Biodiversity, London's existing protected sites, and potential measure locations, where nature could recover through changes in how land is managed or through new habitat. Those locations are opportunities, not designations. The openly published map leaves out Local Wildlife Sites for licensing reasons; the full local version is held by Greenspace Information for Greater London. The takeaway: the strategy shows where nature in Ladywell could recover, but it does not make that happen on its own.</p>`
+                summary: `<p>London's first Local Nature Recovery Strategy was published by the Greater London Authority in March 2026, one of 48 such strategies covering England. It has two parts: a Statement of Biodiversity Priorities, setting out what London's nature needs, and a map. The map shows Areas of Particular Importance for Biodiversity, London's existing protected sites, and potential measure locations, where nature could recover through changes in how land is managed or through new habitat. Those locations are opportunities, not designations. The openly published map leaves out Local Wildlife Sites for licensing reasons; the full local version is held by Greenspace Information for Greater London.</p>`
             }];
         }
 
@@ -793,7 +793,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 title: 'Lewisham Air Quality Action Plan 2022-2027',
                 year: '2022-2027',
                 url: 'https://airquality.lewisham.gov.uk/uploads/reports/air-quality-action-plan-2022-2027-67ab7e945e046781227819.pdf',
-                summary: `<p>Lewisham's Air Quality Action Plan, approved in July 2022, sets out what the council will do about air pollution until 2027, with progress reported each year. It replaced a 2016-2021 plan whose priorities were cutting car use, reducing children's exposure, including anti-idling work at schools, and cleaner deliveries and construction. The new plan lists ten priorities, the first being public health awareness: promoting the Mayor's pollution alerts and the Lewisham app to GPs, care homes, nurseries and people with asthma or lung disease. Others cover schools, emissions from new developments, electric vehicle charging, walking and cycling, construction, energy-efficiency retrofits, car-free days, a cleaner council fleet and smoke control zones. The takeaway: the council's plan works alongside mayoral schemes, which the Greater London Authority credits, with cleaner vehicles, for most of the recent fall in nitrogen dioxide.</p>`
+                summary: `<p>Lewisham's Air Quality Action Plan, approved in July 2022, sets out what the council will do about air pollution until 2027, with progress reported each year. It replaced a 2016-2021 plan whose priorities were cutting car use, reducing children's exposure, including anti-idling work at schools, and cleaner deliveries and construction. The new plan lists ten priorities, the first being public health awareness: promoting the Mayor's pollution alerts and the Lewisham app to GPs, care homes, nurseries and people with asthma or lung disease. Others cover schools, emissions from new developments, electric vehicle charging, walking and cycling, construction, energy-efficiency retrofits, car-free days, a cleaner council fleet and smoke control zones.</p>`
             }];
         }
 
@@ -805,8 +805,70 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     { name: 'Lewisham Local Plan - Green infrastructure chapter (Regulation 19 pre-submission version, 2023)', url: 'https://consultation.lewisham.gov.uk/planning/reg19consultation/user_uploads/green-infrastructure-chapter.pdf' },
                     { name: 'Adopted Lewisham Local Plan 2020-2040 - planning.data.gov.uk record', url: 'https://www.planning.data.gov.uk/entity/3801532' }
                 ],
-                summary: `<p>Lewisham's Local Plan, adopted in July 2025, protects the borough's open spaces from development. In its pre-submission (Regulation 19) version of 2023, which may have changed on adoption, Policy GR2 gives Metropolitan Open Land and Local Green Space the same protection as Green Belt. It allows the loss of strategic open space only in exceptional cases, such as replacement nearby of at least the same amount and better quality. Neighbourhood open space can be reshaped only with no net loss; a net loss is allowed only for a wider public benefit, keeping the loss to a minimum. Major developments must include new publicly accessible open space where feasible, favouring green space, especially where access is poor, or pay towards it elsewhere. The takeaway: the plan protects existing open space across the borough and uses development to add more.</p>`
+                summary: `<p>Lewisham's Local Plan, adopted in July 2025, protects the borough's open spaces from development. In its pre-submission (Regulation 19) version of 2023, which may have changed on adoption, Policy GR2 gives Metropolitan Open Land and Local Green Space the same protection as Green Belt. It allows the loss of strategic open space only in exceptional cases, such as replacement nearby of at least the same amount and better quality. Neighbourhood open space can be reshaped only with no net loss; a net loss is allowed only for a wider public benefit, keeping the loss to a minimum. Major developments must include new publicly accessible open space where feasible, favouring green space, especially where access is poor, or pay towards it elsewhere.</p>`
             }];
+        }
+
+            return null;
+        }
+
+        // Local ecological dimensions (November 2026): local plan cards, then a global
+        // research card for every dimension that opens with why the ecosystem service matters.
+        const ECO_RESEARCH = {
+            water_provisioning: {
+                title: 'Perspectives from wider river research',
+                sources: [
+                    { name: 'State of the water environment indicator B3: supporting evidence - Environment Agency (May 2025)', url: 'https://www.gov.uk/government/publications/state-of-the-water-environment-indicator-b3-supporting-evidence/state-of-the-water-environment-indicator-b3-supporting-evidence' }
+                ],
+                summary: `<p>Clean and plentiful water is one of the goals of the government's 25 Year Environment Plan, and rivers are where a place's water use, drainage and sewage end up. Across England, only 14% of rivers reached good ecological status in the Environment Agency's 2019 classification. Its evidence names agriculture and the water industry, through sewage and wastewater, as the sectors affecting most water bodies, at 45% and 44%, with towns, cities and transport affecting 18%. It also notes that many lowland rivers have been straightened, dredged or enclosed in culverts, to drain farmland, reduce flood risk and make space for homes and roads. The Ravensbourne's shortfall from good status is shared by most English rivers.</p>`
+            },
+            carbon_sequestration: {
+                title: 'Perspectives from global urban forest research',
+                sources: [
+                    { name: 'Carbon storage and sequestration by trees in urban and community areas of the United States - Nowak et al., Environmental Pollution (2013)', url: 'https://doi.org/10.1016/j.envpol.2013.03.019' }
+                ],
+                summary: `<p>Trees take carbon dioxide from the air and store the carbon in their wood as they grow, so a neighbourhood's canopy is a small, living carbon store. A study of urban trees across the United States, built on field data from 28 cities, found they hold an average of 7.69 kilograms of carbon for every square metre of canopy, and add 0.28 kilograms a year. Applied to Ladywell's 51 hectares of canopy, as a rough guide only, those averages suggest about 3,900 tonnes of carbon stored and about 520 tonnes of carbon dioxide taken up each year: roughly the yearly emissions of 250 Lewisham residents. Trees store carbon, but cutting emissions does far more.</p>`
+            },
+            biodiversity_support: {
+                title: 'Perspectives from global biodiversity research',
+                sources: [
+                    { name: 'IPBES Global Assessment Report on Biodiversity and Ecosystem Services - media release (2019)', url: 'https://www.ipbes.net/news/Media-Release-Global-Assessment' },
+                    { name: 'State of Nature 2023', url: 'https://stateofnature.org.uk/' }
+                ],
+                summary: `<p>The 2019 global assessment by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) warned that "the health of ecosystems on which we and all other species depend is deteriorating more rapidly than ever", with around a million species threatened with extinction. It ranked changes in how land and sea are used as the biggest cause, ahead of direct exploitation, climate change, pollution and invasive species. The UK has fared badly. The State of Nature 2023 report found that species studied across the UK had declined by 19% on average since 1970, and that nearly one in six is threatened with extinction from Great Britain. It calls the UK one of the most nature-depleted countries on Earth, but says the causes are clear and that conservation action delivers results.</p>`
+            },
+            energy_harvesting: {
+                title: 'Perspectives from global solar research',
+                sources: [
+                    { name: 'High resolution global spatiotemporal assessment of rooftop solar photovoltaics potential - Joshi et al., Nature Communications (2021)', url: 'https://www.nature.com/articles/s41467-021-25720-2' }
+                ],
+                summary: `<p>In a dense neighbourhood, roofs are the main surface that can harvest energy from sunlight. A 2021 global study in Nature Communications mapped 0.2 million square kilometres of rooftops worldwide and estimated they could generate 27 petawatt-hours of electricity a year, 27 million gigawatt-hours, with 10 of those petawatt-hours available at under $100 per megawatt-hour. Rooftop panels already made up 40% of the world's installed solar capacity in 2018. The study also found the UK among the costliest countries to tap its rooftop potential, at about $251 per megawatt-hour, against $66 in India.</p>`
+            },
+            air_quality_regulation: {
+                title: 'Perspectives from global air quality research',
+                sources: [
+                    { name: 'Ambient (outdoor) air pollution - World Health Organization fact sheet', url: 'https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health' }
+                ],
+                summary: `<p>The World Health Organization calls outdoor air pollution a major environmental health problem affecting everyone. It estimates that outdoor air pollution caused 4.2 million premature deaths worldwide in 2019, through fine particles that cause heart and lung disease and cancers; 68% of those deaths were from heart disease and stroke. In 2019, 99% of the world's population lived where its air quality guidelines were not met. It names cleaner transport, energy-efficient homes, cleaner power generation and industry, and better waste management as the policies that would cut the main sources of outdoor pollution.</p>`
+            },
+            temperature_regulation: {
+                title: 'Perspectives from global urban heat research',
+                sources: [
+                    { name: 'Cooling cities through urban green infrastructure: a health impact assessment of European cities - Iungman et al., The Lancet (2023)', url: 'https://doi.org/10.1016/S0140-6736(22)02585-5' },
+                    { name: 'The role of urban trees in reducing land surface temperatures in European cities - Schwaab et al., Nature Communications (2021)', url: 'https://www.nature.com/articles/s41467-021-26768-w' }
+                ],
+                summary: `<p>High temperatures harm health and cause early deaths, and cities trap heat. A study of 93 European cities, published in The Lancet in 2023, estimated that urban heat raised summer temperatures by 1.5°C on average in 2015 and caused about 6,700 premature deaths, around 4% of all summer deaths. Raising tree cover to 30% would have cooled those cities by 0.4°C on average and prevented about 2,600 of those deaths. A satellite study of 293 European cities, in Nature Communications in 2021, found that in Central Europe ground under trees was 8 to 12°C cooler in summer than dense built-up areas, and that grass and other treeless green space cooled two to four times less than trees.</p>`
+            },
+            wellbeing: {
+                title: 'Perspectives from global nature and health research',
+                sources: [
+                    { name: 'Spending at least 120 minutes a week in nature is associated with good health and wellbeing - White et al., Scientific Reports (2019)', url: 'https://www.nature.com/articles/s41598-019-44097-3' }
+                ],
+                summary: `<p>Time in natural environments can benefit health and wellbeing. A study of nearly 20,000 people in England, published in Scientific Reports in 2019, found that people who spent at least two hours a week in nature were significantly more likely to report good health and high wellbeing than those who spent none, with the benefit levelling off at about three to five hours. It made no difference whether the two hours came in one long visit or several short ones, and the pattern held for older adults and people with long-term health conditions. The link held after allowing for how much green space surrounded people's homes.</p>`
+            }
+        };
+        if (ECO_RESEARCH[dimensionName]) {
+            return [...(ecoLocalContext(dimensionName) || []), ECO_RESEARCH[dimensionName]];
         }
 
         // Health dimension council context

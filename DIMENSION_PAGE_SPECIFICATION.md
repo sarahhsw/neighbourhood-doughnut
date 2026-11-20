@@ -1983,6 +1983,17 @@ behind it. The poverty card now follows the same order: the plan's status in one
 problem and aim, its main tool so far, where the older commitments now sit, and its priorities.
 General rule: one paragraph, in that order, with every sentence a plain statement about the plan.
 
+**Don't label a closing sentence "The takeaway:" (local ecological, November 2026).** The first
+local ecological context cards each ended with a sentence starting "The takeaway:", following the
+problem-response-takeaway rule above. On the air quality card it read "The takeaway: the council's
+plan works alongside mayoral schemes, which the Greater London Authority credits, with cleaner
+vehicles, for most of the recent fall in nitrogen dioxide." The user said it added nothing to the
+narrative and asked for the prefix to go on every dimension; the card should make its point through
+a clear narrative, not announce it. All four such sentences (carbon sequestration, biodiversity, air
+quality, wellbeing) only repeated what their cards already said, so they were cut rather than
+reworded. General rule: never write "The takeaway:" or a similar label; if a closing sentence is
+needed, it must add something new in plain prose, otherwise end on the card's last real point.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

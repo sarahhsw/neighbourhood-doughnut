@@ -58,6 +58,13 @@ for dim, body in re.findall(r"dimensionName === '(\w+)'\)\s*\{(.*?)\n        \}"
         continue
     for title, summary in re.findall(r"title:\s*['\"](.*?)['\"],.*?summary:\s*`(.*?)`", body, flags=re.S):
         over |= report(f"{dim}: {title[:60]}", summary, 165)
+# Local ecological research cards live in an ECO_RESEARCH map, one entry per dimension
+if "const ECO_RESEARCH = {" in ctx:
+    eco = ctx[ctx.index("const ECO_RESEARCH = {"):ctx.index("if (ECO_RESEARCH[dimensionName])")]
+    for dim, title, summary in re.findall(r"\n            (\w+): \{\s*title:\s*'(.*?)',.*?summary:\s*`(.*?)`", eco, flags=re.S):
+        if only and dim != only:
+            continue
+        over |= report(f"{dim}: {title[:60]}", summary, 165)
 
 print("\nGet Involved cards")
 gi = src[src.index("function getWaysToGetInvolved"):]

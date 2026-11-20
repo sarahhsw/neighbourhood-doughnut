@@ -145,7 +145,7 @@ def _canopy(dimension):
             accessed=ACCESSED,
             notes=(
                 "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London "
-                "19.56% (SE 0.30). Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not "
+                "19.56% (SE 0.30). Cross-check: Forest Research's UK Ward Canopy Cover (citizen-science i-Tree Canopy sampling on Google aerial imagery, published via data.gov.uk dataset 43ca8e70, updated February 2026) gives Ladywell (pre-2022 ward E05000446, 160.6 ha) 26% +/- 2.53 SE from 300 points, surveyed 2020. Not used as the headline: older survey, older boundary, larger error, one survey per ward (2018-2022), so no time series. Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not "
                 "detected. " + GLA_METHOD_NOTE
             ),
             **GLA_CANOPY_2024,

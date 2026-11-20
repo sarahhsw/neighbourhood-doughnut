@@ -85,6 +85,7 @@ when you're doing something this file doesn't cover.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
 - If a card's document is more than about five years old, look for the programme or strategy that superseded it. [3.1]
 - Structure a council-plan card as problem, response, takeaway; end with the one thing the reader should remember. [3.2]
+- Never label a sentence "The takeaway:"; let the narrative carry the point, and cut a closing sentence that only repeats the card. [3.2]
 - Write a council-plan card as one paragraph: what the plan is and its status, its aims, what it does, its priorities (model: the equality Inclusive Talent Strategy card). [3.2]
 - Always answer "why?" and "so what?": a card or indicator text should say why the finding is so (sourced) and what follows from it. [3.2]
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]

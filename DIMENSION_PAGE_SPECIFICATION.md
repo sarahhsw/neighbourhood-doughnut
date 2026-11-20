@@ -1994,6 +1994,18 @@ quality, wellbeing) only repeated what their cards already said, so they were cu
 reworded. General rule: never write "The takeaway:" or a similar label; if a closing sentence is
 needed, it must add something new in plain prose, otherwise end on the card's last real point.
 
+**Fold an indicator into another when they measure the same thing (Air quality, November 2026).**
+The air quality page first had two indicators: "% of residents living where air pollution exceeds
+legal limits" (0% in Lewisham, LAEI 2022) and "Annual average air pollution concentration". The
+user asked for the first to be removed and its insight combined into the second, since both
+describe the same pollution, and for a more up-to-date source. The exceedance facts (no resident
+above the NO2 legal limit, 91% above the WHO interim target of 20) now sit in the concentration
+text, and the series moved from two LAEI years (2019, 2022) to Defra's yearly PCM background
+maps, 2015-2024, aggregated to the ward. General rule: one finding, one indicator; when a share
+above a threshold is derived from the same measure as another indicator, report it in that
+indicator's text rather than as a separate headline, and prefer the source with the longest,
+most recent consistent series.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

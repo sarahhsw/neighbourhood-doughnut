@@ -21,6 +21,7 @@ when you're doing something this file doesn't cover.
 - "I couldn't fetch it" must never become "it doesn't exist" in reader-facing copy. [2.5]
 - Before removing an indicator, check whether another dimension shares its name. [2.5]
 - Community and social cohesion are a single dimension, "Social cohesion"; there is no separate community dimension. If a requested indicator lives in another dimension, ask whether the dimensions should merge. [2.5]
+- One finding, one indicator: fold a threshold share (e.g. residents above a legal limit) into the indicator for the measure it comes from. [2.5]
 - Never fill an indicator from an aggregator website when the official publisher has the data; if it can't be fetched, flag it rather than ship a weaker number. [1.4]
 
 ## Top summary [2.1]

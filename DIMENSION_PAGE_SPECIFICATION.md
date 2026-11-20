@@ -742,6 +742,15 @@ text, where they can be explained.
   which includes Lewisham": the reader needs to know *which* geography the number covers,
   not the reasoning behind choosing it. (The card's geography label already says the rest -
   see 2.7.)
+- ❌ **Closing "no smaller geography" sentences.** Caught on the Energy indicator "Energy
+  consumption per resident", November 2026: the text ended "Borough is the smallest geography
+  published." The user asked "Why bother mentioning?" The sentence had been copied from the
+  builder's `source.notes` into the reader-facing text. It tells the reader nothing about
+  energy use, and the card's geography label (2.7) already says the figure is for the
+  borough. Cut it; the same kind of line was also cut from the 5G coverage text ("No
+  ward-level figure exists; borough is the most granular level available..."). **Rule:**
+  never end, or pad, indicator text with a statement that no finer geography exists; that
+  belongs in `source.notes` and the geography label, not the prose.
 - ❌ **Filler characterisations that restate a trend without adding meaning.** Same Water
   text, November 2026: "Use spiked... then eased back before ticking up again - a bumpier
   path than a steady decline, leaving little net progress" - the user flagged "a bumpier

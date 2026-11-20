@@ -58,6 +58,7 @@ when you're doing something this file doesn't cover.
 - No filler that restates a trend, and no dismissive words about a positive finding.
 - Every claim needs a real source, including text you inherited and didn't write. [2.2, 2.9]
 - Describe a measure by what it counts, not by what it isn't ("not a survey of..."). [2.2]
+- Don't tell the reader that no finer geography is published ("Borough is the smallest geography published"); the geography label covers it, and the detail goes in `source.notes`. [2.2]
 - Unit qualifiers belong in the indicator name, not the headline; no bracketed explainers in the big number.
 - Headline stats must read cleanly at phone width (about 390px); check layout changes on a phone-width screenshot as well as desktop. [2.5]
 - One headline stat per indicator: when an indicator has sub-series, add it to `singleHeadlineFilter` and headline the most insightful one. [2.5]

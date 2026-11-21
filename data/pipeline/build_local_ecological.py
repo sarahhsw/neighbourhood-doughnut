@@ -225,7 +225,7 @@ def build_energy_harvesting():
             notes=(
                 "All fuels total (domestic, transport, industrial and commercial) in ktoe, converted at 1 ktoe = 11.63 GWh, divided by "
                 "the ONS mid-year population carried in DESNZ's 2005-2024 local authority greenhouse gas workbook (Table 1.1). "
-                "Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London "
+                "Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London domestic use 5.4 MWh per resident (E12000007 all fuels domestic, London Total population). London "
                 "(E12000007) 14.0 MWh; England (E92000001) 19.2 MWh. Borough is the smallest geography published."
             ),
         ),

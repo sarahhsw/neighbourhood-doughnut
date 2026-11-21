@@ -45,7 +45,9 @@ COMPARE_CUES = re.compile(r"\b(against|compared with|than|above|below|under|over
 
 
 def words(t):
-    return re.sub(r"<[^>]+>", " ", t)
+    # drop tags, and treat financial-year spans such as 2024/25 as a single year
+    t = re.sub(r"<[^>]+>", " ", t)
+    return re.sub(r"\b((?:19|20)\d\d)/\d\d\b", r"\1", t)
 
 
 def sentences(t):
@@ -85,7 +87,11 @@ def summary_for(dim):
     return m.group(1) if m else None
 
 
-def wtm_for(base):
+def wtm_for(base, dim=None):
+    if dim:
+        m = re.search(r"dimension === '" + re.escape(dim) + r"' && baseName === '" + re.escape(base.replace("'", "\\'")) + r"'\)\s*\{(.*?)\n        \}", SRC, flags=re.S)
+        if m:
+            return " ".join(re.findall(r"return `(.*?)`;", m.group(1), flags=re.S))
     m = re.search(r"baseName === '" + re.escape(base).replace("'", "\\\\'") + r"'\)\s*\{(.*?)\n        \}", SRC, flags=re.S)
     if not m:
         m = re.search(r"baseName === '" + re.escape(base.replace("'", "\\'")) + r"'\)\s*\{(.*?)\n        \}", SRC, flags=re.S)
@@ -151,12 +157,12 @@ def main():
     for dim, bases in sorted(dims_and_indicators().items()):
         if only and dim != only:
             continue
-        ind_text = " ".join(wtm_for(b) for b in bases)
+        ind_text = " ".join(wtm_for(b, dim) for b in bases)
         summ = summary_for(dim)
         if summ:
             all_issues += check_block(f"{dim}: summary", summ, True, ind_text)
         for b in sorted(bases):
-            t = wtm_for(b)
+            t = wtm_for(b, dim)
             if t:
                 all_issues += check_block(f"{dim}: {b[:50]}", t)
         for i, c in enumerate(cards_for(dim)):

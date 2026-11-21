@@ -33,6 +33,7 @@ Read `SPEC_RULES.md` for the editorial rules.
   comparisons use the same period. Check whether the source warns against the comparison being
   made (e.g. small-area modelled estimates used as a local trend).
 - Check every block is within its cap: `python3 scripts/check_word_caps.py <dimension>`.
+- Run `python3 scripts/lint_copy.py <dimension>` and then check each changed block against `SPEC_RULES.md` yourself, rule by rule: comparison points, chart narration, new facts in the summary, methodology in the copy, unexplained measures, unnamed causes, tendency wording, acronyms. Report every breach, even when the facts are right.
 - Check for anything that will date quickly in Get Involved cards.
 
 ## Known access routes
@@ -51,7 +52,8 @@ Keep it under 600 words:
 1. A table with one row per claim: claim (short quote) | PASS / FAIL / UNVERIFIED | source
    actually checked (URL) | what the source says (exact figure) | suggested fix.
 2. Word counts for each block checked.
-3. The top issues, most serious first.
+3. Spec compliance: each `lint_copy.py` warning and each SPEC_RULES breach you found, with the rule it breaks.
+4. The top issues, most serious first.
 
 Treat a claim as PASS only when you have read the primary source yourself and it says the same
 thing for the same geography, period and base.

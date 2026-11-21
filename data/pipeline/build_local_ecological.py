@@ -91,7 +91,7 @@ def build_water_provisioning():
             url="https://environment.data.gov.uk/catchment-planning/WaterBody/GB106039023270",
             accessed=ACCESSED,
             notes=(
-                "Classifications CSV (data updated 17 March 2025). The water body's geometry was intersected with the ONS 2022 ward "
+                "Classifications CSV (data updated 17 March 2025). The EA published 2025 classifications on 6 August 2026, but as of 20 November 2026 the Catchment Data Explorer still shows 2022 as the latest year for this water body. The water body's geometry was intersected with the ONS 2022 ward "
                 "boundary: it runs through Ladywell (Ladywell Fields); the upstream Keston-to-Catford water body (GB106039023260) does not. "
                 "Ecological status: 2009 Poor, 2010 Poor, 2011 Bad, 2012 Bad, 2013 Poor (cycle 2; cycle 1 rated 2013 Moderate), 2014 Moderate, 2015 Moderate, 2016 Moderate, "
                 "2019 Moderate, 2022 Moderate. Classification methods change between planning cycles (cycle 1 to 2009-15, cycle 3 for 2019 "
@@ -145,7 +145,7 @@ def _canopy(dimension):
             accessed=ACCESSED,
             notes=(
                 "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London "
-                "19.56% (SE 0.30). Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not "
+                "19.56% (SE 0.30). Cross-check: Forest Research's UK Ward Canopy Cover (citizen-science i-Tree Canopy sampling on Google aerial imagery, published via data.gov.uk dataset 43ca8e70, updated February 2026) gives Ladywell (pre-2022 ward E05000446, 160.6 ha) 26% +/- 2.53 SE from 300 points, surveyed 2020. Not used as the headline: older survey, older boundary, larger error, one survey per ward (2018-2022), so no time series. Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not "
                 "detected. " + GLA_METHOD_NOTE
             ),
             **GLA_CANOPY_2024,
@@ -225,7 +225,7 @@ def build_energy_harvesting():
             notes=(
                 "All fuels total (domestic, transport, industrial and commercial) in ktoe, converted at 1 ktoe = 11.63 GWh, divided by "
                 "the ONS mid-year population carried in DESNZ's 2005-2024 local authority greenhouse gas workbook (Table 1.1). "
-                "Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London "
+                "Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London domestic use 5.4 MWh per resident (E12000007 all fuels domestic, London Total population). London "
                 "(E12000007) 14.0 MWh; England (E92000001) 19.2 MWh. Borough is the smallest geography published."
             ),
         ),
@@ -310,68 +310,92 @@ def build_energy_harvesting():
 
 
 def build_air_quality_regulation():
-    LAEI22 = "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g"
-    exceed = create_targeted_dimension(
-        ward=WARD, ward_code=WARD_CODE, lens=ECO,
-        dimension_name="air_quality_regulation",
-        target=Target(
-            text="UK legal limit for nitrogen dioxide: 40 µg/m³ annual mean. WHO 2021 guideline: 10 µg/m³.",
-            source_body="Air Quality Standards Regulations 2010; World Health Organization",
-            has_official_target=True,
-        ),
-        indicator="% of residents living where air pollution exceeds legal limits",
-        threshold=Threshold(value=None, unit="%", description="UK annual mean limit value for NO2, 40 µg/m³"),
-        snapshot=Snapshot(value=0, unit="%", year="2022"),
-        status=Status.DESCRIPTIVE_ONLY,
-        source=Source(
-            name="Transport for London / GLA - LAEI 2022 Population Exposure and Proportion of Road Length Exceeding statistics (November 2025)",
-            url=LAEI22,
-            accessed=ACCESSED,
-            notes=(
-                "Modelled 2022 annual mean concentrations, population-weighted by Output Area. Lewisham: 298,700 residents, 0 living "
-                "where NO2 exceeds the 40 µg/m³ legal limit; 100 above 30 µg/m³; 272,900 (91.4%) above 20 µg/m³, the WHO interim "
-                "target that the workbook notes will be the EU legal limit from 2030 (London 70.2%). Every Londoner lives above the "
-                "WHO 2021 guideline of 10 µg/m³. PM2.5: 2.5% of Lewisham residents live above 10 µg/m³ (London 11.8%). London as a "
-                "whole: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. Lewisham's population-weighted "
-                "NO2 fell from 27.7 to 21.9 µg/m³ between 2019 and 2022. The workbook publishes boroughs, not wards. Breathe London "
-                "(suggested source) runs a sensor network and does not publish resident exposure shares, so LAEI is used."
-            ),
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH,
-    )
-
+    """
+    Air quality regulation - one concentration indicator split into NO2 / PM2.5 / PM10 sub-indicators (November 2026 revision). The separate 'residents above
+    legal limits' indicator was folded into the concentration indicator at the user's request (one
+    finding, one indicator), and the concentration series moved from LAEI 2019/2022 to Defra's
+    yearly PCM background maps, 2015-2024.
+    """
     conc = create_descriptive_dimension(
         ward=WARD, ward_code=WARD_CODE, lens=ECO,
         dimension_name="air_quality_regulation",
         indicator="Annual average air pollution concentration (µg/m³)",
-        snapshot=Snapshot(value=21.9, unit="µg/m³", year="2022", date="nitrogen dioxide (NO2)"),
+        snapshot=Snapshot(value=18.5, unit="µg/m³", year="2024", date="nitrogen dioxide (NO2), background"),
         source=Source(
-            name="GLA / TfL - London Atmospheric Emissions Inventory (LAEI) 2022 and 2019, modelled concentrations (20m grid)",
-            url=LAEI22,
-            accessed=ACCESSED,
+            name="Defra UK-AIR - Modelled background pollution data (PCM 1x1 km annual mean maps, 2015-2024)",
+            url="https://uk-air.defra.gov.uk/data/pcm-data",
+            accessed="2026-11-20",
             notes=(
-                "Ward mean of every 20m grid point inside the ONS 2022 Ladywell boundary (5,107 points), from LAEI2022_V1_*.csv and "
-                "LAEI2019v3_CorNOx15_*.csv. NO2 27.6 (2019) to 21.9 (2022); PM2.5 10.7 to 9.4; PM10 16.3 to 16.4. Lewisham area "
-                "means: NO2 27.3 to 21.6; PM2.5 10.7 to 9.3; PM10 16.2 to 16.0. These are area averages, not population-weighted. "
-                "1.2% of the ward's area exceeded 40 µg/m³ NO2 in 2019 and 0.06% in 2022 (along the busiest roads); all of it was "
-                "above 20 µg/m³ in both years. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15. The GLA's own tables compare 2019 and "
-                "2022, though each inventory is a separate modelling exercise."
+                "Area-weighted mean of the 1x1 km background cells overlapping the ONS 2022 Ladywell ward boundary (7 cells), "
+                "from mapno2YYYY.csv, mappm25YYYYg.csv and mappm10YYYYg.csv. Ladywell NO2 2015-2024: 25.4, 26.3, 25.4, 24.0, 23.5, 21.0, 22.3, 21.4, 18.3, 18.5; "
+                "PM2.5: 11.0, 12.4, 12.3, 12.5, 12.0, 10.1, 8.8, 9.4, 8.3, 9.0; PM10: 17.2, 18.5, 17.8, 18.6, 18.4, 16.6, 15.2, 17.1, 14.0, 14.4. "
+                "2024 comparators (same method): Lewisham NO2 17.5, PM2.5 9.0, PM10 14.2; London (ONS region) NO2 15.9, PM2.5 8.5, "
+                "PM10 13.7. Background maps represent levels away from the immediate influence of busy roads. Defra: 'The models are "
+                "continually updated and improved and so the methodology often changes each year... Users should be mindful of these "
+                "year to year changes when comparing model outputs between years.' "
+                "Exceedance (moved from the former separate indicator; TfL/GLA LAEI 2022 Population Exposure statistics, November "
+                "2025, data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g): in 2022, 0 of Lewisham's "
+                "298,700 residents lived where NO2 exceeded the 40 µg/m³ legal limit; 272,900 (91.4%) lived above 20 µg/m³, the WHO's "
+                "strictest interim target and the EU limit from 2030 (London 70.2%); every Londoner lived above the WHO 2021 guideline "
+                "of 10. London: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. LAEI's 20m model gave "
+                "a Ladywell area mean of 21.9 µg/m³ NO2 in 2022 (27.6 in 2019), including roadside cells, so it is not joined to the "
+                "PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15 (Ladywell PM10 was below 15 in 2023 and 2024). "
+                "Defra published 2025 modelled maps on 9 October 2026 (Air quality compliance assessment 2025) from a new model, "
+                "CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line. Health effects text: OHID/UKHSA, 'Air pollution: applying All Our Health' (gov.uk, February 2022): short-term exposure can cause coughing, wheezing, shortness of breath and exacerbation of asthma; long-term exposure can cause cardiovascular and respiratory disease and lung cancer; children, the elderly and people with existing cardiovascular or respiratory disease are more susceptible. ULEZ attribution: GLA LAEI 2022 Summary Note (May 2026), London-wide NO2 fall 2019-2022."
             ),
         ),
         geography=GeographyLevel.WARD,
         confidence=Confidence.MEDIUM,
         target_text="UK legal annual limits: NO2 40 µg/m³, PM10 40 µg/m³, PM2.5 20 µg/m³ (10 µg/m³ by 2040). WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15.",
         trend=[
-            {"period": "2019", "value": 27.6, "series": "Nitrogen dioxide (NO2)"},
-            {"period": "2022", "value": 21.9, "series": "Nitrogen dioxide (NO2)"},
-            {"period": "2019", "value": 16.3, "series": "All particles up to 10 microns (PM10)"},
-            {"period": "2022", "value": 16.4, "series": "All particles up to 10 microns (PM10)"},
-            {"period": "2019", "value": 10.7, "series": "Fine particles (PM2.5)"},
+            {"period": "2015", "value": 25.4, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2016", "value": 26.3, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2017", "value": 25.4, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2018", "value": 24.0, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2019", "value": 23.5, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2020", "value": 21.0, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2021", "value": 22.3, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2022", "value": 21.4, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2023", "value": 18.3, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2024", "value": 18.5, "series": "Nitrogen dioxide (NO2)"},
+            {"period": "2015", "value": 17.2, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2016", "value": 18.5, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2017", "value": 17.8, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2018", "value": 18.6, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2019", "value": 18.4, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2020", "value": 16.6, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2021", "value": 15.2, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2022", "value": 17.1, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2023", "value": 14.0, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2024", "value": 14.4, "series": "All particles up to 10 microns (PM10)"},
+            {"period": "2015", "value": 11.0, "series": "Fine particles (PM2.5)"},
+            {"period": "2016", "value": 12.4, "series": "Fine particles (PM2.5)"},
+            {"period": "2017", "value": 12.3, "series": "Fine particles (PM2.5)"},
+            {"period": "2018", "value": 12.5, "series": "Fine particles (PM2.5)"},
+            {"period": "2019", "value": 12.0, "series": "Fine particles (PM2.5)"},
+            {"period": "2020", "value": 10.1, "series": "Fine particles (PM2.5)"},
+            {"period": "2021", "value": 8.8, "series": "Fine particles (PM2.5)"},
             {"period": "2022", "value": 9.4, "series": "Fine particles (PM2.5)"},
+            {"period": "2023", "value": 8.3, "series": "Fine particles (PM2.5)"},
+            {"period": "2024", "value": 9.0, "series": "Fine particles (PM2.5)"}
         ],
     )
-    return [exceed, _canopy("air_quality_regulation"), conc]
+    # One chart, three sub-indicators (grouped on the page by their bracketed suffix), so the
+    # headline can name its pollutant (NO2). Tree canopy was removed from this dimension at the
+    # user's request (it stays in carbon sequestration).
+    parts = []
+    for label, series, value in [
+        ("Nitrogen dioxide, NO2", "Nitrogen dioxide (NO2)", 18.5),
+        ("Fine particles, PM2.5", "Fine particles (PM2.5)", 9.0),
+        ("All particles up to 10 microns, PM10", "All particles up to 10 microns (PM10)", 14.4),
+    ]:
+        parts.append(replace(
+            conc,
+            indicator=f"Annual average air pollution, micrograms per cubic metre ({label})",
+            snapshot=Snapshot(value=value, unit="µg/m³", year="2024", date="background, away from the busiest roads"),
+            trend=[{"period": t["period"], "value": t["value"]} for t in conc.trend if t["series"] == series],
+        ))
+    return parts
 
 
 def build_temperature_regulation():

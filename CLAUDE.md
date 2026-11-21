@@ -15,6 +15,10 @@ The rules most often missed:
 - **Context cards**: max 3 documents per dimension including the research card; 2 is often enough.
 - **Don't narrate a chart's datapoints in prose**; explain why it moved.
 - **Every number or claim must be verified against a primary source you've actually read**, including text you inherited.
+- **One comparison per point**: compare a figure with thresholds *or* with other areas, not both, and never more than two reference points.
+- **The top summary introduces nothing new**: every fact in it must also be in an indicator text.
+- **Say what a measure means for people's lives**; don't assume the reader knows why nitrogen dioxide or fine particles matter.
+- **Name causes and strategies**; never write that causes are clear or solutions exist without naming them.
 - **Run the `fact-checker` agent** (`.claude/agents/fact-checker.md`) on new or edited copy before considering it done: after showing the drafted wording for review when the user is present, not before. Brief it with just the dimension and which blocks changed; the agent file holds the standard instructions.
 
 ## Scripts (use these instead of rewriting them)
@@ -24,6 +28,7 @@ All run from the repo root:
 - `python3 scripts/splice_dimension.py <dimension> --check` - confirm the builder in `data/pipeline/build_local_social_with_real_data.py` matches the live data before you edit it.
 - `python3 scripts/splice_dimension.py <dimension>` - after editing the builder (social builders in `build_local_social_with_real_data.py`, local ecological builders in `data/pipeline/build_local_ecological.py`), write its output into all three ward JSON files and verify they agree and pass the schema.
 - `python3 scripts/check_word_caps.py [dimension]` - word counts against the caps.
+- `python3 scripts/lint_copy.py [dimension]` - checks copy against the SPEC_RULES rules a script can test (new facts in the summary, too many comparison points, chart narration, banned phrases, unexpanded acronyms, unnamed causes). Older pages carry known warnings; every block you write or edit must pass.
 - `node scripts/render_check.js [dimension ...] [--shots DIR]` - open each dimension page in a headless browser; reports page errors, chart counts, headline values and any "undefined"/"NaN".
 - `python3 scripts/ods2csv.py file.ods outdir` - convert an ODS spreadsheet to one CSV per sheet (pandas can't read ODS here).
 
@@ -33,6 +38,15 @@ All run from the repo root:
 - These return bot-check 403s; don't retry them or try to get around them: lewisham.moderngov.co.uk (use the councilmeetings.lewisham.gov.uk mirror, same document ids), ofcom.org.uk and labs.thinkbroadband.com (Ofcom coverage data is on the ONS Explore local statistics API), london.gov.uk, lewisham.gov.uk (and cms.lewisham.gov.uk). Since November 2026 councilmeetings.lewisham.gov.uk has also returned an Azure WAF bot-check page from this environment; council documents may still be reachable on consultation.lewisham.gov.uk, airquality.lewisham.gov.uk or the London Datastore. If a claim can only be checked there, say so and mark it unverified.
 - Never take a figure from a search-result snippet; snippet figures have been wrong several times.
 - Ladywell ward is E05013725 (2022 boundaries). Its 7 best-fit LSOAs (2021): E01003273, E01003274, E01003275, E01003276, E01003278, E01003279, E01003291.
+
+## Copy quality gate (do this every time, in this order)
+
+The user has seen the same spec rules broken repeatedly, so drafting from memory is not enough:
+
+1. Re-read `SPEC_RULES.md` before drafting.
+2. Draft, then run `python3 scripts/check_word_caps.py <dimension>` and `python3 scripts/lint_copy.py <dimension>`; fix every warning on the blocks you touched, or be able to say why it is a false alarm.
+3. Self-review each changed block against the "rules most often missed" above, one rule at a time, and against any spec lesson that touches the same block type. If the user supplied wording, keep it and change only what a source or rule requires, saying what changed and why.
+4. Run the `fact-checker` agent (it now also reports spec breaches) and fix every FAIL, UNVERIFIED and spec breach before reporting the work as done.
 
 ## Close the loop on corrections
 

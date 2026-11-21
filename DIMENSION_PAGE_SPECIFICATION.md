@@ -2107,6 +2107,20 @@ plan prioritises and does, never just that it has priorities or measures; if you
 cut the reference; a summary gives the overview and the so-what (who can act and what it changes),
 never data caveats; end a paragraph on a sentence that connects to its point, not a detached fact.
 
+**Say plainly what a source recommends, and cover everyone a strategy is for (Biodiversity,
+November 2026).** The research card said State of Nature 2023 "points to Tiny Forests: 600 native
+trees and shrubs planted densely in 200 square metres"; the user asked whether that meant it
+recommends Tiny Forests as a solution. The report presents them as a case study of urban
+restoration, prioritised for deprived areas, so the card now says exactly that. On the strategy
+card, the user said the developer-focused narrative (Biodiversity Net Gain) was narrow compared
+with the strategy's own framing, and asked for its principles, priorities and measures to be listed
+so the card is tangible and actionable. The card now presents the strategy as a shared tool for
+anyone who uses, manages or develops land, with what it means for boroughs, developers and
+community groups. The principles' names and the measures could not be added: they are only in the
+Statement on london.gov.uk, which this environment cannot read. General rules: when a source
+features an example, say whether it recommends it, presents it as a case study, or only mentions
+it; describe a strategy through all the groups it is meant for, not the one easiest to source.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

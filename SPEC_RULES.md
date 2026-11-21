@@ -104,6 +104,8 @@ when you're doing something this file doesn't cover.
 - Never write that "the causes are clear" or that solutions exist without naming them. [3.2]
 - Never say a plan "has priorities" or "practical measures" without naming them; if you can't name them, cut the reference. [3.2]
 - End a paragraph on a sentence that connects to its point, not a detached fact. [3.2]
+- Say whether a source recommends an example, presents it as a case study, or only mentions it. [3.2]
+- Describe a strategy through all the groups it is meant for, not only the easiest to source. [3.2]
 
 ## Get Involved cards [4]
 

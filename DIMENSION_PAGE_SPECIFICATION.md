@@ -2082,6 +2082,31 @@ check. Response: `scripts/lint_copy.py` tests the rules a script can test; the f
 runs it and reports spec breaches alongside facts; and CLAUDE.md sets a fixed quality gate
 (re-read SPEC_RULES, lint, rule-by-rule self-review, fact-check) before any copy is reported done.
 
+**Substance over process; a summary gives the so-what; end paragraphs on a point (Biodiversity,
+November 2026).** Four corrections on one page. (1) The indicator text ended with "The strategy's
+open data also maps existing sites of importance for biodiversity, but leaves out locally
+designated wildlife sites for licensing reasons; on that open map no part of Ladywell qualifies":
+methodology too granular for the copy. (2) The strategy card opened with "one of 48 such
+strategies across England, meant to guide local action for nature and direct funding to it ...
+Its Statement of Biodiversity Priorities sets habitat priorities, each with practical measures to
+achieve it, and a list of species prioritised for recovery, chosen by specialists from 1,467
+threatened or locally significant species": the user called it process fluff with no substance
+and asked what the priorities and measures are. (3) The research card ended "In cities, it
+highlights Tiny Forests: 600 native trees and shrubs planted in 200 square metres", which the user
+found an abrupt way to finish. (4) The summary said "These are opportunities, not designations.
+No part of the ward is a nationally designated nature site ..."; the user said a summary is an
+overview, not methodology, and asked the so-what: what can people or government do with these
+areas, and what would it mean for biodiversity? The rewrite: the summary and indicator text say
+what the mapped places change (planning authorities must take them into account; Biodiversity Net
+Gain scores habitat created there higher; community groups can use the map to target funding);
+the card names the priorities (30 priorities and 378 focus species, with examples) and what the
+strategy changes, instead of how it was made; the Tiny Forests sentence is framed by the problem
+it answers. The measures themselves are only in the Statement on london.gov.uk, which this
+environment cannot read, so they were left out rather than gestured at. General rules: name what a
+plan prioritises and does, never just that it has priorities or measures; if you can't name them,
+cut the reference; a summary gives the overview and the so-what (who can act and what it changes),
+never data caveats; end a paragraph on a sentence that connects to its point, not a detached fact.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

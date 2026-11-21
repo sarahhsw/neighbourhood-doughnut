@@ -52,6 +52,7 @@ when you're doing something this file doesn't cover.
 - In the summary, give comparisons as a ratio ("nearly two and a half times") or as two percentages side by side, not raw cut-offs or a points gap. [2.1]
 - Every fact in the summary must already be in an indicator text; the summary never introduces anything new. [2.1]
 - Open with the finding and its cause, not a slogan ("cleaner than it was, but not clean"). [2.1]
+- A summary gives the overview and the so-what (who can act, what it changes); no data caveats or designation detail. [2.1]
 
 ## Indicator text ("What this measures") [2.2, 2.5]
 
@@ -101,6 +102,8 @@ when you're doing something this file doesn't cover.
 - Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]
 - Say what a plan prioritises and will do; explain its map, data or method only where that changes the reader's understanding. [3.2]
 - Never write that "the causes are clear" or that solutions exist without naming them. [3.2]
+- Never say a plan "has priorities" or "practical measures" without naming them; if you can't name them, cut the reference. [3.2]
+- End a paragraph on a sentence that connects to its point, not a detached fact. [3.2]
 
 ## Get Involved cards [4]
 

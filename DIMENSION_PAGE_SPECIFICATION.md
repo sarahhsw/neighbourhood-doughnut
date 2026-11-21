@@ -2047,6 +2047,41 @@ restoration, nature-based solutions such as native woodland and, in cities, Tiny
 responses. General rule: never refer to causes or solutions without naming them; if a source
 gives them, state them.
 
+**One comparison set per point; explain what a measure does to people; the summary adds nothing
+new (Air quality, November 2026).** The air quality text said NO2 "is well under the legal limit
+of 40 but almost double the WHO guideline of 10. It is slightly above Lewisham's 17.5, well above
+London's 15.9, and has fallen since 2015, when it was 25.4." The user said that was too many
+comparison points, already covered by the spec: once a figure has been set against the legal
+limit and the health guideline, it doesn't also need Lewisham and London. They also said not to
+presume the reader knows why nitrogen dioxide and fine particles matter, and supplied a model
+text: "In 2024, Ladywell's nitrogen dioxide level was 18.5 micrograms per cubic metre of air.
+That is well under the legal limit of 40, but almost double the World Health Organization's
+(WHO) guideline of 10. Fine particles follow the same pattern: 9.0, against a legal limit of 20
+and a WHO guideline of 5 ... Pollutants like this can irritate the airways and enter the lungs
+and bloodstream, leading to a small but real added risk for residents, especially children and
+older people." (The published version keeps this shape but states the health effects as the
+gov.uk "Air pollution: applying All Our Health" guidance does.) On the summary, the user said
+new information must not appear there first: the ULEZ attribution and "the European Union's legal
+limit from 2030" were only in the summary. The opener "Ladywell's air is cleaner than it was, but
+not clean" was too simplistic. The user's preferred summary: "Ladywell's air is cleaner than it
+was in 2019, attributed to Ultra Low Emission Zone's expansion to inner London and cleaner
+vehicles. Modelled background nitrogen dioxide, away from the busiest roads, has fallen to 18.5
+micrograms per cubic metre of air in 2024, much lower than the legal limit of 40 micrograms but
+still above [the WHO level]." (Its "above the 20 that the WHO set" was corrected to "almost double
+the WHO guideline of 10", since 18.5 is below 20.) General rules: compare a figure with
+thresholds or with other areas, not both, and never with more than two references; when a
+measure isn't self-explanatory, say in one plain sentence what it does to people and who is most
+affected; every fact in a summary must already be in an indicator text; open a summary with the
+finding and its cause, not a slogan.
+
+**Process: rules were being broken that the spec already covered (November 2026).** The user
+reported a quality regression: rules stated in the spec several times (comparison points, chart
+narration, methodology in copy) kept being broken. The causes were drafting from memory, a
+fact-checker that checked facts but not editorial rules, and word caps being the only automated
+check. Response: `scripts/lint_copy.py` tests the rules a script can test; the fact-checker now
+runs it and reports spec breaches alongside facts; and CLAUDE.md sets a fixed quality gate
+(re-read SPEC_RULES, lint, rule-by-rule self-review, fact-check) before any copy is reported done.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

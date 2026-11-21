@@ -50,6 +50,8 @@ when you're doing something this file doesn't cover.
 - Flow from place to borough to cause; a cause must be sourced at the geography the sentence claims. [2.1]
 - Keep indicators on the same theme adjacent in the summary; include a cause only if it changes how the reader understands the finding. [2.1]
 - In the summary, give comparisons as a ratio ("nearly two and a half times") or as two percentages side by side, not raw cut-offs or a points gap. [2.1]
+- Every fact in the summary must already be in an indicator text; the summary never introduces anything new. [2.1]
+- Open with the finding and its cause, not a slogan ("cleaner than it was, but not clean"). [2.1]
 
 ## Indicator text ("What this measures") [2.2, 2.5]
 
@@ -82,6 +84,8 @@ when you're doing something this file doesn't cover.
 - A headline must say exactly what its number measures; when a chart carries several measures, make them sub-indicators and headline one by name. [2.5]
 - Lead indicator text with the comparison that gives the number meaning (thresholds, then comparator areas); give a trend as one change, never a list of the chart's values. [2.5]
 - An indicator belongs to the one dimension it best explains; don't repeat it on another page. [2.5]
+- Compare a figure with thresholds or with other areas, not both, and never with more than two references. [2.2]
+- When a measure isn't self-explanatory, say in one plain sentence what it does to people and who is most affected. [2.2]
 
 ## Context cards [3]
 
@@ -110,6 +114,7 @@ when you're doing something this file doesn't cover.
 
 - After drafting, show the wording for review when the user is present, then run the `fact-checker` agent on the final text.
 - The edit isn't done until every FAIL and UNVERIFIED item is fixed or explained.
+- Before the fact-check, run `python3 scripts/lint_copy.py <dimension>` and self-review each changed block against these rules; the fact-checker also reports spec breaches. [2.9]
 
 ## Files and pipeline [13, 5.3]
 

@@ -341,7 +341,7 @@ def build_air_quality_regulation():
                 "a Ladywell area mean of 21.9 µg/m³ NO2 in 2022 (27.6 in 2019), including roadside cells, so it is not joined to the "
                 "PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15 (Ladywell PM10 was below 15 in 2023 and 2024). "
                 "Defra published 2025 modelled maps on 9 October 2026 (Air quality compliance assessment 2025) from a new model, "
-                "CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line."
+                "CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line. Health effects text: OHID/UKHSA, 'Air pollution: applying All Our Health' (gov.uk, February 2022): short-term exposure can cause coughing, wheezing, shortness of breath and exacerbation of asthma; long-term exposure can cause cardiovascular and respiratory disease and lung cancer; children, the elderly and people with existing cardiovascular or respiratory disease are more susceptible. ULEZ attribution: GLA LAEI 2022 Summary Note (May 2026), London-wide NO2 fall 2019-2022."
             ),
         ),
         geography=GeographyLevel.WARD,

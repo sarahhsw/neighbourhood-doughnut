@@ -1,0 +1,78 @@
+{
+  "_about": "Which doughnut dimensions each council service line touches. A tag is yes/no: a service's full budget is shown against every dimension it is tagged to and is never split or weighted. Service ids match build_council_spend.py. Dimensions with no tag are shown as 'no council service line'. Draft: review before treating as final.",
+  "services": {
+    "education": {
+      "tags": [
+        "education"
+      ],
+      "rationale": "Education services (RO1): early years, primary, secondary and special schools, alternative provision, post-16 provision."
+    },
+    "childrens_social_care": {
+      "tags": [
+        "equality",
+        "health",
+        "peace_justice"
+      ],
+      "rationale": "Children's social care (RO3): children looked after, safeguarding, family support, youth justice, services for young people, children's centres."
+    },
+    "adult_social_care": {
+      "tags": [
+        "health",
+        "equality"
+      ],
+      "rationale": "Adult social care (RO3): physical, learning disability, mental health and memory support; carers; social isolation."
+    },
+    "housing_gf": {
+      "tags": [
+        "housing"
+      ],
+      "rationale": "Housing services, General Fund only (RO4): homelessness and temporary accommodation, housing strategy and advice, housing benefit administration. Council-home rents and repairs sit in the separate Housing Revenue Account."
+    },
+    "environmental_regulatory": {
+      "tags": [
+        "air_quality_regulation",
+        "peace_justice",
+        "food"
+      ],
+      "rationale": "Environmental and regulatory services (RO5): environmental protection, food safety, housing standards, crime reduction and CCTV, waste and recycling, street cleansing, flood defences, climate change costs."
+    },
+    "public_health": {
+      "tags": [
+        "health",
+        "food"
+      ],
+      "rationale": "Public health (RO3): obesity, physical activity, children's 5-19 programmes, substance misuse, sexual health, smoking."
+    },
+    "central_services": {
+      "tags": [
+        "political_voice",
+        "income"
+      ],
+      "rationale": "Central services (RO6): conducting elections and registering electors; council tax collection and support; local welfare assistance."
+    },
+    "planning_development": {
+      "tags": [
+        "housing",
+        "income"
+      ],
+      "rationale": "Planning and development services (RO5): development control and planning policy, economic development, business support, community development."
+    },
+    "cultural_related": {
+      "tags": [
+        "culture",
+        "social_cohesion",
+        "wellbeing",
+        "biodiversity_support"
+      ],
+      "rationale": "Cultural and related services (RO5): libraries, arts and heritage, community centres, sport and leisure, parks and open spaces, allotments."
+    },
+    "highways_transport": {
+      "tags": [
+        "mobility",
+        "air_quality_regulation"
+      ],
+      "rationale": "Highways and transport services (RO2): road maintenance, street lighting, traffic management, parking, road safety, concessionary fares, transport planning."
+    }
+  },
+  "_verified": "Rationales list sub-lines from MHCLG Revenue Outturn RO1-RO6 2024-25 detailed returns (checked 22 November 2026)."
+}

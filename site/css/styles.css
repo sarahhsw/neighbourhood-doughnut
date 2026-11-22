@@ -17,6 +17,10 @@
     --overshoot: #C22E4A;
     --descriptive: #8C8478;
 
+    /* Council spending (spending.html and its ward-page card) */
+    --spend: #1F5F8B;
+    --spend-down: #9A4A1F;
+
     /* Typography */
     --font-serif: 'Fraunces', serif;
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -835,4 +839,55 @@ h1 {
     color: var(--ink);
     opacity: 0.6;
     padding: 40px;
+}
+
+/* Way in to the council spending page (ward page, under the ecological cards) */
+.spend-entry-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 30px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--spend);
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.spend-entry-card:hover,
+.spend-entry-card:focus-visible {
+    transform: translateY(-2px);
+}
+
+.spend-entry-card svg {
+    flex-shrink: 0;
+    color: var(--spend);
+}
+
+.spend-entry-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.spend-entry-title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.spend-entry-sub {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #3d2c3e;
+}
+
+@media (min-width: 768px) {
+    .spend-entry-card {
+        background: var(--card);
+    }
 }

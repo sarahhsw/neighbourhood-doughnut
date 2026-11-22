@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Council spending and Ladywell's needs</title>
+    <link rel="stylesheet" href="css/styles.css?v=45">
+    <link rel="stylesheet" href="css/spending.css?v=1">
+</head>
+<body>
+    <header>
+        <a class="ward-pill spend-back" href="ward.html">← Ladywell's doughnut</a>
+    </header>
+
+    <main class="spend-page">
+        <h1>Council spending and Ladywell's needs</h1>
+        <p class="spend-intro">Rows are doughnut dimensions; columns are Lewisham's service budgets. A dot means the service touches that dimension; its size is the service's 2024-25 budget. Each column header shows how that budget has changed since 2015-16, after inflation. Click a dimension to compare its need trends with its spending trends.</p>
+
+        <div class="spend-table-wrap" tabindex="0" role="region" aria-label="Council spending grid, scrolls sideways on small screens">
+            <table class="spend-grid" id="spend-grid">
+                <caption class="visually-hidden">Lewisham council service budgets and the Ladywell doughnut dimensions they touch</caption>
+                <thead id="spend-head"></thead>
+                <tbody id="spend-body">
+                    <tr><td class="spend-loading">Loading spending data…</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="spend-legend" aria-label="Key">
+            <span><span class="key-dot" style="background: var(--shortfall)"></span>Shortfall</span>
+            <span><span class="key-dot" style="background: var(--overshoot)"></span>Overshoot</span>
+            <span><span class="key-dot" style="background: var(--met)"></span>Met</span>
+            <span><span class="key-dot" style="background: var(--descriptive)"></span>No target</span>
+            <span><span class="key-line" style="background: var(--spend)"></span>Budget up after inflation</span>
+            <span><span class="key-line" style="background: var(--spend-down)"></span>Budget down after inflation</span>
+            <span><span class="key-gap"></span>Need flagged, no service line</span>
+        </div>
+
+        <p class="spend-footnote" id="spend-footnote">Spending: Ministry of Housing, Communities and Local Government (MHCLG) revenue outturn service expenditure summaries, 2015-16 to 2024-25, Lewisham net current expenditure, converted to 2024-25 prices with the HM Treasury GDP deflator. These are borough-wide figures, not spending located in Ladywell, and exclude the Housing Revenue Account (council-home rents and repairs) and capital spending. Some year-to-year changes reflect accounting changes rather than service levels, so check sharp one-year jumps before drawing conclusions. Which services touch which dimension is a judgement; each service's scope is listed when you open a dimension.</p>
+    </main>
+
+    <script src="js/chart.js?v=14"></script>
+    <script src="js/spending.js?v=1"></script>
+</body>
+</html>

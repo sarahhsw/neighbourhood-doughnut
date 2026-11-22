@@ -58,6 +58,13 @@ python fetch_lookups.py  # (optional - bootstrap file exists)
 python assemble.py
 ```
 
+### Council spending page
+`site/spending.html` compares the doughnut dimensions with Lewisham's service budgets. Its data comes from MHCLG revenue outturn returns and the HM Treasury GDP deflator, rebuilt from the repo root with:
+```bash
+python3 data/pipeline/build_council_spend.py
+```
+Which services touch which dimension is set in `data/lookups/budget_dimension_tags.json` (yes/no tags, never weights).
+
 ### Viewing the visualization locally
 ```bash
 cd site

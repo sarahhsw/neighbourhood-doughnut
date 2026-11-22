@@ -21,6 +21,7 @@ when you're doing something this file doesn't cover.
 - "I couldn't fetch it" must never become "it doesn't exist" in reader-facing copy. [2.5]
 - Before removing an indicator, check whether another dimension shares its name. [2.5]
 - Community and social cohesion are a single dimension, "Social cohesion"; there is no separate community dimension. If a requested indicator lives in another dimension, ask whether the dimensions should merge. [2.5]
+- One finding, one indicator: fold a threshold share (e.g. residents above a legal limit) into the indicator for the measure it comes from. [2.5]
 - Never fill an indicator from an aggregator website when the official publisher has the data; if it can't be fetched, flag it rather than ship a weaker number. [1.4]
 
 ## Top summary [2.1]
@@ -49,6 +50,9 @@ when you're doing something this file doesn't cover.
 - Flow from place to borough to cause; a cause must be sourced at the geography the sentence claims. [2.1]
 - Keep indicators on the same theme adjacent in the summary; include a cause only if it changes how the reader understands the finding. [2.1]
 - In the summary, give comparisons as a ratio ("nearly two and a half times") or as two percentages side by side, not raw cut-offs or a points gap. [2.1]
+- Every fact in the summary must already be in an indicator text; the summary never introduces anything new. [2.1]
+- Open with the finding and its cause, not a slogan ("cleaner than it was, but not clean"). [2.1]
+- A summary gives the overview and the so-what (who can act, what it changes); no data caveats or designation detail. [2.1]
 
 ## Indicator text ("What this measures") [2.2, 2.5]
 
@@ -78,6 +82,11 @@ when you're doing something this file doesn't cover.
 - Name distribution groups by position ("bottom 50%", "top tenth"), not "poorest"/"richest". [2.2]
 - Keep data-quality figures ("activity not known", sample caveats) in `source.notes`, not the copy, unless they change the finding. [2.2]
 - "Why this is happening" only for a real local causal story with evidence; otherwise fold the fact into this text. [2.8]
+- A headline must say exactly what its number measures; when a chart carries several measures, make them sub-indicators and headline one by name. [2.5]
+- Lead indicator text with the comparison that gives the number meaning (thresholds, then comparator areas); give a trend as one change, never a list of the chart's values. [2.5]
+- An indicator belongs to the one dimension it best explains; don't repeat it on another page. [2.5]
+- Compare a figure with thresholds or with other areas, not both, and never with more than two references. [2.2]
+- When a measure isn't self-explanatory, say in one plain sentence what it does to people and who is most affected. [2.2]
 
 ## Context cards [3]
 
@@ -85,11 +94,18 @@ when you're doing something this file doesn't cover.
 - One document per distinct policy area; read the actual document and confirm it's the latest version.
 - If a card's document is more than about five years old, look for the programme or strategy that superseded it. [3.1]
 - Structure a council-plan card as problem, response, takeaway; end with the one thing the reader should remember. [3.2]
+- Never label a sentence "The takeaway:"; let the narrative carry the point, and cut a closing sentence that only repeats the card. [3.2]
 - Write a council-plan card as one paragraph: what the plan is and its status, its aims, what it does, its priorities (model: the equality Inclusive Talent Strategy card). [3.2]
 - Always answer "why?" and "so what?": a card or indicator text should say why the finding is so (sourced) and what follows from it. [3.2]
 - Check any dated target in a card: if the date has passed, report the outcome from a source or reword it as a commitment. [3.2]
 - About 165 words per card; prose by default, bullets only for genuinely distinct themes; always a source link.
 - Describe what the policy does and found, not its process (meeting dates, recommendation counts, working groups); never point back to an indicator on the page. [3]
+- Say what a plan prioritises and will do; explain its map, data or method only where that changes the reader's understanding. [3.2]
+- Never write that "the causes are clear" or that solutions exist without naming them. [3.2]
+- Never say a plan "has priorities" or "practical measures" without naming them; if you can't name them, cut the reference. [3.2]
+- End a paragraph on a sentence that connects to its point, not a detached fact. [3.2]
+- Say whether a source recommends an example, presents it as a case study, or only mentions it. [3.2]
+- Describe a strategy through all the groups it is meant for, not only the easiest to source. [3.2]
 
 ## Get Involved cards [4]
 
@@ -97,11 +113,13 @@ when you're doing something this file doesn't cover.
 - One merged paragraph of about 25-30 words; the whole card is the link.
 - No recurring-event dates, waiting lists, "recruiting now" or other status that will date quickly.
 - State the practical facts of taking part; never quote an organisation's slogan or pep talk. [4]
+- Every dimension needs at least one verified Get Involved card before the page is done. [4]
 
 ## Fact-checking [2.9]
 
 - After drafting, show the wording for review when the user is present, then run the `fact-checker` agent on the final text.
 - The edit isn't done until every FAIL and UNVERIFIED item is fixed or explained.
+- Before the fact-check, run `python3 scripts/lint_copy.py <dimension>` and self-review each changed block against these rules; the fact-checker also reports spec breaches. [2.9]
 
 ## Files and pipeline [13, 5.3]
 

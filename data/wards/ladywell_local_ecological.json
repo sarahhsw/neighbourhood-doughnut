@@ -127,7 +127,7 @@
         "name": "Environment Agency - Catchment Data Explorer, Ravensbourne (Catford to Deptford) water body GB106039023270",
         "url": "https://environment.data.gov.uk/catchment-planning/WaterBody/GB106039023270",
         "accessed": "2026-11-19",
-        "notes": "Classifications CSV (data updated 17 March 2025). The water body's geometry was intersected with the ONS 2022 ward boundary: it runs through Ladywell (Ladywell Fields); the upstream Keston-to-Catford water body (GB106039023260) does not. Ecological status: 2009 Poor, 2010 Poor, 2011 Bad, 2012 Bad, 2013 Poor (cycle 2; cycle 1 rated 2013 Moderate), 2014 Moderate, 2015 Moderate, 2016 Moderate, 2019 Moderate, 2022 Moderate. Classification methods change between planning cycles (cycle 1 to 2009-15, cycle 3 for 2019 and 2022), so no line is drawn. In 2022: fish Bad, invertebrates Moderate, macrophytes Poor, phosphate Poor, dissolved oxygen and ammonia High. Chemical status failed in 2019 (PFOS and PBDEs); in 2022 it is listed as 'does not require assessment'. Designated heavily modified. Reasons for not achieving good status (cycle 3) include physical modification (flood protection structures, barriers to fish, urbanisation), sewage discharges, leaking sewers and misconnected household drains (confirmed for invertebrates). Objectives CSV: ecological Good by 2027 (low confidence), overall Good by 2063."
+        "notes": "Classifications CSV (data updated 17 March 2025). The EA published 2025 classifications on 6 August 2026, but as of 20 November 2026 the Catchment Data Explorer still shows 2022 as the latest year for this water body. The water body's geometry was intersected with the ONS 2022 ward boundary: it runs through Ladywell (Ladywell Fields); the upstream Keston-to-Catford water body (GB106039023260) does not. Ecological status: 2009 Poor, 2010 Poor, 2011 Bad, 2012 Bad, 2013 Poor (cycle 2; cycle 1 rated 2013 Moderate), 2014 Moderate, 2015 Moderate, 2016 Moderate, 2019 Moderate, 2022 Moderate. Classification methods change between planning cycles (cycle 1 to 2009-15, cycle 3 for 2019 and 2022), so no line is drawn. In 2022: fish Bad, invertebrates Moderate, macrophytes Poor, phosphate Poor, dissolved oxygen and ammonia High. Chemical status failed in 2019 (PFOS and PBDEs); in 2022 it is listed as 'does not require assessment'. Designated heavily modified. Reasons for not achieving good status (cycle 3) include physical modification (flood protection structures, barriers to fish, urbanisation), sewage discharges, leaking sewers and misconnected household drains (confirmed for invertebrates). Objectives CSV: ecological Good by 2027 (low confidence), overall Good by 2063."
       },
       "confidence": "high",
       "community_notes": []
@@ -193,7 +193,7 @@
         "name": "Greater London Authority - Tree Canopy Cover 2024 (ward and borough statistics)",
         "url": "https://data.london.gov.uk/dataset/tree-canopy-cover-2024-2w4m3",
         "accessed": "2026-11-19",
-        "notes": "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London 19.56% (SE 0.30). Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not detected. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
+        "notes": "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London 19.56% (SE 0.30). Cross-check: Forest Research's UK Ward Canopy Cover (citizen-science i-Tree Canopy sampling on Google aerial imagery, published via data.gov.uk dataset 43ca8e70, updated February 2026) gives Ladywell (pre-2022 ward E05000446, 160.6 ha) 26% +/- 2.53 SE from 300 points, surveyed 2020. Not used as the headline: older survey, older boundary, larger error, one survey per ward (2018-2022), so no time series. Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not detected. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
       },
       "confidence": "high",
       "community_notes": []
@@ -292,7 +292,7 @@
         "name": "DESNZ - Total final energy consumption at regional and local authority level: 2005 to 2024 (July 2026)",
         "url": "https://www.gov.uk/government/statistics/total-final-energy-consumption-at-regional-and-local-authority-level-2005-to-2024",
         "accessed": "2026-11-19",
-        "notes": "All fuels total (domestic, transport, industrial and commercial) in ktoe, converted at 1 ktoe = 11.63 GWh, divided by the ONS mid-year population carried in DESNZ's 2005-2024 local authority greenhouse gas workbook (Table 1.1). Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London (E12000007) 14.0 MWh; England (E92000001) 19.2 MWh. Borough is the smallest geography published."
+        "notes": "All fuels total (domestic, transport, industrial and commercial) in ktoe, converted at 1 ktoe = 11.63 GWh, divided by the ONS mid-year population carried in DESNZ's 2005-2024 local authority greenhouse gas workbook (Table 1.1). Lewisham 2024: 261.7 ktoe (3,044 GWh) for 301,255 residents = 10.1 MWh; domestic use 5.3 MWh per resident. London domestic use 5.4 MWh per resident (E12000007 all fuels domestic, London Total population). London (E12000007) 14.0 MWh; England (E92000001) 19.2 MWh. Borough is the smallest geography published."
       },
       "confidence": "high",
       "community_notes": [],
@@ -775,65 +775,74 @@
       "lens": "local_ecological",
       "dimension": "air_quality_regulation",
       "target": {
-        "text": "UK legal limit for nitrogen dioxide: 40 \u00b5g/m\u00b3 annual mean. WHO 2021 guideline: 10 \u00b5g/m\u00b3.",
-        "source_body": "Air Quality Standards Regulations 2010; World Health Organization",
-        "has_official_target": true
+        "text": "UK legal annual limits: NO2 40 \u00b5g/m\u00b3, PM10 40 \u00b5g/m\u00b3, PM2.5 20 \u00b5g/m\u00b3 (10 \u00b5g/m\u00b3 by 2040). WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15.",
+        "source_body": "none_found",
+        "has_official_target": false
       },
-      "indicator": "% of residents living where air pollution exceeds legal limits",
+      "indicator": "Annual average air pollution, micrograms per cubic metre (Nitrogen dioxide, NO2)",
       "threshold": {
         "value": null,
-        "unit": "%",
-        "description": "UK annual mean limit value for NO2, 40 \u00b5g/m\u00b3"
+        "unit": null,
+        "description": null
       },
       "snapshot": {
-        "value": 0,
-        "unit": "%",
-        "year": "2022",
-        "date": null
-      },
-      "status": "descriptive_only",
-      "geography_of_data": "borough_inherited",
-      "source": {
-        "name": "Transport for London / GLA - LAEI 2022 Population Exposure and Proportion of Road Length Exceeding statistics (November 2025)",
-        "url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
-        "accessed": "2026-11-19",
-        "notes": "Modelled 2022 annual mean concentrations, population-weighted by Output Area. Lewisham: 298,700 residents, 0 living where NO2 exceeds the 40 \u00b5g/m\u00b3 legal limit; 100 above 30 \u00b5g/m\u00b3; 272,900 (91.4%) above 20 \u00b5g/m\u00b3, the WHO interim target that the workbook notes will be the EU legal limit from 2030 (London 70.2%). Every Londoner lives above the WHO 2021 guideline of 10 \u00b5g/m\u00b3. PM2.5: 2.5% of Lewisham residents live above 10 \u00b5g/m\u00b3 (London 11.8%). London as a whole: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. Lewisham's population-weighted NO2 fell from 27.7 to 21.9 \u00b5g/m\u00b3 between 2019 and 2022. The workbook publishes boroughs, not wards. Breathe London (suggested source) runs a sensor network and does not publish resident exposure shares, so LAEI is used."
-      },
-      "confidence": "high",
-      "community_notes": []
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_ecological",
-      "dimension": "air_quality_regulation",
-      "target": {
-        "text": "London Environment Strategy (2018): increase London's tree canopy cover by 10% by 2050.",
-        "source_body": "Mayor of London - London Environment Strategy",
-        "has_official_target": true
-      },
-      "indicator": "% tree canopy coverage",
-      "threshold": {
-        "value": null,
-        "unit": "%",
-        "description": "London average 19.56% (2022 imagery)"
-      },
-      "snapshot": {
-        "value": 25.0,
-        "unit": "%",
-        "year": "2022",
-        "date": "aerial imagery captured mainly in 2022"
+        "value": 18.5,
+        "unit": "\u00b5g/m\u00b3",
+        "year": "2024",
+        "date": "background, away from the busiest roads"
       },
       "status": "descriptive_only",
       "geography_of_data": "ward",
       "source": {
-        "name": "Greater London Authority - Tree Canopy Cover 2024 (ward and borough statistics)",
-        "url": "https://data.london.gov.uk/dataset/tree-canopy-cover-2024-2w4m3",
-        "accessed": "2026-11-19",
-        "notes": "Ladywell (2022 ward E05013725): 50.97 ha of canopy in 204.26 ha = 24.95%. Lewisham 19.60% (SE 0.36), London 19.56% (SE 0.30). Canopy means tree crowns about 4m tall or more; young and newly planted trees are mostly not detected. Both 2024 maps were modelled by the GLA from 25cm colour and infrared aerial imagery plus height data, captured mainly in 2022 (GLA Methodology Report, Canopy & Green Cover 2024, June 2024). Typical standard error for an average-sized ward is about 0.6 percentage points for canopy and 1.2 for green cover. The GLA says the 2024 estimates should not be compared with the 2018 Curio Canopy map (2016 imagery): the new model uses height data, and the apparent London-wide fall from 21.06% to 19.56% is 'not an indication of true change' (section 4.3). No time series is therefore drawn."
+        "name": "Defra UK-AIR - Modelled background pollution data (PCM 1x1 km annual mean maps, 2015-2024)",
+        "url": "https://uk-air.defra.gov.uk/data/pcm-data",
+        "accessed": "2026-11-20",
+        "notes": "Area-weighted mean of the 1x1 km background cells overlapping the ONS 2022 Ladywell ward boundary (7 cells), from mapno2YYYY.csv, mappm25YYYYg.csv and mappm10YYYYg.csv. Ladywell NO2 2015-2024: 25.4, 26.3, 25.4, 24.0, 23.5, 21.0, 22.3, 21.4, 18.3, 18.5; PM2.5: 11.0, 12.4, 12.3, 12.5, 12.0, 10.1, 8.8, 9.4, 8.3, 9.0; PM10: 17.2, 18.5, 17.8, 18.6, 18.4, 16.6, 15.2, 17.1, 14.0, 14.4. 2024 comparators (same method): Lewisham NO2 17.5, PM2.5 9.0, PM10 14.2; London (ONS region) NO2 15.9, PM2.5 8.5, PM10 13.7. Background maps represent levels away from the immediate influence of busy roads. Defra: 'The models are continually updated and improved and so the methodology often changes each year... Users should be mindful of these year to year changes when comparing model outputs between years.' Exceedance (moved from the former separate indicator; TfL/GLA LAEI 2022 Population Exposure statistics, November 2025, data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g): in 2022, 0 of Lewisham's 298,700 residents lived where NO2 exceeded the 40 \u00b5g/m\u00b3 legal limit; 272,900 (91.4%) lived above 20 \u00b5g/m\u00b3, the WHO's strictest interim target and the EU limit from 2030 (London 70.2%); every Londoner lived above the WHO 2021 guideline of 10. London: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. LAEI's 20m model gave a Ladywell area mean of 21.9 \u00b5g/m\u00b3 NO2 in 2022 (27.6 in 2019), including roadside cells, so it is not joined to the PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15 (Ladywell PM10 was below 15 in 2023 and 2024). Defra published 2025 modelled maps on 9 October 2026 (Air quality compliance assessment 2025) from a new model, CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line. Health effects text: OHID/UKHSA, 'Air pollution: applying All Our Health' (gov.uk, February 2022): short-term exposure can cause coughing, wheezing, shortness of breath and exacerbation of asthma; long-term exposure can cause cardiovascular and respiratory disease and lung cancer; children, the elderly and people with existing cardiovascular or respiratory disease are more susceptible. ULEZ attribution: GLA LAEI 2022 Summary Note (May 2026), London-wide NO2 fall 2019-2022."
       },
-      "confidence": "high",
-      "community_notes": []
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015",
+          "value": 25.4
+        },
+        {
+          "period": "2016",
+          "value": 26.3
+        },
+        {
+          "period": "2017",
+          "value": 25.4
+        },
+        {
+          "period": "2018",
+          "value": 24.0
+        },
+        {
+          "period": "2019",
+          "value": 23.5
+        },
+        {
+          "period": "2020",
+          "value": 21.0
+        },
+        {
+          "period": "2021",
+          "value": 22.3
+        },
+        {
+          "period": "2022",
+          "value": 21.4
+        },
+        {
+          "period": "2023",
+          "value": 18.3
+        },
+        {
+          "period": "2024",
+          "value": 18.5
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -845,58 +854,143 @@
         "source_body": "none_found",
         "has_official_target": false
       },
-      "indicator": "Annual average air pollution concentration (\u00b5g/m\u00b3)",
+      "indicator": "Annual average air pollution, micrograms per cubic metre (Fine particles, PM2.5)",
       "threshold": {
         "value": null,
         "unit": null,
         "description": null
       },
       "snapshot": {
-        "value": 21.9,
+        "value": 9.0,
         "unit": "\u00b5g/m\u00b3",
-        "year": "2022",
-        "date": "nitrogen dioxide (NO2)"
+        "year": "2024",
+        "date": "background, away from the busiest roads"
       },
       "status": "descriptive_only",
       "geography_of_data": "ward",
       "source": {
-        "name": "GLA / TfL - London Atmospheric Emissions Inventory (LAEI) 2022 and 2019, modelled concentrations (20m grid)",
-        "url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
-        "accessed": "2026-11-19",
-        "notes": "Ward mean of every 20m grid point inside the ONS 2022 Ladywell boundary (5,107 points), from LAEI2022_V1_*.csv and LAEI2019v3_CorNOx15_*.csv. NO2 27.6 (2019) to 21.9 (2022); PM2.5 10.7 to 9.4; PM10 16.3 to 16.4. Lewisham area means: NO2 27.3 to 21.6; PM2.5 10.7 to 9.3; PM10 16.2 to 16.0. These are area averages, not population-weighted. 1.2% of the ward's area exceeded 40 \u00b5g/m\u00b3 NO2 in 2019 and 0.06% in 2022 (along the busiest roads); all of it was above 20 \u00b5g/m\u00b3 in both years. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15. The GLA's own tables compare 2019 and 2022, though each inventory is a separate modelling exercise."
+        "name": "Defra UK-AIR - Modelled background pollution data (PCM 1x1 km annual mean maps, 2015-2024)",
+        "url": "https://uk-air.defra.gov.uk/data/pcm-data",
+        "accessed": "2026-11-20",
+        "notes": "Area-weighted mean of the 1x1 km background cells overlapping the ONS 2022 Ladywell ward boundary (7 cells), from mapno2YYYY.csv, mappm25YYYYg.csv and mappm10YYYYg.csv. Ladywell NO2 2015-2024: 25.4, 26.3, 25.4, 24.0, 23.5, 21.0, 22.3, 21.4, 18.3, 18.5; PM2.5: 11.0, 12.4, 12.3, 12.5, 12.0, 10.1, 8.8, 9.4, 8.3, 9.0; PM10: 17.2, 18.5, 17.8, 18.6, 18.4, 16.6, 15.2, 17.1, 14.0, 14.4. 2024 comparators (same method): Lewisham NO2 17.5, PM2.5 9.0, PM10 14.2; London (ONS region) NO2 15.9, PM2.5 8.5, PM10 13.7. Background maps represent levels away from the immediate influence of busy roads. Defra: 'The models are continually updated and improved and so the methodology often changes each year... Users should be mindful of these year to year changes when comparing model outputs between years.' Exceedance (moved from the former separate indicator; TfL/GLA LAEI 2022 Population Exposure statistics, November 2025, data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g): in 2022, 0 of Lewisham's 298,700 residents lived where NO2 exceeded the 40 \u00b5g/m\u00b3 legal limit; 272,900 (91.4%) lived above 20 \u00b5g/m\u00b3, the WHO's strictest interim target and the EU limit from 2030 (London 70.2%); every Londoner lived above the WHO 2021 guideline of 10. London: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. LAEI's 20m model gave a Ladywell area mean of 21.9 \u00b5g/m\u00b3 NO2 in 2022 (27.6 in 2019), including roadside cells, so it is not joined to the PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15 (Ladywell PM10 was below 15 in 2023 and 2024). Defra published 2025 modelled maps on 9 October 2026 (Air quality compliance assessment 2025) from a new model, CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line. Health effects text: OHID/UKHSA, 'Air pollution: applying All Our Health' (gov.uk, February 2022): short-term exposure can cause coughing, wheezing, shortness of breath and exacerbation of asthma; long-term exposure can cause cardiovascular and respiratory disease and lung cancer; children, the elderly and people with existing cardiovascular or respiratory disease are more susceptible. ULEZ attribution: GLA LAEI 2022 Summary Note (May 2026), London-wide NO2 fall 2019-2022."
       },
       "confidence": "medium",
       "community_notes": [],
       "trend": [
         {
-          "period": "2019",
-          "value": 27.6,
-          "series": "Nitrogen dioxide (NO2)"
+          "period": "2015",
+          "value": 11.0
         },
         {
-          "period": "2022",
-          "value": 21.9,
-          "series": "Nitrogen dioxide (NO2)"
+          "period": "2016",
+          "value": 12.4
         },
         {
-          "period": "2019",
-          "value": 16.3,
-          "series": "All particles up to 10 microns (PM10)"
+          "period": "2017",
+          "value": 12.3
         },
         {
-          "period": "2022",
-          "value": 16.4,
-          "series": "All particles up to 10 microns (PM10)"
+          "period": "2018",
+          "value": 12.5
         },
         {
           "period": "2019",
-          "value": 10.7,
-          "series": "Fine particles (PM2.5)"
+          "value": 12.0
+        },
+        {
+          "period": "2020",
+          "value": 10.1
+        },
+        {
+          "period": "2021",
+          "value": 8.8
         },
         {
           "period": "2022",
-          "value": 9.4,
-          "series": "Fine particles (PM2.5)"
+          "value": 9.4
+        },
+        {
+          "period": "2023",
+          "value": 8.3
+        },
+        {
+          "period": "2024",
+          "value": 9.0
+        }
+      ]
+    },
+    {
+      "ward": "Ladywell",
+      "ward_code": "E05013725",
+      "lens": "local_ecological",
+      "dimension": "air_quality_regulation",
+      "target": {
+        "text": "UK legal annual limits: NO2 40 \u00b5g/m\u00b3, PM10 40 \u00b5g/m\u00b3, PM2.5 20 \u00b5g/m\u00b3 (10 \u00b5g/m\u00b3 by 2040). WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15.",
+        "source_body": "none_found",
+        "has_official_target": false
+      },
+      "indicator": "Annual average air pollution, micrograms per cubic metre (All particles up to 10 microns, PM10)",
+      "threshold": {
+        "value": null,
+        "unit": null,
+        "description": null
+      },
+      "snapshot": {
+        "value": 14.4,
+        "unit": "\u00b5g/m\u00b3",
+        "year": "2024",
+        "date": "background, away from the busiest roads"
+      },
+      "status": "descriptive_only",
+      "geography_of_data": "ward",
+      "source": {
+        "name": "Defra UK-AIR - Modelled background pollution data (PCM 1x1 km annual mean maps, 2015-2024)",
+        "url": "https://uk-air.defra.gov.uk/data/pcm-data",
+        "accessed": "2026-11-20",
+        "notes": "Area-weighted mean of the 1x1 km background cells overlapping the ONS 2022 Ladywell ward boundary (7 cells), from mapno2YYYY.csv, mappm25YYYYg.csv and mappm10YYYYg.csv. Ladywell NO2 2015-2024: 25.4, 26.3, 25.4, 24.0, 23.5, 21.0, 22.3, 21.4, 18.3, 18.5; PM2.5: 11.0, 12.4, 12.3, 12.5, 12.0, 10.1, 8.8, 9.4, 8.3, 9.0; PM10: 17.2, 18.5, 17.8, 18.6, 18.4, 16.6, 15.2, 17.1, 14.0, 14.4. 2024 comparators (same method): Lewisham NO2 17.5, PM2.5 9.0, PM10 14.2; London (ONS region) NO2 15.9, PM2.5 8.5, PM10 13.7. Background maps represent levels away from the immediate influence of busy roads. Defra: 'The models are continually updated and improved and so the methodology often changes each year... Users should be mindful of these year to year changes when comparing model outputs between years.' Exceedance (moved from the former separate indicator; TfL/GLA LAEI 2022 Population Exposure statistics, November 2025, data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g): in 2022, 0 of Lewisham's 298,700 residents lived where NO2 exceeded the 40 \u00b5g/m\u00b3 legal limit; 272,900 (91.4%) lived above 20 \u00b5g/m\u00b3, the WHO's strictest interim target and the EU limit from 2030 (London 70.2%); every Londoner lived above the WHO 2021 guideline of 10. London: about 161,000 people above the NO2 legal limit in 2019, just over 1,000 in 2022. LAEI's 20m model gave a Ladywell area mean of 21.9 \u00b5g/m\u00b3 NO2 in 2022 (27.6 in 2019), including roadside cells, so it is not joined to the PCM series. WHO 2021 guidelines: NO2 10, PM2.5 5, PM10 15 (Ladywell PM10 was below 15 in 2023 and 2024). Defra published 2025 modelled maps on 9 October 2026 (Air quality compliance assessment 2025) from a new model, CMAQ-Urban; that is a method break, so 2025 is not added to this PCM line. Health effects text: OHID/UKHSA, 'Air pollution: applying All Our Health' (gov.uk, February 2022): short-term exposure can cause coughing, wheezing, shortness of breath and exacerbation of asthma; long-term exposure can cause cardiovascular and respiratory disease and lung cancer; children, the elderly and people with existing cardiovascular or respiratory disease are more susceptible. ULEZ attribution: GLA LAEI 2022 Summary Note (May 2026), London-wide NO2 fall 2019-2022."
+      },
+      "confidence": "medium",
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2015",
+          "value": 17.2
+        },
+        {
+          "period": "2016",
+          "value": 18.5
+        },
+        {
+          "period": "2017",
+          "value": 17.8
+        },
+        {
+          "period": "2018",
+          "value": 18.6
+        },
+        {
+          "period": "2019",
+          "value": 18.4
+        },
+        {
+          "period": "2020",
+          "value": 16.6
+        },
+        {
+          "period": "2021",
+          "value": 15.2
+        },
+        {
+          "period": "2022",
+          "value": 17.1
+        },
+        {
+          "period": "2023",
+          "value": 14.0
+        },
+        {
+          "period": "2024",
+          "value": 14.4
         }
       ]
     },

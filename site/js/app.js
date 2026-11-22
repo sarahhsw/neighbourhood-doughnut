@@ -82,7 +82,8 @@ async function loadWardData() {
 }
 
 function updateCounts() {
-    document.getElementById('generated-at').textContent = new Date(wardData.generated_at).toLocaleString();
+    document.getElementById('generated-at').textContent = new Date(wardData.generated_at)
+        .toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 function renderPinnedCards() {
@@ -199,7 +200,7 @@ function renderTrendChart(allIndicators, dimension) {
     // geographies or survey versions - each label gets its own line, colour and legend
     // entry, so a change of geography or method is never drawn as one continuous line.
     // Points without a label form a single series per indicator, as before.
-    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled)\)$/, '');
+    const chartTitle = indicatorsWithTrend[0].indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled|Nitrogen dioxide, NO2|Fine particles, PM2\.5|All particles up to 10 microns, PM10)\)$/, '');
     const seriesList = [];
     indicatorsWithTrend.forEach(ind => {
         const labels = [...new Set(ind.trend.map(t => t.series || ''))];
@@ -410,7 +411,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // Group indicators by their base name (without gender/age-group suffix)
     const indicatorGroups = {};
     allIndicators.forEach(ind => {
-        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled)\)$/, '');
+        const baseName = ind.indicator.replace(/\s*\((Male|Female|Reception|Year 6|Owner-occupied|Private rented|Social rented|Women vs men|Ethnic minority vs White|Disabled vs non-disabled|Nitrogen dioxide, NO2|Fine particles, PM2\.5|All particles up to 10 microns, PM10)\)$/, '');
         if (!indicatorGroups[baseName]) {
             indicatorGroups[baseName] = [];
         }
@@ -434,13 +435,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         'income': "Deprivation is patchy within Ladywell: one of its seven neighbourhoods is among England's most deprived for income and employment. In Lewisham, more than a quarter of residents live in poverty after housing costs, close to the London average, and around two-thirds of them are in a family where someone works. Out-of-work benefits reach 17.7% of working-age residents, above London's 15.2%, while the claimant count of job-seekers equals only about two in five of that total. Since 2020, the rise has mostly come among recipients not required to look for work, a group that includes people too ill to work; nationally, the number out of work through long-term sickness rose after the pandemic, often alongside depression or anxiety.",
         'peace_justice': "Ladywell records more crime per resident than Lewisham as a whole: 119 crimes for every 1,000 residents in the year to October 2026, against 100 across the borough. About half the rise since 2022 is violence in which nobody was injured. Trust in the police is also weaker in Lewisham than across the capital: in the year to March 2026, 60% of the borough's residents said they trust the Metropolitan Police, against 71% of Londoners.",
         // Local ecological dimensions (November 2026)
-        'water_provisioning': "Ladywell shares London's strained water supply: Thames Water's area is classed as seriously water-stressed, and each person uses about 139 litres a day, above the national target of 122 litres by 2038. The ward's own river falls short of good health. The Ravensbourne, which runs through Ladywell Fields, has been rated moderate, the middle of a five-step scale from high to bad, in every assessment since 2014. The Environment Agency names sewage discharges, household drains wrongly connected to the river, and flood defence structures that block fish among the reasons. Just over half of Ladywell's land (53%) is not covered by plants, less than across Lewisham (61%); Thames21, which is restoring the river, names runoff from surrounding urban areas among its pressures.",
-        'carbon_sequestration': "Ladywell has more tree cover than London on average. A quarter of the ward (25%) lies under tree canopy, the leafy crowns of trees about 4 metres tall or more, against about a fifth (19.6%) across both Lewisham and London. Counting grass, gardens, shrubs and other plants too, 46.6% of the ward is green, a little below London's 51.7%. Both figures come from aerial photographs taken mainly in 2022. The Greater London Authority changed its method since its maps from 2016 photographs, so neither figure can be compared with earlier ones.",
-        'biodiversity_support': "London's first Local Nature Recovery Strategy, published in March 2026, marks about a quarter (26.5%) of Ladywell's land as a place where nature could recover, more than across Lewisham (19.5%). Much of it is flagged for parks and open spaces, with woodland, lowland meadow, floodplain and river habitat also identified. These locations are opportunities, not new designations. No part of the ward is a nationally designated nature site or Local Nature Reserve, and the strategy's open map leaves out local wildlife sites, so it does not show the nature already valued in the ward's parks.",
-        'energy_harvesting': "Energy used in Lewisham works out at about 10.1 megawatt-hours per resident in 2024, against 14.0 across London, though home use per resident is close to London's; the total per resident has fallen by almost a fifth since 2015. Little of the borough's electricity is known to come from local renewables. Solar panels in the borough generated the equivalent of 1.1% of its electricity use in 2024, though that share has tripled since 2015. Recycling lags too: 27.2% of household waste was reused, recycled or composted in 2024/25, against 32.6% across London, missing the council's 40% target. Lewisham's recycling plan says recycling is harder in flats, and the borough has a high proportion of them.",
-        'air_quality_regulation': "Ladywell's air is cleaner than it was, but not clean. Nitrogen dioxide fell by about a fifth between 2019 and 2022, to an average of 21.9 micrograms per cubic metre of air across the ward. Across London, the Greater London Authority attributes that fall largely to the Ultra Low Emission Zone's expansion to inner London and cleaner vehicles. In 2022 no Lewisham resident lived above the legal limit of 40 micrograms, but 91% lived above 20, the World Health Organization's strictest interim target and the European Union's legal limit from 2030. Fine particles (PM2.5) fell less, by about an eighth, and all particles up to 10 microns (PM10) not at all.",
-        'temperature_regulation': "Lewisham's greenhouse gas emissions have more than halved since 2005, to about 2.1 tonnes per resident in 2024, below London's 3.0. Homes are the largest source, 45% of the total, followed by transport at 28%. The biggest fall since 2015 came from waste, as emissions from landfill dropped by nearly nine-tenths. Ladywell itself runs slightly warm in summer: between 2018 and 2022 its air averaged 0.25°C above London's, and one corner of the ward was almost 0.8°C above.",
-        'wellbeing': "Almost every Ladywell household (99.8%) lives within a 15-minute walk of green or blue space, effectively meeting the government's commitment that everyone should. Across Lewisham only 63% do, and across London 73%. Ladywell Fields and the River Ravensbourne lie in or beside the ward, and 94% of households are within a 15-minute walk of a river, lake or large pond. Small green spaces very close to home are rarer: a quarter of households (25%) have one, by the government's doorstep standard.",
+        'water_provisioning': "Ladywell draws on a strained water supply: Thames Water's area is classed as seriously water-stressed, and each person uses about 139 litres a day, above the national target of 122 litres by 2038. The ward's own river, the Ravensbourne, is rated moderate, short of good, with sewage discharges, household drains wrongly connected to it and flood defences that block fish among the reasons. Just over half of Ladywell's land is roofs, roads and other surfaces without plants, and runoff from urban areas adds to the river's pollution.",
+        'carbon_sequestration': "Ladywell has more tree cover than London on average: a quarter of the ward lies under tree canopy, against about a fifth across both Lewisham and London. Counting grass, gardens and shrubs too, almost half the ward (46.6%) is green, a little less than London's 51.7%. Trees and plants take carbon dioxide from the air and store it as they grow, and many of the borough's trees grow in private gardens, where the council has limited control.",
+        'biodiversity_support': "London's first Local Nature Recovery Strategy marks about a quarter (26.5%) of Ladywell's land as a place where nature could recover, more than across Lewisham (19.5%). Most of it is parks and open spaces, with woodland, lowland meadow, floodplain and river habitat also identified. The map gives these places weight: planning decisions must take the strategy into account, and it is meant to steer money for nature towards them.",
+        'energy_harvesting': "Energy used in Lewisham works out at about 10.1 megawatt-hours per resident a year (a megawatt-hour is 1,000 kilowatt-hours, the unit on household bills), less than London's 14.0, because businesses, industry and transport use less here; home use per resident is close to London's. Very little energy is harvested locally: solar panels in the borough generated the equivalent of 1.1% of its electricity use in 2024. Household recycling reached 27.2% in 2024/25, missing the council's 40% target; its recycling plan says recycling is harder in flats, and the borough has a high proportion of them.",
+        'air_quality_regulation': "Ladywell's air is cleaner than it was in 2019; across London, the Greater London Authority largely attributes the fall in nitrogen dioxide to 2022 to the Ultra Low Emission Zone's expansion to inner London and cleaner vehicles. Modelled background nitrogen dioxide, away from the busiest roads, was 18.5 micrograms per cubic metre of air in 2024, much lower than the legal limit of 40 but still almost double the World Health Organization's guideline of 10.",
+        'temperature_regulation': "Lewisham's greenhouse gas emissions have more than halved since 2005, to about 2.1 tonnes per resident, below London's 3.0. Homes are the largest source, at 45%, and the biggest fall since 2015 came from landfill. Locally, Ladywell runs slightly warm in summer, about 0.25°C above London's average, which matters because high summer temperatures are linked to early deaths in cities.",
+        'wellbeing': "Almost every Ladywell household (99.8%) lives within a 15-minute walk of green or blue space, against 63.4% across Lewisham. Most can also reach a river, lake or large pond, but small green spaces right by home are rarer: only a quarter of households have one. Time in nature matters: people who spend at least two hours a week in nature are more likely to report good health and wellbeing.",
     };
 
     const plainEnglishText = dimensionDescriptions[dimension.dimension] ||
@@ -503,6 +504,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         // Water-specific explanations
         if (baseName === 'Per capita water consumption (litres/day)') {
             return `Per capita consumption measures the average litres of water each person uses per day across Thames Water's supply area, which includes Lewisham. Use spiked during the pandemic, then eased back before ticking up again in the latest year, leaving little net progress since the 2019/20 baseline. The Environment Act 2021 target - 122 litres by 2038, 110 by 2050 - responds to a growing supply-demand gap from climate change, population growth, and unsustainable abstraction from rivers and aquifers. Demand reduction is the fastest, cheapest of the three levers used, alongside leakage and new supply, and Thames Water's approved resource plan commits to meeting the same 110-litre target.`;
+        }
+
+        // Water provisioning (local ecological) copies these two indicators from the social water
+        // dimension; its page gets its own text, written to the current spec.
+        if (firstIndicator && firstIndicator.dimension === 'water_provisioning' && baseName === 'Areas of water stress') {
+            return `Thames Water's supply area, which includes Lewisham, is classed as seriously water-stressed, meaning demand for water is high compared with the amount available. The government gave it this rating, on Environment Agency advice, in 2013 and again in 2021. The rating lets Thames Water consider making water meters compulsory, and its 2024 plan forecasts a shortfall in parts of its area by 2050 unless it cuts leakage and demand and builds new supply, including a reservoir and a water recycling scheme.`;
+        }
+
+        if (firstIndicator && firstIndicator.dimension === 'water_provisioning' && baseName === 'Per capita water consumption (litres/day)') {
+            return `Each person in Thames Water's area, which includes Lewisham, used about 139 litres of water a day at home in 2025/26, above the national target of 122 litres by 2038. Use has fallen only a little since 2019/20. The longer-term target is 110 litres by 2050. The target responds to a growing gap between supply and demand, driven by climate change, a rising population and too much water taken from rivers and aquifers. Using less is often quicker and cheaper than building new supply, and Thames Water's approved plan commits to the 110-litre target.`;
         }
 
         if (baseName === 'Areas of water stress') {
@@ -652,61 +663,58 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
         // Local ecological: water provisioning (November 2026). Areas of water stress and per
         // capita consumption reuse the social water dimension's text above.
         if (baseName === 'River water body status (Ravensbourne, Catford to Deptford)') {
-            return `This is the Environment Agency's assessment of the Ravensbourne between Catford and Deptford, the stretch through Ladywell Fields, on a five-step scale from high to bad. Its ecological status has been moderate in every assessment since 2014, after mostly poor or bad ratings from 2009 to 2013. Fish are rated bad, and phosphate, a nutrient that feeds algae, poor. The Agency's listed reasons include flood defence structures and barriers that block fish, sewage discharges, leaking sewers and household drains misconnected to the river. The river is classed as heavily modified, reshaped by flood protection and urban development. The Agency's objective is good ecological status by 2027, which it rates as low confidence.`;
+            return `The Environment Agency rates the Ravensbourne between Catford and Deptford, the stretch through Ladywell Fields, as moderate on a five-step scale from high to bad: short of the good status it aims for by 2027, an aim it rates as low confidence. Its fish are rated bad, and phosphate, a nutrient that feeds algae, poor. The Agency's listed reasons include flood defences and barriers that block fish, sewage discharges, leaking sewers and household drains wrongly connected to the river. The river is classed as heavily modified, reshaped by flood protection and urban development. It has been rated moderate in every assessment since 2014.`;
         }
 
         if (baseName === '% of land not covered by vegetation (proxy for impervious surface)') {
-            return `This is the share of Ladywell's land without plant cover: roofs, roads, pavements, car parks and other hard surfaces, plus any bare ground or open water. It is worked out from the Greater London Authority's green cover map, made from aerial photographs taken mainly in 2022, as everything the map does not count as vegetation. Ladywell's 53.4% is below Lewisham's 60.9% but above London's 48.3%. Thames21, which is restoring the river in Ladywell Fields, says urban runoff continues to affect the Ravensbourne's water quality, and the Environment Agency lists urban development among the reasons its fish are rated bad.`;
+            return `Just over half of Ladywell's land, 53.4%, has no plant cover: roofs, roads, pavements, car parks and other hard surfaces, plus any bare ground or open water. That is less than Lewisham's 60.9% but more than London's 48.3%. Thames21, which is restoring the river in Ladywell Fields, says runoff from urban areas continues to affect the Ravensbourne's water quality, and the Environment Agency lists urban development among the reasons its fish are rated bad.`;
         }
 
         // Local ecological: carbon sequestration and air quality (shared canopy indicator)
         if (baseName === '% tree canopy coverage') {
-            return `Tree canopy is the area covered by the leafy crowns of trees, seen from above. The Greater London Authority mapped it across London from aerial photographs, taken mainly in 2022, and height data, counting trees about 4 metres tall or more, so young and newly planted trees are mostly missed. Ladywell's 25% is above the 19.6% for both Lewisham and London. The Mayor's London Environment Strategy aims to increase London's canopy by 10% by 2050. The authority's earlier map, from 2016 photographs, used a different method, and it found no statistically significant change across London between the two, so no trend is shown.`;
+            return `A quarter of Ladywell (25%) lies under tree canopy, the leafy crowns of trees about 4 metres tall or more, seen from above. That is above the 19.6% for both Lewisham and London, and a separate citizen-science survey for Forest Research in 2020 found a similar 26%. Trees take carbon dioxide from the air and store the carbon in their wood as they grow, so the bigger the canopy, the more carbon the ward holds.`;
         }
 
         if (baseName === '% green cover') {
-            return `Green cover counts all land covered by plants: trees, shrubs, grass, private gardens and parks. From aerial photographs taken mainly in 2022, the Greater London Authority found 46.6% of Ladywell green, above Lewisham's 39.1% and below London's 51.7%. The London Environment Strategy aims for at least half of London to be green by 2050. Plants take up carbon dioxide as they grow, and Lewisham's Local Plan notes that many of the borough's trees grow in private gardens, especially at the ends of rear gardens.`;
+            return `Almost half of Ladywell (46.6%) is covered by plants: trees, shrubs, grass, private gardens and parks. That is more than Lewisham's 39.1% but less than London's 51.7%. Plants take up carbon dioxide as they grow, and Lewisham's Local Plan notes that many of the borough's trees grow in private gardens, especially at the ends of rear gardens, where the council has limited control.`;
         }
 
         // Local ecological: biodiversity support
         if (baseName === '% of land identified for nature recovery (London Local Nature Recovery Strategy)') {
-            return `London's Local Nature Recovery Strategy, published by the Greater London Authority in March 2026, maps "potential measure locations": places where nature could be restored, for example by changing how land is managed or creating new habitat. 26.5% of Ladywell's land falls inside them, against 19.5% of Lewisham and 28.4% of London. Ladywell's areas are listed for parks and open spaces, woodland, floodplain, lowland meadow, rivers, ponds and scrub. They are opportunities, not designations. The strategy's open data also maps existing sites of importance for biodiversity, but leaves out locally designated wildlife sites for licensing reasons; on that open map no part of Ladywell qualifies.`;
+            return `London's first Local Nature Recovery Strategy, published by the Greater London Authority in March 2026, marks 26.5% of Ladywell's land as a place where nature could be restored, by changing how land is managed or creating new habitat, against 19.5% of Lewisham and 28.4% of London. Most of it in Ladywell is parks and open spaces; woodland, floodplain, lowland meadow, rivers, ponds, scrub and urban mosaic habitat are also flagged. Local planning authorities must take the strategy into account when deciding applications, and it is meant to steer money for nature, including from developers, towards these places.`;
         }
 
         // Local ecological: energy harvesting
         if (baseName === 'Energy consumption per resident (MWh per year)') {
-            return `This is all the energy used within Lewisham in a year, by homes, transport, businesses and public services, divided by the number of residents, from Department for Energy Security and Net Zero figures. A megawatt-hour is 1,000 kilowatt-hours, the unit on household bills. In 2024 Lewisham used 10.1 megawatt-hours per resident, against 14.0 across London. Homes used just over half of the borough's total. Use per resident fell by almost a fifth between 2015 and 2024. Borough is the smallest geography published.`;
+            return `Lewisham used about 10.1 megawatt-hours of energy per resident in 2024, counting homes, transport, businesses and public services, against 14.0 across London. A megawatt-hour is 1,000 kilowatt-hours, the unit on household bills. The gap comes from businesses, industry and transport: homes used 5.3 megawatt-hours per resident, close to London's 5.4, and just over half of Lewisham's total. Use per resident has fallen by almost a fifth since 2015.`;
         }
 
         if (baseName === '% of electricity use matched by solar generated in the borough') {
-            return `This compares the electricity generated by solar panels in Lewisham with all the electricity used in the borough, from government statistics. In 2024 solar produced 7,078 megawatt-hours, equal to 1.1% of the borough's electricity use, up from 0.4% in 2015, as installed solar capacity tripled to 9.9 megawatts. London's share was 0.7%. Solar is the only renewable source with published output for Lewisham: the borough also has 35 megawatts of energy-from-waste capacity, which these statistics count as renewable, but its output is withheld for confidentiality, so a full renewable share can't be calculated.`;
+            return `Solar panels in Lewisham generated the equivalent of 1.1% of the borough's electricity use in 2024, above London's 0.7%. The share has roughly tripled since 2015 as more panels went up. Solar is the only renewable source with published output for Lewisham.`;
         }
 
         if (baseName === 'Household recycling and composting rate') {
-            return `This is the share of household waste collected by Lewisham Council that is reused, recycled or composted, from Defra's annual waste statistics. Lewisham reached 27.2% in 2024/25, below London's 32.6%. Its Reduction and Recycling Plan for 2023 to 2025 set a target of 40% for 2024/25, so the target was missed. The plan's main response is extending separate food waste collections to estates and flats, to divert food waste from incineration; houses on kerbside rounds already have one.`;
+            return `Lewisham reused, recycled or composted 27.2% of its household waste in 2024/25, short of the 40% target in its Reduction and Recycling Plan. The plan says recycling is harder for people living in flats, and the borough has a high proportion of them. Its main response is extending separate food waste collections, already offered to houses on kerbside rounds, to estates and flats, so that food waste is no longer burned with the rest of the rubbish.`;
         }
 
         // Local ecological: air quality regulation
-        if (baseName === '% of residents living where air pollution exceeds legal limits') {
-            return `This counts residents living where modelled yearly average nitrogen dioxide is above the UK's legal limit, from the London Atmospheric Emissions Inventory, which estimates pollution for every 20-metre square of London. In 2022 no Lewisham resident lived above the nitrogen dioxide limit of 40 micrograms per cubic metre; across London the number fell from about 161,000 in 2019 to just over 1,000. Health guidance is much stricter: 91.4% of Lewisham residents lived above 20 micrograms, the World Health Organization's strictest interim target, against 70.2% across London, and every Londoner lived above its full guideline of 10. Figures are published for boroughs, not wards.`;
-        }
 
-        if (baseName === 'Annual average air pollution concentration (µg/m³)') {
-            return `These are yearly average concentrations of three pollutants across Ladywell, from the London Atmospheric Emissions Inventory's modelled maps for 2019 and 2022: nitrogen dioxide (NO2), fine particles (PM2.5) and all particles up to 10 microns (PM10, which includes the fine ones), measured in micrograms per cubic metre of air and averaged over the ward's area. NO2 fell from 27.6 to 21.9 and PM2.5 from 10.7 to 9.4, while PM10 stayed at about 16. Particles come from brakes, tyres, construction and burning as well as exhausts. All three remain above the World Health Organization's 2021 guidelines: 10 for NO2, 5 for PM2.5 and 15 for PM10.`;
+        if (baseName === 'Annual average air pollution, micrograms per cubic metre') {
+            return `In 2024, Ladywell's modelled background nitrogen dioxide level, away from the busiest roads, was 18.5 micrograms per cubic metre of air. That is well under the legal limit of 40, but almost double the World Health Organization's (WHO) guideline of 10. Fine particles follow the same pattern: 9.0, against a legal limit of 20 and a WHO guideline of 5. Both are lower than in 2019. The Greater London Authority largely credits London's fall in nitrogen dioxide from 2019 to 2022 to the Ultra Low Emission Zone's expansion to inner London and cleaner vehicles. Pollution like this can harm the airways, heart and lungs, from coughing and asthma attacks to long-term heart and lung disease; children, older people and those with heart or lung conditions are more vulnerable.`;
         }
 
         // Local ecological: temperature regulation
         if (baseName === 'Territorial greenhouse gas emissions per resident (tonnes CO2e)') {
-            return `Territorial emissions are the greenhouse gases released within Lewisham's boundary, from heating buildings, transport, waste and other sources, with electricity counted where it is used and waste counted where it is produced. They leave out emissions from making goods that residents buy from elsewhere. Lewisham emitted about 637,000 tonnes of carbon dioxide equivalent in 2024, 2.1 tonnes per resident, against 3.0 across London. That total is 54% lower than in 2005. Homes produced 45% and transport 28%. Lewisham's Climate Emergency Action Plan, approved in 2020, aims for a carbon-neutral borough by 2030.`;
+            return `Lewisham emitted about 2.1 tonnes of greenhouse gases per resident in 2024, measured in carbon dioxide equivalent, against 3.0 across London. Its total, about 637,000 tonnes, is 54% lower than in 2005. Homes produced 45% and transport 28%; the biggest fall since 2015 came from landfill, where emissions from rotting rubbish dropped by nearly nine-tenths. Greenhouse gases trap heat and drive climate change. These are emissions released within the borough, with electricity counted where it is used; they leave out emissions from making goods bought from elsewhere. Lewisham's Climate Emergency Action Plan, approved in 2020, aims for a carbon-neutral borough by 2030.`;
         }
 
         if (baseName === 'Summer air temperature compared with the London average (°C)') {
-            return `Across Ladywell's seven neighbourhoods, the average summer air temperature in 2018 to 2022 was 18.21°C: 0.25°C above the London average and warmer than Lewisham's 18.05°C. One corner of the ward, covering two neighbourhoods, ran almost 0.8°C above London's average. The figures come from high-resolution modelled temperatures produced by Arup for the Greater London Authority, averaged over each neighbourhood's area. Street Trees for Living, a Lewisham tree charity, notes that trees shading pavements and homes help reduce summer temperatures.`;
+            return `Across Ladywell's seven neighbourhoods, the average summer air temperature from 2018 to 2022 was 18.21°C: 0.25°C above the London average and warmer than Lewisham's 18.05°C. One corner of the ward, covering two neighbourhoods, ran almost 0.8°C above London's average. Heat matters for health: a study of 93 European cities linked urban heat to around 4% of summer deaths in 2015. Street Trees for Living, a Lewisham tree charity, notes that trees shading pavements and homes help reduce summer temperatures.`;
         }
 
         // Local ecological: wellbeing
         if (baseName === '% of households within a 15-minute walk of green or blue space') {
-            return `In Ladywell's seven neighbourhoods, 99.8% of households live within a 15-minute walk of green or blue space, against 63.4% across Lewisham and 73.2% across London. Blue space alone is within reach of 94.1% of Ladywell households, against 25.3% across Lewisham. The measure counts walks along real paths and streets to green space, such as a park, playing field or woodland, or blue space, such as a river, lake or large pond. It comes from the first statistics from the Department for Environment, Food and Rural Affairs on the government's commitment for green and blue space combined, published in March 2026 as official statistics in development.`;
+            return `In Ladywell's seven neighbourhoods, 99.8% of households live within a 15-minute walk, along real paths and streets, of green space such as a park, playing field or woodland, or blue space such as a river, lake or large pond. That compares with 63.4% across Lewisham and 73.2% across London. 94.1% can reach blue space, but only 25.2% have a small green space very close to home, under the government's doorstep standard. Time in nature matters: people who spend at least two hours a week in nature are more likely to report good health and wellbeing.`;
         }
 
         // Generic fallback
@@ -748,7 +756,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
     // but a dimension can have up to 3 when its indicators span genuinely distinct policy
     // areas that no single document covers (see DIMENSION_PAGE_SPECIFICATION.md Section 3).
     function getCouncilContext(dimensionName) {
-        // Local ecological dimensions (November 2026)
+        function ecoLocalContext(dimensionName) {
         if (dimensionName === 'water_provisioning') {
             // Same Thames Water plan card as the social water dimension
             return [getCouncilContext('water')[0]];
@@ -762,7 +770,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     { name: 'Lewisham Local Plan - Green infrastructure chapter (Regulation 19 pre-submission version, 2023)', url: 'https://consultation.lewisham.gov.uk/planning/reg19consultation/user_uploads/green-infrastructure-chapter.pdf' },
                     { name: 'Adopted Lewisham Local Plan 2020-2040 - planning.data.gov.uk record', url: 'https://www.planning.data.gov.uk/entity/3801532' }
                 ],
-                summary: `<p>Lewisham's Local Plan, adopted in July 2025, sets the planning rules for new development until 2040. Its pre-submission text treats trees as part of the borough's urban forest and notes that many of them grow in private gardens, where the council has limited control. In its pre-submission (Regulation 19) version of 2023, Policy GR5 requires major developments to reach the London Plan's Urban Greening Factor, a score for the amount and quality of greening on a site, unless shown not to be feasible: 0.4 for mainly residential schemes and 0.3 for commercial ones. Developments must keep existing trees where possible, plant more, especially in streets and town centres, and replace trees that can't be kept; the council will refuse the removal of protected trees. Major schemes must show they have looked at green roofs and walls. The takeaway: planning can protect and add canopy on development sites, but many of the borough's trees grow in gardens it does not control.</p>`
+                summary: `<p>Lewisham's Local Plan, adopted in July 2025, sets the planning rules for new development until 2040. Its pre-submission text treats trees as part of the borough's urban forest and notes that many of them grow in private gardens, where the council has limited control. In its pre-submission (Regulation 19) version of 2023, the plan's urban greening policy requires major developments to reach the London Plan's Urban Greening Factor, a score for the amount and quality of greening on a site, unless shown not to be feasible: 0.4 for mainly residential schemes and 0.3 for commercial ones. Developments must keep existing trees where possible, plant more, especially in streets and town centres, and replace trees that can't be kept; the council will refuse the removal of protected trees. Major schemes must show they have looked at green roofs and walls.</p>`
             }];
         }
 
@@ -771,9 +779,13 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 title: 'London Local Nature Recovery Strategy',
                 year: '2026',
                 sources: [
-                    { name: 'London Local Nature Recovery Strategy (LNRS) - London Datastore', url: 'https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6' }
+                    { name: 'London Local Nature Recovery Strategy (LNRS) - London Datastore (open data layers)', url: 'https://data.london.gov.uk/dataset/london-local-nature-recovery-strategy-lnrs-20gj6' },
+                    { name: "GiGL's role in developing London's Local Nature Recovery Strategy - Greenspace Information for Greater London (March 2026)", url: 'https://www.gigl.org.uk/?p=81432' },
+                    { name: 'Public consultation of the draft London LNRS - GiGL (October 2025)', url: 'https://www.gigl.org.uk/?p=80324' },
+                    { name: 'Local nature recovery strategies - Defra guidance (gov.uk, updated September 2026)', url: 'https://www.gov.uk/government/publications/local-nature-recovery-strategies/local-nature-recovery-strategies' },
+                    { name: 'Applying the Local Nature Recovery Strategy - GiGL StoryMap', url: 'https://storymaps.arcgis.com/stories/a3a03dec5ab743f797dcdeb96280c790' }
                 ],
-                summary: `<p>London's first Local Nature Recovery Strategy was published by the Greater London Authority in March 2026, one of 48 such strategies covering England. It has two parts: a Statement of Biodiversity Priorities, setting out what London's nature needs, and a map. The map shows Areas of Particular Importance for Biodiversity, London's existing protected sites, and potential measure locations, where nature could recover through changes in how land is managed or through new habitat. Those locations are opportunities, not designations. The openly published map leaves out Local Wildlife Sites for licensing reasons; the full local version is held by Greenspace Information for Greater London. The takeaway: the strategy shows where nature in Ladywell could recover, but it does not make that happen on its own.</p>`
+                summary: `<p>London's first Local Nature Recovery Strategy, published in March 2026, sets 30 biodiversity priorities and names 378 focus species, such as the kingfisher and the Essex skipper butterfly. The priorities are mostly habitats to restore or create, including rivers and streams, parks and open spaces, wildflower meadows, woodland, ponds, reedbeds and orchards, and its map shows where each could happen. It is designed as a shared tool for anyone who uses, manages or develops land. Councils must have regard to it, and their local plans must show they have taken account of it before they can be finalised. Developers, who must leave habitat at least 10% better than they found it, earn 15% more credit for habitat that delivers the strategy's measures. Landowners and land managers are encouraged and supported to carry them out, and community groups can use the map to plan projects, attract funding and argue for protecting important sites.</p>`
             }];
         }
 
@@ -784,7 +796,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 sources: [
                     { name: 'Lewisham Reduction and Recycling Plan - London Datastore (plan and annual updates)', url: 'https://data.london.gov.uk/dataset/lewisham-reduction-and-recycling-plan-ex4rm' }
                 ],
-                summary: `<p>Lewisham's Reduction and Recycling Plan, drawn up for the Mayor of London, covered April 2023 to March 2025. It says recycling is harder for residents in flats, and that Lewisham has a high proportion of flats. It set targets to raise the household recycling rate from 27% in 2019/20 to 40% by 2024/25, and to cut leftover household rubbish from 556 kg to 450 kg per household a year. Its main action was extending separate food waste collections, already offered on kerbside rounds, to estates, then other flats, then flats above shops, to divert food waste from incineration. The council's 2025 update reported that 30% of flats on communal collections had a food waste collection in 2023/24, and aimed for all of them to have one by April 2026. In 2024/25 the recycling rate reached 27.2% and leftover rubbish 502 kg per household, so both targets were missed.</p>`
+                summary: `<p>Lewisham's Reduction and Recycling Plan, drawn up for the Mayor of London, covered April 2023 to March 2025. It says recycling is harder for residents in flats, and that Lewisham has a high proportion of flats. It aimed to raise household recycling from 27% to 40% by 2024/25, and to cut leftover rubbish per household by about a fifth. Its main action was extending separate food waste collections, already offered on kerbside rounds, to estates, then other flats, then flats above shops, to divert food waste from incineration. The council's November 2025 update reported that 30% of flats on communal collections had a food waste collection in 2023/24, and planned to reach all of them by April 2026. In 2024/25 the recycling rate reached 27.2% and leftover rubbish 502 kg per household, so both targets were missed.</p>`
             }];
         }
 
@@ -793,7 +805,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                 title: 'Lewisham Air Quality Action Plan 2022-2027',
                 year: '2022-2027',
                 url: 'https://airquality.lewisham.gov.uk/uploads/reports/air-quality-action-plan-2022-2027-67ab7e945e046781227819.pdf',
-                summary: `<p>Lewisham's Air Quality Action Plan, approved in July 2022, sets out what the council will do about air pollution until 2027, with progress reported each year. It replaced a 2016-2021 plan whose priorities were cutting car use, reducing children's exposure, including anti-idling work at schools, and cleaner deliveries and construction. The new plan lists ten priorities, the first being public health awareness: promoting the Mayor's pollution alerts and the Lewisham app to GPs, care homes, nurseries and people with asthma or lung disease. Others cover schools, emissions from new developments, electric vehicle charging, walking and cycling, construction, energy-efficiency retrofits, car-free days, a cleaner council fleet and smoke control zones. The takeaway: the council's plan works alongside mayoral schemes, which the Greater London Authority credits, with cleaner vehicles, for most of the recent fall in nitrogen dioxide.</p>`
+                summary: `<p>Lewisham's Air Quality Action Plan, approved in July 2022, sets out what the council will do about air pollution until 2027, with progress reported each year. It replaced a 2016-2021 plan whose priorities were cutting car use, reducing children's exposure, including anti-idling work at schools, and cleaner deliveries and construction. The new plan lists ten priorities, the first being public health awareness: promoting the Mayor's pollution alerts and the Lewisham app to GPs, care homes, nurseries and people with asthma or lung disease. Others cover schools, emissions from new developments, electric vehicle charging, walking and cycling, construction, energy-efficiency retrofits, car-free days, a cleaner council fleet and smoke control zones.</p>`
             }];
         }
 
@@ -805,8 +817,71 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     { name: 'Lewisham Local Plan - Green infrastructure chapter (Regulation 19 pre-submission version, 2023)', url: 'https://consultation.lewisham.gov.uk/planning/reg19consultation/user_uploads/green-infrastructure-chapter.pdf' },
                     { name: 'Adopted Lewisham Local Plan 2020-2040 - planning.data.gov.uk record', url: 'https://www.planning.data.gov.uk/entity/3801532' }
                 ],
-                summary: `<p>Lewisham's Local Plan, adopted in July 2025, protects the borough's open spaces from development. In its pre-submission (Regulation 19) version of 2023, which may have changed on adoption, Policy GR2 gives Metropolitan Open Land and Local Green Space the same protection as Green Belt. It allows the loss of strategic open space only in exceptional cases, such as replacement nearby of at least the same amount and better quality. Neighbourhood open space can be reshaped only with no net loss; a net loss is allowed only for a wider public benefit, keeping the loss to a minimum. Major developments must include new publicly accessible open space where feasible, favouring green space, especially where access is poor, or pay towards it elsewhere. The takeaway: the plan protects existing open space across the borough and uses development to add more.</p>`
+                summary: `<p>Lewisham's Local Plan, adopted in July 2025, protects the borough's open spaces from development. In its pre-submission (Regulation 19) version of 2023, which may have changed on adoption, the plan's open space policy gives Metropolitan Open Land and Local Green Space the same protection as Green Belt. It allows the loss of strategic open space only in exceptional cases, such as replacement nearby of at least the same amount and better quality. Neighbourhood open space can be reshaped only with no net loss; a net loss is allowed only for a wider public benefit, keeping the loss to a minimum. Major developments must include new publicly accessible open space where feasible, favouring green space, especially where access is poor, or pay towards it elsewhere.</p>`
             }];
+        }
+
+            return null;
+        }
+
+        // Local ecological dimensions (November 2026): local plan cards, then a global
+        // research card for every dimension that opens with why the ecosystem service matters.
+        const ECO_RESEARCH = {
+            water_provisioning: {
+                title: 'Perspectives from wider river research',
+                sources: [
+                    { name: 'New data to drive action to improve England\'s rivers and lakes - Environment Agency (August 2026)', url: 'https://www.gov.uk/government/news/new-data-to-drive-action-to-improve-englands-rivers-and-lakes' },
+                    { name: 'State of the water environment indicator B3: supporting evidence - Environment Agency (May 2025)', url: 'https://www.gov.uk/government/publications/state-of-the-water-environment-indicator-b3-supporting-evidence/state-of-the-water-environment-indicator-b3-supporting-evidence' }
+                ],
+                summary: `<p>A river's health reflects how its whole catchment uses and drains water. In the Environment Agency's 2025 classification, published in August 2026, only 14.3% of England's surface waters reached good ecological status; the Agency says this can't be compared directly with 2019's 16.3%, because its methods changed. Its earlier evidence named agriculture and the water industry, through sewage and wastewater, as the sectors affecting most water bodies, at 45% and 44%, with towns, cities and transport affecting 18%. It also notes that many lowland rivers have been straightened, dredged or enclosed in culverts, to drain farmland, reduce flood risk and make space for homes and roads. The Ravensbourne's shortfall from good status is shared by most English waters.</p>`
+            },
+            carbon_sequestration: {
+                title: 'Perspectives from global urban forest research',
+                sources: [
+                    { name: 'Carbon storage and sequestration by trees in urban and community areas of the United States - Nowak et al., Environmental Pollution (2013)', url: 'https://doi.org/10.1016/j.envpol.2013.03.019' }
+                ],
+                summary: `<p>Trees take carbon dioxide from the air and store the carbon in their wood as they grow, so a neighbourhood's canopy is a small, living carbon store. A study of urban trees across the United States, built on field data from 28 cities, found they hold an average of 7.69 kilograms of carbon for every square metre of canopy, and add 0.28 kilograms a year. As a rough guide only, those averages suggest Ladywell's 51 hectares of canopy take up about 520 tonnes of carbon dioxide a year, roughly the yearly emissions of 250 Lewisham residents.</p>`
+            },
+            biodiversity_support: {
+                title: 'Perspectives from global biodiversity research',
+                sources: [
+                    { name: 'IPBES Global Assessment Report on Biodiversity and Ecosystem Services - media release (2019)', url: 'https://www.ipbes.net/news/Media-Release-Global-Assessment' },
+                    { name: 'State of Nature 2023 - full report', url: 'https://stateofnature.org.uk/wp-content/uploads/2023/09/TP25999-State-of-Nature-main-report_2023_FULL-DOC-v12.pdf' }
+                ],
+                summary: `<p>The 2019 global assessment by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) found around a million species threatened with extinction, and ranked changes in how land and sea are used as the biggest cause, ahead of direct exploitation, climate change, pollution and invasive species. In the UK, the State of Nature 2023 report found that 753 land and freshwater species had fallen in abundance by 19% on average since 1970, and that nearly one in six species assessed is threatened with extinction from Great Britain. On land, it names changes in how farmland is managed, and climate change, as the biggest pressures. Its answers include nature-friendly farming at a much wider scale, restoring habitats and creating native woodland. For towns and cities, where the most deprived areas often have less accessible green space, it includes a case study of Tiny Forests: 600 native trees and shrubs planted in 200 square metres, placed where possible in deprived areas so they are for everyone.</p>`
+            },
+            energy_harvesting: {
+                title: 'Perspectives from global solar research',
+                sources: [
+                    { name: 'High resolution global spatiotemporal assessment of rooftop solar photovoltaics potential - Joshi et al., Nature Communications (2021)', url: 'https://www.nature.com/articles/s41467-021-25720-2' }
+                ],
+                summary: `<p>In a dense neighbourhood, roofs are the main surface that can harvest energy from sunlight. A 2021 global study in Nature Communications estimated that the world's rooftops could generate 27 million gigawatt-hours of electricity a year, over a third of it at under $100 per megawatt-hour. Rooftop panels already made up 40% of the world's installed solar capacity in 2018. The study also found the UK among the costliest countries to tap its rooftop potential, at about $251 per megawatt-hour, against $66 in India.</p>`
+            },
+            air_quality_regulation: {
+                title: 'Perspectives from global air quality research',
+                sources: [
+                    { name: 'Ambient (outdoor) air pollution - World Health Organization fact sheet', url: 'https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health' }
+                ],
+                summary: `<p>The World Health Organization calls outdoor air pollution a major environmental health problem affecting everyone. It estimates that outdoor air pollution caused 4.2 million premature deaths worldwide in 2019, through fine particles that cause heart and lung disease and cancers; 68% of those deaths were from heart disease and stroke. In 2019, 99% of the world's population lived where its air quality guidelines were not met. It names cleaner transport, energy-efficient homes, cleaner power generation and industry, and better waste management as the policies that would cut the main sources of outdoor pollution.</p>`
+            },
+            temperature_regulation: {
+                title: 'Perspectives from global urban heat research',
+                sources: [
+                    { name: 'Cooling cities through urban green infrastructure: a health impact assessment of European cities - Iungman et al., The Lancet (2023)', url: 'https://doi.org/10.1016/S0140-6736(22)02585-5' },
+                    { name: 'The role of urban trees in reducing land surface temperatures in European cities - Schwaab et al., Nature Communications (2021)', url: 'https://www.nature.com/articles/s41467-021-26768-w' }
+                ],
+                summary: `<p>High temperatures harm health and cause early deaths, and cities trap heat. A study of 93 European cities, published in The Lancet in 2023, estimated that urban heat raised summer temperatures by 1.5°C on average in 2015. It linked that extra heat to about 6,700 early deaths, around 4% of all summer deaths. Raising tree cover to 30% would have cooled those cities by 0.4°C on average and prevented about 2,600 of those deaths. A satellite study of 293 European cities, in Nature Communications in 2021, found that in Central Europe areas covered by trees had summer surface temperatures 8 to 12°C lower than dense built-up areas, and that grass and other treeless green space cooled two to four times less than trees.</p>`
+            },
+            wellbeing: {
+                title: 'Perspectives from global nature and health research',
+                sources: [
+                    { name: 'Spending at least 120 minutes a week in nature is associated with good health and wellbeing - White et al., Scientific Reports (2019)', url: 'https://www.nature.com/articles/s41598-019-44097-3' }
+                ],
+                summary: `<p>Time in natural environments can benefit health and wellbeing. A study of nearly 20,000 people in England, published in Scientific Reports in 2019, found that people who spent at least two hours a week in nature were significantly more likely to report good health and high wellbeing than those who spent none, with the benefit levelling off at about three to five hours. It made no difference whether the two hours came in one long visit or several short ones, and the pattern held for older adults and people with long-term health conditions. The link held after allowing for how much green space surrounded people's homes.</p>`
+            }
+        };
+        if (ECO_RESEARCH[dimensionName]) {
+            return [...(ecoLocalContext(dimensionName) || []), ECO_RESEARCH[dimensionName]];
         }
 
         // Health dimension council context
@@ -1337,7 +1412,7 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             return [
                 {
                     action: "Join a Nature's Gym work day",
-                    text: `Free conservation sessions in Lewisham's parks and nature reserves, from wading in rivers to work in the woods, led by council and Glendale officers. No experience needed; newcomers start with taster sessions.`,
+                    text: `Free conservation sessions in Lewisham's parks and nature reserves, led by council and Glendale officers, with jobs for every ability. No experience needed; newcomers start with taster sessions.`,
                     url: 'https://natureconservationlewisham.co.uk/how-to/natures-gym-2/'
                 }
             ];
@@ -1349,6 +1424,16 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
                     action: 'Back South East London Community Energy',
                     text: `A community energy co-operative covering Lewisham that puts solar panels on schools and community buildings, funded through local share offers, and gives households advice on saving energy.`,
                     url: 'https://selce.org.uk/'
+                }
+            ];
+        }
+
+        if (dimensionName === 'air_quality_regulation') {
+            return [
+                {
+                    action: "Join Mums for Lungs' Lewisham group",
+                    text: `Volunteers campaigning for cleaner air in Lewisham, pressing the council and raising awareness locally, especially of the harm from wood burning. Get in touch through its website to join.`,
+                    url: 'https://www.mumsforlungs.org/local-groups'
                 }
             ];
         }
@@ -1703,7 +1788,8 @@ function renderDimensionDetail(dimension, allIndicators, ring) {
             'Healthy life expectancy at birth': 'Male',
             '% of children with obesity': 'Year 6',
             '% non-decent homes': 'Private rented',
-            'Employment rate gap, percentage points': 'Disabled'
+            'Employment rate gap, percentage points': 'Disabled',
+            'Annual average air pollution, micrograms per cubic metre': 'Nitrogen dioxide'
         };
         const indicatorsToShow = (indicators.length > 1 && singleHeadlineFilter[baseName])
             ? indicators.filter(ind => ind.indicator.includes(singleHeadlineFilter[baseName]))
@@ -1894,6 +1980,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Ward pill acts as a back button to the homepage
         const goHome = () => { window.location.href = 'index.html'; };
         document.getElementById('ward-pill-home').addEventListener('click', goHome);
-        document.getElementById('ward-pill-home-overlay').addEventListener('click', goHome);
     }
 });

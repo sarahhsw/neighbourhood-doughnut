@@ -532,35 +532,35 @@
   },
   {
     "lens": "local_ecological",
-    "dimension": "air_quality_regulation",
-    "category": "Air quality regulation",
-    "indicator": "% of residents living where air pollution exceeds legal limits",
-    "source_url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
-    "granularity": "LA"
-  },
-  {
-    "lens": "local_ecological",
-    "dimension": "air_quality_regulation",
-    "category": "Air quality regulation",
-    "indicator": "% tree canopy coverage",
-    "source_url": "https://data.london.gov.uk/dataset/tree-canopy-cover-2024-2w4m3",
-    "granularity": "Ward"
-  },
-  {
-    "lens": "local_ecological",
-    "dimension": "air_quality_regulation",
-    "category": "Air quality regulation",
-    "indicator": "Annual average air pollution concentration (µg/m³)",
-    "source_url": "https://data.london.gov.uk/dataset/london-atmospheric-emissions-inventory-laei-2022-2lg5g",
-    "granularity": "Ward"
-  },
-  {
-    "lens": "local_ecological",
     "dimension": "temperature_regulation",
     "category": "Temperature regulation",
     "indicator": "Territorial greenhouse gas emissions per resident (tonnes CO2e)",
     "source_url": "https://www.gov.uk/government/statistics/uk-local-authority-and-regional-greenhouse-gas-emissions-statistics-2005-to-2024",
     "granularity": "LA"
+  },
+  {
+    "lens": "local_ecological",
+    "dimension": "air_quality_regulation",
+    "category": "Air quality regulation",
+    "indicator": "Annual average air pollution, micrograms per cubic metre (Nitrogen dioxide, NO2)",
+    "source_url": "https://uk-air.defra.gov.uk/data/pcm-data",
+    "granularity": "Ward"
+  },
+  {
+    "lens": "local_ecological",
+    "dimension": "air_quality_regulation",
+    "category": "Air quality regulation",
+    "indicator": "Annual average air pollution, micrograms per cubic metre (Fine particles, PM2.5)",
+    "source_url": "https://uk-air.defra.gov.uk/data/pcm-data",
+    "granularity": "Ward"
+  },
+  {
+    "lens": "local_ecological",
+    "dimension": "air_quality_regulation",
+    "category": "Air quality regulation",
+    "indicator": "Annual average air pollution, micrograms per cubic metre (All particles up to 10 microns, PM10)",
+    "source_url": "https://uk-air.defra.gov.uk/data/pcm-data",
+    "granularity": "Ward"
   },
   {
     "lens": "local_ecological",

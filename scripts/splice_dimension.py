@@ -20,6 +20,7 @@ entry round-trips through the schema.
 import json
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -89,6 +90,9 @@ def main():
         else:
             rest = [e for e in items[idx:] if e["dimension"] != dim]
             data[lens] = items[:idx] + new + rest
+        if "generated_at" in data or path.name == "ladywell.json":
+            # shown on the site as "Last updated"
+            data["generated_at"] = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
         path.write_text(json.dumps(data, indent=2))
 
     loaded = [{e["indicator"]: e for e in entries(json.loads(p.read_text()), lens, dim)} for p in files]

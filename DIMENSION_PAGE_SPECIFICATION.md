@@ -1983,6 +1983,144 @@ behind it. The poverty card now follows the same order: the plan's status in one
 problem and aim, its main tool so far, where the older commitments now sit, and its priorities.
 General rule: one paragraph, in that order, with every sentence a plain statement about the plan.
 
+**Don't label a closing sentence "The takeaway:" (local ecological, November 2026).** The first
+local ecological context cards each ended with a sentence starting "The takeaway:", following the
+problem-response-takeaway rule above. On the air quality card it read "The takeaway: the council's
+plan works alongside mayoral schemes, which the Greater London Authority credits, with cleaner
+vehicles, for most of the recent fall in nitrogen dioxide." The user said it added nothing to the
+narrative and asked for the prefix to go on every dimension; the card should make its point through
+a clear narrative, not announce it. All four such sentences (carbon sequestration, biodiversity, air
+quality, wellbeing) only repeated what their cards already said, so they were cut rather than
+reworded. General rule: never write "The takeaway:" or a similar label; if a closing sentence is
+needed, it must add something new in plain prose, otherwise end on the card's last real point.
+
+**Fold an indicator into another when they measure the same thing (Air quality, November 2026).**
+The air quality page first had two indicators: "% of residents living where air pollution exceeds
+legal limits" (0% in Lewisham, LAEI 2022) and "Annual average air pollution concentration". The
+user asked for the first to be removed and its insight combined into the second, since both
+describe the same pollution, and for a more up-to-date source. The exceedance facts (no resident
+above the NO2 legal limit, 91% above the WHO interim target of 20) now sit in the concentration
+text, and the series moved from two LAEI years (2019, 2022) to Defra's yearly PCM background
+maps, 2015-2024, aggregated to the ward. General rule: one finding, one indicator; when a share
+above a threshold is derived from the same measure as another indicator, report it in that
+indicator's text rather than as a separate headline, and prefer the source with the longest,
+most recent consistent series.
+
+**Name the measure in the headline, and lead indicator text with thresholds and comparators
+(Air quality, November 2026).** The air quality headline read "18.5 µg/m³ - Annual average air
+pollution concentration (µg/m³) · 2024", without saying which pollutant, and its text opened by
+listing the chart's numbers ("NO2 averaged 18.5 ... down from 25.4 in 2015 ... PM2.5 fell from 11.0
+to 9.0 ...") and ended with a methodology aside ("it updates the model most years, so small
+year-to-year changes may not be real"). The user asked for the pollutant to be named, pointed back
+to the rule against narrating a chart, said the decade's change can be one percentage, and that
+the most meaningful thing is the comparison with the legal and health thresholds and with
+Lewisham and London; methodology like the model-update caveat should go. The indicator is now
+three sub-indicators (NO2, PM2.5, PM10) on one chart, with NO2 as the headline, and the text
+leads with NO2 against the legal limit and WHO guideline, then Lewisham and London. General rule:
+a headline must say exactly what its number measures; where one chart carries several measures,
+make them sub-indicators and headline one by name. Lead indicator text with the comparison that
+gives the number meaning (thresholds, then comparator areas); give the trend as a single change.
+
+**Don't repeat another dimension's indicator; give every dimension Get Involved cards (local
+ecological, November 2026).** Tree canopy appeared on both the carbon sequestration and air
+quality pages; the user asked for it to be removed from air quality. The user also noted some
+local ecological dimensions had no Get Involved cards (air quality had none). General rule: an
+indicator belongs to the one dimension it best explains; and every dimension needs at least one
+verified Get Involved card, found before the page is called done.
+
+**Context cards: priorities and strategies, not how the map or method works (Biodiversity,
+November 2026).** The London Local Nature Recovery Strategy card described the strategy's map
+layers (Areas of Particular Importance for Biodiversity, potential measure locations, what the open
+version leaves out). The user said they would rather hear what the priorities and strategies are,
+and asked for the spec to say priorities and strategies matter more than methodology. The card now
+says what the strategy is for, how its priorities are set (habitat priorities with measures, and
+priority species such as the kingfisher), which habitats it targets most across London, and
+which it assigns to Ladywell. General rule: a context card says what a plan prioritises and what
+it will do; explain its method or data only where that changes what the reader understands.
+
+**Name the causes and the remedies, not just that they exist (Biodiversity, November 2026).** The
+research card said State of Nature 2023 "says the causes are clear and that conservation action
+delivers results". The user asked what the causes are, and said always to explain the root cause
+and the strategies where available. The card now names them: changes in how farmland is managed
+and climate change as the main causes on land, and nature-friendly farming at scale, habitat
+restoration, nature-based solutions such as native woodland and, in cities, Tiny Forests as the
+responses. General rule: never refer to causes or solutions without naming them; if a source
+gives them, state them.
+
+**One comparison set per point; explain what a measure does to people; the summary adds nothing
+new (Air quality, November 2026).** The air quality text said NO2 "is well under the legal limit
+of 40 but almost double the WHO guideline of 10. It is slightly above Lewisham's 17.5, well above
+London's 15.9, and has fallen since 2015, when it was 25.4." The user said that was too many
+comparison points, already covered by the spec: once a figure has been set against the legal
+limit and the health guideline, it doesn't also need Lewisham and London. They also said not to
+presume the reader knows why nitrogen dioxide and fine particles matter, and supplied a model
+text: "In 2024, Ladywell's nitrogen dioxide level was 18.5 micrograms per cubic metre of air.
+That is well under the legal limit of 40, but almost double the World Health Organization's
+(WHO) guideline of 10. Fine particles follow the same pattern: 9.0, against a legal limit of 20
+and a WHO guideline of 5 ... Pollutants like this can irritate the airways and enter the lungs
+and bloodstream, leading to a small but real added risk for residents, especially children and
+older people." (The published version keeps this shape but states the health effects as the
+gov.uk "Air pollution: applying All Our Health" guidance does.) On the summary, the user said
+new information must not appear there first: the ULEZ attribution and "the European Union's legal
+limit from 2030" were only in the summary. The opener "Ladywell's air is cleaner than it was, but
+not clean" was too simplistic. The user's preferred summary: "Ladywell's air is cleaner than it
+was in 2019, attributed to Ultra Low Emission Zone's expansion to inner London and cleaner
+vehicles. Modelled background nitrogen dioxide, away from the busiest roads, has fallen to 18.5
+micrograms per cubic metre of air in 2024, much lower than the legal limit of 40 micrograms but
+still above [the WHO level]." (Its "above the 20 that the WHO set" was corrected to "almost double
+the WHO guideline of 10", since 18.5 is below 20.) General rules: compare a figure with
+thresholds or with other areas, not both, and never with more than two references; when a
+measure isn't self-explanatory, say in one plain sentence what it does to people and who is most
+affected; every fact in a summary must already be in an indicator text; open a summary with the
+finding and its cause, not a slogan.
+
+**Process: rules were being broken that the spec already covered (November 2026).** The user
+reported a quality regression: rules stated in the spec several times (comparison points, chart
+narration, methodology in copy) kept being broken. The causes were drafting from memory, a
+fact-checker that checked facts but not editorial rules, and word caps being the only automated
+check. Response: `scripts/lint_copy.py` tests the rules a script can test; the fact-checker now
+runs it and reports spec breaches alongside facts; and CLAUDE.md sets a fixed quality gate
+(re-read SPEC_RULES, lint, rule-by-rule self-review, fact-check) before any copy is reported done.
+
+**Substance over process; a summary gives the so-what; end paragraphs on a point (Biodiversity,
+November 2026).** Four corrections on one page. (1) The indicator text ended with "The strategy's
+open data also maps existing sites of importance for biodiversity, but leaves out locally
+designated wildlife sites for licensing reasons; on that open map no part of Ladywell qualifies":
+methodology too granular for the copy. (2) The strategy card opened with "one of 48 such
+strategies across England, meant to guide local action for nature and direct funding to it ...
+Its Statement of Biodiversity Priorities sets habitat priorities, each with practical measures to
+achieve it, and a list of species prioritised for recovery, chosen by specialists from 1,467
+threatened or locally significant species": the user called it process fluff with no substance
+and asked what the priorities and measures are. (3) The research card ended "In cities, it
+highlights Tiny Forests: 600 native trees and shrubs planted in 200 square metres", which the user
+found an abrupt way to finish. (4) The summary said "These are opportunities, not designations.
+No part of the ward is a nationally designated nature site ..."; the user said a summary is an
+overview, not methodology, and asked the so-what: what can people or government do with these
+areas, and what would it mean for biodiversity? The rewrite: the summary and indicator text say
+what the mapped places change (planning authorities must take them into account; Biodiversity Net
+Gain scores habitat created there higher; community groups can use the map to target funding);
+the card names the priorities (30 priorities and 378 focus species, with examples) and what the
+strategy changes, instead of how it was made; the Tiny Forests sentence is framed by the problem
+it answers. The measures themselves are only in the Statement on london.gov.uk, which this
+environment cannot read, so they were left out rather than gestured at. General rules: name what a
+plan prioritises and does, never just that it has priorities or measures; if you can't name them,
+cut the reference; a summary gives the overview and the so-what (who can act and what it changes),
+never data caveats; end a paragraph on a sentence that connects to its point, not a detached fact.
+
+**Say plainly what a source recommends, and cover everyone a strategy is for (Biodiversity,
+November 2026).** The research card said State of Nature 2023 "points to Tiny Forests: 600 native
+trees and shrubs planted densely in 200 square metres"; the user asked whether that meant it
+recommends Tiny Forests as a solution. The report presents them as a case study of urban
+restoration, prioritised for deprived areas, so the card now says exactly that. On the strategy
+card, the user said the developer-focused narrative (Biodiversity Net Gain) was narrow compared
+with the strategy's own framing, and asked for its principles, priorities and measures to be listed
+so the card is tangible and actionable. The card now presents the strategy as a shared tool for
+anyone who uses, manages or develops land, with what it means for boroughs, developers and
+community groups. The principles' names and the measures could not be added: they are only in the
+Statement on london.gov.uk, which this environment cannot read. General rules: when a source
+features an example, say whether it recommends it, presents it as a case study, or only mentions
+it; describe a strategy through all the groups it is meant for, not the one easiest to source.
+
 **Always answer "why?" and "so what?" (Education, November 2026).** The council standards card
 reported results and a Progress 8 concern without saying why Lewisham trails London or what the
 council is doing about it. The user asked for the reason and said always ask why and so what. The

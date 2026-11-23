@@ -841,53 +841,58 @@ h1 {
     padding: 40px;
 }
 
-/* Way in to the council spending page (ward page, under the ecological cards) */
+/* Way in to the council spending page (ward page, under the ecological cards).
+   Kept quiet on purpose: a plain link row in ink, not another card. */
 .spend-entry-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-top: 30px;
-    padding: 14px 18px;
-    border: 1.5px solid var(--spend);
-    border-radius: 12px;
-    background: var(--paper);
+    margin-top: 32px;
+    padding: 16px 2px 0;
+    border-top: 1px solid rgba(36, 18, 38, 0.18);
     color: var(--ink);
     text-decoration: none;
-    transition: transform 0.2s ease;
-}
-
-.spend-entry-card:hover,
-.spend-entry-card:focus-visible {
-    transform: translateY(-2px);
 }
 
 .spend-entry-card svg {
     flex-shrink: 0;
-    color: var(--spend);
+    opacity: 0.6;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.spend-entry-card:hover svg,
+.spend-entry-card:focus-visible svg {
+    transform: translateX(3px);
+    opacity: 1;
+}
+
+.spend-entry-card:hover .spend-entry-title,
+.spend-entry-card:focus-visible .spend-entry-title {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.spend-entry-card:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+    border-radius: 2px;
 }
 
 .spend-entry-text {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
 }
 
 .spend-entry-title {
-    font-family: var(--font-serif);
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 1.25;
+    line-height: 1.35;
 }
 
 .spend-entry-sub {
-    font-size: 13px;
+    font-size: 12.5px;
     line-height: 1.45;
-    color: #3d2c3e;
-}
-
-@media (min-width: 768px) {
-    .spend-entry-card {
-        background: var(--card);
-    }
+    opacity: 0.7;
 }

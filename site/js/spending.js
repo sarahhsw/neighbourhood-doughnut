@@ -1,11 +1,14 @@
-// Council spending page: Ladywell's doughnut dimensions (rows) against Lewisham's
-// service budgets (columns), with real-terms spending trends and, per dimension, the
-// indicator trends from the ward data.
+// Spending page: Ladywell's doughnut dimensions (rows) against public spending columns,
+// grouped by who spends the money and at what geography.
 //
-// Data: data/council/lewisham_service_spend.json (built by
-// data/pipeline/build_council_spend.py) and data/wards/ladywell.json.
-// A service is either tagged to a dimension or not: its full budget is shown on every
-// dimension it touches and is never split.
+// Data: data/spending/lewisham_public_spending.json (built by
+// data/pipeline/build_public_spending.py; method in docs/spending-methodology.md) and
+// data/wards/ladywell.json.
+//
+// A column is either tagged to a dimension or not: its full amount is shown on every
+// dimension it touches and is never split. Borough columns get a dot sized by amount.
+// Region-wide columns (e.g. London-wide) are not comparable with borough figures, so they
+// get a fixed-size hollow ring and their own header styling.
 
 const STATUS_COLOURS = {
     shortfall: 'var(--shortfall)',
@@ -55,12 +58,25 @@ function fmtNumber(v) {
     return v.toLocaleString('en-GB', { maximumFractionDigits: digits, minimumFractionDigits: 0 });
 }
 
+function fmtMoney(m) {
+    return m >= 1000 ? `£${(m / 1000).toFixed(1)}bn` : `£${m.toFixed(1)}m`;
+}
+
 function fmtChange(pct) {
+    if (pct === null || pct === undefined) return '';
     return (pct >= 0 ? '+' : '−') + Math.abs(pct).toFixed(0) + '%';
 }
 
+function changeColour(pct) {
+    return pct >= 0 ? 'var(--spend)' : 'var(--spend-down)';
+}
+
+function latest(col) {
+    return col.real_millions[col.real_millions.length - 1];
+}
+
 function sparkline(values, w, h, { zeroBase, stroke, dot, baseline }) {
-    let lo = zeroBase ? 0 : Math.min(...values);
+    let lo = zeroBase ? Math.min(0, ...values) : Math.min(...values);
     let hi = Math.max(...values);
     if (hi === lo) hi = lo + 1;
     if (!zeroBase) { const pad = (hi - lo) * 0.15; lo -= pad; hi += pad; }
@@ -113,55 +129,81 @@ function needPanel(indicators) {
         : '<p class="panel-empty">The ward data has no indicator time series for this dimension yet.</p>';
 }
 
-function spendPanel(services, years) {
-    if (!services.length) {
-        return '<p class="panel-empty">No council service line touches this dimension. The lever may sit with another body.</p>';
+function spendRow(c) {
+    const r = c.real_millions;
+    const colour = changeColour(c.real_change_pct);
+    const k = c.years.indexOf(c.change_from);
+    const from = k >= 0 ? k : 0;
+    return `<li class="trend-row">
+        <span class="trend-label">${esc(c.name)}<span class="trend-sub">${esc(c.rationale)}${c.caveat ? ' ' + esc(c.caveat) : ''}</span></span>
+        ${sparkline(r, 150, 36, { zeroBase: true, stroke: colour, baseline: true })}
+        <span class="trend-values">${esc(c.years[from])}: ${fmtMoney(r[from])}<br><strong style="color: ${colour}">${esc(c.years[c.years.length - 1])}: ${fmtMoney(r[r.length - 1])} (${fmtChange(c.real_change_pct)})</strong></span>
+    </li>`;
+}
+
+function spendPanel(tagged, spend) {
+    const local = tagged.filter(c => c.geography === 'borough');
+    const wide = tagged.filter(c => c.geography !== 'borough');
+    let html = local.length
+        ? `<ul class="trend-list">${local.map(spendRow).join('')}</ul>`
+        : `<p class="panel-empty">No ${esc(spend.authority)} budget line touches this dimension.</p>`;
+    if (wide.length) {
+        html += `<div class="panel-subhead"><span class="wide-badge">${esc(spend.region)}-wide</span> For context only: not comparable with ${esc(spend.authority)} figures.</div>
+            <ul class="trend-list is-wide">${wide.map(spendRow).join('')}</ul>`;
     }
-    return `<ul class="trend-list">${services.map(s => {
-        const r = s.real_millions;
-        const colour = s.real_change_pct >= 0 ? 'var(--spend)' : 'var(--spend-down)';
-        return `<li class="trend-row">
-            <span class="trend-label">${esc(s.name)}<span class="trend-sub">${esc(s.rationale)}</span></span>
-            ${sparkline(r, 150, 36, { zeroBase: true, stroke: colour, baseline: true })}
-            <span class="trend-values">${esc(years[0])}: £${r[0].toFixed(1)}m<br><strong style="color: ${colour}">${esc(years[years.length - 1])}: £${r[r.length - 1].toFixed(1)}m (${fmtChange(s.real_change_pct)})</strong></span>
-        </li>`;
-    }).join('')}</ul>`;
+    return html;
 }
 
 function render(spend, ward) {
-    const services = spend.services;
-    const years = spend.years;
-    const maxLatest = Math.max(...services.map(s => s.real_millions[s.real_millions.length - 1]));
-    const cols = services.length + 1;
+    const groups = spend.groups;
+    const cols = groups.flatMap(g => spend.columns.filter(c => c.group === g.id));
+    const boroughMax = Math.max(...cols.filter(c => c.geography === 'borough').map(latest));
+    const ncols = cols.length + 1;
+    const isWide = c => c.geography !== 'borough';
+    const startsGroup = i => i > 0 && cols[i].group !== cols[i - 1].group;
 
-    document.getElementById('spend-head').innerHTML = `<tr>
-        <th scope="col" class="dim-col"><span class="col-kicker">Dimension</span><span class="col-note">Spending ${esc(years[0])} to ${esc(years[years.length - 1])}, in ${esc(spend.price_base)} prices</span></th>
-        ${services.map(s => {
-            const r = s.real_millions;
-            const colour = s.real_change_pct >= 0 ? 'var(--spend)' : 'var(--spend-down)';
-            return `<th scope="col" class="svc-col">
-                <span class="svc-name">${esc(s.name)}</span>
-                <span class="svc-amt">£${r[r.length - 1].toFixed(1)}m</span>
-                ${sparkline(r, 76, 30, { zeroBase: true, stroke: colour, baseline: true })}
-                <span class="svc-chg" style="color: ${colour}">${fmtChange(s.real_change_pct)}</span>
+    const groupRow = `<tr class="group-head">
+        <td class="dim-col"></td>
+        ${groups.map(g => {
+            const n = cols.filter(c => c.group === g.id).length;
+            if (!n) return '';
+            const wide = g.geography !== 'borough';
+            return `<th scope="colgroup" colspan="${n}" class="group-start${wide ? ' is-wide' : ''}">
+                <span class="group-label">${esc(g.label)}</span>${wide ? `<span class="wide-note">Not comparable with ${esc(spend.authority)}</span>` : ''}
             </th>`;
         }).join('')}
     </tr>`;
 
-    const groups = [
+    const colRow = `<tr>
+        <th scope="col" class="dim-col"><span class="col-kicker">Dimension</span><span class="col-note">Spending after inflation, in ${esc(spend.price_base)} prices</span></th>
+        ${cols.map((c, i) => {
+            const colour = changeColour(c.real_change_pct);
+            return `<th scope="col" class="svc-col${isWide(c) ? ' is-wide' : ''}${startsGroup(i) ? ' group-start' : ''}">
+                <span class="svc-name">${esc(c.name)}</span>
+                <span class="svc-amt">${fmtMoney(latest(c))}</span>
+                ${sparkline(c.real_millions, 76, 30, { zeroBase: true, stroke: colour, baseline: true })}
+                <span class="svc-chg" style="color: ${colour}">${fmtChange(c.real_change_pct)}</span>
+                <span class="svc-since">since ${esc(c.change_from)}</span>
+            </th>`;
+        }).join('')}
+    </tr>`;
+    document.getElementById('spend-head').innerHTML = groupRow + colRow;
+    document.getElementById('spend-grid').style.minWidth = `${190 + cols.length * 80}px`;
+
+    const lenses = [
         ['Social foundation', 'local_social'],
         ['Ecological ceiling', 'local_ecological']
     ];
     let html = '';
-    groups.forEach(([label, lens]) => {
+    lenses.forEach(([label, lens]) => {
         const byDim = {};
         (ward[lens] || []).forEach(ind => { (byDim[ind.dimension] = byDim[ind.dimension] || []).push(ind); });
-        html += `<tr class="group-row"><th colspan="${cols}" scope="colgroup">${label}</th></tr>`;
+        html += `<tr class="group-row"><th colspan="${ncols}" scope="colgroup">${label}</th></tr>`;
         Object.keys(byDim).sort().forEach(dim => {
             const inds = byDim[dim];
             const status = dimensionStatus(inds, lens);
-            const tagged = services.filter(s => s.tags.includes(dim));
-            const gap = tagged.length === 0 && (status === 'shortfall' || status === 'overshoot');
+            const tagged = cols.filter(c => c.tags.includes(dim));
+            const gap = !tagged.some(c => !isWide(c)) && (status === 'shortfall' || status === 'overshoot');
             const id = `detail-${dim}`;
             html += `<tr class="dim-row${gap ? ' is-gap' : ''}" data-dim="${dim}">
                 <th scope="row" class="dim-col">
@@ -171,24 +213,28 @@ function render(spend, ward) {
                         <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
                     </button>
                 </th>
-                ${services.map(s => {
-                    if (!s.tags.includes(dim)) return '<td></td>';
-                    const latest = s.real_millions[s.real_millions.length - 1];
-                    const px = (8 + 26 * Math.sqrt(latest / maxLatest)).toFixed(1);
-                    const label = `${s.name}, £${latest.toFixed(1)}m in ${years[years.length - 1]}, touches ${dimensionName(dim)}`;
-                    return `<td><span class="spend-dot" style="width:${px}px;height:${px}px" role="img" aria-label="${esc(label)}" title="${esc(label)}"></span></td>`;
+                ${cols.map((c, i) => {
+                    const cls = [isWide(c) ? 'is-wide' : '', startsGroup(i) ? 'group-start' : ''].filter(Boolean).join(' ');
+                    const attr = cls ? ` class="${cls}"` : '';
+                    if (!c.tags.includes(dim)) return `<td${attr}></td>`;
+                    const label = `${c.name}, ${fmtMoney(latest(c))} in ${c.years[c.years.length - 1]}${isWide(c) ? ` (${spend.region}-wide)` : ''}, touches ${dimensionName(dim)}`;
+                    if (isWide(c)) {
+                        return `<td${attr}><span class="spend-ring" role="img" aria-label="${esc(label)}" title="${esc(label)}"></span></td>`;
+                    }
+                    const px = (8 + 26 * Math.sqrt(Math.max(latest(c), 0) / boroughMax)).toFixed(1);
+                    return `<td${attr}><span class="spend-dot" style="width:${px}px;height:${px}px" role="img" aria-label="${esc(label)}" title="${esc(label)}"></span></td>`;
                 }).join('')}
             </tr>
             <tr class="detail-row" id="${id}" hidden>
-                <td colspan="${cols}">
+                <td colspan="${ncols}">
                     <div class="detail-panel">
                         <section>
                             <div class="panel-head"><h2>Need over time</h2><span>from the ward data</span></div>
                             ${needPanel(inds)}
                         </section>
                         <section>
-                            <div class="panel-head"><h2>Council budgets that touch it</h2><span>Lewisham-wide, ${esc(spend.price_base)} prices</span></div>
-                            ${spendPanel(tagged, years)}
+                            <div class="panel-head"><h2>Public spending that touches it</h2><span>${esc(spend.price_base)} prices</span></div>
+                            ${spendPanel(tagged, spend)}
                         </section>
                     </div>
                 </td>
@@ -196,6 +242,9 @@ function render(spend, ward) {
         });
     });
     document.getElementById('spend-body').innerHTML = html;
+
+    document.getElementById('spend-gaps-list').innerHTML = (spend.gaps || []).map(g =>
+        `<li><strong>${esc(g.what)}.</strong> ${esc(g.why)}</li>`).join('');
 
     document.querySelectorAll('.dim-toggle').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -212,7 +261,7 @@ function render(spend, ward) {
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const [spend, ward] = await Promise.all([
-            fetch('data/council/lewisham_service_spend.json?v=' + Date.now()).then(r => { if (!r.ok) throw new Error('spend'); return r.json(); }),
+            fetch('data/spending/lewisham_public_spending.json?v=' + Date.now()).then(r => { if (!r.ok) throw new Error('spend'); return r.json(); }),
             fetch('data/wards/ladywell.json?v=' + Date.now()).then(r => { if (!r.ok) throw new Error('ward'); return r.json(); })
         ]);
         render(spend, ward);

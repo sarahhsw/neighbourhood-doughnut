@@ -58,12 +58,12 @@ python fetch_lookups.py  # (optional - bootstrap file exists)
 python assemble.py
 ```
 
-### Council spending page
-`site/spending.html` compares the doughnut dimensions with Lewisham's service budgets. Its data comes from MHCLG revenue outturn returns and the HM Treasury GDP deflator, rebuilt from the repo root with:
+### Spending page
+`site/spending.html` puts public spending next to the doughnut: Lewisham Council's day-to-day services, council homes, building projects and Housing Benefit (MHCLG outturn returns), and London-wide national and regional bodies (HM Treasury Country and Regional Analysis). Rebuild its data from the repo root with:
 ```bash
-python3 data/pipeline/build_council_spend.py
+python3 data/pipeline/build_public_spending.py
 ```
-Which services touch which dimension is set in `data/lookups/budget_dimension_tags.json` (yes/no tags, never weights).
+Which budgets touch which dimension is set in `data/lookups/budget_dimension_tags.json` (yes/no tags, never weights). The full method, caveats, gaps and how to reuse it for another ward are in `docs/spending-methodology.md`.
 
 ### Viewing the visualization locally
 ```bash

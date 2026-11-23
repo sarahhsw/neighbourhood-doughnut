@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Council spending and Ladywell's needs</title>
+    <title>Public spending and Ladywell's needs</title>
     <link rel="stylesheet" href="css/styles.css?v=46">
-    <link rel="stylesheet" href="css/spending.css?v=3">
+    <link rel="stylesheet" href="css/spending.css?v=4">
 </head>
 <body>
     <main class="spend-page">
         <a class="back-button" href="ward.html">← Back</a>
-        <h1>Council spending and Ladywell's needs</h1>
-        <p class="spend-intro">Rows are doughnut dimensions; columns are Lewisham's service budgets. A dot means the service touches that dimension; its size is the service's 2024-25 budget. Each column header shows how that budget has changed since 2015-16, after inflation. Click a dimension to compare its need trends with its spending trends.</p>
+        <h1>Public spending and Ladywell's needs</h1>
+        <p class="spend-intro">Rows are doughnut dimensions; columns are public budgets, grouped by who spends the money. A mark means that budget touches the dimension. For Lewisham budgets, a dot's size shows the 2025-26 amount. London-wide budgets get a hollow ring instead: they cover the whole city, so their size can't be compared with Lewisham's. Each column header shows how the budget has changed after inflation. Click a dimension to compare its need trends with its spending trends.</p>
 
-        <div class="spend-table-wrap" tabindex="0" role="region" aria-label="Council spending grid, scrolls sideways on small screens">
+        <div class="spend-table-wrap" tabindex="0" role="region" aria-label="Public spending grid, scrolls sideways">
             <table class="spend-grid" id="spend-grid">
-                <caption class="visually-hidden">Lewisham council service budgets and the Ladywell doughnut dimensions they touch</caption>
+                <caption class="visually-hidden">Public budgets for Lewisham and London, and the Ladywell doughnut dimensions they touch</caption>
                 <thead id="spend-head"></thead>
                 <tbody id="spend-body">
                     <tr><td class="spend-loading">Loading spending data…</td></tr>
@@ -28,15 +28,22 @@
             <span><span class="key-dot" style="background: var(--overshoot)"></span>Overshoot</span>
             <span><span class="key-dot" style="background: var(--met)"></span>Met</span>
             <span><span class="key-dot" style="background: var(--descriptive)"></span>No target</span>
-            <span><span class="key-line" style="background: var(--spend)"></span>Budget up after inflation</span>
-            <span><span class="key-line" style="background: var(--spend-down)"></span>Budget down after inflation</span>
-            <span><span class="key-gap"></span>Need flagged, no service line</span>
+            <span><span class="spend-dot key-size"></span>Lewisham budget (size = amount)</span>
+            <span><span class="spend-ring"></span>London-wide budget (not to scale)</span>
+            <span><span class="key-line" style="background: var(--spend)"></span>Up after inflation</span>
+            <span><span class="key-line" style="background: var(--spend-down)"></span>Down after inflation</span>
+            <span><span class="key-gap"></span>Need flagged, no Lewisham budget line</span>
         </div>
 
-        <p class="spend-footnote" id="spend-footnote">Spending: Ministry of Housing, Communities and Local Government (MHCLG) revenue outturn service expenditure summaries, 2015-16 to 2024-25, Lewisham net current expenditure, converted to 2024-25 prices with the HM Treasury GDP deflator. These are borough-wide figures, not spending located in Ladywell, and exclude the Housing Revenue Account (council-home rents and repairs) and capital spending. Some year-to-year changes reflect accounting changes rather than service levels, so check sharp one-year jumps before drawing conclusions. Which services touch which dimension is a judgement; each service's scope is listed when you open a dimension.</p>
+        <details class="spend-gaps">
+            <summary>What's not on this page yet</summary>
+            <ul id="spend-gaps-list"></ul>
+        </details>
+
+        <p class="spend-footnote" id="spend-footnote">Lewisham Council: Ministry of Housing, Communities and Local Government (MHCLG) revenue outturn returns, 2016-17 to 2025-26 (net current expenditure by service, Housing Revenue Account spending and Housing Benefit payments), and capital outturn returns, 2018-19 to 2025-26. London-wide: HM Treasury Country and Regional Analysis 2025, spending identifiable to London, 2020-21 to 2024-25. All amounts are converted to 2025-26 prices with the HM Treasury GDP deflator. Lewisham figures cover the whole borough, not spending located in Ladywell. Some year-to-year changes reflect accounting changes rather than service levels, so check sharp one-year jumps before drawing conclusions. Which budgets touch which dimension is a judgement; each budget's scope is listed when you open a dimension.</p>
     </main>
 
     <script src="js/chart.js?v=14"></script>
-    <script src="js/spending.js?v=2"></script>
+    <script src="js/spending.js?v=3"></script>
 </body>
 </html>

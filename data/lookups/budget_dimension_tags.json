@@ -1,11 +1,13 @@
 {
-  "_about": "Which doughnut dimensions each council service line touches. A tag is yes/no: a service's full budget is shown against every dimension it is tagged to and is never split or weighted. Service ids match build_council_spend.py. Dimensions with no tag are shown as 'no council service line'. Draft: review before treating as final.",
-  "services": {
+  "_about": "Which doughnut dimensions each spending column touches. A tag is yes/no: a column's full amount is shown against every dimension it is tagged to and is never split or weighted. Column ids match data/pipeline/build_public_spending.py. Method: docs/spending-methodology.md.",
+  "_verified": "Council service rationales list sub-lines from MHCLG Revenue Outturn RO1-RO6 2024-25; London-wide rationales list departments and sub-functions in the HM Treasury Country and Regional Analysis 2025 database (checked 23 November 2026).",
+  "columns": {
     "education": {
       "tags": [
         "education"
       ],
-      "rationale": "Education services (RO1): early years, primary, secondary and special schools, alternative provision, post-16 provision."
+      "rationale": "Education services (RO1): early years, primary, secondary and special schools, alternative provision, post-16 provision.",
+      "caveat": "Covers council-maintained schools. Academies are funded by the Department for Education directly and appear in the London-wide 'Academies & colleges' column, so a fall here can reflect schools becoming academies."
     },
     "childrens_social_care": {
       "tags": [
@@ -72,7 +74,166 @@
         "air_quality_regulation"
       ],
       "rationale": "Highways and transport services (RO2): road maintenance, street lighting, traffic management, parking, road safety, concessionary fares, transport planning."
+    },
+    "council_homes_hra": {
+      "tags": [
+        "housing"
+      ],
+      "rationale": "Housing Revenue Account (RS): running, repairing and managing council-owned homes, paid for mainly by council tenants' rents."
+    },
+    "capital_housing": {
+      "tags": [
+        "housing"
+      ],
+      "rationale": "Capital expenditure on housing (capital outturn return): building, buying and improving homes, including council homes.",
+      "caveat": "Building spending is lumpy: one large project can make a single year jump."
+    },
+    "capital_transport": {
+      "tags": [
+        "mobility",
+        "air_quality_regulation"
+      ],
+      "rationale": "Capital expenditure on highways and transport (capital outturn return): roads, street lighting, road safety, parking.",
+      "caveat": "Building spending is lumpy: one large project can make a single year jump."
+    },
+    "capital_schools": {
+      "tags": [
+        "education"
+      ],
+      "rationale": "Capital expenditure on education (capital outturn return): building and improving council-maintained schools and early years settings.",
+      "caveat": "Building spending is lumpy: one large project can make a single year jump."
+    },
+    "capital_culture": {
+      "tags": [
+        "culture",
+        "social_cohesion",
+        "wellbeing",
+        "biodiversity_support"
+      ],
+      "rationale": "Capital expenditure on culture and related services (capital outturn return): libraries, heritage, sport and leisure, open spaces.",
+      "caveat": "Building spending is lumpy: one large project can make a single year jump."
+    },
+    "housing_benefit": {
+      "tags": [
+        "income",
+        "housing"
+      ],
+      "rationale": "Housing Benefit (RS): rent support paid by the council on behalf of the Department for Work and Pensions, which funds it.",
+      "caveat": "Housing Benefit is being replaced by Universal Credit, which the Department for Work and Pensions pays directly, so the fall mostly reflects that move rather than less support."
+    },
+    "nhs": {
+      "tags": [
+        "health"
+      ],
+      "rationale": "Department of Health and Social Care (Country and Regional Analysis): medical services such as hospitals, GPs and community care, and medical research.",
+      "caveat": "London total; a Lewisham share is not published. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "benefits": {
+      "tags": [
+        "income",
+        "equality"
+      ],
+      "rationale": "Department for Work and Pensions and HM Revenue and Customs (Country and Regional Analysis): pensions, disability and incapacity benefits, Universal Credit and other income support, tax credits and family benefits.",
+      "caveat": "London total; a Lewisham share is not published. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "schools_national": {
+      "tags": [
+        "education"
+      ],
+      "rationale": "Department for Education spending outside councils (Country and Regional Analysis): mainly academy schools, plus colleges and other education it funds directly.",
+      "caveat": "London total; a Lewisham share is not published. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "justice": {
+      "tags": [
+        "peace_justice"
+      ],
+      "rationale": "Central government public order and safety (Country and Regional Analysis): Ministry of Justice courts and prisons, Crown Prosecution Service, Home Office, British Transport Police.",
+      "caveat": "London total; a Lewisham share is not published. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "rail": {
+      "tags": [
+        "mobility"
+      ],
+      "rationale": "Department for Transport (Country and Regional Analysis): mostly railways, plus national roads.",
+      "caveat": "London total; a Lewisham share is not published. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "energy_national": {
+      "tags": [
+        "energy",
+        "energy_harvesting"
+      ],
+      "rationale": "Department for Energy Security and Net Zero and Ofgem (Country and Regional Analysis): energy programmes such as net zero buildings and heat, new nuclear and carbon capture.",
+      "caveat": "London total; a Lewisham share is not published. Leaves out the temporary energy bill support schemes of 2022 to 2024 (Energy Bills Support Scheme, Energy Price Guarantee, Energy Bills Relief Scheme), which would otherwise dwarf the ongoing programmes. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "environment_national": {
+      "tags": [
+        "biodiversity_support",
+        "water_provisioning"
+      ],
+      "rationale": "Department for Environment, Food and Rural Affairs and its agencies, such as the Environment Agency (Country and Regional Analysis): environmental protection, biodiversity and landscape.",
+      "caveat": "London total; a Lewisham share is not published. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "police_fire_regional": {
+      "tags": [
+        "peace_justice"
+      ],
+      "rationale": "Local government police and fire (Country and Regional Analysis): mainly the Metropolitan Police, through the Mayor's Office for Policing and Crime, and London Fire Brigade.",
+      "caveat": "London total. The source groups these regional bodies with the London boroughs, so it includes councils' own community safety spending. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
+    },
+    "transport_regional": {
+      "tags": [
+        "mobility",
+        "air_quality_regulation"
+      ],
+      "rationale": "Local government and public corporation transport (Country and Regional Analysis): Transport for London, including London Underground, and borough roads.",
+      "caveat": "London total. The source groups Transport for London with the London boroughs, so it includes councils' own transport spending. Change is measured from 2022-23 because 2020-21 and 2021-22 include pandemic spending."
     }
   },
-  "_verified": "Rationales list sub-lines from MHCLG Revenue Outturn RO1-RO6 2024-25 detailed returns (checked 22 November 2026)."
+  "gaps": [
+    {
+      "what": "Water company investment (Thames Water)",
+      "why": "Set for the whole company area by the regulator, Ofwat, not by borough. Ofwat's site refuses automated access from this environment, and Discover Water only shows the industry total for England and Wales.",
+      "where": "Ofwat PR24 final determination for Thames Water; Thames Water annual performance report. Would be shown as company-wide, not comparable."
+    },
+    {
+      "what": "NHS spending in Lewisham",
+      "why": "No borough figure is published centrally: the South East London Integrated Care Board covers six boroughs. NHS Digital and NHS England refuse automated access from this environment.",
+      "where": "NHS Payments to General Practice (per practice, could be summed for Lewisham practices); South East London Integrated Care Board papers."
+    },
+    {
+      "what": "Benefits paid in Lewisham, other than Housing Benefit",
+      "why": "The Department for Work and Pensions stopped publishing benefit spending by local authority after 2011-12.",
+      "where": "Stat-Xplore gives claimant numbers by area (free account), not amounts."
+    },
+    {
+      "what": "Academy schools in Lewisham",
+      "why": "Academies are funded by the Department for Education directly; per-school allocations are in its funding web service rather than a download. Not attempted yet.",
+      "where": "Department for Education academy accounts returns and funding allocations."
+    },
+    {
+      "what": "Transport for London, the Metropolitan Police, London Fire Brigade and the Greater London Authority, separately or by borough",
+      "why": "The Country and Regional Analysis groups them with the London boroughs. Transport for London's and the Greater London Authority's sites refuse automated access from this environment.",
+      "where": "Transport for London Local Implementation Plan funding per borough; London Fire Brigade financial reports (London Datastore); Greater London Authority group budget."
+    },
+    {
+      "what": "Greater London Authority affordable housing grant",
+      "why": "The London Datastore publishes homes started and completed by borough, not grant amounts.",
+      "where": "Greater London Authority housing programme reports."
+    },
+    {
+      "what": "Developer contributions (Community Infrastructure Levy and Section 106)",
+      "why": "Reported only in the council's Infrastructure Funding Statement, on a site that refuses automated access from this environment.",
+      "where": "Lewisham Infrastructure Funding Statement."
+    },
+    {
+      "what": "Council building spending before 2018-19",
+      "why": "The government's capital time series starts in 2018-19.",
+      "where": "Older per-council capital outturn files, if a longer series is needed."
+    },
+    {
+      "what": "Spending located in Ladywell",
+      "why": "None of these sources record where in the borough money is spent.",
+      "where": "Council capital programme by project and ward; developer contributions by site."
+    }
+  ]
 }

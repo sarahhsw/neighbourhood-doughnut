@@ -1,0 +1,458 @@
+{
+  "authority": "Lewisham",
+  "ons_code": "E09000023",
+  "generated_at": "2026-11-22T23:54:28+00:00",
+  "years": [
+    "2015-16",
+    "2016-17",
+    "2017-18",
+    "2018-19",
+    "2019-20",
+    "2020-21",
+    "2021-22",
+    "2022-23",
+    "2023-24",
+    "2024-25"
+  ],
+  "measure": "Net current expenditure (gross expenditure minus fees, charges and other income)",
+  "price_base": "2024-25",
+  "excludes": "Housing Revenue Account and capital spending",
+  "total_real_millions": [
+    784.1,
+    729.6,
+    714.6,
+    742.2,
+    746.9,
+    737.0,
+    720.2,
+    746.3,
+    779.5,
+    777.9
+  ],
+  "services": [
+    {
+      "id": "education",
+      "name": "Education",
+      "rsx_name": "Education services",
+      "tags": [
+        "education"
+      ],
+      "rationale": "Education services (RO1): early years, primary, secondary and special schools, alternative provision, post-16 provision.",
+      "nominal_thousands": [
+        322131.0,
+        317995.0,
+        312711.0,
+        312139.1348714071,
+        319679.0,
+        340594.0,
+        344537.0,
+        346633.0,
+        378888.0,
+        360269.0
+      ],
+      "real_millions": [
+        431.3,
+        417.4,
+        405.5,
+        395.9,
+        395.0,
+        400.4,
+        403.3,
+        379.2,
+        393.8,
+        360.3
+      ],
+      "real_change_pct": -16.5
+    },
+    {
+      "id": "childrens_social_care",
+      "name": "Children's social care",
+      "rsx_name": "Children's social care",
+      "tags": [
+        "equality",
+        "health",
+        "peace_justice"
+      ],
+      "rationale": "Children's social care (RO3): children looked after, safeguarding, family support, youth justice, services for young people, children's centres.",
+      "nominal_thousands": [
+        63493.0,
+        58301.0,
+        63320.0,
+        75191.56774668173,
+        80810.0,
+        81070.0,
+        76556.0,
+        86467.0,
+        105982.0,
+        120816.0
+      ],
+      "real_millions": [
+        85.0,
+        76.5,
+        82.1,
+        95.4,
+        99.9,
+        95.3,
+        89.6,
+        94.6,
+        110.1,
+        120.8
+      ],
+      "real_change_pct": 42.1
+    },
+    {
+      "id": "adult_social_care",
+      "name": "Adult social care",
+      "rsx_name": "Adult social care",
+      "tags": [
+        "health",
+        "equality"
+      ],
+      "rationale": "Adult social care (RO3): physical, learning disability, mental health and memory support; carers; social isolation.",
+      "nominal_thousands": [
+        81173.0,
+        78171.0,
+        80119.821,
+        90655.0,
+        93791.0,
+        94321.0,
+        86151.0,
+        102224.0,
+        110387.0,
+        120137.9
+      ],
+      "real_millions": [
+        108.7,
+        102.6,
+        103.9,
+        115.0,
+        115.9,
+        110.9,
+        100.8,
+        111.8,
+        114.7,
+        120.1
+      ],
+      "real_change_pct": 10.5
+    },
+    {
+      "id": "housing_gf",
+      "name": "Housing (General Fund)",
+      "rsx_name": "Housing services (General Fund only)",
+      "tags": [
+        "housing"
+      ],
+      "rationale": "Housing services, General Fund only (RO4): homelessness and temporary accommodation, housing strategy and advice, housing benefit administration. Council-home rents and repairs sit in the separate Housing Revenue Account.",
+      "nominal_thousands": [
+        18649.0,
+        15076.0,
+        15394.0,
+        21153.31417961831,
+        23297.0,
+        23485.0,
+        21775.0,
+        32566.0,
+        45678.0,
+        54277.0
+      ],
+      "real_millions": [
+        25.0,
+        19.8,
+        20.0,
+        26.8,
+        28.8,
+        27.6,
+        25.5,
+        35.6,
+        47.5,
+        54.3
+      ],
+      "real_change_pct": 117.2
+    },
+    {
+      "id": "environmental_regulatory",
+      "name": "Environmental & regulatory",
+      "rsx_name": "Environmental and regulatory services",
+      "tags": [
+        "air_quality_regulation",
+        "peace_justice",
+        "food"
+      ],
+      "rationale": "Environmental and regulatory services (RO5): environmental protection, food safety, housing standards, crime reduction and CCTV, waste and recycling, street cleansing, flood defences, climate change costs.",
+      "nominal_thousands": [
+        27726.0,
+        20402.0,
+        22050.0,
+        22718.34821424919,
+        24604.0,
+        28861.0,
+        28809.0,
+        28525.0,
+        31095.0,
+        33322.0
+      ],
+      "real_millions": [
+        37.1,
+        26.8,
+        28.6,
+        28.8,
+        30.4,
+        33.9,
+        33.7,
+        31.2,
+        32.3,
+        33.3
+      ],
+      "real_change_pct": -10.2
+    },
+    {
+      "id": "public_health",
+      "name": "Public health",
+      "rsx_name": "Public health",
+      "tags": [
+        "health",
+        "food"
+      ],
+      "rationale": "Public health (RO3): obesity, physical activity, children's 5-19 programmes, substance misuse, sexual health, smoking.",
+      "nominal_thousands": [
+        22400.0,
+        26057.0,
+        24968.182999999997,
+        25775.71365692513,
+        23683.0,
+        25702.0,
+        25352.0,
+        28650.0,
+        29855.0,
+        31218.92
+      ],
+      "real_millions": [
+        30.0,
+        34.2,
+        32.4,
+        32.7,
+        29.3,
+        30.2,
+        29.7,
+        31.3,
+        31.0,
+        31.2
+      ],
+      "real_change_pct": 4.0
+    },
+    {
+      "id": "central_services",
+      "name": "Central services",
+      "rsx_name": "Central services",
+      "tags": [
+        "political_voice",
+        "income"
+      ],
+      "rationale": "Central services (RO6): conducting elections and registering electors; council tax collection and support; local welfare assistance.",
+      "nominal_thousands": [
+        21756.0,
+        16417.0,
+        13496.0,
+        14345.961988048883,
+        14393.0,
+        12365.0,
+        12942.0,
+        36803.0,
+        22446.0,
+        24012.0
+      ],
+      "real_millions": [
+        29.1,
+        21.5,
+        17.5,
+        18.2,
+        17.8,
+        14.5,
+        15.1,
+        40.3,
+        23.3,
+        24.0
+      ],
+      "real_change_pct": -17.5
+    },
+    {
+      "id": "planning_development",
+      "name": "Planning & development",
+      "rsx_name": "Planning and development services",
+      "tags": [
+        "housing",
+        "income"
+      ],
+      "rationale": "Planning and development services (RO5): development control and planning policy, economic development, business support, community development.",
+      "nominal_thousands": [
+        8210.0,
+        5284.0,
+        3813.0,
+        6011.500567816274,
+        8491.0,
+        9325.0,
+        7953.0,
+        6305.0,
+        9965.0,
+        14703.0
+      ],
+      "real_millions": [
+        11.0,
+        6.9,
+        4.9,
+        7.6,
+        10.5,
+        11.0,
+        9.3,
+        6.9,
+        10.4,
+        14.7
+      ],
+      "real_change_pct": 33.6
+    },
+    {
+      "id": "cultural_related",
+      "name": "Cultural & related",
+      "rsx_name": "Cultural and related services",
+      "tags": [
+        "culture",
+        "social_cohesion",
+        "wellbeing",
+        "biodiversity_support"
+      ],
+      "rationale": "Cultural and related services (RO5): libraries, arts and heritage, community centres, sport and leisure, parks and open spaces, allotments.",
+      "nominal_thousands": [
+        11284.0,
+        10070.0,
+        8944.0,
+        9192.949742073339,
+        6988.0,
+        8779.0,
+        8430.0,
+        11698.0,
+        11649.0,
+        11577.0
+      ],
+      "real_millions": [
+        15.1,
+        13.2,
+        11.6,
+        11.7,
+        8.6,
+        10.3,
+        9.9,
+        12.8,
+        12.1,
+        11.6
+      ],
+      "real_change_pct": -23.2
+    },
+    {
+      "id": "highways_transport",
+      "name": "Highways & transport",
+      "rsx_name": "Highways and transport services",
+      "tags": [
+        "mobility",
+        "air_quality_regulation"
+      ],
+      "rationale": "Highways and transport services (RO2): road maintenance, street lighting, traffic management, parking, road safety, concessionary fares, transport planning.",
+      "nominal_thousands": [
+        8772.0,
+        8065.0,
+        6244.0,
+        7997.4435548436395,
+        8761.0,
+        2476.0,
+        2836.0,
+        2449.0,
+        4117.0,
+        7578.0
+      ],
+      "real_millions": [
+        11.7,
+        10.6,
+        8.1,
+        10.1,
+        10.8,
+        2.9,
+        3.3,
+        2.7,
+        4.3,
+        7.6
+      ],
+      "real_change_pct": -35.0
+    }
+  ],
+  "sources": {
+    "rsx": {
+      "2015-16": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2015 to 2016",
+        "url": "https://assets.publishing.service.gov.uk/media/5a82308040f0b62305b92f4f/RSX_2015-16_data_by_LA_-_Revision.xlsx",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2015-to-2016-individual-local-authority-data-outturn"
+      },
+      "2016-17": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2016 to 2017",
+        "url": "https://assets.publishing.service.gov.uk/media/5a74add6e5274a56317a6421/RSX_2016-17_data_by_LA.xlsx",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2016-to-2017-individual-local-authority-data-outturn"
+      },
+      "2017-18": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2017 to 2018 - revised",
+        "url": "https://assets.publishing.service.gov.uk/media/6656f65e8f90ef31c23ebb8b/RSX_2017-18_data_by_LA_-_revised.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2017-to-2018-individual-local-authority-data-outturn"
+      },
+      "2018-19": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2018 to 2019",
+        "url": "https://assets.publishing.service.gov.uk/media/66573b5e7b792ffff71a84e2/RSX_2018-19_data_by_LA.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2018-to-2019-individual-local-authority-data-outturn"
+      },
+      "2019-20": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2019 to 2020",
+        "url": "https://assets.publishing.service.gov.uk/media/6656f5327b792ffff71a8495/RSX_2019-20_data_by_LA.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2019-to-2020-individual-local-authority-data-outturn"
+      },
+      "2020-21": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2020 to 2021 (revised)",
+        "url": "https://assets.publishing.service.gov.uk/media/67dc2606931ea30d1b7ee36b/RSX_2020-21_data_by_LA_March_2025.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2020-to-2021-individual-local-authority-data-outturn"
+      },
+      "2021-22": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2021 to 2022",
+        "url": "https://assets.publishing.service.gov.uk/media/6825a5a1ab96d4ed0b262f78/RSX_2021-22_data_by_LA_Live.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2021-to-2022-individual-local-authority-data-outturn"
+      },
+      "2022-23": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2022 to 2023",
+        "url": "https://assets.publishing.service.gov.uk/media/686be42881dd8f70f5de3c18/RSX_2022-23_data_by_LA.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2022-to-2023-individual-local-authority-data-outturn"
+      },
+      "2023-24": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2023 to 2024",
+        "url": "https://assets.publishing.service.gov.uk/media/6a291c0b3b15d05a7ce31ffe/RSX_2023-24_data_by_LA.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2023-to-2024-individual-local-authority-data-outturn"
+      },
+      "2024-25": {
+        "title": "Revenue outturn service expenditure summary (RSX) 2024 to 2025",
+        "url": "https://assets.publishing.service.gov.uk/media/6a291b0fade52dc088221881/RSX_LA_Data_2024-25_data_by_LA.ods",
+        "page": "https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-2024-to-2025-individual-local-authority-data-outturn"
+      }
+    },
+    "deflator": {
+      "title": "GDP deflators at market prices, and money GDP October 2026 (Budget)",
+      "url": "https://assets.publishing.service.gov.uk/media/6ae32ab0a5c2f99e3a7b82e3/GDP_Deflators_Budget_October_2026_update.xlsx",
+      "page": "https://www.gov.uk/government/statistics/gdp-deflators-at-market-prices-and-money-gdp-october-2026-budget",
+      "values": {
+        "2015-16": 72.2622,
+        "2016-17": 73.7129,
+        "2017-18": 74.6091,
+        "2018-19": 76.2884,
+        "2019-20": 78.3047,
+        "2020-21": 82.3141,
+        "2021-22": 82.6648,
+        "2022-23": 88.4564,
+        "2023-24": 93.1026,
+        "2024-25": 96.757
+      }
+    },
+    "tags": "data/lookups/budget_dimension_tags.json"
+  }
+}

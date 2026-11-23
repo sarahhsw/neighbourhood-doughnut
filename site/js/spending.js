@@ -183,7 +183,7 @@ function render(spend, ward) {
                 <td colspan="${cols}">
                     <div class="detail-panel">
                         <section>
-                            <div class="panel-head"><h2>${esc(dimensionName(dim))}: need over time</h2><span>from the ward data</span></div>
+                            <div class="panel-head"><h2>Need over time</h2><span>from the ward data</span></div>
                             ${needPanel(inds)}
                         </section>
                         <section>

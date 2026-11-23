@@ -77,6 +77,13 @@ without a model of what the need would cost to meet.
 | Open row | Left: each indicator's trend, using its most local series (Ladywell, then Lewisham, then the first available). Right: each tagged budget's trend, scope and caveat; London-wide budgets in a separate "for context only" list |
 | "What's not on this page yet" | The known gaps (section 7), read from the tags file |
 
+**On phones (under 768px wide)** the grid can't show 25 columns, so `renderMobile()` in
+`spending.js` draws a list instead: one row per dimension with a summary of the budgets that
+touch it (filled dots for Lewisham, hollow rings for London-wide, plus counts, or "No Lewisham
+budget" on gap rows). Tapping a row opens the same detail as the grid. An "All budgets and how
+they've changed" section below gives what the desktop column headers show. CSS classes
+`desktop-only` and `mobile-only` pick the layout; both are built from the same data.
+
 ## 4. Sources
 
 All sources are official statistics downloaded from gov.uk. The pipeline finds each file

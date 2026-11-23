@@ -243,6 +243,8 @@ function render(spend, ward) {
     });
     document.getElementById('spend-body').innerHTML = html;
 
+    renderMobile(spend, ward, cols, lenses);
+
     document.getElementById('spend-gaps-list').innerHTML = (spend.gaps || []).map(g =>
         `<li><strong>${esc(g.what)}.</strong> ${esc(g.why)}</li>`).join('');
 
@@ -256,6 +258,79 @@ function render(spend, ward) {
             detail.hidden = open;
         });
     });
+}
+
+// Phone layout: the grid can't show 25 columns at 390px, so each dimension becomes a row
+// with a summary of the budgets that touch it, opening to the same detail as the grid.
+function renderMobile(spend, ward, cols, lenses) {
+    const isWide = c => c.geography !== 'borough';
+    let html = '';
+    lenses.forEach(([label, lens]) => {
+        const byDim = {};
+        (ward[lens] || []).forEach(ind => { (byDim[ind.dimension] = byDim[ind.dimension] || []).push(ind); });
+        html += `<h2 class="m-group">${label}</h2><ul class="m-list">`;
+        Object.keys(byDim).sort().forEach(dim => {
+            const inds = byDim[dim];
+            const status = dimensionStatus(inds, lens);
+            const tagged = cols.filter(c => c.tags.includes(dim));
+            const nLocal = tagged.filter(c => !isWide(c)).length;
+            const nWide = tagged.length - nLocal;
+            const gap = nLocal === 0 && (status === 'shortfall' || status === 'overshoot');
+            const marks = '<span class="spend-dot m-mark"></span>'.repeat(nLocal) + '<span class="spend-ring m-mark"></span>'.repeat(nWide);
+            const parts = [];
+            if (nLocal) parts.push(`${nLocal} ${esc(spend.authority)}`);
+            if (nWide) parts.push(`${nWide} ${esc(spend.region)}-wide`);
+            const summary = gap
+                ? `<span class="m-none">No ${esc(spend.authority)} budget</span>`
+                : (parts.length ? parts.join(' · ') : '<span class="m-zero">No budget line</span>');
+            const id = `m-detail-${dim}`;
+            html += `<li class="m-item${gap ? ' is-gap' : ''}">
+                <button type="button" class="m-toggle" aria-expanded="false" aria-controls="${id}">
+                    <span class="key-dot" style="background: ${STATUS_COLOURS[status]}" title="${STATUS_LABELS[status]}"></span>
+                    <span class="m-name">${esc(dimensionName(dim))}<span class="m-status">${STATUS_LABELS[status]}</span></span>
+                    <span class="m-summary"><span class="m-marks" aria-hidden="true">${marks}</span><span class="m-count">${summary}</span></span>
+                    <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                </button>
+                <div class="m-detail" id="${id}" hidden>
+                    <section>
+                        <div class="panel-head"><h3>Need over time</h3><span>from the ward data</span></div>
+                        ${needPanel(inds)}
+                    </section>
+                    <section>
+                        <div class="panel-head"><h3>Public spending that touches it</h3><span>${esc(spend.price_base)} prices</span></div>
+                        ${spendPanel(tagged, spend)}
+                    </section>
+                </div>
+            </li>`;
+        });
+        html += '</ul>';
+    });
+    const box = document.getElementById('spend-mobile');
+    box.innerHTML = html;
+    box.querySelectorAll('.m-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const open = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+            btn.closest('.m-item').classList.toggle('is-open', !open);
+            document.getElementById(btn.getAttribute('aria-controls')).hidden = open;
+        });
+    });
+
+    document.getElementById('spend-all-list').innerHTML = spend.groups.map(g => {
+        const gcols = cols.filter(c => c.group === g.id);
+        if (!gcols.length) return '';
+        const wide = g.geography !== 'borough';
+        return `<h3 class="m-all-group">${esc(g.label)}${wide ? `<span class="m-all-note">Not comparable with ${esc(spend.authority)}</span>` : ''}</h3>
+            <ul class="m-all">${gcols.map(c => {
+                const colour = changeColour(c.real_change_pct);
+                return `<li>
+                    <span class="m-all-name">${wide ? '<span class="spend-ring m-mark"></span>' : '<span class="spend-dot m-mark"></span>'}${esc(c.name)}</span>
+                    <span class="m-all-amt">${fmtMoney(latest(c))}</span>
+                    ${sparkline(c.real_millions, 64, 24, { zeroBase: true, stroke: colour, baseline: true })}
+                    <span class="m-all-chg" style="color: ${colour}">${fmtChange(c.real_change_pct)}<span>since ${esc(c.change_from)}</span></span>
+                </li>`;
+            }).join('')}</ul>`;
+    }).join('');
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Public spending and Ladywell's needs</title>
     <link rel="stylesheet" href="css/styles.css?v=46">
-    <link rel="stylesheet" href="css/spending.css?v=4">
+    <link rel="stylesheet" href="css/spending.css?v=6">
 </head>
 <body>
     <main class="spend-page">
         <a class="back-button" href="ward.html">← Back</a>
         <h1>Public spending and Ladywell's needs</h1>
-        <p class="spend-intro">Rows are doughnut dimensions; columns are public budgets, grouped by who spends the money. A mark means that budget touches the dimension. For Lewisham budgets, a dot's size shows the 2025-26 amount. London-wide budgets get a hollow ring instead: they cover the whole city, so their size can't be compared with Lewisham's. Each column header shows how the budget has changed after inflation. Click a dimension to compare its need trends with its spending trends.</p>
+        <p class="spend-intro desktop-only">Rows are doughnut dimensions; columns are public budgets, grouped by who spends the money. A mark means that budget touches the dimension. For Lewisham budgets, a dot's size shows the 2025-26 amount. London-wide budgets get a hollow ring instead: they cover the whole city, so their size can't be compared with Lewisham's. Each column header shows how the budget has changed after inflation. Click a dimension to compare its need trends with its spending trends.</p>
 
-        <div class="spend-table-wrap" tabindex="0" role="region" aria-label="Public spending grid, scrolls sideways">
+        <p class="spend-intro mobile-only">Each row is a doughnut dimension. Tap one to see how the need has changed and which public budgets touch it, with how each budget has changed after inflation. Filled dots are Lewisham budgets; hollow rings are London-wide budgets, shown for context only because they cover the whole city.</p>
+
+        <div class="spend-mobile mobile-only" id="spend-mobile"></div>
+
+        <div class="spend-table-wrap desktop-only" tabindex="0" role="region" aria-label="Public spending grid, scrolls sideways">
             <table class="spend-grid" id="spend-grid">
                 <caption class="visually-hidden">Public budgets for Lewisham and London, and the Ladywell doughnut dimensions they touch</caption>
                 <thead id="spend-head"></thead>
@@ -28,12 +32,17 @@
             <span><span class="key-dot" style="background: var(--overshoot)"></span>Overshoot</span>
             <span><span class="key-dot" style="background: var(--met)"></span>Met</span>
             <span><span class="key-dot" style="background: var(--descriptive)"></span>No target</span>
-            <span><span class="spend-dot key-size"></span>Lewisham budget (size = amount)</span>
+            <span><span class="spend-dot key-size"></span>Lewisham budget<span class="desktop-only-inline"> (size = amount)</span></span>
             <span><span class="spend-ring"></span>London-wide budget (not to scale)</span>
             <span><span class="key-line" style="background: var(--spend)"></span>Up after inflation</span>
             <span><span class="key-line" style="background: var(--spend-down)"></span>Down after inflation</span>
             <span><span class="key-gap"></span>Need flagged, no Lewisham budget line</span>
         </div>
+
+        <details class="spend-all mobile-only">
+            <summary>All budgets and how they've changed</summary>
+            <div id="spend-all-list"></div>
+        </details>
 
         <details class="spend-gaps">
             <summary>What's not on this page yet</summary>
@@ -44,6 +53,6 @@
     </main>
 
     <script src="js/chart.js?v=14"></script>
-    <script src="js/spending.js?v=3"></script>
+    <script src="js/spending.js?v=5"></script>
 </body>
 </html>

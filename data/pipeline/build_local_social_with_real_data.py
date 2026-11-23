@@ -19,34 +19,44 @@ with open('data/manual/lewisham_real_data.json') as f:
     lewisham_data = json.load(f)
 
 def build_health():
-    """Health dimension - using female life expectancy and premature mortality"""
-    return create_targeted_dimension(
-        ward=LADYWELL_WARD_NAME,
-        ward_code=LADYWELL_WARD_CODE,
-        lens=Lens.LOCAL_SOCIAL,
-        dimension_name="health",
-        target=Target(
-            text="Healthy life expectancy ≥ London average; premature mortality ≤ London average",
-            source_body="Trust for London benchmarks",
-            has_official_target=True
-        ),
-        indicator="Female life expectancy (years)",
-        threshold=Threshold(value=84.13, unit="years", description="London average life expectancy"),
-        snapshot=Snapshot(
-            value=82.92,
-            unit="years",
-            year=2023
-        ),
-        status=Status.SHORTFALL,
-        source=Source(
-            name="Trust for London - Lewisham Poverty Profile",
-            url=lewisham_data["url"],
-            accessed=lewisham_data["accessed"],
-            notes=f"Lewisham: {lewisham_data['indicators']['female_life_expectancy']['value']} years vs London avg: {lewisham_data['indicators']['female_life_expectancy']['comparison']['london_average']} years. Premature mortality also worse than London average."
-        ),
-        geography=GeographyLevel.BOROUGH_INHERITED,
-        confidence=Confidence.HIGH
-    )
+    """
+    Health dimension - healthy life expectancy at birth for Lewisham, male and female,
+    ONS 3-year rolling periods. Values copied unchanged from site/data/wards/ladywell.json
+    (the live page) when the builder was brought back into line with it; the Health index
+    score was dropped from the page in August 2026 (commit f65326b).
+    """
+    source_url = "https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/datasets/healthstatelifeexpectancyallagesuk"
+    periods = ["2011-2013", "2012-2014", "2013-2015", "2014-2016", "2015-2017", "2016-2018",
+               "2017-2019", "2018-2020", "2019-2021", "2020-2022", "2021-2023", "2022-2024"]
+    series = {
+        "Male": (58.3, "52.0-64.7",
+                 [64.7, 62.2, 60.9, 62.3, 62.9, 62.8, 62.1, 62.6, 62.5, 62.7, 57.8, 58.3]),
+        "Female": (58.1, "52.3-63.9",
+                   [65.2, 62.2, 60.8, 63.0, 63.5, 63.1, 62.5, 63.8, 63.4, 62.8, 57.2, 58.1]),
+    }
+    dims = []
+    for sex, (value, ci, values) in series.items():
+        dims.append(Dimension(
+            ward=LADYWELL_WARD_NAME,
+            ward_code=LADYWELL_WARD_CODE,
+            lens=Lens.LOCAL_SOCIAL,
+            dimension="health",
+            target=Target(text="No official target set", source_body=None, has_official_target=False),
+            indicator=f"Healthy life expectancy at birth ({sex})",
+            threshold=Threshold(),
+            snapshot=Snapshot(value=value, unit="years", year="2022-2024"),
+            status=Status.DESCRIPTIVE_ONLY,
+            geography_of_data=GeographyLevel.BOROUGH_INHERITED,
+            source=Source(
+                name="Office for National Statistics - Healthy life expectancy, UK",
+                url=source_url,
+                accessed="2026-07-12",
+                notes=f"Lewisham: {value} years (95% CI: {ci}). London average: 62.9 years. 3-year period 2022-2024.",
+            ),
+            confidence=Confidence.HIGH,
+            trend=[{"period": p, "value": v} for p, v in zip(periods, values)],
+        ))
+    return dims
 
 def build_housing_dimensions():
     """
@@ -1866,7 +1876,7 @@ def build_social_cohesion_dimensions():
 def main():
     """Build all Local Social dimensions with real Lewisham data where available"""
     dimensions = [
-        build_health(),
+        *build_health(),
         *build_housing_dimensions(),
         *build_food_dimensions(),
         *build_water_dimensions(),

@@ -6,32 +6,82 @@
       "lens": "local_social",
       "dimension": "health",
       "target": {
-        "text": "Female life expectancy target: London average life expectancy",
-        "source_body": "Trust for London benchmarks",
-        "has_official_target": true
+        "text": "No official target set",
+        "source_body": null,
+        "has_official_target": false
       },
-      "indicator": "Female life expectancy",
+      "indicator": "Healthy life expectancy at birth (Male)",
       "threshold": {
-        "value": 84.13,
-        "unit": "years",
-        "description": "London average life expectancy"
+        "value": null,
+        "unit": null,
+        "description": null
       },
       "snapshot": {
-        "value": 82.92,
+        "value": 58.3,
         "unit": "years",
-        "year": 2023,
+        "year": "2022-2024",
         "date": null
       },
-      "status": "shortfall",
+      "status": "descriptive_only",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
+        "name": "Office for National Statistics - Healthy life expectancy, UK",
+        "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/datasets/healthstatelifeexpectancyallagesuk",
         "accessed": "2026-07-12",
-        "notes": "Lewisham: 82.92years. Comparison: below vs benchmark"
+        "notes": "Lewisham: 58.3 years (95% CI: 52.0-64.7). London average: 62.9 years. 3-year period 2022-2024."
       },
       "confidence": "high",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2011-2013",
+          "value": 64.7
+        },
+        {
+          "period": "2012-2014",
+          "value": 62.2
+        },
+        {
+          "period": "2013-2015",
+          "value": 60.9
+        },
+        {
+          "period": "2014-2016",
+          "value": 62.3
+        },
+        {
+          "period": "2015-2017",
+          "value": 62.9
+        },
+        {
+          "period": "2016-2018",
+          "value": 62.8
+        },
+        {
+          "period": "2017-2019",
+          "value": 62.1
+        },
+        {
+          "period": "2018-2020",
+          "value": 62.6
+        },
+        {
+          "period": "2019-2021",
+          "value": 62.5
+        },
+        {
+          "period": "2020-2022",
+          "value": 62.7
+        },
+        {
+          "period": "2021-2023",
+          "value": 57.8
+        },
+        {
+          "period": "2022-2024",
+          "value": 58.3
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -39,65 +89,82 @@
       "lens": "local_social",
       "dimension": "health",
       "target": {
-        "text": "Premature mortality rate target: London average premature mortality",
-        "source_body": "Trust for London benchmarks",
-        "has_official_target": true
+        "text": "No official target set",
+        "source_body": null,
+        "has_official_target": false
       },
-      "indicator": "Premature mortality rate",
+      "indicator": "Healthy life expectancy at birth (Female)",
       "threshold": {
-        "value": 294,
-        "unit": "per 100,000",
-        "description": "London average premature mortality"
+        "value": null,
+        "unit": null,
+        "description": null
       },
       "snapshot": {
-        "value": 340,
-        "unit": "per 100,000",
-        "year": 2023,
+        "value": 58.1,
+        "unit": "years",
+        "year": "2022-2024",
         "date": null
       },
-      "status": "shortfall",
+      "status": "descriptive_only",
       "geography_of_data": "borough_inherited",
       "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
+        "name": "Office for National Statistics - Healthy life expectancy, UK",
+        "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/datasets/healthstatelifeexpectancyallagesuk",
         "accessed": "2026-07-12",
-        "notes": "Lewisham: 340per 100,000. Comparison: worse vs benchmark"
+        "notes": "Lewisham: 58.1 years (95% CI: 52.3-63.9). London average: 62.9 years. 3-year period 2022-2024."
       },
       "confidence": "high",
-      "community_notes": []
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_social",
-      "dimension": "health",
-      "target": {
-        "text": "Childhood obesity prevalence target: London average childhood obesity",
-        "source_body": "Trust for London benchmarks",
-        "has_official_target": true
-      },
-      "indicator": "Childhood obesity prevalence",
-      "threshold": {
-        "value": 23.2,
-        "unit": "%",
-        "description": "London average childhood obesity"
-      },
-      "snapshot": {
-        "value": 24.5,
-        "unit": "%",
-        "year": 2023,
-        "date": null
-      },
-      "status": "shortfall",
-      "geography_of_data": "borough_inherited",
-      "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 24.5%. Comparison: worse vs benchmark"
-      },
-      "confidence": "high",
-      "community_notes": []
+      "community_notes": [],
+      "trend": [
+        {
+          "period": "2011-2013",
+          "value": 65.2
+        },
+        {
+          "period": "2012-2014",
+          "value": 62.2
+        },
+        {
+          "period": "2013-2015",
+          "value": 60.8
+        },
+        {
+          "period": "2014-2016",
+          "value": 63.0
+        },
+        {
+          "period": "2015-2017",
+          "value": 63.5
+        },
+        {
+          "period": "2016-2018",
+          "value": 63.1
+        },
+        {
+          "period": "2017-2019",
+          "value": 62.5
+        },
+        {
+          "period": "2018-2020",
+          "value": 63.8
+        },
+        {
+          "period": "2019-2021",
+          "value": 63.4
+        },
+        {
+          "period": "2020-2022",
+          "value": 62.8
+        },
+        {
+          "period": "2021-2023",
+          "value": 57.2
+        },
+        {
+          "period": "2022-2024",
+          "value": 58.1
+        }
+      ]
     },
     {
       "ward": "Ladywell",
@@ -467,39 +534,6 @@
           "note": "London average: 11.8%"
         }
       ]
-    },
-    {
-      "ward": "Ladywell",
-      "ward_code": "E05013725",
-      "lens": "local_social",
-      "dimension": "health",
-      "target": {
-        "text": "Childhood obesity prevalence target: London average childhood obesity",
-        "source_body": "Trust for London benchmarks",
-        "has_official_target": true
-      },
-      "indicator": "Childhood obesity prevalence",
-      "threshold": {
-        "value": 23.2,
-        "unit": "%",
-        "description": "London average childhood obesity"
-      },
-      "snapshot": {
-        "value": 24.5,
-        "unit": "%",
-        "year": 2023,
-        "date": null
-      },
-      "status": "shortfall",
-      "geography_of_data": "borough_inherited",
-      "source": {
-        "name": "Trust for London - Lewisham Poverty Profile",
-        "url": "https://trustforlondon.org.uk/data/boroughs/lewisham-poverty-and-inequality-indicators/",
-        "accessed": "2026-07-12",
-        "notes": "Lewisham: 24.5%. Comparison: worse vs benchmark"
-      },
-      "confidence": "high",
-      "community_notes": []
     },
     {
       "ward": "Ladywell",

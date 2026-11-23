@@ -161,6 +161,10 @@
     background: var(--card);
 }
 
+.dim-row.is-open {
+    border-bottom-color: transparent;
+}
+
 .dim-toggle {
     width: 100%;
     min-height: 36px;
@@ -216,18 +220,17 @@
 
 /* Expanded dimension: need trends beside spending trends */
 .detail-row td {
-    padding: 4px 0 10px;
+    padding: 0;
     text-align: left;
+    border-bottom: 1px solid #e0d1b5;
 }
 
 .detail-panel {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 32px;
-    padding: 18px 20px;
+    padding: 6px 20px 20px 22px;
     background: var(--card);
-    border: 1.5px solid var(--ink);
-    border-radius: 12px;
     position: sticky;
     left: 0;
     max-width: calc(100vw - 32px);
@@ -243,15 +246,18 @@
 }
 
 .panel-head h2 {
-    font-family: var(--font-serif);
-    font-size: 18px;
+    font-size: 11px;
     font-weight: 600;
-    line-height: 1.25;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: #5b4a5c;
 }
 
 .panel-head span {
     font-size: 11px;
     color: #5b4a5c;
+    opacity: 0.8;
     white-space: nowrap;
 }
 
@@ -264,8 +270,8 @@
     grid-template-columns: minmax(0, 1fr) 150px 130px;
     align-items: center;
     gap: 12px;
-    padding: 7px 0;
-    border-bottom: 1px solid #e8dcc4;
+    padding: 8px 0;
+    border-top: 1px solid rgba(36, 18, 38, 0.08);
 }
 
 .trend-label {
@@ -349,8 +355,8 @@
 
     .detail-panel {
         grid-template-columns: minmax(0, 1fr);
-        gap: 20px;
-        padding: 14px;
+        gap: 18px;
+        padding: 4px 14px 16px;
     }
 
     .trend-row {

@@ -21,6 +21,10 @@ The rules most often missed:
 - **Name causes and strategies**; never write that causes are clear or solutions exist without naming them.
 - **Run the `fact-checker` agent** (`.claude/agents/fact-checker.md`) on new or edited copy before considering it done: after showing the drafted wording for review when the user is present, not before. Brief it with just the dimension and which blocks changed; the agent file holds the standard instructions.
 
+## Spending page
+
+`site/spending.html` compares dimensions with public spending. Before changing it, its data or its tags, read `docs/spending-methodology.md` (method, sources, caveats, gaps, decision log). Rebuild data with `python3 data/pipeline/build_public_spending.py`; tags are in `data/lookups/budget_dimension_tags.json`.
+
 ## Scripts (use these instead of rewriting them)
 
 All run from the repo root:

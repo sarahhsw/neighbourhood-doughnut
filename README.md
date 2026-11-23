@@ -58,6 +58,13 @@ python fetch_lookups.py  # (optional - bootstrap file exists)
 python assemble.py
 ```
 
+### Spending page
+`site/spending.html` puts public spending next to the doughnut: Lewisham Council's day-to-day services, council homes, building projects and Housing Benefit (MHCLG outturn returns), and London-wide national and regional bodies (HM Treasury Country and Regional Analysis). Rebuild its data from the repo root with:
+```bash
+python3 data/pipeline/build_public_spending.py
+```
+Which budgets touch which dimension is set in `data/lookups/budget_dimension_tags.json` (yes/no tags, never weights). The full method, caveats, gaps and how to reuse it for another ward are in `docs/spending-methodology.md`.
+
 ### Viewing the visualization locally
 ```bash
 cd site

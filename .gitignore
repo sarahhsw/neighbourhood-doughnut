@@ -60,3 +60,6 @@ ENV/
 # Claude Code agent worktrees (transient, per-session)
 .claude/*
 !.claude/agents/
+
+# Cached downloads for the council spending pipeline
+data/raw/council_spend/

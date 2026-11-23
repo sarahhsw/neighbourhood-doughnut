@@ -12,15 +12,14 @@
     border: 0;
 }
 
-a.ward-pill.spend-back {
-    display: inline-flex;
-    align-items: center;
-    min-height: 36px;
+/* Same back button as the dimension pages (.back-button in styles.css), as a link. */
+.spend-page > .back-button {
     text-decoration: none;
+    line-height: normal;
 }
 
 .spend-page {
-    padding: 0 16px 40px;
+    padding: 22px 16px 40px;
 }
 
 .spend-page h1 {
@@ -371,6 +370,6 @@ a.ward-pill.spend-back {
     .spend-page {
         max-width: 1232px;
         margin: 0 auto;
-        padding: 0 48px 48px;
+        padding: 48px 48px 48px;
     }
 }
